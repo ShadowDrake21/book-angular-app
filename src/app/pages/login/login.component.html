@@ -1,1 +1,13 @@
-<p>login works!</p>
+<section class="min-h-screen">
+  <div class="flex items-center flex-col container mx-auto min-h-screen pt-10">
+    <div>
+      <img src="/assets/logo/png/logo-no-background.png" alt="" class="w-80" />
+    </div>
+    <form class="max-w-lg w-full mt-10 text-center">
+      <h2 class="text-4xl font-bold mb-1">Sign-In</h2>
+      <app-input [input-name]="'Email'"></app-input>
+      <app-input [input-name]="'Password'"></app-input>
+      <app-button [button-styles]="'margin-top: 40px'" />
+    </form>
+  </div>
+</section>
