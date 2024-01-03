@@ -1,11 +1,15 @@
 <div class="form__group field">
   <input
-    [type]="name.toLowerCase() === 'password' ? 'password' : 'text'"
+    [type]="type"
+    [placeholder]="placeholder"
+    [id]="label"
+    [(ngModel)]="value"
+    [disabled]="disabled"
+    (input)="onChange(value)"
+    (blur)="onTouched()"
     class="form__field"
-    [placeholder]="name"
     name="input"
-    [id]="name"
     required
   />
-  <label [for]="name" class="form__label">{{ name }}</label>
+  <label [for]="label" class="form__label">{{ label }}</label>
 </div>
