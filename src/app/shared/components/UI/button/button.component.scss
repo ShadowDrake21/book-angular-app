@@ -58,3 +58,18 @@
   background-color: #0088cc;
   transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
 }
+
+.button:disabled {
+  color: #c6c6c6;
+  border-color: #c6c6c6;
+}
+
+.button:disabled::before,
+.button:disabled::after,
+.button:disabled:hover,
+.button:disabled:hover:before,
+.button:disabled:hover::after {
+  top: 0;
+  background-color: transparent;
+  transform: none;
+}

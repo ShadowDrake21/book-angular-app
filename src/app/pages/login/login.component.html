@@ -14,14 +14,61 @@
         [label]="'Email'"
         [placeholder]="'Email'"
         formControlName="email"
+        [isError]="
+          loginForm.controls.email.invalid && loginForm.controls.email.touched
+        "
       ></app-input>
+      @if (loginForm.controls.email.invalid && loginForm.controls.email.touched
+      ) {
+      <div
+        class="validate-error mt-2"
+        *ngIf="loginForm.controls.email.errors?.['required']"
+      >
+        Email is required
+      </div>
+      <div
+        class="validate-error mt-2"
+        *ngIf="loginForm.controls.email.errors?.['email']"
+      >
+        {{ loginForm.controls.email.value }} is not a valid email
+      </div>
+      }
       <app-input
         [type]="'password'"
         [label]="'Password'"
         [placeholder]="'Password'"
         formControlName="password"
+        [isError]="
+          loginForm.controls.password.invalid &&
+          loginForm.controls.password.touched
+        "
       ></app-input>
-      <app-button [button-styles]="'margin-top: 40px'" />
+      @if (loginForm.controls.password.invalid &&
+      loginForm.controls.password.touched ) {
+      <div
+        class="validate-error mt-2"
+        *ngIf="loginForm.controls.password.errors?.['required']"
+      >
+        Password is required
+      </div>
+      <div
+        class="validate-error mt-2"
+        *ngIf="loginForm.controls.password.errors?.['minlength']"
+      >
+        Password must have at least 6 characters
+      </div>
+      <div
+        class="validate-error mt-2"
+        *ngIf="loginForm.controls.password.errors?.['maxlength']"
+      >
+        Password must have less than 20 characters
+      </div>
+      }
+      <app-button
+        [button-styles]="'margin-top: 40px'"
+        [text]="'Sign-In'"
+        [disabled]="loginForm.invalid || loginForm.untouched"
+      />
     </form>
   </div>
 </section>

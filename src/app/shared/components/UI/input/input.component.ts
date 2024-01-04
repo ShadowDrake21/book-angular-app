@@ -1,10 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, Optional, Self, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef } from '@angular/core';
 import {
+  AbstractControl,
   ControlValueAccessor,
   FormsModule,
+  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
-  NgControl,
+  ValidationErrors,
+  Validator,
 } from '@angular/forms';
 
 @Component({
@@ -19,12 +21,18 @@ import {
       useExisting: forwardRef(() => InputComponent),
       multi: true,
     },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => InputComponent),
+      multi: true,
+    },
   ],
 })
-export class InputComponent implements ControlValueAccessor {
+export class InputComponent implements ControlValueAccessor, Validator {
   @Input() label!: string;
   @Input() placeholder: string = '';
   @Input() type: 'text' | 'email' | 'password' = 'text';
+  @Input() isError: boolean = false;
 
   value: string = '';
   disabled = false;
@@ -45,5 +53,12 @@ export class InputComponent implements ControlValueAccessor {
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    if (!control.value || control.value === '') {
+      return { required: true };
+    }
+    return null;
   }
 }

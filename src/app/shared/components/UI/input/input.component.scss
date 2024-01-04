@@ -64,3 +64,21 @@ $gray: #9b9b9b;
     box-shadow: none;
   }
 }
+
+.form__group.invalid-error {
+  .form__field {
+    border-bottom-color: var(--error-color);
+    color: var(--error-color);
+
+    &:focus {
+      ~ .form__label {
+        color: var(--error-color);
+      }
+      border-image: none;
+    }
+  }
+
+  .form__label {
+    color: var(--error-color);
+  }
+}
