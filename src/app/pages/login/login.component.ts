@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../core/authentication/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,17 @@ export class LoginComponent {
     ]),
   });
 
+  constructor(private authService: AuthService) {}
   onSubmit() {
+    if (!this.loginForm.value.email || !this.loginForm.value.password) {
+      return;
+    }
+
+    this.authService
+      .login(this.loginForm.value.email, this.loginForm.value.password)
+      .then(() => {
+        console.log('User is login');
+      });
     console.log(this.loginForm.value);
   }
 }
