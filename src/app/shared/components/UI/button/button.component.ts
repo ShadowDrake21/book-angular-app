@@ -9,4 +9,6 @@ import { Component, Input } from '@angular/core';
 })
 export class ButtonComponent {
   @Input({ alias: 'button-styles', required: false }) styles!: string;
+  @Input({ required: true }) text!: string;
+  @Input() disabled: boolean = false;
 }
