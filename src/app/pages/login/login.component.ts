@@ -26,6 +26,10 @@ export class LoginComponent {
       Validators.maxLength(20),
     ]),
   });
+  failedLoginSet = {
+    isFailed: false,
+    message: '',
+  };
 
   constructor(private authService: AuthService, private router: Router) {}
   onSubmit() {
@@ -33,19 +37,23 @@ export class LoginComponent {
       return;
     }
 
+    if (this.failedLoginSet.isFailed) {
+      this.failedLoginSet.isFailed = false;
+      this.failedLoginSet.message = '';
+    }
+
     this.authService
       .login(this.loginForm.value.email, this.loginForm.value.password)
       .then(() => {
         console.log('User is login');
         this.router.navigate(['home']);
-        this.authService.user$.subscribe((result) => {
-          if (result) {
-            console.log(result.email);
-          } else {
-            console.log('USER IS NOT LOGGED IN');
-          }
-        });
         setTimeout(() => this.isLogin(), 5000);
+      })
+      .catch((error) => {
+        this.failedLoginSet = {
+          isFailed: true,
+          message: error.message,
+        };
       });
   }
 
