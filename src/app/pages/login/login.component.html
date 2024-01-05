@@ -1,0 +1,79 @@
+<section class="min-h-screen">
+  <div class="flex items-center flex-col container mx-auto min-h-screen pt-10">
+    <div>
+      <img src="/assets/logo/png/logo-no-background.png" alt="" class="w-80" />
+    </div>
+    <form
+      class="max-w-lg w-full mt-10 text-center"
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <h2 class="text-4xl font-bold mb-1">Sign-In</h2>
+      @if(failedLoginSet.isFailed) {
+      <p class="text-black bg-red-500 p-3 my-5">
+        {{ failedLoginSet.message }}
+      </p>
+      }
+      <app-input
+        [type]="'email'"
+        [label]="'Email'"
+        [placeholder]="'Email'"
+        formControlName="email"
+        [isError]="
+          loginForm.controls.email.invalid && loginForm.controls.email.touched
+        "
+      ></app-input>
+      @if (loginForm.controls.email.invalid && loginForm.controls.email.touched
+      ) {
+      <div
+        class="validate-error mt-2"
+        *ngIf="loginForm.controls.email.errors?.['required']"
+      >
+        Email is required
+      </div>
+      <div
+        class="validate-error mt-2"
+        *ngIf="loginForm.controls.email.errors?.['email']"
+      >
+        {{ loginForm.controls.email.value }} is not a valid email
+      </div>
+      }
+      <app-input
+        [type]="'password'"
+        [label]="'Password'"
+        [placeholder]="'Password'"
+        formControlName="password"
+        [isError]="
+          loginForm.controls.password.invalid &&
+          loginForm.controls.password.touched
+        "
+      ></app-input>
+      @if (loginForm.controls.password.invalid &&
+      loginForm.controls.password.touched ) {
+      <div
+        class="validate-error mt-2"
+        *ngIf="loginForm.controls.password.errors?.['required']"
+      >
+        Password is required
+      </div>
+      <div
+        class="validate-error mt-2"
+        *ngIf="loginForm.controls.password.errors?.['minlength']"
+      >
+        Password must have at least 6 characters
+      </div>
+      <div
+        class="validate-error mt-2"
+        *ngIf="loginForm.controls.password.errors?.['maxlength']"
+      >
+        Password must have less than 20 characters
+      </div>
+      }
+      <app-button
+        [button-styles]="'margin-top: 40px'"
+        [text]="'Sign-In'"
+        [disabled]="loginForm.invalid || loginForm.untouched"
+      />
+    </form>
+  </div>
+</section>
