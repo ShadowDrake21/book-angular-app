@@ -23,4 +23,25 @@ export const routes: Routes = [
         (m) => m.BooklistItemComponent
       ),
   },
+  {
+    path: 'userlist',
+    loadComponent: () =>
+      import('./pages/userlist/userlist.component').then(
+        (m) => m.UserlistComponent
+      ),
+  },
+  {
+    path: 'userlist/:userid',
+    loadComponent: () =>
+      import('./pages/userlist-item/userlist-item.component').then(
+        (m) => m.UserlistItemComponent
+      ),
+  },
+  {
+    path: 'favourite-books',
+    loadComponent: () =>
+      import('./pages/favbooks/favbooks.component').then(
+        (m) => m.FavbooksComponent
+      ),
+  },
 ];
