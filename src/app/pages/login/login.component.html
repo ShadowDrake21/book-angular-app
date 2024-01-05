@@ -9,6 +9,11 @@
       (ngSubmit)="onSubmit()"
     >
       <h2 class="text-4xl font-bold mb-1">Sign-In</h2>
+      @if(failedLoginSet.isFailed) {
+      <p class="text-black bg-red-500 p-3 my-5">
+        {{ failedLoginSet.message }}
+      </p>
+      }
       <app-input
         [type]="'email'"
         [label]="'Email'"
