@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/authentication/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,7 @@ export class LoginComponent {
     ]),
   });
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
   onSubmit() {
     if (!this.loginForm.value.email || !this.loginForm.value.password) {
       return;
@@ -36,7 +37,25 @@ export class LoginComponent {
       .login(this.loginForm.value.email, this.loginForm.value.password)
       .then(() => {
         console.log('User is login');
+        this.router.navigate(['home']);
+        this.authService.user$.subscribe((result) => {
+          if (result) {
+            console.log(result.email);
+          } else {
+            console.log('USER IS NOT LOGGED IN');
+          }
+        });
+        setTimeout(() => this.isLogin(), 5000);
       });
-    console.log(this.loginForm.value);
+  }
+
+  isLogin() {
+    this.authService.authState$.subscribe((res) => {
+      if (res && res.uid) {
+        console.log('user is logged in');
+      } else {
+        console.log('user is not logged in');
+      }
+    });
   }
 }
