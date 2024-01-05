@@ -1,24 +1,45 @@
-<header>
-  <div>
+<header class="sticky top-0 px-5 bg-[#e7e7e7]">
+  <nav
+    class="nav flex container-normall max-h-full h-full items-center justify-between"
+  >
+    <a routerLink="/home" class="max-h-full h-full w-1/4"
+      ><img
+        src="/assets/logo/png/logo-sm.png"
+        alt="logo"
+        class="w-full h-full object-contain"
+    /></a>
+    <ul class="nav-list flex justify-center h-full">
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/home"
+          >Home</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/booklist"
+          >Books</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/userlist"
+          >Users</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          routerLinkActive="active"
+          routerLink="/favourite-books"
+          >Your favourites</a
+        >
+      </li>
+    </ul>
     <div>
-      <a routerLink="/home"
-        ><img src="/assets/logo/png/logo-min.png" alt=""
-      /></a>
-      <ul>
-        <li><a routerLink="/home"></a></li>
-        <li><a routerLink="/booklist"></a></li>
-        <li><a routerLink="/userlist"></a></li>
-        <li><a routerLink="/favourite-books"></a></li>
-      </ul>
-      <div>
-        <input type="search" placeholder="Search books" />
-      </div>
-      <ul>
-        <li><a href="#"></a></li>
-        <li><a href="#"></a></li>
-        <li><a href="#"></a></li>
-      </ul>
-      <div>profile</div>
+      <app-search-input />
     </div>
-  </div>
+    <div class="user-actions flex gap-5">
+      <div class=""><fa-icon [icon]="faBell"></fa-icon></div>
+      <div><fa-icon [icon]="faEnvelope"></fa-icon></div>
+      <div><fa-icon [icon]="faUser"></fa-icon></div>
+    </div>
+  </nav>
 </header>
