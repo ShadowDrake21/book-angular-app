@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
   user,
   UserCredential,
+  signOut,
 } from '@angular/fire/auth';
 import { User } from '../../shared/models/user.model';
 import { doc, Firestore } from '@angular/fire/firestore';
@@ -38,5 +39,9 @@ export class AuthService {
     };
     const userDocRef = doc(this._firestore, `users/${user.id}`);
     return setDoc(userDocRef, user).then(() => user);
+  }
+
+  logout(): Promise<void> {
+    return signOut(this._auth);
   }
 }
