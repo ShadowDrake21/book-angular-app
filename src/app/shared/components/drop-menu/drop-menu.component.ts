@@ -1,30 +1,16 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faBell, faEnvelope, faUser } from '@fortawesome/free-solid-svg-icons';
-import { SearchInputComponent } from '../search-input/search-input.component';
-import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { ClickOutsideDirective } from '../header/directives/click-outside.directive';
 import { DropMenu } from '../../models/dropmenu.model';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-drop-menu',
   standalone: true,
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-    RouterModule,
-    SearchInputComponent,
-    ClickOutsideDirective,
-  ],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+  imports: [CommonModule, ClickOutsideDirective],
+  templateUrl: './drop-menu.component.html',
+  styleUrl: './drop-menu.component.scss',
 })
-export class HeaderComponent {
-  faBell = faBell;
-  faUser = faUser;
-  faEnvelope = faEnvelope;
-
+export class DropMenuComponent {
   isMenuOpened: boolean = false;
   clickedLi: string = 'background-color: rgb(122, 122, 122); color: #fff;';
 
@@ -42,7 +28,6 @@ export class HeaderComponent {
       date: 'a month ago',
     },
   ];
-
   toggleMenu(): void {
     this.isMenuOpened = !this.isMenuOpened;
   }
