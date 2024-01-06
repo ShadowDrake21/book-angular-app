@@ -36,10 +36,44 @@
     <div>
       <app-search-input />
     </div>
-    <div class="user-actions flex gap-5">
-      <div class=""><fa-icon [icon]="faBell"></fa-icon></div>
-      <div><fa-icon [icon]="faEnvelope"></fa-icon></div>
-      <div><fa-icon [icon]="faUser"></fa-icon></div>
-    </div>
+    <ul class="user-actions__list flex justify-between h-full text-center">
+      <li
+        class="user-actions flex w-14 h-full items-center justify-center"
+        (clickOutside)="clickedOutside()"
+        (click)="toggleMenu()"
+        [style]="isMenuOpened ? clickedLi : ''"
+      >
+        <div class="relative">
+          <div class="menu-container">
+            <div class="menu-toggler">
+              <fa-icon [icon]="faBell"></fa-icon>
+            </div>
+            @if(isMenuOpened) {
+            <div class="menu">
+              <div class="menu-item">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis
+                minus eaque saepe ipsum possimus dignissimos!
+              </div>
+              <div class="menu-item">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis
+                minus eaque saepe ipsum possimus dignissimos!
+              </div>
+              <div class="menu-item">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis
+                minus eaque saepe ipsum possimus dignissimos!
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </li>
+      <li class="flex w-14 h-full items-center justify-center">
+        <fa-icon [icon]="faEnvelope"></fa-icon>
+      </li>
+
+      <li class="flex w-14 h-full items-center justify-center">
+        <fa-icon [icon]="faUser"></fa-icon>
+      </li>
+    </ul>
   </nav>
 </header>
