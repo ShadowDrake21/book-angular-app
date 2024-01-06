@@ -13,7 +13,7 @@
   outline: none;
   border-radius: 25px;
   transition: all 0.5s ease-in-out;
-  background-color: #818181;
+  background-color: #aaaaaa;
   padding-right: 40px;
   color: #000;
 }
@@ -34,7 +34,7 @@
   border-radius: 50%;
   position: absolute;
   right: 0px;
-  color: #ffffff;
+  color: #000;
   background-color: transparent;
   pointer-events: painted;
 }
@@ -49,6 +49,7 @@
   background-color: transparent;
   border-bottom: 1px solid rgba(0, 0, 0, 0.7);
   transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+  color: #000;
 }
 .input-search:focus {
   width: 250px;
