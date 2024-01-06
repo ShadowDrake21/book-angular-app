@@ -35,7 +35,6 @@ export class ClickOutsideDirective implements AfterViewInit, OnDestroy {
   }
 
   isInside(elementToCheck: HTMLElement): boolean {
-    console.log('is inside');
     return (
       elementToCheck === this.element.nativeElement ||
       this.element.nativeElement.contains(elementToCheck)

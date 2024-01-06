@@ -38,19 +38,21 @@ header {
 }
 
 .menu {
-  background: #333;
-  color: #fff;
+  background: #fff;
+  color: rgb(122, 122, 122);
   padding: 10px;
-  width: 200px;
+  width: 400px;
   position: absolute;
-  font-size: 20px;
   right: -19px;
   top: 52px;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 .menu-item {
   cursor: pointer;
-  padding: 5px 0;
+  padding: 5px;
+  text-align: left;
 }
 
 .menu-item:hover {
@@ -63,5 +65,20 @@ header {
       background-color: #303030;
       color: #fff;
     }
+  }
+}
+
+.menu-wrapper {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+
+  .menu-img {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
   }
 }
