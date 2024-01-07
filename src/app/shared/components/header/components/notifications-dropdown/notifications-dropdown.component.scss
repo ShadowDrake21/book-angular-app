@@ -1,34 +1,3 @@
-header {
-  height: 80px;
-}
-
-.nav {
-  .nav-list {
-    .nav-item {
-      .nav-link {
-        display: flex;
-        align-items: center;
-        padding: 0 25px;
-        height: 100%;
-
-        &:hover {
-          background-color: #303030;
-          color: #fff;
-        }
-
-        &.active {
-          background-color: rgb(122, 122, 122);
-          color: #fff;
-
-          &:hover {
-            background-color: #303030;
-          }
-        }
-      }
-    }
-  }
-}
-
 .user-actions {
   div {
     fa-icon {
