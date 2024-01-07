@@ -1,0 +1,31 @@
+<div
+  class="flex w-14 h-full items-center justify-center"
+  clickOutside
+  (clickOutside)="clickedProfileOutside()"
+  (click)="toggleProfile()"
+  [style]="isProfileOpened ? clickedLi : ''"
+>
+  <div class="relative">
+    <div class="dropdown-container">
+      <div class="dropdown-toggler">
+        <fa-icon [icon]="faUser"></fa-icon>
+      </div>
+      @if(isProfileOpened) {
+      <div class="dropdown profile-dropdown">
+        <div class="text-left pb-2">
+          <h5 class="font-bold">
+            {{ userEmail | truncateText : 22 | uppercase }}
+          </h5>
+        </div>
+        @for (item of profile; track $index) {
+        <div class="dropdown-item flex gap-5 mb-1">
+          <a [routerLink]="item.link" class="hover:underline">{{
+            item.title
+          }}</a>
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+</div>
