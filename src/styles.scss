@@ -12,8 +12,16 @@
 
 body {
   font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  line-height: 22px;
 }
 
 .validate-error {
   color: var(--error-color);
+}
+
+.container-normall {
+  max-width: 1280px;
+  padding: 0 10px;
+  margin: auto;
 }

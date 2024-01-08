@@ -23,12 +23,17 @@ export class AuthService {
   user$ = user(this._auth);
   idToken$ = idToken(this._auth);
 
+  email!: string;
+
   login(email: string, password: string): Promise<User> {
     return signInWithEmailAndPassword(
       this._auth,
       email.trim(),
       password.trim()
-    ).then((auth) => this._setUserData(auth));
+    ).then((auth) => {
+      this.email = email;
+      return this._setUserData(auth);
+    });
   }
 
   private _setUserData(auth: UserCredential): Promise<User> {
