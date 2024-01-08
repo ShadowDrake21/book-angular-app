@@ -17,21 +17,21 @@ import { NotificationsDropdownComponent } from './components/notifications-dropd
 @Component({
   selector: 'app-header',
   standalone: true,
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss',
   imports: [
     CommonModule,
     FontAwesomeModule,
     RouterModule,
     SearchInputComponent,
     TruncateTextPipe,
-    NotificationsDropdownComponent,
+    ClickOutsideDirective,
     ProfileDropdownComponent,
+    NotificationsDropdownComponent,
   ],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   faEnvelope = faEnvelope;
-  faUser = faUser;
 
   public user!: User | null;
   public userEmail: string = '';

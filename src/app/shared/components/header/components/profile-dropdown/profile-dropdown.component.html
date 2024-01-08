@@ -2,12 +2,14 @@
   class="flex w-14 h-full items-center justify-center"
   clickOutside
   (clickOutside)="clickedProfileOutside()"
-  (click)="toggleProfile()"
   [style]="isProfileOpened ? clickedLi : ''"
 >
-  <div class="relative">
-    <div class="dropdown-container">
-      <div class="dropdown-toggler">
+  <div class="relative w-full h-full">
+    <div class="dropdown-container w-full h-full">
+      <div
+        class="dropdown-toggler w-full h-full flex items-center justify-center"
+        (click)="toggleProfile()"
+      >
         <fa-icon [icon]="faUser"></fa-icon>
       </div>
       @if(isProfileOpened) {

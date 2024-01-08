@@ -2,12 +2,14 @@
   class="user-actions flex w-14 h-full items-center justify-center"
   clickOutside
   (clickOutside)="clickedNotificationOutside()"
-  (click)="toggleNotification()"
   [style]="isNotificationOpened ? clickedLi : ''"
 >
-  <div class="relative">
-    <div class="dropdown-container">
-      <div class="dropdown-toggler">
+  <div class="relative w-full h-full">
+    <div class="dropdown-container w-full h-full">
+      <div
+        class="dropdown-toggler w-full h-full flex items-center justify-center"
+        (click)="toggleNotification()"
+      >
         <fa-icon [icon]="faBell"></fa-icon>
       </div>
       @if(isNotificationOpened) {

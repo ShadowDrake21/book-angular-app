@@ -60,7 +60,9 @@ header {
 }
 
 .user-actions__list {
-  li {
+  div,
+  app-notifications-dropdown,
+  app-profile-dropdown {
     &:hover {
       background-color: #303030;
       color: #fff;
