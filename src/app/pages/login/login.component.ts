@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { InputComponent } from '../../shared/components/UI/input/input.component';
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
 import {
@@ -9,16 +9,23 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/authentication/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, InputComponent, ButtonComponent, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    InputComponent,
+    ButtonComponent,
+    ReactiveFormsModule,
+    RouterModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   loginForm = new FormGroup({
     email: new FormControl('', Validators.email),
     password: new FormControl('', [
@@ -26,12 +33,19 @@ export class LoginComponent {
       Validators.maxLength(20),
     ]),
   });
+
   failedLoginSet = {
     isFailed: false,
     message: '',
   };
 
-  constructor(private authService: AuthService, private router: Router) {}
+  authSubscription!: Subscription;
+  isInSystem: boolean = false;
+
+  constructor(private authService: AuthService, private router: Router) {
+    this.checkAuthState();
+  }
+
   onSubmit() {
     if (!this.loginForm.value.email || !this.loginForm.value.password) {
       return;
@@ -47,7 +61,7 @@ export class LoginComponent {
       .then(() => {
         console.log('User is login');
         this.router.navigate(['home']);
-        setTimeout(() => this.isLogin(), 5000);
+        this.checkAuthState();
       })
       .catch((error) => {
         this.failedLoginSet = {
@@ -57,13 +71,25 @@ export class LoginComponent {
       });
   }
 
-  isLogin() {
-    this.authService.authState$.subscribe((res) => {
-      if (res && res.uid) {
-        console.log('user is logged in');
-      } else {
-        console.log('user is not logged in');
-      }
+  onLogout() {
+    this.authService
+      .logout()
+      .then(() => {
+        console.log('user is logged out');
+        this.router.navigate(['/']);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  checkAuthState() {
+    this.authSubscription = this.authService.authState$.subscribe((res) => {
+      this.isInSystem = !!(res && res.uid);
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.authSubscription) this.authSubscription.unsubscribe();
   }
 }

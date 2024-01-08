@@ -1,6 +1,26 @@
-.login {
-  // background-image: url("/assets/logo/png/logo-no-background.png");
-  background-position: center center;
-  background-size: contain;
-  background-repeat: no-repeat;
+.confirmation {
+  width: 350px;
+  height: 200px;
+  padding: 25px;
+  box-shadow: 1px 4px 42px -10px rgba(0, 0, 0, 0.75);
+  background-color: #fff;
+  border-radius: 30px;
+
+  p {
+    font-size: 18px;
+    line-height: 24px;
+    font-family: "Roboto Slab", serif;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+
+.confirmation-btn {
+  padding: 5px 15px;
+  background-color: #e4e4e4;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #cecece;
+  }
 }
