@@ -1,0 +1,42 @@
+<div
+  class="user-actions flex w-14 h-full items-center justify-center"
+  clickOutside
+  (clickOutside)="clickedNotificationOutside()"
+  [style]="isNotificationOpened ? clickedLi : ''"
+>
+  <div class="relative w-full h-full">
+    <div class="dropdown-container w-full h-full">
+      <div
+        class="dropdown-toggler w-full h-full flex items-center justify-center"
+        (click)="toggleNotification()"
+      >
+        <fa-icon [icon]="faBell"></fa-icon>
+      </div>
+      @if(isNotificationOpened) {
+      <div class="dropdown">
+        <div class="text-left pb-2">
+          <h6 class="font-bold mb-1">
+            {{ "notifications" | uppercase }}
+          </h6>
+          <a href="#">View all notifications</a>
+        </div>
+        @for (item of notifications; track $index) {
+        <div class="dropdown-item flex gap-5 border-t">
+          <div class="dropdown-wrapper shrink-0">
+            <img [src]="item.img" class="dropdown-img" alt="" />
+          </div>
+          <div>
+            <div>
+              <span class="font-bold hover:underline">{{ item.user }}</span
+              >{{ " " }}
+              <span class="hover:underline">{{ item.text }}</span>
+            </div>
+            <span class="text-xs text-gray-500">{{ item.date }}</span>
+          </div>
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+</div>

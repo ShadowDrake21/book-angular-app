@@ -1,34 +1,3 @@
-header {
-  height: 80px;
-}
-
-.nav {
-  .nav-list {
-    .nav-item {
-      .nav-link {
-        display: flex;
-        align-items: center;
-        padding: 0 25px;
-        height: 100%;
-
-        &:hover {
-          background-color: #303030;
-          color: #fff;
-        }
-
-        &.active {
-          background-color: rgb(122, 122, 122);
-          color: #fff;
-
-          &:hover {
-            background-color: #303030;
-          }
-        }
-      }
-    }
-  }
-}
-
 .user-actions {
   div {
     fa-icon {
@@ -43,8 +12,8 @@ header {
   padding: 15px;
   width: 400px;
   position: absolute;
-  right: -19px;
-  top: 52px;
+  right: 0px;
+  top: 80px;
   font-size: 14px;
   line-height: 18px;
 }
@@ -60,9 +29,7 @@ header {
 }
 
 .user-actions__list {
-  div,
-  app-notifications-dropdown,
-  app-profile-dropdown {
+  li {
     &:hover {
       background-color: #303030;
       color: #fff;

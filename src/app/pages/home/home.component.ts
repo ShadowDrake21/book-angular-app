@@ -5,18 +5,11 @@ import { AuthService } from '../../core/authentication/auth.service';
 import { InputComponent } from '../../shared/components/UI/input/input.component';
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HeaderComponent } from '../../shared/components/header/header.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    CommonModule,
-    InputComponent,
-    ButtonComponent,
-    HeaderComponent,
-    ReactiveFormsModule,
-  ],
+  imports: [CommonModule, InputComponent, ButtonComponent, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
