@@ -4,6 +4,7 @@
       <img src="/assets/logo/png/logo-no-background.png" alt="" class="w-80" />
     </div>
     <form
+      *ngIf="!isInSystem; else confirmation"
       class="max-w-lg w-full mt-10 text-center"
       [formGroup]="loginForm"
       (ngSubmit)="onSubmit()"
@@ -75,5 +76,21 @@
         [disabled]="loginForm.invalid || loginForm.untouched"
       />
     </form>
+    <ng-template #confirmation>
+      <div class="confirmation flex flex-col items-center justify-center">
+        <p>
+          You have already signed in. <br />
+          You want to sign out or back to home?
+        </p>
+        <div class="flex w-full justify-center gap-5">
+          <button class="confirmation-btn" (click)="onLogout()">
+            Sign-out
+          </button>
+          <a class="confirmation-btn inline-block" routerLink="/home"
+            >Back to home</a
+          >
+        </div>
+      </div>
+    </ng-template>
   </div>
 </section>
