@@ -1,15 +1,14 @@
+@for (book of books; track $index) {
 <div class="max-w-sm rounded overflow-hidden shadow-lg">
   <img
     class="w-full"
-    src="/assets/dummy book.jpg"
+    [src]="book?.volumeInfo?.imageLinks?.thumbnail"
     alt="Sunset in the mountains"
   />
   <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
+    <div class="font-bold text-xl mb-2">{{ book.volumeInfo.title }}</div>
     <p class="text-gray-700 text-base">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus
-      quia, nulla! Maiores et perferendis eaque, exercitationem praesentium
-      nihil.
+      {{ book?.volumeInfo?.description }}
     </p>
   </div>
   <div class="px-6 pt-4 pb-2">
@@ -27,4 +26,5 @@
     >
   </div>
 </div>
+}
 <button (click)="onLogout()">Logout</button>
