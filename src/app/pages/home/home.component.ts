@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../core/authentication/auth.service';
 import { InputComponent } from '../../shared/components/UI/input/input.component';
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
@@ -8,11 +8,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BooksService } from '../../core/services/books.service';
 import { Book } from '../../shared/models/book.model';
 import { IMG_URL } from '../../core/constants/books.constants';
+import { BookItemComponent } from '../../shared/components/book-item/book-item.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, InputComponent, ButtonComponent, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    InputComponent,
+    ButtonComponent,
+    ReactiveFormsModule,
+    RouterModule,
+    BookItemComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
