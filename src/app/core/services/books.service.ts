@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { SEARCH_API_URL } from '../constants/books.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -7,10 +8,9 @@ import { Injectable, inject } from '@angular/core';
 export class BooksService {
   http = inject(HttpClient);
 
-  private BASE_API_URL: string =
-    'https://www.googleapis.com/books/v1/volumes?q=';
-
-  getBooks(search: string) {
-    return this.http.get<any>(this.BASE_API_URL + search);
+  getBooksByTitles(searchStr: string) {
+    return this.http.get<any>(
+      SEARCH_API_URL + '?title=' + searchStr + '&limit=10'
+    );
   }
 }

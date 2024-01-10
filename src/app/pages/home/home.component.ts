@@ -7,6 +7,7 @@ import { ButtonComponent } from '../../shared/components/UI/button/button.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { BooksService } from '../../core/services/books.service';
 import { Book } from '../../shared/models/book.model';
+import { IMG_URL } from '../../core/constants/books.constants';
 
 @Component({
   selector: 'app-home',
@@ -20,11 +21,13 @@ export class HomeComponent implements OnInit {
   router = inject(Router);
   booksService = inject(BooksService);
 
-  books: Array<Book> = [];
+  books: Book[] = [];
 
   ngOnInit(): void {
-    this.booksService.getBooks('Ania z Zielonego Wzgórza').subscribe((res) => {
-      this.books = res.items;
+    this.booksService.getBooksByTitles('Harry Potter').subscribe((res) => {
+      this.books = res.docs.map((book: Book) => {
+        return { ...book, image: `${IMG_URL}${book.cover_edition_key}-L.jpg` };
+      });
       console.log(this.books);
     });
   }
