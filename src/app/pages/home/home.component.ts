@@ -9,6 +9,7 @@ import { BooksService } from '../../core/services/books.service';
 import { Book } from '../../shared/models/book.model';
 import { IMG_URL } from '../../core/constants/books.constants';
 import { BookItemComponent } from '../../shared/components/book-item/book-item.component';
+import { CarouselComponent } from '../../shared/components/carousel/carousel.component';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,7 @@ import { BookItemComponent } from '../../shared/components/book-item/book-item.c
     ReactiveFormsModule,
     RouterModule,
     BookItemComponent,
+    CarouselComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -33,9 +35,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.booksService.getBooksByTitles('Harry Potter').subscribe((res) => {
-      this.books = res.docs.map((book: Book) => {
-        return { ...book, image: `${IMG_URL}${book.cover_edition_key}-L.jpg` };
-      });
+      this.books = res.docs;
       console.log(this.books);
     });
   }

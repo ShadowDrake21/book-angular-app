@@ -10,7 +10,7 @@ export class BooksService {
 
   getBooksByTitles(searchStr: string) {
     return this.http.get<any>(
-      SEARCH_API_URL + '?title=' + searchStr + '&limit=10'
+      SEARCH_API_URL + '?title=' + searchStr + '&limit=20'
     );
   }
 }
