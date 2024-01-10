@@ -1,0 +1,8 @@
+.book__card {
+  &:hover {
+    .book__description {
+      transition: all 0.3s;
+      opacity: 1;
+    }
+  }
+}
