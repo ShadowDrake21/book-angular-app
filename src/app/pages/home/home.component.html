@@ -1,4 +1,4 @@
-@for (book of books; track $index) {
-<app-book-item [book]="book"></app-book-item>
-}
+<section class="container-normall">
+  <app-carousel [contents]="books" [title]="'Fantasy'"></app-carousel>
+</section>
 <button (click)="onLogout()">Logout</button>

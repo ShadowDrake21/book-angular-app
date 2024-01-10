@@ -6,3 +6,10 @@
     }
   }
 }
+
+.book__image {
+  width: 300px !important;
+  height: 400px !important;
+  object-fit: cover;
+  object-position: top;
+}

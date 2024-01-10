@@ -1,0 +1,16 @@
+<div class="container px-20 mt-14 mb-20 overflow-hidden min-h-screen">
+  <p class="font-semibold text-2xl my-3 ml-3">{{ title }}</p>
+  <div #swiperContainer class="swiper-container">
+    <div class="swiper-wrapper">
+      <ng-container *ngFor="let book of contents">
+        <div
+          (mouseenter)="setHoverBook(book)"
+          (mouseleave)="clearHoverBook()"
+          class="swiper-slide relative"
+        >
+          <app-book-item [book]="book"></app-book-item>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

@@ -1,9 +1,13 @@
 <a
-  class="book__card max-w-[250px] h-[350px] rounded inline-block overflow-hidden shadow-lg relative"
+  class="book__card rounded inline-block overflow-hidden shadow-lg relative"
   routerLink="/booklist/1"
 >
   <div>
-    <img class="w-full" [src]="book.image" alt="Sunset in the mountains" />
+    <img
+      class="book__image"
+      [src]="book.cover_edition_key | bookImage : 'L'"
+      alt="Sunset in the mountains"
+    />
   </div>
   <div
     class="book__description px-6 py-4 absolute w-full h-full top-0 bg-white bg-opacity-70 opacity-0"
