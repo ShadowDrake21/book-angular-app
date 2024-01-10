@@ -8,4 +8,3 @@ export const environment = {
     appId: '1:869230915901:web:c1e5aadce79caeb1145554',
   },
 };
-export const GOOGLE_API_KEY: string = 'AIzaSyCXeGqEVxNcDf-x5Sq9nZOSe4czAjz5NQQ';
