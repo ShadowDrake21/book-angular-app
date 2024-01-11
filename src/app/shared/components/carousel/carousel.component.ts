@@ -30,10 +30,10 @@ export class CarouselComponent implements AfterViewInit {
 
   private initSwiper() {
     return new Swiper(this.swiperContainer.nativeElement, {
-      slidesPerView: 5,
+      slidesPerView: 3,
       slidesPerGroup: 2,
       centeredSlides: true,
-      loop: true,
+      loop: false,
       breakpoints: {
         600: {
           slidesPerView: 2,
@@ -53,18 +53,18 @@ export class CarouselComponent implements AfterViewInit {
           spaceBetween: 5,
           centeredSlides: false,
         },
-        // 1500: {
-        //   slidesPerView: 5,
-        //   slidesPerGroup: 5,
-        //   spaceBetween: 5,
-        //   centeredSlides: false,
-        // },
-        // 1800: {
-        //   slidesPerView: 5,
-        //   slidesPerGroup: 6,
-        //   spaceBetween: 5,
-        //   centeredSlides: false,
-        // },
+        1500: {
+          slidesPerView: 5,
+          slidesPerGroup: 5,
+          spaceBetween: 5,
+          centeredSlides: false,
+        },
+        1800: {
+          slidesPerView: 5,
+          slidesPerGroup: 6,
+          spaceBetween: 5,
+          centeredSlides: false,
+        },
       },
     });
   }

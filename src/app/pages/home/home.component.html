@@ -1,4 +1,12 @@
-<section class="container-normall">
-  <app-carousel [contents]="books" [title]="'Fantasy'"></app-carousel>
+<section class="container-slider">
+  @if(loadingFantasy) {
+  <p>Loading!</p>
+  } @else {
+  <app-carousel [contents]="booksFantasy" [title]="'Fantasy'"></app-carousel>
+  } @if(loadingFantasy) {
+  <p>Loading!</p>
+  } @else {
+  <app-carousel [contents]="booksSport" [title]="'Sport'"></app-carousel>
+  }
 </section>
 <button (click)="onLogout()">Logout</button>

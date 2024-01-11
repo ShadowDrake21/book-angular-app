@@ -5,7 +5,11 @@
   <div>
     <img
       class="book__image"
-      [src]="book.cover_edition_key | bookImage : 'L'"
+      [src]="
+        !book.cover_edition_key
+          ? '/assets/if there is no image.png'
+          : (book.cover_edition_key | bookImage : 'M')
+      "
       alt="Sunset in the mountains"
     />
   </div>

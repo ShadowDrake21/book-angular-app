@@ -7,7 +7,6 @@ import { ButtonComponent } from '../../shared/components/UI/button/button.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { BooksService } from '../../core/services/books.service';
 import { Book } from '../../shared/models/book.model';
-import { IMG_URL } from '../../core/constants/books.constants';
 import { BookItemComponent } from '../../shared/components/book-item/book-item.component';
 import { CarouselComponent } from '../../shared/components/carousel/carousel.component';
 
@@ -31,13 +30,42 @@ export class HomeComponent implements OnInit {
   router = inject(Router);
   booksService = inject(BooksService);
 
-  books: Book[] = [];
+  booksFantasy: Book[] = [];
+  loadingFantasy?: boolean;
 
-  ngOnInit(): void {
-    this.booksService.getBooksByTitles('Harry Potter').subscribe((res) => {
-      this.books = res.docs;
-      console.log(this.books);
-    });
+  booksSport: Book[] = [];
+  loadingSport?: boolean;
+
+  async ngOnInit() {
+    this.loadingFantasy = true;
+    this.loadingSport = true;
+
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    this.booksService
+      .getBooksBySubject('fantasy', {
+        details: true,
+        limit: 25,
+        lang: 'en',
+        sort: 'new',
+      })
+      .subscribe((res) => {
+        this.booksFantasy = res.works;
+        console.log(this.booksFantasy);
+        this.loadingFantasy = false;
+      });
+
+    this.booksService
+      .getBooksBySubject('adventures', {
+        details: true,
+        limit: 25,
+        lang: 'en',
+        sort: 'new',
+      })
+      .subscribe((res) => {
+        this.booksSport = res.works;
+        console.log(this.booksSport);
+        this.loadingSport = false;
+      });
   }
 
   onLogout() {
