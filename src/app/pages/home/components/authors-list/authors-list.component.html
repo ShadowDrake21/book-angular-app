@@ -1,0 +1,13 @@
+<div>
+  <input type="search" placeholder="Author" />
+  <div *ngIf="authorsList; else noAuthors" class="author__list">
+    @for (author of authorsList; track author.key) {
+    <a
+      class="author__list-link bg-zinc-300 font-semibold"
+      [routerLink]="['/authorlist', author.key]"
+      >{{ author.name }}</a
+    >
+    }
+  </div>
+  <ng-template #noAuthors> There is no author with such name </ng-template>
+</div>

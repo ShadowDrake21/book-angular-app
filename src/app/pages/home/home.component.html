@@ -1,36 +1,43 @@
 <section class="container-slider">
-  @if(loadingFantasy) {
-  <p>Loading!</p>
-  } @else {
-  <app-carousel
-    [contents]="booksFantasy"
-    [title]="'Fantasy'"
-    [carouselLink]="'fantasy'"
-  ></app-carousel>
-  } @if(loadingFantasy) {
-  <p>Loading!</p>
-  } @else {
-  <app-carousel
-    [contents]="booksSport"
-    [title]="'Adventures'"
-    [carouselLink]="'adventures'"
-  ></app-carousel>
-  } @if(loadingLove) {
-  <p>Loading!</p>
-  } @else {
-  <app-carousel
-    [contents]="booksLove"
-    [title]="'Love'"
-    [carouselLink]="'love'"
-  ></app-carousel>
-  } @if(loadingChildren) {
-  <p>Loading!</p>
-  } @else {
-  <app-carousel
-    [contents]="booksChildren"
-    [title]="'Children\'s'"
-    [carouselLink]="'children'"
-  ></app-carousel>
-  }
+  <div>
+    <h3 class="font-semibold text-3xl">Books by genre</h3>
+    @if(loadingFantasy) {
+    <p>Loading!</p>
+    } @else {
+    <app-carousel
+      [contents]="booksFantasy"
+      [title]="'Fantasy'"
+      [carouselLink]="'fantasy'"
+    ></app-carousel>
+    } @if(loadingFantasy) {
+    <p>Loading!</p>
+    } @else {
+    <app-carousel
+      [contents]="booksSport"
+      [title]="'Adventures'"
+      [carouselLink]="'adventures'"
+    ></app-carousel>
+    } @if(loadingLove) {
+    <p>Loading!</p>
+    } @else {
+    <app-carousel
+      [contents]="booksLove"
+      [title]="'Love'"
+      [carouselLink]="'love'"
+    ></app-carousel>
+    } @if(loadingChildren) {
+    <p>Loading!</p>
+    } @else {
+    <app-carousel
+      [contents]="booksChildren"
+      [title]="'Children\'s'"
+      [carouselLink]="'children'"
+    ></app-carousel>
+    }
+  </div>
+  <div>
+    <h3 class="font-semibold text-3xl">Authors by name</h3>
+    <app-authors-list></app-authors-list>
+  </div>
 </section>
 <button (click)="onLogout()">Logout</button>
