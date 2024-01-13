@@ -1,9 +1,7 @@
 <div>
-  @if(loadingAuthors) {
-  <p>Loading!</p>
-  } @else {
+  @if(currentPageData$ | async) {
   <form
-    class="flex mb-10"
+    class="flex mb-7"
     [formGroup]="searchAuthorForm"
     (ngSubmit)="onSearch()"
   >
@@ -35,20 +33,35 @@
     />
   </form>
 
-  <div *ngIf="authorsList.length; else noAuthors">
-    <p>Found results: {{ numFound }}</p>
+  <div *ngIf="currentPageData$ | async as authorsList">
+    <p class="mb-2">
+      <span class="font-semibold">Found results:</span> {{ numFound }}
+    </p>
     <div class="author__list">
-      @for (author of authorsList; track author.key) {
+      @if(authorsList) { @for (author of authorsList; track author.key) {
       <a
         class="author__list-link bg-zinc-300 font-semibold"
         [routerLink]="['/authorlist', author.key]"
         >{{ author.name }}</a
       >
+      } }@else {
+      <p>none</p>
       }
     </div>
   </div>
   <!-- pagination -->
-  <a routerLink="">Go to the Authors page</a>
+
+  <div>
+    <button (click)="prevPage()">Previous</button>
+    <div *ngIf="currentPage$ | async as currentPage">
+      Current Page: {{ currentPage }}
+    </div>
+    <button (click)="nextPage()">Next</button>
+  </div>
+  <a routerLink="authorlist">Go to the Authors page</a>
+  } @else {
+  <p>Loading!</p>
   }
+
   <ng-template #noAuthors> There is no author with such name </ng-template>
 </div>

@@ -32,9 +32,9 @@ export class BooksService {
     });
   }
 
-  getAuthorsByName(name: string, limit: number) {
+  getAuthorsByName(name: string, offest: number, limit: number) {
     return this.http.get<any>(AUTHORS_API_URL, {
-      params: { q: name, limit: limit },
+      params: { q: name, offset: offest, limit: limit },
     });
   }
 }
