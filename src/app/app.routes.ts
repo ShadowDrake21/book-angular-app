@@ -10,7 +10,7 @@ export const routes: Routes = [
       import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
-    path: 'booklist',
+    path: 'booklist/:category',
     loadComponent: () =>
       import('./pages/booklist/booklist.component').then(
         (m) => m.BooklistComponent
