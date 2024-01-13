@@ -1,0 +1,15 @@
+.book__card {
+  &:hover {
+    .book__description {
+      transition: all 0.3s;
+      opacity: 1;
+    }
+  }
+}
+
+.book__image {
+  width: 300px !important;
+  height: 400px !important;
+  object-fit: cover;
+  object-position: top;
+}
