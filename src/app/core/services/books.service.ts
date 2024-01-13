@@ -3,10 +3,10 @@ import { Injectable, inject } from '@angular/core';
 import { SEARCH_API_URL, SUBJECT_API_URL } from '../constants/books.constants';
 
 export interface BooksBySubject {
-  details: boolean;
-  limit: number;
-  lang: string;
-  sort: string;
+  details?: boolean;
+  limit?: number;
+  lang?: string;
+  sort?: string;
 }
 
 @Injectable({
@@ -21,14 +21,10 @@ export class BooksService {
     });
   }
 
-  getBooksBySubject(subject: string, paramValues: BooksBySubject) {
-    let httpParams = new HttpParams()
-      .append('details', paramValues.details)
-      .append('limit', paramValues.limit)
-      .append('lang', paramValues.lang)
-      .append('sort', paramValues.sort);
+  getBooksBySubject(subject: string, ...[params]: any) {
+    console.log(params);
     return this.http.get<any>(SUBJECT_API_URL + subject + '.json', {
-      params: httpParams,
+      params: params,
     });
   }
 }

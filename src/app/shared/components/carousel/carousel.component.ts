@@ -10,17 +10,25 @@ import Swiper from 'swiper';
 import { BookImagePipe } from '../../pipes/book-image.pipe';
 import { Book } from '../../models/book.model';
 import { BookItemComponent } from '../book-item/book-item.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-carousel',
   standalone: true,
-  imports: [CommonModule, NgFor, BookImagePipe, BookItemComponent],
+  imports: [
+    CommonModule,
+    NgFor,
+    BookImagePipe,
+    BookItemComponent,
+    RouterModule,
+  ],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
 })
 export class CarouselComponent implements AfterViewInit {
   @Input({ required: true }) contents: Book[] = [];
   @Input({ required: true }) title!: string;
+  @Input() carouselLink!: string;
   @ViewChild('swiperContainer') swiperContainer!: ElementRef;
   selectedContent: string | null = null;
 

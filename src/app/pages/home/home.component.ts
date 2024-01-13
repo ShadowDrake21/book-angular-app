@@ -36,15 +36,23 @@ export class HomeComponent implements OnInit {
   booksSport: Book[] = [];
   loadingSport?: boolean;
 
+  booksLove: Book[] = [];
+  loadingLove?: boolean;
+
+  booksChildren: Book[] = [];
+  loadingChildren?: boolean;
+
   async ngOnInit() {
     this.loadingFantasy = true;
     this.loadingSport = true;
+    this.loadingLove = true;
+    this.loadingChildren = true;
 
     await new Promise((resolve) => setTimeout(resolve, 2000));
     this.booksService
       .getBooksBySubject('fantasy', {
         details: true,
-        limit: 25,
+        limit: 10,
         lang: 'en',
         sort: 'new',
       })
@@ -57,7 +65,7 @@ export class HomeComponent implements OnInit {
     this.booksService
       .getBooksBySubject('adventures', {
         details: true,
-        limit: 25,
+        limit: 10,
         lang: 'en',
         sort: 'new',
       })
@@ -65,6 +73,31 @@ export class HomeComponent implements OnInit {
         this.booksSport = res.works;
         console.log(this.booksSport);
         this.loadingSport = false;
+      });
+
+    this.booksService
+      .getBooksBySubject('love', {
+        details: true,
+        limit: 10,
+        lang: 'en',
+        sort: 'new',
+      })
+      .subscribe((res) => {
+        this.booksLove = res.works;
+        console.log(this.booksSport);
+        this.loadingLove = false;
+      });
+
+    this.booksService
+      .getBooksBySubject('children', {
+        details: true,
+        limit: 10,
+        lang: 'en',
+      })
+      .subscribe((res) => {
+        this.booksChildren = res.works;
+        console.log(this.booksChildren);
+        this.loadingChildren = false;
       });
   }
 
