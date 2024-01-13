@@ -1,0 +1,22 @@
+<div class="my-10 h-[520px] overflow-hidden">
+  <p class="font-semibold text-2xl mt-3 mb-5 ml-3">{{ title }}</p>
+  <div #swiperContainer class="swiper-container">
+    <div class="swiper-wrapper">
+      <ng-container *ngFor="let book of contents">
+        <div
+          (mouseenter)="setHoverBook(book)"
+          (mouseleave)="clearHoverBook()"
+          class="swiper-slide relative"
+        >
+          <app-book-item [book]="book"></app-book-item>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <a
+    *ngIf="carouselLink"
+    [routerLink]="['/booklist', carouselLink]"
+    class="font-medium text-lg inline-block mt-5 ml-2 text-gray-600 hover:underline"
+    >See more of {{ title }}</a
+  >
+</div>
