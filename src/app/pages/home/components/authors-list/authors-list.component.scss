@@ -1,0 +1,11 @@
+.author__list {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px 0;
+  flex-wrap: wrap;
+
+  .author__list-link {
+    flex: 0 0 49%;
+    padding: 10px;
+  }
+}
