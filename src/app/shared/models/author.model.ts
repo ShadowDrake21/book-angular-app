@@ -1,4 +1,4 @@
-export interface Author {
+export interface IAuthor {
   key: string;
   type: string;
   name: string;
