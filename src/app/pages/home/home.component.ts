@@ -6,10 +6,11 @@ import { InputComponent } from '../../shared/components/UI/input/input.component
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BooksService } from '../../core/services/books.service';
-import { Book } from '../../shared/models/book.model';
+import { IBook } from '../../shared/models/book.model';
 import { BookItemComponent } from '../../shared/components/book-item/book-item.component';
 import { CarouselComponent } from '../../shared/components/carousel/carousel.component';
 import { AuthorsListComponent } from './components/authors-list/authors-list.component';
+import { AboutUserComponent } from './components/about-user/about-user.component';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ import { AuthorsListComponent } from './components/authors-list/authors-list.com
     BookItemComponent,
     CarouselComponent,
     AuthorsListComponent,
+    AboutUserComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -32,16 +34,16 @@ export class HomeComponent implements OnInit {
   router = inject(Router);
   booksService = inject(BooksService);
 
-  booksFantasy: Book[] = [];
+  booksFantasy: IBook[] = [];
   loadingFantasy?: boolean;
 
-  booksSport: Book[] = [];
+  booksSport: IBook[] = [];
   loadingSport?: boolean;
 
-  booksLove: Book[] = [];
+  booksLove: IBook[] = [];
   loadingLove?: boolean;
 
-  booksChildren: Book[] = [];
+  booksChildren: IBook[] = [];
   loadingChildren?: boolean;
 
   async ngOnInit() {

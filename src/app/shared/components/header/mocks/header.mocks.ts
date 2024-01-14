@@ -1,6 +1,6 @@
-import { Notification } from '../../../models/dropmenu.model';
+import { INotification } from '../../../models/dropmenu.model';
 
-export const notifications: Array<Notification> = [
+export const notifications: Array<INotification> = [
   {
     user: 'Drake21',
     img: '/assets/doktor.book_335560326_1185623702313385_2179959843033941049_n.jpg',

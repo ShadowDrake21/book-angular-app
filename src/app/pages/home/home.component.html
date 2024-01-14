@@ -1,4 +1,4 @@
-<section class="container-slider">
+<section class="container-big">
   <div>
     <h3 class="font-semibold text-3xl">Books by genre</h3>
     @if(loadingFantasy) {
@@ -35,9 +35,12 @@
     ></app-carousel>
     }
   </div>
-  <div>
-    <h3 class="font-semibold text-3xl">Authors by name</h3>
-    <app-authors-list></app-authors-list>
-  </div>
+</section>
+<section class="container-big">
+  <h3 class="font-semibold text-3xl">Authors by name</h3>
+  <app-authors-list></app-authors-list>
+</section>
+<section class="bg-stone-300">
+  <app-about-user></app-about-user>
 </section>
 <button (click)="onLogout()">Logout</button>
