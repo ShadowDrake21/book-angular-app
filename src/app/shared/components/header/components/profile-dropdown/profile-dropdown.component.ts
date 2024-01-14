@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { TruncateTextPipe } from '../../../../pipes/truncate-text.pipe';
-import { SearchInputComponent } from '../../../search-input/search-input.component';
 import { profile } from '../../content/header.content';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 

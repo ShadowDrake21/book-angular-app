@@ -1,4 +1,4 @@
-export interface Book {
+export interface IBook {
   key: string;
   type: string;
   seed: string[];
