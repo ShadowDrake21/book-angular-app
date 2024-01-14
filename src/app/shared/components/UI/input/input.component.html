@@ -8,6 +8,7 @@
     (input)="onChange(value)"
     (blur)="onTouched()"
     class="form__field"
+    [class.text]="type === 'text'"
     name="input"
     required
   />

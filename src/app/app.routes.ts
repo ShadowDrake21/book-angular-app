@@ -10,6 +10,13 @@ export const routes: Routes = [
       import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
+    path: 'booklist',
+    loadComponent: () =>
+      import('./pages/booklist/booklist.component').then(
+        (m) => m.BooklistComponent
+      ),
+  },
+  {
     path: 'booklist/:category',
     loadComponent: () =>
       import('./pages/booklist/booklist.component').then(
@@ -17,7 +24,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'booklist/:bookid',
+    path: 'booklist-item/:bookid',
     loadComponent: () =>
       import('./pages/booklist-item/booklist-item.component').then(
         (m) => m.BooklistItemComponent
@@ -35,6 +42,20 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/userlist-item/userlist-item.component').then(
         (m) => m.UserlistItemComponent
+      ),
+  },
+  {
+    path: 'authorlist',
+    loadComponent: () =>
+      import('./pages/authorlist/authorlist.component').then(
+        (m) => m.AuthorlistComponent
+      ),
+  },
+  {
+    path: 'authorlist/:authorid',
+    loadComponent: () =>
+      import('./pages/authorlist-item/authorlist-item.component').then(
+        (m) => m.AuthorlistItemComponent
       ),
   },
   {

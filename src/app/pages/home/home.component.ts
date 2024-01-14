@@ -9,6 +9,7 @@ import { BooksService } from '../../core/services/books.service';
 import { Book } from '../../shared/models/book.model';
 import { BookItemComponent } from '../../shared/components/book-item/book-item.component';
 import { CarouselComponent } from '../../shared/components/carousel/carousel.component';
+import { AuthorsListComponent } from './components/authors-list/authors-list.component';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,7 @@ import { CarouselComponent } from '../../shared/components/carousel/carousel.com
     RouterModule,
     BookItemComponent,
     CarouselComponent,
+    AuthorsListComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

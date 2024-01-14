@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faBell, faEnvelope, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { SearchInputComponent } from '../search-input/search-input.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { CommonModule } from '@angular/common';
-import { Notification, Profile } from '../../models/dropmenu.model';
 import { AuthService } from '../../../core/authentication/auth.service';
 import { User } from '@angular/fire/auth';
-import { profile } from './content/header.content';
-import { notifications } from './mocks/header.mocks';
 import { TruncateTextPipe } from '../../pipes/truncate-text.pipe';
 import { ProfileDropdownComponent } from './components/profile-dropdown/profile-dropdown.component';
 import { NotificationsDropdownComponent } from './components/notifications-dropdown/notifications-dropdown.component';
