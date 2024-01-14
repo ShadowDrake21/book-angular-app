@@ -4,6 +4,7 @@ import { BooksService } from '../../../../core/services/books.service';
 import { AuthService } from '../../../../core/authentication/auth.service';
 import { User, getAuth } from '@angular/fire/auth';
 import { IUpdateProfile } from '../../../../shared/models/profileManipulations.model';
+import { aboutUser } from '../../mocks/home.mocks';
 
 @Component({
   selector: 'app-about-user',
@@ -17,10 +18,8 @@ export class AboutUserComponent implements OnInit {
   booksService = inject(BooksService);
 
   user!: User | null;
-  email!: string;
-  name!: string;
-  joinData!: Date;
-  lastTimeInSystem!: any;
+
+  aboutUser = aboutUser;
 
   ngOnInit(): void {
     this.updateUser();

@@ -1,12 +1,44 @@
-<div class="container-big">
-  <div>
-    <div>
-      <img [src]="user?.photoURL ?? '/assets/dummy book.jpg'" alt="" />
+<div class="about__user container-big">
+  <h3 class="font-semibold text-3xl mb-5">About you</h3>
+  <div class="flex">
+    <div class="w-1/2 text-center">
+      <div class="w-full mb-4">
+        <img
+          [src]="user?.photoURL ?? '/assets/dummy book.jpg'"
+          class="object-cover max-w-full w-full"
+          alt="profile-img"
+        />
+      </div>
+      <div class="flex flex-col gap-3">
+        <p>
+          Your email: <span class="font-semibold">{{ user?.email }}</span>
+        </p>
+        <p>
+          Your name: <span class="font-semibold">{{ user?.displayName }}</span>
+        </p>
+        <p>
+          Joined us on
+          <span class="font-semibold">{{
+            user?.metadata?.creationTime | date : "medium"
+          }}</span>
+        </p>
+        <p>
+          Last time in system:
+          <span class="font-semibold">{{
+            user?.metadata?.lastSignInTime | date : "medium"
+          }}</span>
+        </p>
+      </div>
     </div>
-    <h3>{{ user?.email }}</h3>
-    <span>{{ user?.displayName }}</span>
-    <p>Joined us on January 1th, 2024</p>
-    <p>Last time in system: now</p>
+    <!-- dummy content -->
+    <div class="about__user-activity w-1/2">
+      <div class="flex justify-center items-center flex-col gap-4 h-full">
+        <h6 class="font-semibold text-2xl mb-3">Your activity</h6>
+        @for (item of aboutUser; track $index) {
+        <p class="italic text-lg">{{ item }}</p>
+        }
+      </div>
+    </div>
+    <!-- dummy content -->
   </div>
-  <div></div>
 </div>
