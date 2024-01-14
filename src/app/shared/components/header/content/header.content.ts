@@ -1,6 +1,6 @@
-import { Profile } from '../../../models/dropmenu.model';
+import { IProfile } from '../../../models/dropmenu.model';
 
-export const profile: Array<Profile> = [
+export const profile: Array<IProfile> = [
   {
     title: 'Profile',
     link: '/profile',
