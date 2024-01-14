@@ -29,7 +29,7 @@
     <app-button
       [button-styles]="'margin: 10px 0 0 40px'"
       [text]="'Search'"
-      [disabled]="searchAuthorForm.invalid || searchAuthorForm.untouched"
+      [disabled]="searchAuthorForm.controls.authorName.errors?.['required']"
     />
   </form>
 
@@ -49,14 +49,26 @@
       }
     </div>
   </div>
-  <!-- pagination -->
 
-  <div>
-    <button (click)="prevPage()">Previous</button>
-    <div *ngIf="currentPage$ | async as currentPage">
+  <!-- pagination -->
+  <div class="pagination">
+    <button
+      class="pagination__btn"
+      (click)="prevPage()"
+      [disabled]="isFirstPage"
+    >
+      Previous
+    </button>
+    <div *ngIf="currentPage$ | async as currentPage" class="pagination__text">
       Current Page: {{ currentPage }}
     </div>
-    <button (click)="nextPage()">Next</button>
+    <button
+      (click)="nextPage()"
+      class="pagination__btn"
+      [disabled]="isLastPage"
+    >
+      Next
+    </button>
   </div>
   <a routerLink="authorlist">Go to the Authors page</a>
   } @else {

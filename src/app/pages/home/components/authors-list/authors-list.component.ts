@@ -1,17 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { BooksService } from '../../../../core/services/books.service';
-import { Author } from '../../../../shared/models/author.model';
 import { RouterModule } from '@angular/router';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputComponent } from '../../../../shared/components/UI/input/input.component';
 import { ButtonComponent } from '../../../../shared/components/UI/button/button.component';
-import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-authors-list',
@@ -40,6 +34,8 @@ export class AuthorsListComponent implements OnInit {
   currentPage$ = new BehaviorSubject(1);
 
   currentPageData$!: Observable<any>;
+  isLastPage: boolean = false;
+  isFirstPage: boolean = false;
 
   async ngOnInit() {
     if (!this.searchAuthorForm.value.authorName) {
@@ -52,14 +48,6 @@ export class AuthorsListComponent implements OnInit {
   }
 
   fetchData(searchStr: string) {
-    // this.bookService
-    //   .getAuthorsByName(searchStr, 0, 20)
-    //   .subscribe(({ numFound, docs }) => {
-    //     this.numFound = numFound;
-    //     this.authorsList = docs;
-    //     console.log(this.authorsList);
-    //     this.loadingAuthors = false;
-    //   });
     this.currentPageData$ = this.currentPage$.pipe(
       switchMap((currentPage) =>
         this.bookService.getAuthorsByName(
@@ -68,53 +56,61 @@ export class AuthorsListComponent implements OnInit {
           this.itemsPerPage
         )
       ),
-      map((res: any) => {
-        console.log(res);
+      tap((res) => {
         this.numFound = res.numFound;
         this.loadingAuthors = false;
+        this.checkLastPage();
+        this.checkFirstPage();
+      }),
+      map((res: any) => {
         return res.docs;
       })
     );
   }
 
+  calcNumPages(): number {
+    let pages = Math.round(this.numFound / this.itemsPerPage);
+    if (pages === 0) {
+      return 1;
+    }
+    return pages;
+  }
+
+  checkLastPage() {
+    const totalPages = this.calcNumPages();
+    this.isLastPage = this.currentPage$.value === totalPages;
+  }
+
+  checkFirstPage() {
+    this.isFirstPage = this.currentPage$.value === 1;
+  }
+
   onSearch() {
-    console.log(this.searchAuthorForm.value.authorName);
-    // if (
-    //   !this.searchAuthorForm.value.authorName &&
-    //   this.searchAuthorForm.value.authorName
-    // ) {
-    //   return;
-    // }
-    // this.bookService
-    //   .getAuthorsByName(this.searchAuthorForm.value.authorName, 0, 20)
-    //   .subscribe(({ numFound, docs }) => {
-    //     this.numFound = numFound;
-    //     this.authorsList = docs;
-    //   });
     if (!this.searchAuthorForm.value.authorName) {
       return;
     }
     this.fetchData(this.searchAuthorForm.value.authorName);
     this.currentPage$.next(1);
+    if (this.calcNumPages() === this.currentPage$.value) {
+      this.isLastPage = true;
+    }
   }
 
   nextPage() {
-    if (!this.searchAuthorForm.value.authorName) {
+    if (!this.searchAuthorForm.value.authorName || this.isLastPage) {
       return;
     }
     this.currentPage$.next(this.currentPage$.value + 1);
     this.fetchData(this.searchAuthorForm.value.authorName);
-    this.currentPageData$.subscribe((res) => console.log('next', res));
   }
 
   prevPage() {
-    if (!this.searchAuthorForm.value.authorName) {
+    if (!this.searchAuthorForm.value.authorName || this.isFirstPage) {
       return;
     }
     if (this.currentPage$.value > 1) {
       this.currentPage$.next(this.currentPage$.value - 1);
       this.fetchData(this.searchAuthorForm.value.authorName);
-      this.currentPageData$.subscribe((res) => console.log('prev', res));
     }
   }
 }
