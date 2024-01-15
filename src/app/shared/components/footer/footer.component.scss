@@ -1,0 +1,63 @@
+$color_1: gray;
+$color_2: #fff;
+$font-family_1: "Play", sans-serif;
+
+@import "https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap";
+.footer {
+  background: #000;
+  padding: 30px 0px;
+  font-family: $font-family_1;
+  text-align: center;
+  .row {
+    width: 100%;
+    margin: 1% 0%;
+    padding: 0.6% 0%;
+    color: $color_1;
+    font-size: 1em;
+    &__socials {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+    a {
+      text-decoration: none;
+      color: $color_1;
+      transition: 0.5s;
+      width: 30px;
+      height: 30px;
+      &:hover {
+        color: $color_2;
+      }
+      .footer__icon {
+        font-size: 30px;
+      }
+    }
+    ul {
+      width: 100%;
+      li {
+        display: inline-block;
+        margin: 0px 30px;
+      }
+    }
+  }
+}
+@media (max-width: 720px) {
+  .footer {
+    text-align: left;
+    padding: 5%;
+    .row {
+      ul {
+        li {
+          display: block;
+          margin: 10px 0px;
+          text-align: left;
+        }
+      }
+      a {
+        i {
+          margin: 0% 3%;
+        }
+      }
+    }
+  }
+}
