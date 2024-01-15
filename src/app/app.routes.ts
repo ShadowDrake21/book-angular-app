@@ -65,4 +65,18 @@ export const routes: Routes = [
         (m) => m.FavbooksComponent
       ),
   },
+  {
+    path: 'contact-me',
+    loadComponent: () =>
+      import('./pages/contact-me/contact-me.component').then(
+        (m) => m.ContactMeComponent
+      ),
+  },
+  {
+    path: 'about-developer',
+    loadComponent: () =>
+      import('./pages/about-developer/about-developer.component').then(
+        (m) => m.AboutDeveloperComponent
+      ),
+  },
 ];
