@@ -105,18 +105,6 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  onLogout() {
-    this.authService
-      .logout()
-      .then(() => {
-        console.log('user is logged out');
-        this.router.navigate(['/']);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
   isLogin = setInterval(() => {
     this.authService.authState$.subscribe((res) => {
       if (res && res.uid) {
