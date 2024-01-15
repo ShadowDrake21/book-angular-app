@@ -25,8 +25,4 @@ export const profile: Array<IProfile> = [
     title: 'Account setting',
     link: '/profile',
   },
-  {
-    title: 'Sign out',
-    link: '/Sign out',
-  },
 ];
