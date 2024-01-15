@@ -1,12 +1,20 @@
 <section class="container-big">
-  @if (subjectParam) {
-  <app-booklist-catalogue
-    [books]="books"
-    *ngIf="books.length; else loading"
-  ></app-booklist-catalogue>
-  <ng-template #loading> Loading... </ng-template>
-  } @else {
-  <p>There is no books</p>
-  }
-  <app-booklist-filter></app-booklist-filter>
+  <div class="flex gap-5">
+    <div class="min-w-[220px]">
+      <app-booklist-filter></app-booklist-filter>
+    </div>
+    @if (subjectParam) {
+    <div class="w-full">
+      <app-booklist-catalogue
+        [books]="books"
+        *ngIf="books.length; else loading"
+      ></app-booklist-catalogue>
+      <ng-template #loading> Loading... </ng-template>
+    </div>
+    } @else {
+    <div class="w-full">
+      <p>There is no books</p>
+    </div>
+    }
+  </div>
 </section>

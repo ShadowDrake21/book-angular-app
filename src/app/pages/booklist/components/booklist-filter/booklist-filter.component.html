@@ -1,1 +1,158 @@
-<p>booklist-filter works!</p>
+<section class="filter__section">
+  <form action="" class="filter__form">
+    <div class="filter__item">
+      <h3 class="filter__item-title">Filters</h3>
+      <label for="fiveStars" class="filter__item-label">
+        <input type="checkbox" id="fiveStars" class="filter__item-checkbox" />
+        <div class="filter__item-stars">
+          <fa-icon [icon]="faStar"></fa-icon><fa-icon [icon]="faStar"></fa-icon
+          ><fa-icon [icon]="faStar"></fa-icon><fa-icon [icon]="faStar"></fa-icon
+          ><fa-icon [icon]="faStar"></fa-icon>
+        </div>
+      </label>
+      <label for="fourStars" class="filter__item-label">
+        <input type="checkbox" id="fourStars" class="filter__item-checkbox" />
+        <div class="filter__item-stars">
+          <fa-icon [icon]="faStar"></fa-icon><fa-icon [icon]="faStar"></fa-icon
+          ><fa-icon [icon]="faStar"></fa-icon><fa-icon [icon]="faStar"></fa-icon
+          ><fa-icon [icon]="faStar" class="text-gray-300"></fa-icon>
+        </div>
+      </label>
+      <label for="threeStars" class="filter__item-label">
+        <input type="checkbox" id="threeStars" class="filter__item-checkbox" />
+        <div class="filter__item-stars">
+          <fa-icon class="filter__item-star" [icon]="faStar"></fa-icon
+          ><fa-icon class="filter__item-star" [icon]="faStar"></fa-icon
+          ><fa-icon class="filter__item-star" [icon]="faStar"></fa-icon
+          ><fa-icon
+            class="filter__item-star"
+            [icon]="faStar"
+            class="text-gray-300"
+          ></fa-icon
+          ><fa-icon
+            class="filter__item-star"
+            [icon]="faStar"
+            class="text-gray-300"
+          ></fa-icon>
+        </div>
+      </label>
+      <label for="twoStars" class="filter__item-label">
+        <input type="checkbox" id="twoStars" class="filter__item-checkbox" />
+        <div class="filter__item-stars">
+          <fa-icon class="filter__item-star" [icon]="faStar"></fa-icon
+          ><fa-icon class="filter__item-star" [icon]="faStar"></fa-icon
+          ><fa-icon
+            class="filter__item-star"
+            [icon]="faStar"
+            class="text-gray-300"
+          ></fa-icon
+          ><fa-icon
+            class="filter__item-star"
+            [icon]="faStar"
+            class="text-gray-300"
+          ></fa-icon
+          ><fa-icon
+            class="filter__item-star"
+            [icon]="faStar"
+            class="text-gray-300"
+          ></fa-icon>
+        </div>
+      </label>
+      <label for="oneStar" class="filter__item-label">
+        <input type="checkbox" id="oneStar" class="filter__item-checkbox" />
+        <div class="filter__item-stars">
+          <fa-icon class="filter__item-star" [icon]="faStar"></fa-icon
+          ><fa-icon
+            class="filter__item-star"
+            [icon]="faStar"
+            class="text-gray-300"
+          ></fa-icon
+          ><fa-icon
+            class="filter__item-star"
+            [icon]="faStar"
+            class="text-gray-300"
+          ></fa-icon
+          ><fa-icon
+            class="filter__item-star"
+            [icon]="faStar"
+            class="text-gray-300"
+          ></fa-icon
+          ><fa-icon
+            class="filter__item-star"
+            [icon]="faStar"
+            class="text-gray-300"
+          ></fa-icon>
+        </div>
+      </label>
+    </div>
+    <div class="filter__item">
+      <h3 class="filter__item-title">Language</h3>
+      <select name="language" class="filter__item-select">
+        <option value="0" class="filter__item-select__option">-Any-</option>
+        <option value="pl" class="filter__item-select__option">Polish</option>
+        <option value="en" class="filter__item-select__option">English</option>
+        <option value="ru" class="filter__item-select__option">Russian</option>
+      </select>
+    </div>
+    <div class="filter__item">
+      <h3 class="filter__item-title">Genres</h3>
+      <label for="adventure" class="filter__item-label">
+        <input type="checkbox" id="adventure" class="filter__item-checkbox" />
+        <p class="filter__item-text">Adventure</p>
+      </label>
+      <label for="adventure" class="filter__item-label">
+        <input type="checkbox" id="adventure" class="filter__item-checkbox" />
+        <p class="filter__item-text">Adventure</p>
+      </label>
+      <label for="adventure" class="filter__item-label">
+        <input type="checkbox" id="adventure" class="filter__item-checkbox" />
+        <p class="filter__item-text">Adventure</p>
+      </label>
+      <label for="adventure" class="filter__item-label">
+        <input type="checkbox" id="adventure" class="filter__item-checkbox" />
+        <p class="filter__item-text">Adventure</p>
+      </label>
+      <label for="adventure" class="filter__item-label">
+        <input type="checkbox" id="adventure" class="filter__item-checkbox" />
+        <p class="filter__item-text">Adventure</p>
+      </label>
+      <label for="adventure" class="filter__item-label">
+        <input type="checkbox" id="adventure" class="filter__item-checkbox" />
+        <p class="filter__item-text">Adventure</p>
+      </label>
+    </div>
+    <div class="filter__item">
+      <h3 class="filter__item-title">Year</h3>
+      <label for="2024" class="filter__item-label">
+        <input type="checkbox" id="2024" class="filter__item-checkbox" />
+        <p class="filter__item-text">2024</p>
+      </label>
+      <label for="2023" class="filter__item-label">
+        <input type="checkbox" id="2023" class="filter__item-checkbox" />
+        <p class="filter__item-text">2023</p>
+      </label>
+      <label for="2022" class="filter__item-label">
+        <input type="checkbox" id="2022" class="filter__item-checkbox" />
+        <p class="filter__item-text">2022</p>
+      </label>
+      <label for="2021" class="filter__item-label">
+        <input type="checkbox" id="2021" class="filter__item-checkbox" />
+        <p class="filter__item-text">2021</p>
+      </label>
+      <label for="2020" class="filter__item-label">
+        <input type="checkbox" id="2020" class="filter__item-checkbox" />
+        <p class="filter__item-text">2020</p>
+      </label>
+      <label for="2019" class="filter__item-label">
+        <input type="checkbox" id="2019" class="filter__item-checkbox" />
+        <p class="filter__item-text">2019</p>
+      </label>
+      <span class="filter__text">or</span>
+      <label for="year" class="filter__item-label">
+        <p class="filter__item-text">Year</p>
+        <input type="text" id="year" class="filter__item-input" />
+      </label>
+    </div>
+    <button type="submit">Search</button>
+  </form>
+</section>
