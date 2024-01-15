@@ -25,23 +25,28 @@ export class BooklistComponent implements OnInit {
   booksService = inject(BooksService);
 
   subjectSub!: Subscription;
-  subjectParam: string = '';
+  subjectParam!: string;
 
   books: IBook[] = [];
   loadingBooks?: boolean;
 
+  isResult: boolean = false;
+
   ngOnInit(): void {
     this.getQueryParams();
-    this.booksService
-      .getBooksBySubject(this.subjectParam, {
-        details: true,
-        limit: 10,
-      })
-      .subscribe((res) => {
-        this.books = res.works;
-
-        this.loadingBooks = false;
-      });
+    if (this.subjectParam.length) {
+      this.loadingBooks = true;
+      this.booksService
+        .getBooksBySubject(this.subjectParam, {
+          details: true,
+          limit: 10,
+        })
+        .subscribe((res) => {
+          this.books = res.works;
+          this.isResult = true;
+          this.loadingBooks = false;
+        });
+    }
   }
 
   getQueryParams(): void {
