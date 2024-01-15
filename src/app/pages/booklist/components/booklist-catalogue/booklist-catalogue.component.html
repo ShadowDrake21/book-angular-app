@@ -1,3 +1,5 @@
-@for (book of books; track book.cover_edition_key) {
-<app-book-item [book]="book"></app-book-item>
-}
+<div class="flex gap-3 flex-wrap justify-center">
+  @for (book of books; track book.cover_edition_key) {
+  <app-book-item [book]="book"></app-book-item>
+  }
+</div>
