@@ -1,27 +1,32 @@
 <section class="filter__section rounded-xl">
-  <form action="" class="filter__form p-5">
+  <form
+    action=""
+    class="filter__form p-5"
+    [formGroup]="filterForm"
+    (ngSubmit)="onSubmit()"
+  >
     <div class="filter__item">
-      <h3 class="filter__item-title">Filters</h3>
-      @for (rate of filterContent.rating; track $index) {
-      <label [for]="rate.id" class="filter__item-label">
-        <input type="checkbox" [id]="rate.id" class="filter__item-checkbox" />
-        <div class="filter__item-stars">
-          <fa-icon
-            [icon]="faStar"
-            *ngFor="let star of generateStarsArray(5); let i = index"
-            [class.filter__item-star__disabled]="i >= rate.starsNumber"
-          ></fa-icon>
-        </div>
+      <h3 class="filter__item-title">Author</h3>
+      <label for="year" class="filter__item-label">
+        <input
+          type="text"
+          id="author"
+          class="filter__item-input block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Year"
+          placeholder="Rebecca Kuang"
+        />
       </label>
-      }
     </div>
     <div class="filter__item">
       <h3 class="filter__item-title">Genres</h3>
       <select
-        name="genres"
+        name="genre"
         class="filter__item-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        formControlName="genre"
       >
-        <option value="0" class="filter__item-select__option">-Any-</option>
+        <option value="0" class="filter__item-select__option" selected>
+          -Any-
+        </option>
         @for (genre of filterContent.genres; track $index) {
         <option [value]="genre.text" class="filter__item-select__option">
           {{ genre.text | titlecase }}
@@ -31,23 +36,20 @@
     </div>
     <div class="filter__item">
       <h3 class="filter__item-title">Year</h3>
-      @for (year of filterContent.year; track $index) {
-      <label [for]="year.num" class="filter__item-label">
-        <input type="checkbox" [id]="year.num" class="filter__item-checkbox" />
-        <p class="filter__item-text">{{ year.num }}</p>
-      </label>
-      }
-      <p class="filter__text mb-[15px]">or</p>
       <label for="year" class="filter__item-label">
         <input
           type="number"
           id="year"
           class="filter__item-input block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Year"
-          value="2024"
+          formControlName="year"
         />
       </label>
     </div>
-    <app-button text="Search" button-styles="width: 100%;"></app-button>
+    <app-button
+      text="Search"
+      button-styles="width: 100%;"
+      [disabled]="filterForm.invalid || filterForm.untouched"
+    ></app-button>
   </form>
 </section>
