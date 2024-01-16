@@ -1,5 +1,5 @@
-<section class="filter__section">
-  <form action="" class="filter__form">
+<section class="filter__section rounded-xl">
+  <form action="" class="filter__form p-5">
     <div class="filter__item">
       <h3 class="filter__item-title">Filters</h3>
       <label for="fiveStars" class="filter__item-label">
@@ -87,7 +87,10 @@
     </div>
     <div class="filter__item">
       <h3 class="filter__item-title">Language</h3>
-      <select name="language" class="filter__item-select">
+      <select
+        name="language"
+        class="filter__item-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      >
         <option value="0" class="filter__item-select__option">-Any-</option>
         <option value="pl" class="filter__item-select__option">Polish</option>
         <option value="en" class="filter__item-select__option">English</option>
@@ -147,12 +150,17 @@
         <input type="checkbox" id="2019" class="filter__item-checkbox" />
         <p class="filter__item-text">2019</p>
       </label>
-      <span class="filter__text">or</span>
+      <p class="filter__text mb-[15px]">or</p>
       <label for="year" class="filter__item-label">
-        <p class="filter__item-text">Year</p>
-        <input type="text" id="year" class="filter__item-input" />
+        <input
+          type="number"
+          id="year"
+          class="filter__item-input block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Year"
+          value="2024"
+        />
       </label>
     </div>
-    <button type="submit">Search</button>
+    <app-button text="Search" button-styles="width: 100%;"></app-button>
   </form>
 </section>
