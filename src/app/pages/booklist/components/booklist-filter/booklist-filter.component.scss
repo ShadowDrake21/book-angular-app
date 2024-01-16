@@ -1,5 +1,22 @@
 .filter__section {
-  max-width: 250px;
+  max-width: 220px;
   width: 100%;
   background-color: #fff;
+}
+
+.filter__item {
+  margin-bottom: 30px;
+  &-title {
+    font-size: 22px;
+    line-height: 26px;
+    font-weight: 600;
+    color: #0f0f0f;
+    margin-bottom: 15px;
+  }
+  &-label {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
 }
