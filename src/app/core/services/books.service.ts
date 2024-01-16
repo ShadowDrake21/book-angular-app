@@ -9,7 +9,6 @@ import {
 export interface BooksBySubject {
   details?: boolean;
   limit?: number;
-  lang?: string;
   sort?: string;
 }
 
