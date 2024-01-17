@@ -22,7 +22,7 @@ import { PaginationService } from '../../../../core/services/pagination.service'
   styleUrl: './authors-list.component.scss',
 })
 export class AuthorsListComponent implements OnInit {
-  bookService = inject(BooksService);
+  booksService = inject(BooksService);
   paginationService = inject(PaginationService);
 
   searchAuthorForm = new FormGroup({
@@ -47,7 +47,7 @@ export class AuthorsListComponent implements OnInit {
     this.paginationService.currentPageData$ =
       this.paginationService.currentPage$.pipe(
         switchMap((currentPage) =>
-          this.bookService.getAuthorsByName(
+          this.booksService.getAuthorsByName(
             searchStr,
             (currentPage - 1) * this.paginationService.itemsPerPage,
             this.paginationService.itemsPerPage

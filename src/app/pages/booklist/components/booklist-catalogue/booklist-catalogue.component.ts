@@ -17,11 +17,41 @@ import { BookItemComponent } from '../../../../shared/components/book-item/book-
 })
 export class BooklistCatalogueComponent implements OnInit, OnChanges {
   @Input({ required: true }) books: IBook[] = [];
+  itemsPerPage: number = 8;
+  currentPage: number = 1;
+  visibleBooks: IBook[] = [];
   ngOnInit(): void {
     console.log('old', this.books);
   }
   ngOnChanges(changes: SimpleChanges): void {
-    this.books = changes['books'].currentValue;
+    if (changes['books']) {
+      this.books = changes['books'].currentValue;
+      this.updateVisibleBooks();
+    }
+
     console.log('new arr', this.books);
+  }
+  updateVisibleBooks() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.visibleBooks = this.books.slice(startIndex, endIndex);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.numPages()) {
+      this.currentPage++;
+      this.updateVisibleBooks();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updateVisibleBooks();
+    }
+  }
+
+  numPages(): number {
+    return Math.ceil(this.books.length / this.itemsPerPage);
   }
 }
