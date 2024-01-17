@@ -24,6 +24,12 @@ export class BooksService {
     });
   }
 
+  getBooksByAuthor(author: string, limit: number) {
+    return this.http.get<any>(SEARCH_API_URL, {
+      params: { author: author, limit: limit },
+    });
+  }
+
   getBooksBySubject(subject: string, ...[params]: any) {
     console.log(params);
     return this.http.get<any>(SUBJECT_API_URL + subject + '.json', {

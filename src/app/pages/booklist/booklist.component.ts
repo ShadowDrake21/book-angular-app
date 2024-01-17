@@ -29,7 +29,7 @@ export class BooklistComponent implements OnInit {
 
   books: IBook[] = [];
   loadingBooks?: boolean;
-
+  isAfterFilter: boolean = false;
   isResult: boolean = false;
 
   ngOnInit(): void {
@@ -53,5 +53,11 @@ export class BooklistComponent implements OnInit {
     this.subjectSub = this.activatedRoute.queryParamMap.subscribe((params) => {
       this.subjectParam = params.get('subject') || '';
     });
+  }
+
+  getFilteredBooks(books: IBook[]) {
+    this.isAfterFilter = true;
+    this.books = books;
+    console.log('books in booklist:', books);
   }
 }
