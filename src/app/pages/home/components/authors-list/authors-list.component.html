@@ -1,5 +1,5 @@
 <div>
-  @if(currentPageData$ | async) {
+  @if(paginationService.currentPageData$ | async) {
   <form
     class="flex mb-7"
     [formGroup]="searchAuthorForm"
@@ -33,7 +33,7 @@
     />
   </form>
 
-  <div *ngIf="currentPageData$ | async as authorsList">
+  <div *ngIf="paginationService.currentPageData$ | async as authorsList">
     <p class="mb-2">
       <span class="font-semibold">Found results:</span> {{ numFound }}
     </p>
@@ -55,17 +55,20 @@
     <button
       class="pagination__btn"
       (click)="prevPage()"
-      [disabled]="isFirstPage"
+      [disabled]="paginationService.isFirstPage"
     >
       Previous
     </button>
-    <div *ngIf="currentPage$ | async as currentPage" class="pagination__text">
+    <div
+      *ngIf="paginationService.currentPage$ | async as currentPage"
+      class="pagination__text"
+    >
       Current Page: {{ currentPage }}
     </div>
     <button
       (click)="nextPage()"
       class="pagination__btn"
-      [disabled]="isLastPage"
+      [disabled]="paginationService.isLastPage"
     >
       Next
     </button>

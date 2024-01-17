@@ -54,6 +54,7 @@ export class BooklistFilterComponent {
         .subscribe((res) => {
           this.filteredBooks = res.docs;
           this.getFilteredBooks.emit(this.filteredBooks);
+          this.filterForm.reset();
         });
     } else if (this.filterForm.value.genre) {
       if (this.filterForm.value.yearFrom && this.filterForm.value.yearTo) {
@@ -68,6 +69,7 @@ export class BooklistFilterComponent {
           .subscribe((res) => {
             this.filteredBooks = res.works;
             this.getFilteredBooks.emit(this.filteredBooks);
+            this.filterForm.reset();
           });
       } else {
         this.bookService
@@ -77,6 +79,7 @@ export class BooklistFilterComponent {
           .subscribe((res) => {
             this.filteredBooks = res.works;
             this.getFilteredBooks.emit(this.filteredBooks);
+            this.filterForm.reset();
           });
       }
     }
