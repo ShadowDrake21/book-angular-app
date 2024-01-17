@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { InputComponent } from '../../shared/components/UI/input/input.component';
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
 import {
@@ -25,7 +25,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm = new FormGroup({
     email: new FormControl('', Validators.email),
     password: new FormControl('', [
@@ -42,7 +42,9 @@ export class LoginComponent implements OnDestroy {
   authSubscription!: Subscription;
   isInSystem: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
     this.checkAuthState();
   }
 

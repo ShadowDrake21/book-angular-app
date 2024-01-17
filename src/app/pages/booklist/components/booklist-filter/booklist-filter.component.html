@@ -7,13 +7,20 @@
   >
     <div class="filter__item">
       <h3 class="filter__item-title">Author</h3>
-      <label for="year" class="filter__item-label">
+      <label for="author" class="filter__item-label">
         <input
           type="text"
           id="author"
           class="filter__item-input block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Year"
           placeholder="Rebecca Kuang"
+          formControlName="author"
+          (change)="
+            disabledUnusedFields(
+              !!filterForm.controls.author.value,
+              'genre',
+              'year'
+            )
+          "
         />
       </label>
     </div>
@@ -23,12 +30,17 @@
         name="genre"
         class="filter__item-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         formControlName="genre"
+        (change)="
+          disabledUnusedFields(
+            !!filterForm.controls.genre.value,
+            'author',
+            'year'
+          )
+        "
       >
-        <option value="0" class="filter__item-select__option" selected>
-          -Any-
-        </option>
+        <option [ngValue]="null" disabled>Choose genre</option>
         @for (genre of filterContent.genres; track $index) {
-        <option [value]="genre.text" class="filter__item-select__option">
+        <option [ngValue]="genre.text" class="filter__item-select__option">
           {{ genre.text | titlecase }}
         </option>
         }
@@ -43,13 +55,20 @@
           class="filter__item-input block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Year"
           formControlName="year"
+          (change)="
+            disabledUnusedFields(
+              !!filterForm.controls.year.value,
+              'author',
+              'genre'
+            )
+          "
         />
       </label>
     </div>
     <app-button
       text="Search"
       button-styles="width: 100%;"
-      [disabled]="filterForm.invalid || filterForm.untouched"
+      [disabled]="filterForm.invalid || !filterForm.dirty"
     ></app-button>
   </form>
 </section>
