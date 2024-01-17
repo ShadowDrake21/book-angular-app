@@ -30,20 +30,15 @@ export class BooklistComponent implements OnInit {
   books: IBook[] = [];
   loadingBooks?: boolean;
   isAfterFilter: boolean = false;
-  isResult: boolean = false;
 
   ngOnInit(): void {
     this.getQueryParams();
     if (this.subjectParam.length) {
       this.loadingBooks = true;
       this.booksService
-        .getBooksBySubject(this.subjectParam, {
-          details: true,
-          limit: 10,
-        })
+        .getBooksBySubject(this.subjectParam, {})
         .subscribe((res) => {
           this.books = res.works;
-          this.isResult = true;
           this.loadingBooks = false;
         });
     }

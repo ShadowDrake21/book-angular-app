@@ -1,5 +1,12 @@
 <div class="flex gap-3 flex-wrap justify-center">
-  @for (book of books; track book.cover_edition_key) {
+  @for (book of visibleBooks; track book.cover_edition_key) {
   <app-book-item [book]="book"></app-book-item>
   }
+</div>
+<div class="pagination">
+  <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+  <span>{{ currentPage }} / {{ numPages() }}</span>
+  <button (click)="nextPage()" [disabled]="currentPage === numPages()">
+    Next
+  </button>
 </div>

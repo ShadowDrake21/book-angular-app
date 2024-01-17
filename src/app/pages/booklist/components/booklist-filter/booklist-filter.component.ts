@@ -64,7 +64,7 @@ export class BooklistFilterComponent {
           .getBooksBySubject(this.filterForm.value.genre, {
             details: true,
             published_in: published_in,
-            limit: 20,
+            limit: 50,
           })
           .subscribe((res) => {
             this.filteredBooks = res.works;
@@ -74,7 +74,7 @@ export class BooklistFilterComponent {
       } else {
         this.bookService
           .getBooksBySubject(this.filterForm.value.genre, {
-            limit: 20,
+            limit: 50,
           })
           .subscribe((res) => {
             this.filteredBooks = res.works;
