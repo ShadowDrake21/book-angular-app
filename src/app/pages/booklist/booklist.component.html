@@ -1,1 +1,36 @@
-<p>booklist works!</p>
+<section class="container-big">
+  <div class="flex gap-5">
+    <div class="min-w-[220px]">
+      <app-booklist-filter
+        (getFilteredBooks)="getFilteredBooks($event)"
+        (getFilterRequest)="getFilterRequest($event)"
+        (getFilterLoading)="getFilterLoading($event)"
+        (getFilterError)="getFilterError($event)"
+      ></app-booklist-filter>
+    </div>
+    @if (subjectParam || isAfterFilter || loadingFilterBooks) {
+    <div class="w-full">
+      <h2
+        class="text-3xl font-semibold mb-3"
+        *ngIf="books.length && !loadingFilterBooks"
+      >
+        Search by: {{ formSearchTitle() | titlecase }}
+      </h2>
+      <app-booklist-catalogue
+        [books]="books"
+        *ngIf="books.length && !loadingFilterBooks"
+      ></app-booklist-catalogue>
+      <div
+        class="flex justify-center items-center min-h-full h-full"
+        *ngIf="loadingBooks || loadingFilterBooks"
+      >
+        <p class="text-3xl font-semibold">Loading...</p>
+      </div>
+    </div>
+    } @else {
+    <div class="w-full flex justify-center items-center">
+      <p class="text-3xl font-semibold">There is no books</p>
+    </div>
+    }
+  </div>
+</section>

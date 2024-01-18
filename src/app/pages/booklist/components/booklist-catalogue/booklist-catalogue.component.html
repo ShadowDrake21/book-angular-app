@@ -1,0 +1,26 @@
+<div class="flex gap-5 mb-3">
+  <p><span class="font-semibold">Found results:</span> {{ books.length }}</p>
+  <p><span class="font-semibold">Number of pages:</span> {{ numPages() }}</p>
+</div>
+<div class="flex gap-3 flex-wrap justify-center">
+  @for (book of visibleBooks; track book.cover_edition_key) {
+  <app-book-item [book]="book"></app-book-item>
+  }
+</div>
+<div class="pagination mb-5">
+  <button
+    class="pagination__btn"
+    (click)="prevPage()"
+    [disabled]="currentPage === 1"
+  >
+    Previous
+  </button>
+  <span class="pagination__text">Current Page: {{ currentPage }}</span>
+  <button
+    class="pagination__btn"
+    (click)="nextPage()"
+    [disabled]="currentPage === numPages()"
+  >
+    Next
+  </button>
+</div>

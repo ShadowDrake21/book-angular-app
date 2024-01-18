@@ -15,7 +15,8 @@
   </div>
   <a
     *ngIf="carouselLink"
-    [routerLink]="['/booklist', carouselLink]"
+    [routerLink]="['/booklist']"
+    [queryParams]="{ subject: carouselLink }"
     class="font-medium text-lg inline-block mt-5 ml-2 text-gray-600 hover:underline"
     >See more of {{ title }}</a
   >
