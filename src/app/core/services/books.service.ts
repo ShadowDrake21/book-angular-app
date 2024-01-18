@@ -18,15 +18,15 @@ export interface BooksBySubject {
 export class BooksService {
   http = inject(HttpClient);
 
-  getBooksByTitles(title: string, limit: number) {
+  getBooksByTitles(title: string, ...[params]: any) {
     return this.http.get<any>(SEARCH_API_URL, {
-      params: { title: title, limit: limit },
+      params: { title: title, ...params },
     });
   }
 
-  getBooksByAuthor(author: string, limit: number) {
+  getBooksByAuthor(author: string, ...[params]: any) {
     return this.http.get<any>(SEARCH_API_URL, {
-      params: { author: author, limit: limit },
+      params: { author: author, ...params },
     });
   }
 

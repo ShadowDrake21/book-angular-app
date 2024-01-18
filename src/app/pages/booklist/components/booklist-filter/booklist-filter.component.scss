@@ -20,3 +20,8 @@
     cursor: pointer;
   }
 }
+
+.filter__item-input:disabled,
+.filter__item-select:disabled {
+  cursor: not-allowed;
+}

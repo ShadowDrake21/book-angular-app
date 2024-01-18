@@ -35,6 +35,8 @@ export class BooklistFilterComponent {
     genre: new FormControl(null),
     yearFrom: new FormControl(null),
     yearTo: new FormControl(null),
+    limit: new FormControl(null),
+    sorting: new FormControl(null),
   });
 
   disabledUnusedFields(bool: boolean, ...fields: string[]) {
@@ -66,7 +68,10 @@ export class BooklistFilterComponent {
     this.getFilterLoading.emit(true);
     if (this.filterForm.value.author) {
       this.bookService
-        .getBooksByAuthor(this.filterForm.value.author, 10)
+        .getBooksByAuthor(
+          this.filterForm.value.author,
+          this.filterForm.value.limit && { limit: this.filterForm.value.limit }
+        )
         .subscribe((res) => {
           this.submitSubscribe(res);
         });
@@ -84,15 +89,15 @@ export class BooklistFilterComponent {
             message: 'Invalid year values',
             code: 400,
           });
-          this.filterForm.reset();
-          this.filterForm.enable();
+          this.formClean();
           return;
         }
         this.bookService
           .getBooksBySubject(this.filterForm.value.genre, {
             details: true,
             published_in: published_in,
-            limit: 50,
+            limit: this.filterForm.value.limit && this.filterForm.value.limit,
+            sort: 'old',
           })
           .subscribe((res) => {
             this.submitSubscribe(res);
@@ -100,7 +105,8 @@ export class BooklistFilterComponent {
       } else {
         this.bookService
           .getBooksBySubject(this.filterForm.value.genre, {
-            limit: 50,
+            limit: this.filterForm.value.limit && this.filterForm.value.limit,
+            sort: 'old',
           })
           .subscribe((res) => {
             this.submitSubscribe(res);
@@ -113,6 +119,10 @@ export class BooklistFilterComponent {
     this.filteredBooks = res.works ?? res.docs;
     this.getFilteredBooks.emit(this.filteredBooks);
     this.setFilterRequest();
+    this.formClean();
+  }
+
+  formClean() {
     this.filterForm.reset();
     this.filterForm.enable();
   }
