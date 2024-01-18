@@ -17,13 +17,6 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'booklist/:category',
-    loadComponent: () =>
-      import('./pages/booklist/booklist.component').then(
-        (m) => m.BooklistComponent
-      ),
-  },
-  {
     path: 'booklist-item/:bookid',
     loadComponent: () =>
       import('./pages/booklist-item/booklist-item.component').then(
