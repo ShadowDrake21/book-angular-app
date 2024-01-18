@@ -15,7 +15,7 @@ export const BooklistFilterContent: IBooklistFilter = {
       text: 'fiction',
     },
     {
-      text: 'classic literature',
+      text: 'classic',
     },
     { text: 'fantasy' },
     { text: 'history' },

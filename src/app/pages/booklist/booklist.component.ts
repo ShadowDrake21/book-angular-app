@@ -6,6 +6,7 @@ import { BooklistFilterComponent } from './components/booklist-filter/booklist-f
 import { Subscription } from 'rxjs';
 import { BooksService } from '../../core/services/books.service';
 import { IBook } from '../../shared/models/book.model';
+import { IError } from '../../shared/models/error.model';
 
 @Component({
   selector: 'app-booklist',
@@ -27,9 +28,14 @@ export class BooklistComponent implements OnInit {
   subjectSub!: Subscription;
   subjectParam!: string;
 
+  searchTitle!: string;
+
   books: IBook[] = [];
   loadingBooks?: boolean;
   isAfterFilter: boolean = false;
+
+  loadingFilterBooks?: boolean;
+  filterError?: IError;
 
   ngOnInit(): void {
     this.getQueryParams();
@@ -40,6 +46,7 @@ export class BooklistComponent implements OnInit {
         .subscribe((res) => {
           this.books = res.works;
           this.loadingBooks = false;
+          this.subjectParam = '';
         });
     }
   }
@@ -52,7 +59,26 @@ export class BooklistComponent implements OnInit {
 
   getFilteredBooks(books: IBook[]) {
     this.isAfterFilter = true;
+    this.loadingFilterBooks = false;
+    console.log('loading in booklist: ', this.loadingBooks);
     this.books = books;
-    console.log('books in booklist:', books);
+  }
+
+  getFilterRequest(request: string) {
+    this.searchTitle = request;
+  }
+
+  getFilterLoading(value: boolean) {
+    this.loadingFilterBooks = value;
+  }
+
+  getFilterError(error: IError) {
+    this.filterError = error;
+  }
+
+  formSearchTitle() {
+    return this.subjectParam
+      ? `genre "${this.subjectParam}"`
+      : this.searchTitle;
   }
 }
