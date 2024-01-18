@@ -25,4 +25,10 @@ export const BooklistFilterContent: IBooklistFilter = {
     { text: 'death' },
     { text: 'comedy' },
   ],
+  sorting: [
+    {
+      text: 'old',
+    },
+    { text: 'new' },
+  ],
 };

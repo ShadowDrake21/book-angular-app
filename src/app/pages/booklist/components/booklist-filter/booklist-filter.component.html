@@ -18,7 +18,9 @@
             disabledUnusedFields(
               !!filterForm.controls.author.value,
               'genre',
-              'year'
+              'yearFrom',
+              'yearTo',
+              'sorting'
             )
           "
         />
@@ -71,6 +73,46 @@
         />
       </label>
     </div>
+    <div class="filter__item">
+      <h3 class="filter__item-title">Limit</h3>
+      <label for="limit" class="filter__item-label">
+        <input
+          type="number"
+          id="limit"
+          class="filter__item-input block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="100"
+          formControlName="limit"
+        />
+      </label>
+    </div>
+    <div class="filter__item">
+      <h3 class="filter__item-title">Sorting</h3>
+      <label for="sorting" class="filter__item-label">
+        <select
+          name="sorting"
+          class="filter__item-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          formControlName="sorting"
+          (change)="
+            disabledUnusedFields(!!filterForm.controls.genre.value, 'author')
+          "
+        >
+          <option [ngValue]="null" disabled>Choose type</option>
+          @for (sorting of filterContent.sorting; track $index) {
+          <option [ngValue]="sorting.text" class="filter__item-select__option">
+            {{ sorting.text | titlecase }}
+          </option>
+          }
+        </select>
+      </label>
+    </div>
+    <button
+      type="button"
+      class="w-full text-gray-900 transition-all hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800 disabled:hover:bg-transparent disabled:border-[#c6c6c6] disabled:text-[#c6c6c6]"
+      (click)="formClean()"
+      [disabled]="!filterForm.dirty"
+    >
+      Clean all
+    </button>
     <app-button
       text="Search"
       button-styles="width: 100%;"
