@@ -4,7 +4,12 @@ import { ButtonComponent } from '../../../../shared/components/UI/button/button.
 import { BooklistFilterContent } from './content/booklist-filter.content';
 import { IBooklistFilter } from './models/booklist-filter.model';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { BooksService } from '../../../../core/services/books.service';
 import { IBook } from '../../../../shared/models/book.model';
 import { IError } from '../../../../shared/models/error.model';
@@ -64,7 +69,6 @@ export class BooklistFilterComponent {
   }
 
   onSubmit() {
-    console.log(this.filterForm);
     this.getFilterLoading.emit(true);
     if (this.filterForm.value.author) {
       this.bookService

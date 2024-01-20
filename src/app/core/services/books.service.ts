@@ -4,6 +4,7 @@ import {
   AUTHORS_API_URL,
   SEARCH_API_URL,
   SUBJECT_API_URL,
+  WORK_URL,
 } from '../constants/books.constants';
 
 export interface BooksBySubject {
@@ -31,7 +32,6 @@ export class BooksService {
   }
 
   getBooksBySubject(subject: string, ...[params]: any) {
-    console.log(params);
     return this.http.get<any>(SUBJECT_API_URL + subject + '.json', {
       params: params,
     });
@@ -41,5 +41,9 @@ export class BooksService {
     return this.http.get<any>(AUTHORS_API_URL, {
       params: { q: name, offset: offest, limit: limit },
     });
+  }
+
+  getWorkByKey(key: string) {
+    return this.http.get<any>(WORK_URL + key + '.json');
   }
 }

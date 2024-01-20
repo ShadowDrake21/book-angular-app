@@ -29,8 +29,6 @@ export class BooklistCatalogueComponent implements OnInit, OnChanges {
       this.currentPage = 1;
       this.updateVisibleBooks();
     }
-
-    console.log('new arr', this.books);
   }
   updateVisibleBooks() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
