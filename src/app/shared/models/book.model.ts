@@ -62,3 +62,58 @@ export interface IBook {
   ddc_sort: string;
   image: string;
 }
+
+export interface IWork {
+  description: Description;
+  links: Link[];
+  title: string;
+  covers: number[];
+  subject_places: string[];
+  subjects: string[];
+  subject_people: string[];
+  key: string;
+  authors: Author[];
+  type: Type;
+  first_sentence: FirstSentence;
+  first_publish_date: string;
+  location: string;
+  latest_revision: number;
+  revision: number;
+  created: Created;
+  last_modified: LastModified;
+}
+
+interface Description {
+  type: string;
+  value: string;
+}
+
+interface Link {
+  url: string;
+  title: string;
+  type: string;
+}
+
+interface Type {
+  key: string;
+}
+
+interface Author {
+  author: string;
+  type: string;
+}
+
+interface FirstSentence {
+  type: string;
+  value: string;
+}
+
+interface Created {
+  type: string;
+  value: string;
+}
+
+interface LastModified {
+  type: string;
+  value: string;
+}
