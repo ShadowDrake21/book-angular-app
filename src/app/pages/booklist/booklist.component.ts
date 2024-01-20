@@ -54,8 +54,8 @@ export class BooklistComponent implements OnInit {
           this.loadingBooks = false;
           console.log('books: ', this.books);
 
-          await new Promise((resolve) => setTimeout(resolve, 2000));
-          this.subjectParam = '';
+          // await new Promise((resolve) => setTimeout(resolve, 2000));
+          // this.subjectParam = '';
         });
     }
   }
