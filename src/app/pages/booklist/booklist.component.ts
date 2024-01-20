@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BooklistCatalogueComponent } from './components/booklist-catalogue/booklist-catalogue.component';
 import { BooklistFilterComponent } from './components/booklist-filter/booklist-filter.component';
@@ -35,7 +41,7 @@ export class BooklistComponent implements OnInit {
   isAfterFilter: boolean = false;
 
   loadingFilterBooks?: boolean;
-  filterError?: IError;
+  filterError?: IError | null;
 
   ngOnInit(): void {
     this.getQueryParams();
@@ -43,9 +49,12 @@ export class BooklistComponent implements OnInit {
       this.loadingBooks = true;
       this.booksService
         .getBooksBySubject(this.subjectParam, {})
-        .subscribe((res) => {
+        .subscribe(async (res) => {
           this.books = res.works;
           this.loadingBooks = false;
+          console.log('books: ', this.books);
+
+          await new Promise((resolve) => setTimeout(resolve, 2000));
           this.subjectParam = '';
         });
     }
@@ -60,8 +69,8 @@ export class BooklistComponent implements OnInit {
   getFilteredBooks(books: IBook[]) {
     this.isAfterFilter = true;
     this.loadingFilterBooks = false;
-    console.log('loading in booklist: ', this.loadingBooks);
     this.books = books;
+    this.filterError = null;
   }
 
   getFilterRequest(request: string) {
@@ -73,7 +82,17 @@ export class BooklistComponent implements OnInit {
   }
 
   getFilterError(error: IError) {
+    this.subjectParam = '';
+    this.isAfterFilter = false;
+    this.loadingFilterBooks = false;
     this.filterError = error;
+  }
+
+  isError() {
+    setInterval(() => {
+      console.log('is after filter:', this.isAfterFilter);
+      console.log('error:', this.filterError);
+    }, 1000);
   }
 
   formSearchTitle() {

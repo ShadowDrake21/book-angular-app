@@ -62,7 +62,6 @@ export class HomeComponent implements OnInit {
       })
       .subscribe((res) => {
         this.booksFantasy = res.works;
-        console.log(this.booksFantasy);
         this.loadingFantasy = false;
       });
 
@@ -75,7 +74,6 @@ export class HomeComponent implements OnInit {
       })
       .subscribe((res) => {
         this.booksSport = res.works;
-        console.log(this.booksSport);
         this.loadingSport = false;
       });
 
@@ -88,7 +86,6 @@ export class HomeComponent implements OnInit {
       })
       .subscribe((res) => {
         this.booksLove = res.works;
-        console.log(this.booksSport);
         this.loadingLove = false;
       });
 
@@ -100,7 +97,6 @@ export class HomeComponent implements OnInit {
       })
       .subscribe((res) => {
         this.booksChildren = res.works;
-        console.log(this.booksChildren);
         this.loadingChildren = false;
       });
   }
