@@ -49,13 +49,10 @@ export class BooklistComponent implements OnInit {
       this.loadingBooks = true;
       this.booksService
         .getBooksBySubject(this.subjectParam, {})
-        .subscribe(async (res) => {
+        .subscribe((res) => {
           this.books = res.works;
           this.loadingBooks = false;
           console.log('books: ', this.books);
-
-          // await new Promise((resolve) => setTimeout(resolve, 2000));
-          // this.subjectParam = '';
         });
     }
   }

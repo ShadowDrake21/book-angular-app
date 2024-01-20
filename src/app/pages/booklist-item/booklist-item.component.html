@@ -1,5 +1,82 @@
 <section class="container-big">
+  @if (!loadingBook) {
   <div>
-    <img [src]="mainCover | bookImage : 'id' : 'L'" alt="" />
+    <img [src]="mainCover | bookImage : 'id' : 'L'" alt="main cover" />
   </div>
+  <div>
+    @for (cover of book.covers; track $index) {
+    <img
+      *ngIf="cover !== -1 && cover !== +mainCover"
+      [src]="cover.toString() | bookImage : 'id' : 'L'"
+      alt="cover"
+    />
+    }
+  </div>
+  <div>
+    <h1>{{ book.title }}</h1>
+    <p *ngIf="book.description.value || book.description; else noDescription">
+      {{ book.description.value || book.description }}
+    </p>
+    <ng-template #noDescription
+      ><p>This book has no description</p></ng-template
+    >
+    <p *ngIf="book.first_publish_date">
+      First published in
+      <span class="font-semibold">{{ book.first_publish_date }}</span>
+    </p>
+    <p>
+      Release date:
+      <span class="font-semibold">{{
+        book.created.value | date : "longDate"
+      }}</span>
+    </p>
+    <div *ngIf="book.subject_people">
+      <h3 class="text-2xl font-semibold">Main Characters</h3>
+      <ul>
+        @for (people of book.subject_people; track $index) {
+        <li>{{ people }}</li>
+        }
+      </ul>
+    </div>
+    <div *ngIf="book.subject_places">
+      <h3 class="text-2xl font-semibold">Main Places</h3>
+      <ul>
+        @for (place of book.subject_places; track $index) {
+        <li>{{ place }}</li>
+        }
+      </ul>
+    </div>
+    <div *ngIf="book.subjects">
+      <h3 class="text-2xl font-semibold">Main Subjects</h3>
+      <ul>
+        @for (subject of book.subjects; track $index) {
+        <li>{{ subject }}</li>
+        }
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-2xl font-semibold">Authors</h3>
+      <ul>
+        @for (author of book.authors; track $index) {
+        <li>author name and link</li>
+        }
+      </ul>
+    </div>
+    <div *ngIf="book.links">
+      <h3 class="text-2xl font-semibold">Links</h3>
+      <ul>
+        @for (link of book.links; track $index) {
+        <li>
+          <a [href]="link.url">{{ link.title }}</a>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+  <div>comment section</div>
+  <div>rating section</div>
+  <div>add to/delete from favourite books</div>
+  } @else {
+  <p class="text-3xl font-semibold">Loading...</p>
+  }
 </section>
