@@ -6,11 +6,19 @@ import { BookImagePipe } from '../../shared/pipes/book-image.pipe';
 import { CommonModule } from '@angular/common';
 import { TruncateTextPipe } from '../../shared/pipes/truncate-text.pipe';
 import { ObjectManipulations } from '../../shared/utils/objectManipulations.utils';
+import { IAuthor } from '../../shared/models/author.model';
+import { AuthorImagePipe } from '../../shared/pipes/author-image.pipe';
 
 @Component({
   selector: 'app-booklist-item',
   standalone: true,
-  imports: [CommonModule, RouterModule, BookImagePipe, TruncateTextPipe],
+  imports: [
+    CommonModule,
+    RouterModule,
+    BookImagePipe,
+    AuthorImagePipe,
+    TruncateTextPipe,
+  ],
   templateUrl: './booklist-item.component.html',
   styleUrl: './booklist-item.component.scss',
 })
@@ -42,13 +50,16 @@ export class BooklistItemComponent implements OnInit {
   subjectsBtn: string = 'Show all subjects';
   isAllSubjects: boolean = false;
 
+  authors: IAuthor[] = [];
+  loadingAuthor?: boolean;
+
   ngOnInit(): void {
     this.path = this.route.snapshot.url[1].path;
 
     this.loadingBook = true;
     this.booksService.getWorkByKey(this.path).subscribe((res) => {
       this.book = res;
-      this.mainCover = this.book.covers[0].toString();
+      this.mainCover = this.book.covers && this.book.covers[0].toString();
       this.characters = ObjectManipulations.checkIfHasKey(
         this.book,
         'subject_people'
@@ -65,6 +76,8 @@ export class BooklistItemComponent implements OnInit {
         ? this.book.subjects.slice(0, this.basicToggleItems)
         : [];
       console.log(this.book);
+      this.loadingAuthor = true;
+      this.getAuthors();
       this.loadingBook = false;
     });
   }
@@ -132,5 +145,21 @@ export class BooklistItemComponent implements OnInit {
         }
         break;
     }
+  }
+
+  getAuthors() {
+    for (const author of this.book.authors) {
+      let authorKey = author.author.key.slice(9, author.author.key.length);
+      console.log(authorKey);
+      this.booksService.getAuthorByKey(authorKey).subscribe((res) => {
+        this.authors.push(res);
+        console.log(this.authors);
+      });
+    }
+    this.loadingAuthor = false;
+  }
+
+  isString(value: any): boolean {
+    return typeof value === 'string';
   }
 }

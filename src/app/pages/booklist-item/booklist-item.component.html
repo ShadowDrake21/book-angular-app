@@ -2,21 +2,41 @@
   @if (!loadingBook) {
   <div class="flex gap-10">
     <div class="max-w-96 flex-shrink-0">
-      <img
-        [src]="mainCover | bookImage : 'id' : 'L'"
-        alt="main cover"
-        class="w-full"
-      />
-      <p *ngIf="book.first_publish_date">
-        First published in
-        <span class="font-semibold">{{ book.first_publish_date }}</span>
-      </p>
-      <p>
-        Release date:
-        <span class="font-semibold">{{
-          book.created.value | date : "longDate"
-        }}</span>
-      </p>
+      <div class="max-h-[500px] h-full">
+        <img
+          [src]="
+            mainCover
+              ? (mainCover | bookImage : 'L' : 'id')
+              : '/assets/if there is no image.png'
+          "
+          alt="main cover"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <div class="my-5">
+        <p *ngIf="book.first_publish_date" class="mb-2">
+          First published in
+          <span class="font-semibold">{{ book.first_publish_date }}</span>
+        </p>
+        <p *ngIf="book.created">
+          Release date:
+          <span class="font-semibold">{{
+            book.created.value | date : "longDate"
+          }}</span>
+        </p>
+      </div>
+      <div class="mb-3" *ngIf="book.links">
+        <h3 class="text-2xl font-semibold">Links</h3>
+        <ul class="list-disc pl-5">
+          @for (link of book.links; track $index) {
+          <li
+            class="mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
+          >
+            <a [href]="link.url">{{ link.title }}</a>
+          </li>
+          }
+        </ul>
+      </div>
     </div>
     <div>
       <h1 class="font-semibold text-5xl mb-5">{{ book.title }}</h1>
@@ -41,7 +61,7 @@
       <ng-template #noDescription
         ><p>This book has no description</p></ng-template
       >
-      <div class="flex justify-between">
+      <div class="flex justify-between pb-10">
         <div class="mb-3 max-w-[30%] w-full">
           <div
             class="text-center"
@@ -116,24 +136,40 @@
           </ng-template>
         </div>
       </div>
+      @if (!loadingAuthor) {
       <div class="mb-3">
         <h3 class="text-2xl font-semibold">Authors</h3>
-        <ul>
-          @for (author of book.authors; track $index) {
-          <li>author name and link</li>
-          }
-        </ul>
+        @for (author of authors; track $index) {
+        <div class="flex w-full">
+          <div class="max-w-52 w-full h-72 flex-shrink-0">
+            <img
+              [src]="
+                author.photos
+                  ? (author.photos[0].toString() | authorImage : 'L' : 'id')
+                  : '/assets/if there is no image.png'
+              "
+              alt=""
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div>
+            <h5>{{ author.name }}</h5>
+            <p *ngIf="isString(author.bio); else noBio">
+              {{ author.bio }}
+            </p>
+            <ng-template #noBio>
+              <p>
+                This author is waiting that someone will write for him or her a
+                normal bio info XD
+              </p>
+            </ng-template>
+          </div>
+        </div>
+        }
       </div>
-      <div class="mb-3" *ngIf="book.links">
-        <h3 class="text-2xl font-semibold">Links</h3>
-        <ul>
-          @for (link of book.links; track $index) {
-          <li>
-            <a [href]="link.url">{{ link.title }}</a>
-          </li>
-          }
-        </ul>
-      </div>
+      } @else {
+      <p class="text-3xl font-semibold">Loading authors...</p>
+      }
     </div>
   </div>
   <div>comment section</div>
@@ -143,7 +179,7 @@
     @for (cover of book.covers; track $index) {
     <img
       *ngIf="cover !== -1 && cover !== +mainCover"
-      [src]="cover.toString() | bookImage : 'id' : 'L'"
+      [src]="cover.toString() | bookImage : 'L' : 'id'"
       alt="cover"
     />
     }
