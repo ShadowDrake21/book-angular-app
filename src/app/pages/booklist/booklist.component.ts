@@ -47,13 +47,16 @@ export class BooklistComponent implements OnInit {
     this.getQueryParams();
     if (this.subjectParam.length) {
       this.loadingBooks = true;
-      this.booksService
-        .getBooksBySubject(this.subjectParam, {})
-        .subscribe((res) => {
+      this.booksService.getBooksBySubject(this.subjectParam, {}).subscribe(
+        (res) => {
           this.books = res.works;
           this.loadingBooks = false;
           console.log('books: ', this.books);
-        });
+        },
+        (err) => {
+          console.log('There is no such category');
+        }
+      );
     }
   }
 

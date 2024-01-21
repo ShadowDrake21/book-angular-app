@@ -1,9 +1,145 @@
 <section class="container-big">
   @if (!loadingBook) {
-  <div>
-    <img [src]="mainCover | bookImage : 'id' : 'L'" alt="main cover" />
+  <div class="flex gap-10">
+    <div class="max-w-96 flex-shrink-0">
+      <img
+        [src]="mainCover | bookImage : 'id' : 'L'"
+        alt="main cover"
+        class="w-full"
+      />
+      <p *ngIf="book.first_publish_date">
+        First published in
+        <span class="font-semibold">{{ book.first_publish_date }}</span>
+      </p>
+      <p>
+        Release date:
+        <span class="font-semibold">{{
+          book.created.value | date : "longDate"
+        }}</span>
+      </p>
+    </div>
+    <div>
+      <h1 class="font-semibold text-5xl mb-5">{{ book.title }}</h1>
+      <div class="mb-5" *ngIf="book.description; else noDescription">
+        <h3 class="text-2xl font-semibold pb-2">Description</h3>
+        <p>
+          {{
+            book.description.value || book.description.toString()
+              | truncateText : descriptionShowLength : isDescriptionFullText
+          }}
+          <span class="ml-1"
+            ><button
+              type="button"
+              (click)="showCloseDescription()"
+              class="underline text-blue-700 transition-colors hover:text-blue-800"
+            >
+              {{ descriptionBtn }}
+            </button></span
+          >
+        </p>
+      </div>
+      <ng-template #noDescription
+        ><p>This book has no description</p></ng-template
+      >
+      <div class="flex justify-between">
+        <div class="mb-3 max-w-[30%] w-full">
+          <div
+            class="text-center"
+            *ngIf="book.subject_people; else noCharacters"
+          >
+            <h3 class="text-2xl font-semibold pb-2">Main Characters</h3>
+            <ul>
+              @for (people of characters; track $index) {
+              <li class="mb-3">{{ people }}</li>
+              }
+            </ul>
+            <button
+              type="button"
+              (click)="toggleList('characters')"
+              *ngIf="book.subject_people.length > 5"
+              class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 transition-all"
+            >
+              {{ charactersBtn }}
+            </button>
+          </div>
+          <ng-template #noCharacters>
+            <p class="text-center">There is not info about characters</p>
+          </ng-template>
+        </div>
+        <div class="mb-3 max-w-[30%] w-full">
+          <div class="text-center" *ngIf="book.subject_places; else noPlaces">
+            <h3 class="text-2xl font-semibold pb-2">Main Places</h3>
+            <ul>
+              @for (place of places; track $index) {
+              <li class="mb-3">{{ place }}</li>
+              }
+            </ul>
+            <button
+              type="button"
+              (click)="toggleList('places')"
+              *ngIf="book.subject_places.length > 5"
+              class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 transition-all"
+            >
+              {{ placesBtn }}
+            </button>
+          </div>
+          <ng-template #noPlaces>
+            <p class="text-center">There is not info about places</p>
+          </ng-template>
+        </div>
+        <div class="mb-3 text-center max-w-[30%] w-full">
+          <div class="text-center" *ngIf="book.subjects; else noSubjects">
+            <h3 class="text-2xl font-semibold pb-2">Main Subjects</h3>
+            <ul>
+              @for (subject of subjects; track $index) {
+              <li class="mb-3">
+                <a
+                  [routerLink]="['/booklist']"
+                  [queryParams]="{ subject: subject.toLowerCase() }"
+                  class="underline text-blue-700 transition-colors hover:text-blue-800"
+                  >{{ subject | titlecase }}</a
+                >
+              </li>
+              }
+            </ul>
+            <button
+              type="button"
+              (click)="toggleList('subjects')"
+              *ngIf="book.subjects.length > 5"
+              class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 transition-all"
+            >
+              {{ subjectsBtn }}
+            </button>
+          </div>
+          <ng-template #noSubjects>
+            <p class="text-center">There is not info about subjects</p>
+          </ng-template>
+        </div>
+      </div>
+      <div class="mb-3">
+        <h3 class="text-2xl font-semibold">Authors</h3>
+        <ul>
+          @for (author of book.authors; track $index) {
+          <li>author name and link</li>
+          }
+        </ul>
+      </div>
+      <div class="mb-3" *ngIf="book.links">
+        <h3 class="text-2xl font-semibold">Links</h3>
+        <ul>
+          @for (link of book.links; track $index) {
+          <li>
+            <a [href]="link.url">{{ link.title }}</a>
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
   </div>
-  <div>
+  <div>comment section</div>
+  <div>rating section</div>
+  <div>add to/delete from favourite books</div>
+  <div class="flex flex-wrap">
     @for (cover of book.covers; track $index) {
     <img
       *ngIf="cover !== -1 && cover !== +mainCover"
@@ -12,70 +148,6 @@
     />
     }
   </div>
-  <div>
-    <h1>{{ book.title }}</h1>
-    <p *ngIf="book.description.value || book.description; else noDescription">
-      {{ book.description.value || book.description }}
-    </p>
-    <ng-template #noDescription
-      ><p>This book has no description</p></ng-template
-    >
-    <p *ngIf="book.first_publish_date">
-      First published in
-      <span class="font-semibold">{{ book.first_publish_date }}</span>
-    </p>
-    <p>
-      Release date:
-      <span class="font-semibold">{{
-        book.created.value | date : "longDate"
-      }}</span>
-    </p>
-    <div *ngIf="book.subject_people">
-      <h3 class="text-2xl font-semibold">Main Characters</h3>
-      <ul>
-        @for (people of book.subject_people; track $index) {
-        <li>{{ people }}</li>
-        }
-      </ul>
-    </div>
-    <div *ngIf="book.subject_places">
-      <h3 class="text-2xl font-semibold">Main Places</h3>
-      <ul>
-        @for (place of book.subject_places; track $index) {
-        <li>{{ place }}</li>
-        }
-      </ul>
-    </div>
-    <div *ngIf="book.subjects">
-      <h3 class="text-2xl font-semibold">Main Subjects</h3>
-      <ul>
-        @for (subject of book.subjects; track $index) {
-        <li>{{ subject }}</li>
-        }
-      </ul>
-    </div>
-    <div>
-      <h3 class="text-2xl font-semibold">Authors</h3>
-      <ul>
-        @for (author of book.authors; track $index) {
-        <li>author name and link</li>
-        }
-      </ul>
-    </div>
-    <div *ngIf="book.links">
-      <h3 class="text-2xl font-semibold">Links</h3>
-      <ul>
-        @for (link of book.links; track $index) {
-        <li>
-          <a [href]="link.url">{{ link.title }}</a>
-        </li>
-        }
-      </ul>
-    </div>
-  </div>
-  <div>comment section</div>
-  <div>rating section</div>
-  <div>add to/delete from favourite books</div>
   } @else {
   <p class="text-3xl font-semibold">Loading...</p>
   }
