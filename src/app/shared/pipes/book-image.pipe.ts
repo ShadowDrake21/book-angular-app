@@ -6,7 +6,7 @@ import { IMG_ID_URL, IMG_OLID_URL } from '../../core/constants/books.constants';
   standalone: true,
 })
 export class BookImagePipe implements PipeTransform {
-  transform(value: string, type: string = 'olid', size: string): string {
+  transform(value: string, size: string, type: string = 'olid'): string {
     let result: string = '';
     switch (type) {
       case 'olid':

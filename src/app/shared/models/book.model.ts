@@ -99,7 +99,7 @@ interface Type {
 }
 
 interface Author {
-  author: string;
+  author: Type;
   type: string;
 }
 
