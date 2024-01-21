@@ -138,9 +138,9 @@
       </div>
       @if (!loadingAuthor) {
       <div class="mb-3">
-        <h3 class="text-2xl font-semibold">Authors</h3>
+        <h3 class="text-2xl font-semibold pb-2">Authors</h3>
         @for (author of authors; track $index) {
-        <div class="flex w-full">
+        <div class="flex w-full gap-5 mb-10">
           <div class="max-w-52 w-full h-72 flex-shrink-0">
             <img
               [src]="
@@ -153,9 +153,9 @@
             />
           </div>
           <div>
-            <h5>{{ author.name }}</h5>
+            <h5 class="text-xl font-semibold pb-2">{{ author.name }}</h5>
             <p *ngIf="isString(author.bio); else noBio">
-              {{ author.bio }}
+              {{ author.bio | truncateText : 350 }}
             </p>
             <ng-template #noBio>
               <p>
@@ -163,6 +163,11 @@
                 normal bio info XD
               </p>
             </ng-template>
+            <a
+              class="inline-block mt-5 underline text-blue-700 transition-colors hover:text-blue-800"
+              [routerLink]="['/authorlist', authorKeys[$index]]"
+              >Go to Author page</a
+            >
           </div>
         </div>
         }
@@ -175,7 +180,7 @@
   <div>comment section</div>
   <div>rating section</div>
   <div>add to/delete from favourite books</div>
-  <div class="flex flex-wrap">
+  <!-- <div class="flex flex-wrap">
     @for (cover of book.covers; track $index) {
     <img
       *ngIf="cover !== -1 && cover !== +mainCover"
@@ -183,7 +188,7 @@
       alt="cover"
     />
     }
-  </div>
+  </div> -->
   } @else {
   <p class="text-3xl font-semibold">Loading...</p>
   }

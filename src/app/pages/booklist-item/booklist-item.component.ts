@@ -51,6 +51,7 @@ export class BooklistItemComponent implements OnInit {
   isAllSubjects: boolean = false;
 
   authors: IAuthor[] = [];
+  authorKeys: string[] = [];
   loadingAuthor?: boolean;
 
   ngOnInit(): void {
@@ -150,7 +151,7 @@ export class BooklistItemComponent implements OnInit {
   getAuthors() {
     for (const author of this.book.authors) {
       let authorKey = author.author.key.slice(9, author.author.key.length);
-      console.log(authorKey);
+      this.authorKeys.push(authorKey);
       this.booksService.getAuthorByKey(authorKey).subscribe((res) => {
         this.authors.push(res);
         console.log(this.authors);
