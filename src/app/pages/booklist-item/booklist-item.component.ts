@@ -15,6 +15,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import {
+  StarRating,
+  StarRatingComponent,
+  StarRatingModule,
+} from 'angular-star-rating';
+import { AuthService } from '../../core/authentication/auth.service';
+import { IBookComment } from '../../shared/models/comment.model';
 
 @Component({
   selector: 'app-booklist-item',
@@ -27,11 +34,13 @@ import {
     TruncateTextPipe,
     ButtonComponent,
     ReactiveFormsModule,
+    StarRatingModule,
   ],
   templateUrl: './booklist-item.component.html',
   styleUrl: './booklist-item.component.scss',
 })
 export class BooklistItemComponent implements OnInit {
+  authService = inject(AuthService);
   booksService = inject(BooksService);
   route = inject(ActivatedRoute);
 
@@ -65,8 +74,11 @@ export class BooklistItemComponent implements OnInit {
   loadingAuthor?: boolean;
 
   commentForm = new FormGroup({
+    rating: new FormControl('', Validators.required),
     comment: new FormControl('', Validators.required),
   });
+
+  isRatingSet: boolean = true;
 
   ngOnInit(): void {
     const externalDataParams =
@@ -183,7 +195,20 @@ export class BooklistItemComponent implements OnInit {
   }
 
   onCommentFormSubmit() {
-    console.log(this.commentForm.value);
+    if (!this.commentForm.value.rating) {
+      this.isRatingSet = false;
+      return;
+    } else if (!this.commentForm.value.comment) {
+      return;
+    }
+    this.isRatingSet = true;
+
+    const commentObj: IBookComment = {
+      email: this.authService.email,
+      comment: this.commentForm.value.comment,
+      rating: this.commentForm.value.rating,
+    };
+    console.log(commentObj);
   }
 
   isString(value: any): boolean {

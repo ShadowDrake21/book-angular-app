@@ -1,3 +1,11 @@
+.rating__item {
+  margin-bottom: 5px;
+}
+
+.rating__value {
+  font-weight: 600;
+}
+
 .textarea-error {
   border-color: var(--error-color);
   color: var(--error-color);
