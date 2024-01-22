@@ -117,3 +117,17 @@ interface LastModified {
   type: string;
   value: string;
 }
+
+export interface IBookExternalInfo {
+  number_of_pages_median: number;
+  ratings_average: number;
+  ratings_count: number;
+  ratings_count_1: number;
+  ratings_count_2: number;
+  ratings_count_3: number;
+  ratings_count_4: number;
+  ratings_count_5: number;
+  want_to_read_count: number;
+  currently_reading_count: number;
+  already_read_count: number;
+}

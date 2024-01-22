@@ -68,7 +68,7 @@
             *ngIf="book.subject_people; else noCharacters"
           >
             <h3 class="text-2xl font-semibold pb-2">Main Characters</h3>
-            <ul>
+            <ul class="overflow-y-scroll h-[170px]">
               @for (people of characters; track $index) {
               <li class="mb-3">{{ people }}</li>
               }
@@ -89,7 +89,7 @@
         <div class="mb-3 max-w-[30%] w-full">
           <div class="text-center" *ngIf="book.subject_places; else noPlaces">
             <h3 class="text-2xl font-semibold pb-2">Main Places</h3>
-            <ul>
+            <ul class="overflow-y-scroll h-[170px]">
               @for (place of places; track $index) {
               <li class="mb-3">{{ place }}</li>
               }
@@ -110,7 +110,7 @@
         <div class="mb-3 text-center max-w-[30%] w-full">
           <div class="text-center" *ngIf="book.subjects; else noSubjects">
             <h3 class="text-2xl font-semibold pb-2">Main Subjects</h3>
-            <ul>
+            <ul class="overflow-y-scroll h-[170px]">
               @for (subject of subjects; track $index) {
               <li class="mb-3">
                 <a
@@ -177,9 +177,24 @@
       }
     </div>
   </div>
-  <div>comment section</div>
-  <div>rating section</div>
-  <div>add to/delete from favourite books</div>
+  <div>
+    <div class="mb-3">
+      <h3 class="text-2xl font-semibold pb-2">Ratings</h3>
+      <p>Average ratings: {{ bookExternalData.ratings_average }}</p>
+      <p>Ratings count: {{ bookExternalData.ratings_count }}</p>
+      <p>1 star: {{ bookExternalData.ratings_count_1 }}</p>
+      <p>2 star: {{ bookExternalData.ratings_count_2 }}</p>
+      <p>3 star: {{ bookExternalData.ratings_count_3 }}</p>
+      <p>4 star: {{ bookExternalData.ratings_count_4 }}</p>
+      <p>5 star: {{ bookExternalData.ratings_count_5 }}</p>
+      <p>Pages: {{ bookExternalData.number_of_pages_median }}</p>
+      <p>Currently reading: {{ bookExternalData.currently_reading_count }}</p>
+      <p>Already read: {{ bookExternalData.already_read_count }}</p>
+      <p>Want to reading: {{ bookExternalData.want_to_read_count }}</p>
+    </div>
+    <div>comment section</div>
+    <div>add to/delete from favourite books</div>
+  </div>
   <!-- <div class="flex flex-wrap">
     @for (cover of book.covers; track $index) {
     <img

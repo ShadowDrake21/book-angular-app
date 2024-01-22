@@ -1,7 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { BooksService } from '../../core/services/books.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { IWork } from '../../shared/models/book.model';
+import { IBookExternalInfo, IWork } from '../../shared/models/book.model';
 import { BookImagePipe } from '../../shared/pipes/book-image.pipe';
 import { CommonModule } from '@angular/common';
 import { TruncateTextPipe } from '../../shared/pipes/truncate-text.pipe';
@@ -27,6 +27,7 @@ export class BooklistItemComponent implements OnInit {
   route = inject(ActivatedRoute);
 
   path!: string;
+  bookExternalData!: IBookExternalInfo;
   loadingBook?: boolean;
 
   book!: IWork;
@@ -55,6 +56,14 @@ export class BooklistItemComponent implements OnInit {
   loadingAuthor?: boolean;
 
   ngOnInit(): void {
+    const externalDataParams =
+      this.route.snapshot.queryParamMap.get('externalData');
+
+    if (externalDataParams !== null) {
+      this.bookExternalData = JSON.parse(externalDataParams);
+      console.log(this.bookExternalData);
+    }
+
     this.path = this.route.snapshot.url[1].path;
 
     this.loadingBook = true;
