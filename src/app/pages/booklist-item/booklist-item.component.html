@@ -18,6 +18,12 @@
           First published in
           <span class="font-semibold">{{ book.first_publish_date }}</span>
         </p>
+        <p *ngIf="bookExternalData.number_of_pages_median" class="mb-2">
+          Pages:
+          <span class="font-semibold">{{
+            bookExternalData.number_of_pages_median
+          }}</span>
+        </p>
         <p *ngIf="book.created">
           Release date:
           <span class="font-semibold">{{
@@ -180,76 +186,70 @@
   <div class="flex justify-between items-center">
     <div class="mb-3 w-60">
       <h3 class="text-2xl font-semibold pb-2">Ratings</h3>
-      <p>
-        Average ratings:
-        <span class="rating__value">{{
-          bookExternalData.ratings_average
-        }}</span>
-      </p>
-      <p>
-        Ratings count:
-        <span class="rating__value">{{ bookExternalData.ratings_count }}</span>
-      </p>
-      <p>
-        1 star:
-        <span class="rating__value">{{
-          bookExternalData.ratings_count_1
-        }}</span>
-      </p>
-      <p>
-        2 star:
-        <span class="rating__value">{{
-          bookExternalData.ratings_count_2
-        }}</span>
-      </p>
-      <p>
-        3 star:
-        <span class="rating__value">{{
-          bookExternalData.ratings_count_3
-        }}</span>
-      </p>
-      <p>
-        4 star:
-        <span class="rating__value">{{
-          bookExternalData.ratings_count_4
-        }}</span>
-      </p>
-      <p>
-        5 star:
-        <span class="rating__value">{{
-          bookExternalData.ratings_count_5
-        }}</span>
-      </p>
-      <p>
-        Pages:
-        <span class="rating__value">{{
-          bookExternalData.number_of_pages_median
-        }}</span>
-      </p>
-      <p>
+      <p class="rating__item">
         Currently reading:
         <span class="rating__value">{{
-          bookExternalData.currently_reading_count
+          bookExternalData.currently_reading_count || 0
         }}</span>
       </p>
-      <p>
+      <p class="rating__item">
         Already read:
         <span class="rating__value">{{
-          bookExternalData.already_read_count
+          bookExternalData.already_read_count || 0
         }}</span>
       </p>
-      <p>
+      <p class="rating__item">
         Want to reading:
         <span class="rating__value">{{
-          bookExternalData.want_to_read_count
+          bookExternalData.want_to_read_count || 0
+        }}</span>
+      </p>
+      <p class="rating__item">
+        Average ratings:
+        <span class="rating__value">{{
+          bookExternalData.ratings_average | number : "1.1-2" || 0
+        }}</span>
+      </p>
+      <p class="rating__item">
+        Ratings count:
+        <span class="rating__value">{{
+          bookExternalData.ratings_count || 0
+        }}</span>
+      </p>
+      <p class="rating__item">
+        1 star:
+        <span class="rating__value">{{
+          bookExternalData.ratings_count_1 || 0
+        }}</span>
+      </p>
+      <p class="rating__item">
+        2 star:
+        <span class="rating__value">{{
+          bookExternalData.ratings_count_2 || 0
+        }}</span>
+      </p>
+      <p class="rating__item">
+        3 star:
+        <span class="rating__value">{{
+          bookExternalData.ratings_count_3 || 0
+        }}</span>
+      </p>
+      <p class="rating__item">
+        4 star:
+        <span class="rating__value">{{
+          bookExternalData.ratings_count_4 || 0
+        }}</span>
+      </p>
+      <p class="rating__item">
+        5 star:
+        <span class="rating__value">{{
+          bookExternalData.ratings_count_5 || 0
         }}</span>
       </p>
     </div>
     <div class="max-w-full w-full mx-5">
       <form [formGroup]="commentForm" (ngSubmit)="onCommentFormSubmit()">
-        <label
-          for="comment"
-          class="block mb-2 text-xl font-semibold text-gray-90"
+        <label for="comment" class="block mb-2 text-2xl font-semibold"
           >Your comment</label
         >
         <textarea
@@ -267,8 +267,18 @@
         >
           You should write a comment
         </div>
+        <div class="flex gap-5 items-center my-5">
+          <label for="rating" class="text-xl font-semibold">Your rating</label>
+          <star-rating-control
+            id="rating"
+            formControlName="rating"
+          ></star-rating-control>
+        </div>
+        <div class="validate-error mt-2" *ngIf="!isRatingSet">
+          You should write a comment
+        </div>
         <app-button
-          [button-styles]="'margin-top: 20px; width: 100%;'"
+          [button-styles]="'width: 100%;'"
           [text]="'Post'"
           [disabled]="commentForm.controls.comment.errors?.['required']"
         />
