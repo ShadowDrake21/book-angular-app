@@ -177,23 +177,104 @@
       }
     </div>
   </div>
-  <div>
-    <div class="mb-3">
+  <div class="flex justify-between items-center">
+    <div class="mb-3 w-60">
       <h3 class="text-2xl font-semibold pb-2">Ratings</h3>
-      <p>Average ratings: {{ bookExternalData.ratings_average }}</p>
-      <p>Ratings count: {{ bookExternalData.ratings_count }}</p>
-      <p>1 star: {{ bookExternalData.ratings_count_1 }}</p>
-      <p>2 star: {{ bookExternalData.ratings_count_2 }}</p>
-      <p>3 star: {{ bookExternalData.ratings_count_3 }}</p>
-      <p>4 star: {{ bookExternalData.ratings_count_4 }}</p>
-      <p>5 star: {{ bookExternalData.ratings_count_5 }}</p>
-      <p>Pages: {{ bookExternalData.number_of_pages_median }}</p>
-      <p>Currently reading: {{ bookExternalData.currently_reading_count }}</p>
-      <p>Already read: {{ bookExternalData.already_read_count }}</p>
-      <p>Want to reading: {{ bookExternalData.want_to_read_count }}</p>
+      <p>
+        Average ratings:
+        <span class="rating__value">{{
+          bookExternalData.ratings_average
+        }}</span>
+      </p>
+      <p>
+        Ratings count:
+        <span class="rating__value">{{ bookExternalData.ratings_count }}</span>
+      </p>
+      <p>
+        1 star:
+        <span class="rating__value">{{
+          bookExternalData.ratings_count_1
+        }}</span>
+      </p>
+      <p>
+        2 star:
+        <span class="rating__value">{{
+          bookExternalData.ratings_count_2
+        }}</span>
+      </p>
+      <p>
+        3 star:
+        <span class="rating__value">{{
+          bookExternalData.ratings_count_3
+        }}</span>
+      </p>
+      <p>
+        4 star:
+        <span class="rating__value">{{
+          bookExternalData.ratings_count_4
+        }}</span>
+      </p>
+      <p>
+        5 star:
+        <span class="rating__value">{{
+          bookExternalData.ratings_count_5
+        }}</span>
+      </p>
+      <p>
+        Pages:
+        <span class="rating__value">{{
+          bookExternalData.number_of_pages_median
+        }}</span>
+      </p>
+      <p>
+        Currently reading:
+        <span class="rating__value">{{
+          bookExternalData.currently_reading_count
+        }}</span>
+      </p>
+      <p>
+        Already read:
+        <span class="rating__value">{{
+          bookExternalData.already_read_count
+        }}</span>
+      </p>
+      <p>
+        Want to reading:
+        <span class="rating__value">{{
+          bookExternalData.want_to_read_count
+        }}</span>
+      </p>
     </div>
-    <div>comment section</div>
-    <div>add to/delete from favourite books</div>
+    <div class="max-w-full w-full mx-5">
+      <form [formGroup]="commentForm" (ngSubmit)="onCommentFormSubmit()">
+        <label
+          for="comment"
+          class="block mb-2 text-xl font-semibold text-gray-90"
+          >Your comment</label
+        >
+        <textarea
+          name="comment"
+          id="comment"
+          rows="6"
+          class="block p-2.5 w-full text-base resize-none text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Write your comment here..."
+          formControlName="comment"
+          [class.textarea-error]="commentForm.controls.comment.touched && commentForm.controls.comment.errors?.['required']"
+        ></textarea>
+        <div
+          class="validate-error mt-2"
+          *ngIf="commentForm.controls.comment.touched && commentForm.controls.comment.errors?.['required']"
+        >
+          You should write a comment
+        </div>
+        <app-button
+          [button-styles]="'margin-top: 20px; width: 100%;'"
+          [text]="'Post'"
+          [disabled]="commentForm.controls.comment.errors?.['required']"
+        />
+      </form>
+    </div>
+    <div class="w-60">add to/delete from favourite books</div>
   </div>
   <!-- <div class="flex flex-wrap">
     @for (cover of book.covers; track $index) {
