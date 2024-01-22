@@ -8,6 +8,13 @@ import { TruncateTextPipe } from '../../shared/pipes/truncate-text.pipe';
 import { ObjectManipulations } from '../../shared/utils/objectManipulations.utils';
 import { IAuthor } from '../../shared/models/author.model';
 import { AuthorImagePipe } from '../../shared/pipes/author-image.pipe';
+import { ButtonComponent } from '../../shared/components/UI/button/button.component';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-booklist-item',
@@ -18,6 +25,8 @@ import { AuthorImagePipe } from '../../shared/pipes/author-image.pipe';
     BookImagePipe,
     AuthorImagePipe,
     TruncateTextPipe,
+    ButtonComponent,
+    ReactiveFormsModule,
   ],
   templateUrl: './booklist-item.component.html',
   styleUrl: './booklist-item.component.scss',
@@ -54,6 +63,10 @@ export class BooklistItemComponent implements OnInit {
   authors: IAuthor[] = [];
   authorKeys: string[] = [];
   loadingAuthor?: boolean;
+
+  commentForm = new FormGroup({
+    comment: new FormControl('', Validators.required),
+  });
 
   ngOnInit(): void {
     const externalDataParams =
@@ -167,6 +180,10 @@ export class BooklistItemComponent implements OnInit {
       });
     }
     this.loadingAuthor = false;
+  }
+
+  onCommentFormSubmit() {
+    console.log(this.commentForm.value);
   }
 
   isString(value: any): boolean {

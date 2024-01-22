@@ -1,0 +1,8 @@
+.textarea-error {
+  border-color: var(--error-color);
+  color: var(--error-color);
+}
+
+.textarea-error::placeholder {
+  color: var(--error-color);
+}
