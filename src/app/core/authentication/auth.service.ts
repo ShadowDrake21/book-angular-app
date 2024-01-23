@@ -14,6 +14,7 @@ import { IUser } from '../../shared/models/user.model';
 import { doc, Firestore } from '@angular/fire/firestore';
 import { setDoc } from '@firebase/firestore';
 import { IUpdateProfile } from '../../shared/models/profileManipulations.model';
+import { Observable, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
