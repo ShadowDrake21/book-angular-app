@@ -21,9 +21,13 @@ import {
   StarRatingModule,
 } from 'angular-star-rating';
 import { AuthService } from '../../core/authentication/auth.service';
-import { IBookComment } from '../../shared/models/comment.model';
+import {
+  IBookComment,
+  IBookCommentWithImage,
+} from '../../shared/models/comment.model';
 import { CommentsService } from '../../core/services/comments.service';
 import { Subscription } from 'rxjs';
+import { getAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-booklist-item',
@@ -87,6 +91,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
   isRatingSet: boolean = true;
 
   comments: IBookComment[] = [];
+  commentsWithImages: IBookCommentWithImage[] = [];
 
   ngOnInit(): void {
     this.subscription = this.authService.user$.subscribe((data) => {
@@ -234,6 +239,11 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
       .getAllCommentsByBook('n5nije8FMAFRPR0hELNo')
       .then((comments) => {
         this.comments = comments;
+        this.commentsWithImages = this.comments.map((obj) => ({
+          ...obj,
+          image: '/assets/no profile photo.jpg',
+        }));
+        this.authService.retrieveUserData('nikola.doktorbook@gmail.com');
       });
   }
 
