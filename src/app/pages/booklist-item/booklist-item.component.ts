@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { BooksService } from '../../core/services/books.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IBookExternalInfo, IWork } from '../../shared/models/book.model';
@@ -22,6 +22,8 @@ import {
 } from 'angular-star-rating';
 import { AuthService } from '../../core/authentication/auth.service';
 import { IBookComment } from '../../shared/models/comment.model';
+import { CommentsService } from '../../core/services/comments.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-booklist-item',
@@ -39,10 +41,14 @@ import { IBookComment } from '../../shared/models/comment.model';
   templateUrl: './booklist-item.component.html',
   styleUrl: './booklist-item.component.scss',
 })
-export class BooklistItemComponent implements OnInit {
+export class BooklistItemComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
   booksService = inject(BooksService);
   route = inject(ActivatedRoute);
+  commentsService = inject(CommentsService);
+
+  private subscription!: Subscription;
+  userEmail: string = '';
 
   path!: string;
   bookExternalData!: IBookExternalInfo;
@@ -81,6 +87,12 @@ export class BooklistItemComponent implements OnInit {
   isRatingSet: boolean = true;
 
   ngOnInit(): void {
+    this.subscription = this.authService.user$.subscribe((data) => {
+      if (!data?.email) return;
+      this.userEmail = data?.email;
+      console.log('our email: ', this.userEmail);
+    });
+
     const externalDataParams =
       this.route.snapshot.queryParamMap.get('externalData');
 
@@ -114,6 +126,7 @@ export class BooklistItemComponent implements OnInit {
       this.loadingAuthor = true;
       this.getAuthors();
       this.loadingBook = false;
+      this.commentsService.getAllCommentsByBook('n5nije8FMAFRPR0hELNo');
     });
   }
 
@@ -204,14 +217,25 @@ export class BooklistItemComponent implements OnInit {
     this.isRatingSet = true;
 
     const commentObj: IBookComment = {
-      email: this.authService.email,
+      email: this.userEmail,
       comment: this.commentForm.value.comment,
-      rating: this.commentForm.value.rating,
+      rating: parseInt(this.commentForm.value.rating),
     };
     console.log(commentObj);
+    this.commentsService.addNewComment(
+      'n5nije8FMAFRPR0hELNo',
+      commentObj.email,
+      commentObj.comment,
+      commentObj.rating
+    );
+    this.commentForm.reset();
   }
 
   isString(value: any): boolean {
     return typeof value === 'string';
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
