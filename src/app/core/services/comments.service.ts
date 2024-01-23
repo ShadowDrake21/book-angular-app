@@ -9,6 +9,7 @@ import {
   getDocs,
   setDoc,
 } from '@angular/fire/firestore';
+import { IBookComment } from '../../shared/models/comment.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,30 +17,22 @@ import {
 export class CommentsService {
   private _firestore = inject(Firestore);
 
-  async getAllCommentsByBook(bookId: string) {
+  async getAllCommentsByBook(bookId: string): Promise<IBookComment[]> {
+    let comments: Array<IBookComment> = [];
     const querySnapshot = await getDocs(
       collection(this._firestore, 'books', bookId, 'comments')
     );
 
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, '=>', doc.data());
+      comments.push(doc.data() as IBookComment);
     });
-    console.log();
+    return comments;
   }
 
-  async addNewComment(
-    bookId: string,
-    email: string,
-    comment: string,
-    rating: number
-  ) {
+  async addNewComment(bookId: string, dataObj: IBookComment) {
     const docRef = await addDoc(
       collection(this._firestore, 'books', bookId, 'comments'),
-      {
-        email,
-        comment,
-        rating,
-      }
+      dataObj
     );
 
     console.log('document written with id:', docRef.id);

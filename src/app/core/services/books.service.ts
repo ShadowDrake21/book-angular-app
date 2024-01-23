@@ -7,7 +7,6 @@ import {
   SUBJECT_API_URL,
   WORK_URL,
 } from '../constants/books.constants';
-import { IAuthor } from '../../shared/models/author.model';
 
 export interface BooksBySubject {
   details?: boolean;

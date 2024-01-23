@@ -86,6 +86,8 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
 
   isRatingSet: boolean = true;
 
+  comments: IBookComment[] = [];
+
   ngOnInit(): void {
     this.subscription = this.authService.user$.subscribe((data) => {
       if (!data?.email) return;
@@ -126,7 +128,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
       this.loadingAuthor = true;
       this.getAuthors();
       this.loadingBook = false;
-      this.commentsService.getAllCommentsByBook('n5nije8FMAFRPR0hELNo');
+      this.getAllComments();
     });
   }
 
@@ -222,13 +224,17 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
       rating: parseInt(this.commentForm.value.rating),
     };
     console.log(commentObj);
-    this.commentsService.addNewComment(
-      'n5nije8FMAFRPR0hELNo',
-      commentObj.email,
-      commentObj.comment,
-      commentObj.rating
-    );
+    this.commentsService.addNewComment('n5nije8FMAFRPR0hELNo', commentObj);
     this.commentForm.reset();
+    this.getAllComments();
+  }
+
+  getAllComments() {
+    this.commentsService
+      .getAllCommentsByBook('n5nije8FMAFRPR0hELNo')
+      .then((comments) => {
+        this.comments = comments;
+      });
   }
 
   isString(value: any): boolean {
