@@ -68,17 +68,19 @@ export class AuthService {
     return updateProfile(currentUser, updateData);
   }
 
-  async retrieveUserData(email: string) {
+  async retrieveUserData(email: string): Promise<IUser[]> {
     const q = query(
       collection(this._firestore, 'users'),
       where('email', '==', email)
     );
 
     const querySnapshot = await getDocs(q);
+    let returnArr: IUser[] = [];
 
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, 'email =>', doc.data() as IUser);
+      returnArr.push(doc.data() as IUser);
     });
+    return returnArr;
   }
 
   logout(): Promise<void> {

@@ -2,11 +2,11 @@ export interface IBookComment {
   email: string;
   comment: string;
   rating: number;
+  date: Date;
+  photoURL: string;
 }
 
-export interface IBookCommentWithImage {
+export interface INeededUserInfo {
   email: string;
-  comment: string;
-  rating: number;
-  image: string;
+  photoURL: string;
 }
