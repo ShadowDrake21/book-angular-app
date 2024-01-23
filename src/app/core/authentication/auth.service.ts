@@ -58,6 +58,7 @@ export class AuthService {
       id: auth.user.uid,
       email: auth.user.email,
       lastSignInTime: auth.user.metadata.lastSignInTime,
+      photoURL: auth.user.photoURL,
     };
     const userDocRef = doc(this._firestore, `users/${user.id}`);
     return setDoc(userDocRef, user).then(() => user);
