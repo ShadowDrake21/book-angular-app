@@ -23,11 +23,10 @@ import {
 import { AuthService } from '../../core/authentication/auth.service';
 import {
   IBookComment,
-  IBookCommentWithImage,
+  INeededUserInfo,
 } from '../../shared/models/comment.model';
 import { CommentsService } from '../../core/services/comments.service';
 import { Subscription } from 'rxjs';
-import { getAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-booklist-item',
@@ -52,7 +51,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
   commentsService = inject(CommentsService);
 
   private subscription!: Subscription;
-  userEmail: string = '';
+  neededUserInfo: INeededUserInfo = { email: '', photoURL: '' };
 
   path!: string;
   bookExternalData!: IBookExternalInfo;
@@ -91,13 +90,13 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
   isRatingSet: boolean = true;
 
   comments: IBookComment[] = [];
-  commentsWithImages: IBookCommentWithImage[] = [];
 
   ngOnInit(): void {
     this.subscription = this.authService.user$.subscribe((data) => {
-      if (!data?.email) return;
-      this.userEmail = data?.email;
-      console.log('our email: ', this.userEmail);
+      if (!data?.email || !data.photoURL) return;
+      this.neededUserInfo.email = data?.email;
+      this.neededUserInfo.photoURL = data?.photoURL;
+      console.log('our neededInfo: ', this.neededUserInfo);
     });
 
     const externalDataParams =
@@ -224,9 +223,11 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     this.isRatingSet = true;
 
     const commentObj: IBookComment = {
-      email: this.userEmail,
+      email: this.neededUserInfo.email,
       comment: this.commentForm.value.comment,
       rating: parseInt(this.commentForm.value.rating),
+      date: new Date(),
+      photoURL: this.neededUserInfo.photoURL,
     };
     console.log(commentObj);
     this.commentsService.addNewComment('n5nije8FMAFRPR0hELNo', commentObj);
@@ -239,14 +240,9 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
       .getAllCommentsByBook('n5nije8FMAFRPR0hELNo')
       .then((comments) => {
         this.comments = comments;
-        this.commentsWithImages = this.comments.map((obj) => ({
-          ...obj,
-          image: '/assets/no profile photo.jpg',
-        }));
-        this.authService.retrieveUserData('nikola.doktorbook@gmail.com');
       });
   }
-
+  // date!!!!!!!!!!!
   isString(value: any): boolean {
     return typeof value === 'string';
   }
