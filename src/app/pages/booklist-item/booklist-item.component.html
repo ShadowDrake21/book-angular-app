@@ -284,9 +284,12 @@
         />
       </form>
       <div>
-        @if (comments) { @for (comment of comments; track $index) {
+        @if (commentsWithImages) { @for (comment of commentsWithImages; track
+        $index) {
         <div>
-          <div></div>
+          <div>
+            <img [src]="comment.image" alt="" />
+          </div>
           <div>
             <h6>{{ comment.email }}</h6>
             <p>{{ comment.comment }}</p>
