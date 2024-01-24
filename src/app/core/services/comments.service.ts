@@ -5,12 +5,15 @@ import {
   addDoc,
   collection,
   collectionGroup,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
   orderBy,
   query,
   setDoc,
+  updateDoc,
+  where,
 } from '@angular/fire/firestore';
 import {
   IBookCommentToClient,
@@ -37,6 +40,7 @@ export class CommentsService {
 
       let transformDate: Date = (commentDataFromDB.date as Timestamp).toDate();
       const commentDateToClient: IBookCommentToClient = {
+        id: commentDataFromDB.id,
         email: commentDataFromDB.email,
         comment: commentDataFromDB.comment,
         rating: commentDataFromDB.rating,
@@ -48,12 +52,102 @@ export class CommentsService {
     return comments;
   }
 
-  async addNewComment(bookId: string, dataObj: IBookCommentToDB) {
-    const docRef = await addDoc(
-      collection(this._firestore, 'books', bookId, 'comments'),
+  async addNewComment(
+    bookId: string,
+    commentId: string,
+    dataObj: IBookCommentToDB
+  ) {
+    await setDoc(
+      doc(this._firestore, 'books', bookId, 'comments', commentId),
       dataObj
     );
+  }
 
-    console.log('document written with id:', docRef.id);
+  async updateComment(
+    bookId: string,
+    commentId: string,
+    dataObj: IBookCommentToDB
+  ) {
+    const q = query(
+      collection(this._firestore, 'books', bookId, 'comments'),
+      where('id', '==', dataObj.id)
+    );
+
+    const docRef = doc(this._firestore, 'books', bookId, 'comments', commentId);
+
+    await updateDoc(docRef, {
+      comment: dataObj.comment,
+      rating: dataObj.rating,
+      date: dataObj.date,
+    });
+
+    console.log('document updated with id:', docRef.id);
+  }
+
+  // retrieveUserComments(): Promise<IUserCommentOnBook[]> {
+  //   const q = query(
+  //     collection(this._firestore, 'books'),
+  //     where('email', '==', email)
+  //   );
+
+  //   const querySnapshot = await getDocs(q);
+  //   let returnArr: IUser[] = [];
+
+  //   querySnapshot.forEach((doc) => {
+  //     returnArr.push(doc.data() as IUser);
+  //   });
+  //   return returnArr;
+  // }
+
+  async getComment(
+    bookId: string,
+    commentId: string
+  ): Promise<IBookCommentToClient[]> {
+    let comments: Array<IBookCommentToClient> = [];
+    const querySnapshot = await getDocs(
+      query(
+        collection(this._firestore, 'books', bookId, 'comments'),
+        where('id', '==', commentId)
+      )
+    );
+
+    querySnapshot.forEach((doc) => {
+      const commentDataFromDB = doc.data() as IBookCommentToDB;
+
+      let transformDate: Date = (commentDataFromDB.date as Timestamp).toDate();
+      const commentDateToClient: IBookCommentToClient = {
+        id: commentDataFromDB.id,
+        email: commentDataFromDB.email,
+        comment: commentDataFromDB.comment,
+        rating: commentDataFromDB.rating,
+        date: transformDate,
+        photoURL: commentDataFromDB.photoURL,
+      };
+      comments.push(commentDateToClient);
+    });
+    console.log('edit comment: ', comments);
+    return comments;
+  }
+
+  // zrobić coś takiego, ale na user obiekcie (spis komentarzy)
+  async checkUserHasComment(
+    bookId: string,
+    userEmail: string
+  ): Promise<boolean> {
+    const querySnapshot = await getDocs(
+      query(
+        collection(this._firestore, 'books', bookId, 'comments'),
+        where('email', '==', userEmail)
+      )
+    );
+
+    console.log('user has commit', querySnapshot.empty);
+    return querySnapshot.empty;
+  }
+
+  async deleteComment(bookId: string, commentId: string) {
+    await deleteDoc(
+      doc(this._firestore, 'books', bookId, 'comments', commentId)
+    );
   }
 }

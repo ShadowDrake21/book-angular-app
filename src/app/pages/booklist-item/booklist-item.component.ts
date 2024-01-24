@@ -20,6 +20,7 @@ import { AuthService } from '../../core/authentication/auth.service';
 import {
   IBookCommentToClient,
   IBookCommentToDB,
+  ICommentResult,
   INeededUserInfo,
 } from '../../shared/models/comment.model';
 import { CommentsService } from '../../core/services/comments.service';
@@ -50,6 +51,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
 
   private subscription!: Subscription;
   neededUserInfo: INeededUserInfo = { email: '', photoURL: '' };
+  isUserHasComment: boolean = false;
 
   path!: string;
   bookExternalData!: IBookExternalInfo;
@@ -81,15 +83,21 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
   loadingAuthor?: boolean;
 
   commentForm = new FormGroup({
+    id: new FormControl(''),
     rating: new FormControl('', Validators.required),
     comment: new FormControl('', Validators.required),
   });
+  commentFormBtn = 'Post';
 
   isRatingSet: boolean = true;
 
+  commentPostedResult!: ICommentResult | undefined;
+  commentEditedResult!: ICommentResult | undefined;
+  commentDeletedResult!: ICommentResult | undefined;
+
   comments: IBookCommentToClient[] = [];
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.subscription = this.authService.user$.subscribe((data) => {
       if (!data?.email || !data.photoURL) return;
       this.neededUserInfo.email = data?.email;
@@ -130,8 +138,17 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
       this.loadingAuthor = true;
       this.getAuthors();
       this.loadingBook = false;
-      this.getAllComments();
     });
+    if (
+      await this.commentsService.checkUserHasComment(
+        this.path,
+        this.neededUserInfo.email
+      )
+    ) {
+      this.disableForm();
+    }
+    this.getAllComments();
+    console.log('length: ', this.comments.length);
   }
 
   showCloseDescription() {
@@ -212,6 +229,9 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
   }
 
   onCommentFormSubmit() {
+    if (!this.commentForm.value.id) {
+      this.commentForm.value.id = 'id' + Math.random().toString(16).slice(2);
+    }
     if (!this.commentForm.value.rating) {
       this.isRatingSet = false;
       return;
@@ -221,29 +241,113 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     this.isRatingSet = true;
 
     const commentObj: IBookCommentToDB = {
+      id: this.commentForm.value.id,
       email: this.neededUserInfo.email,
       comment: this.commentForm.value.comment,
       rating: parseInt(this.commentForm.value.rating),
       date: Timestamp.now(),
       photoURL: this.neededUserInfo.photoURL,
     };
-    console.log(commentObj);
-    this.commentsService.addNewComment('n5nije8FMAFRPR0hELNo', commentObj);
-    this.commentForm.reset();
+    if (this.commentFormBtn === 'Post') {
+      this.commentsService
+        .addNewComment(this.path, commentObj.id, commentObj)
+        .then(() => {
+          this.commentPostedResult = {
+            isSuccessfull: true,
+            message: 'Review successfully added!',
+          };
+          this.disableForm();
+        })
+        .catch((err) => {
+          this.commentPostedResult = {
+            isSuccessfull: false,
+            message: err.toString(),
+          };
+        });
+      setTimeout(() => {
+        this.commentPostedResult = undefined;
+      }, 3000);
+    } else {
+      this.commentsService
+        .updateComment(this.path, commentObj.id, commentObj)
+        .then(() => {
+          this.commentEditedResult = {
+            isSuccessfull: true,
+            message: 'Review successfully edited!',
+          };
+          this.disableForm();
+        })
+        .catch((err) => {
+          this.commentPostedResult = {
+            isSuccessfull: false,
+            message: err.toString(),
+          };
+        });
+      setTimeout(() => {
+        this.commentEditedResult = undefined;
+      }, 3000);
+    }
     this.getAllComments();
+    this.commentForm.reset();
+    this.commentFormBtn = 'Post';
   }
 
   getAllComments() {
-    this.commentsService
-      .getAllCommentsByBook('n5nije8FMAFRPR0hELNo')
-      .then((comments) => {
-        this.comments = comments;
-      });
+    this.commentsService.getAllCommentsByBook(this.path).then((comments) => {
+      this.comments = comments;
+    });
   }
 
-  // date!!!!!!!!!!!
+  editComment(commentId: string) {
+    this.commentFormBtn = 'Edit';
+    let choosenComment: IBookCommentToClient | undefined = undefined;
+    this.commentsService.getComment(this.path, commentId).then((comments) => {
+      this.enableForm();
+      choosenComment = comments[0];
+      this.commentForm.controls.comment.enable();
+      this.commentForm.controls.rating.enable();
+      this.commentForm.controls.id.setValue(choosenComment.id);
+      this.commentForm.controls.comment.setValue(choosenComment.comment);
+      this.commentForm.controls.rating.setValue(
+        choosenComment.rating.toString()
+      );
+    });
+  }
+
+  deleteComment(commentId: string) {
+    this.commentsService
+      .deleteComment(this.path, commentId)
+      .then(() => {
+        this.commentDeletedResult = {
+          isSuccessfull: true,
+          message: 'Review successfully deleted!',
+        };
+        this.getAllComments();
+        this.enableForm();
+      })
+      .catch((err) => {
+        this.commentDeletedResult = {
+          isSuccessfull: false,
+          message: err.toString(),
+        };
+      });
+    setTimeout(() => {
+      this.commentDeletedResult = undefined;
+    }, 3000);
+  }
+
   isString(value: any): boolean {
     return typeof value === 'string';
+  }
+
+  disableForm(): void {
+    this.commentForm.controls.comment.disable();
+    this.commentForm.controls.rating.disable();
+  }
+
+  enableForm(): void {
+    this.commentForm.controls.comment.enable();
+    this.commentForm.controls.rating.enable();
   }
 
   ngOnDestroy(): void {
