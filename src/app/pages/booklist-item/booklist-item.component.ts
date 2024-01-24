@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { BooksService } from '../../core/services/books.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IBookExternalInfo, IWork } from '../../shared/models/book.model';
@@ -15,18 +15,16 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {
-  StarRating,
-  StarRatingComponent,
-  StarRatingModule,
-} from 'angular-star-rating';
+import { RatingChangeEvent, StarRatingModule } from 'angular-star-rating';
 import { AuthService } from '../../core/authentication/auth.service';
 import {
-  IBookComment,
+  IBookCommentToClient,
+  IBookCommentToDB,
   INeededUserInfo,
 } from '../../shared/models/comment.model';
 import { CommentsService } from '../../core/services/comments.service';
 import { Subscription } from 'rxjs';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-booklist-item',
@@ -89,7 +87,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
 
   isRatingSet: boolean = true;
 
-  comments: IBookComment[] = [];
+  comments: IBookCommentToClient[] = [];
 
   ngOnInit(): void {
     this.subscription = this.authService.user$.subscribe((data) => {
@@ -222,11 +220,11 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     }
     this.isRatingSet = true;
 
-    const commentObj: IBookComment = {
+    const commentObj: IBookCommentToDB = {
       email: this.neededUserInfo.email,
       comment: this.commentForm.value.comment,
       rating: parseInt(this.commentForm.value.rating),
-      date: new Date(),
+      date: Timestamp.now(),
       photoURL: this.neededUserInfo.photoURL,
     };
     console.log(commentObj);
@@ -242,6 +240,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
         this.comments = comments;
       });
   }
+
   // date!!!!!!!!!!!
   isString(value: any): boolean {
     return typeof value === 'string';
