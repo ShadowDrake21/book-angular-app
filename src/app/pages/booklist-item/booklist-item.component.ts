@@ -26,6 +26,8 @@ import {
 import { CommentsService } from '../../core/services/comments.service';
 import { Subscription } from 'rxjs';
 import { Timestamp } from '@angular/fire/firestore';
+import { BookmarkButtonComponent } from '../../shared/components/bookmark-button/bookmark-button.component';
+import { BookmarkService } from '../../core/services/bookmark.service';
 
 @Component({
   selector: 'app-booklist-item',
@@ -39,15 +41,17 @@ import { Timestamp } from '@angular/fire/firestore';
     ButtonComponent,
     ReactiveFormsModule,
     StarRatingModule,
+    BookmarkButtonComponent,
   ],
   templateUrl: './booklist-item.component.html',
   styleUrl: './booklist-item.component.scss',
 })
 export class BooklistItemComponent implements OnInit, OnDestroy {
+  route = inject(ActivatedRoute);
   authService = inject(AuthService);
   booksService = inject(BooksService);
-  route = inject(ActivatedRoute);
   commentsService = inject(CommentsService);
+  bookmarkService = inject(BookmarkService);
 
   private subscription!: Subscription;
   neededUserInfo: INeededUserInfo = { email: '', photoURL: '' };
@@ -98,6 +102,8 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
   comments: IBookCommentToClient[] = [];
   userComment: IBookCommentToClient | undefined = undefined;
 
+  isBookmarked: boolean = false;
+
   ngOnInit(): void {
     this.subscription = this.authService.user$.subscribe(async (data) => {
       if (!data?.email || !data.photoURL) return;
@@ -116,6 +122,11 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
         await this.getUserComment(this.neededUserInfo.email);
       });
       console.log('user comment', this.userComment);
+      this.bookmarkService
+        .checkUserHasBookBookmark(this.neededUserInfo.email, this.bookId)
+        .then((res: boolean) => {
+          this.isBookmarked = res;
+        });
     });
 
     const externalDataParams =
@@ -152,7 +163,6 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
       this.getAuthors();
       this.loadingBook = false;
     });
-
     console.log('length: ', this.comments.length);
   }
 
@@ -256,11 +266,14 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     if (this.commentFormBtn === 'Post') {
       this.commentsService
         .addNewComment(this.bookId, commentObj.id, commentObj)
-        .then(() => {
+        .then(async () => {
           this.commentPostedResult = {
             isSuccessfull: true,
             message: 'Review successfully added!',
           };
+          await this.getAllComments().then(async () => {
+            await this.getUserComment(this.neededUserInfo.email);
+          });
           this.getUserComment(this.neededUserInfo.email);
           this.disableForm();
         })
@@ -276,11 +289,14 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     } else {
       this.commentsService
         .updateComment(this.bookId, commentObj.id, commentObj)
-        .then(() => {
+        .then(async () => {
           this.commentEditedResult = {
             isSuccessfull: true,
             message: 'Review successfully edited!',
           };
+          await this.getAllComments().then(async () => {
+            await this.getUserComment(this.neededUserInfo.email);
+          });
           this.getUserComment(this.neededUserInfo.email);
           this.disableForm();
         })
@@ -294,20 +310,15 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
         this.commentEditedResult = undefined;
       }, 3000);
     }
-    await this.getAllComments().then(async () => {
-      await this.getUserComment(this.neededUserInfo.email);
-    });
     this.commentForm.reset();
     this.commentFormBtn = 'Post';
   }
 
   async getAllComments() {
-    await this.commentsService
-      .getAllCommentsByBook(this.bookId)
-      .then((comments) => {
-        console.log('all comments: ', comments);
-        this.comments = comments;
-      });
+    const comments = await this.commentsService.getAllCommentsByBook(
+      this.bookId
+    );
+    this.comments = comments;
   }
 
   editComment(commentId: string) {
@@ -351,7 +362,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     }, 3000);
   }
 
-  async getUserComment(email: string) {
+  getUserComment(email: string) {
     if (this.comments.length) {
       this.userComment = this.comments.find((item) => item.email === email);
     } else {
@@ -369,6 +380,32 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
 
   enableForm(): void {
     this.commentForm.controls.comment.enable();
+  }
+
+  getBookmarkedChange(bookmarkedChange: boolean) {
+    this.isBookmarked = bookmarkedChange;
+
+    if (this.isBookmarked) {
+      this.addBookmark();
+    } else {
+      this.deleteBookmark();
+    }
+  }
+
+  addBookmark() {
+    this.bookmarkService
+      .addNewBookBookmark(this.neededUserInfo.email, this.bookId)
+      .then(() => {
+        console.log('bookmark added');
+      });
+  }
+
+  deleteBookmark() {
+    this.bookmarkService
+      .deleteBookBookmark(this.neededUserInfo.email, this.bookId)
+      .then(() => {
+        console.log('bookmark deleted');
+      });
   }
 
   ngOnDestroy(): void {
