@@ -259,9 +259,14 @@
           id="comment"
           rows="6"
           class="block p-2.5 w-full text-base resize-none text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Write your comment here..."
+          [placeholder]="
+            !commentForm.controls.comment.disabled
+              ? 'Write your review here...'
+              : 'You have already written a review'
+          "
           formControlName="comment"
           [class.textarea-error]="commentForm.controls.comment.touched && commentForm.controls.comment.errors?.['required']"
+          [class.disabled-textarea]="commentForm.controls.comment.disabled"
         ></textarea>
         <div
           class="validate-error mt-2"
@@ -275,6 +280,7 @@
             id="rating"
             formControlName="rating"
             [staticColor]="'default'"
+            [readOnly]="commentForm.controls.comment.disabled"
           ></star-rating-control>
         </div>
         <div class="validate-error mt-2" *ngIf="!isRatingSet">
@@ -283,11 +289,12 @@
         <app-button
           [button-styles]="'width: 100%;'"
           [text]="commentFormBtn"
-          [disabled]="commentForm.controls.comment.errors?.['required']"
+          [disabled]="commentForm.controls.comment.errors?.['required'] || commentForm.controls.comment.disabled"
         />
       </form>
       <div class="pt-10">
         <div
+          class="mb-5"
           *ngIf="
             commentPostedResult || commentEditedResult || commentDeletedResult
           "
@@ -307,7 +314,69 @@
             }}
           </p>
         </div>
-        @if (comments.length) { @for (comment of comments; track $index) {
+        @if(userComment) {
+        <h3 class="text-2xl font-semibold pb-2">Your Review</h3>
+        <div
+          class="bg-white max-w-full rounded-2xl px-6 py-4 mb-10 shadow-lg hover:shadow-2xl transition duration-500"
+        >
+          <div class="mt-4">
+            <div class="flex justify-between">
+              <h1
+                class="text-lg text-gray-700 font-semibold hover:underline cursor-pointer"
+              >
+                Book Review
+              </h1>
+              <div>
+                <button
+                  class="mr-4 text-gray-600 transition-colors hover:underline hover:text-gray-800"
+                  (click)="editComment(userComment.id)"
+                >
+                  Edit comment
+                </button>
+                <button
+                  class="text-gray-600 transition-colors hover:text-gray-800 hover:underline"
+                  (click)="deleteComment(userComment.id)"
+                >
+                  Delete comment
+                </button>
+              </div>
+            </div>
+            <div class="flex mt-2">
+              <star-rating
+                [starType]="'svg'"
+                [rating]="userComment.rating"
+                [staticColor]="'default'"
+                [readOnly]="true"
+              ></star-rating>
+            </div>
+            <p class="mt-4 text-md text-gray-600">
+              {{ userComment.comment }}
+            </p>
+            <div class="flex justify-between items-center">
+              <div class="mt-4 flex items-center space-x-4 py-6">
+                <div class="">
+                  <img
+                    class="w-24 h-24 rounded-full object-cover"
+                    [src]="userComment.photoURL"
+                    alt=""
+                  />
+                </div>
+                <div class="text-sm font-semibold">
+                  {{ userComment.email }} •
+                  <span class="font-normal">
+                    {{ userComment.date | date : "medium" }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        } @else {
+        <p>You have not written a review yet</p>
+        } @if (comments.length) {
+        <h3 class="text-2xl font-semibold pb-2">All reviews</h3>
+        @for (comment of comments; track $index) {
+
         <div
           class="bg-white max-w-full rounded-2xl px-6 py-4 mb-10 shadow-lg hover:shadow-2xl transition duration-500"
         >

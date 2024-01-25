@@ -134,16 +134,44 @@ export class CommentsService {
     bookId: string,
     userEmail: string
   ): Promise<boolean> {
+    console.log('userEmail:', userEmail);
     const querySnapshot = await getDocs(
       query(
         collection(this._firestore, 'books', bookId, 'comments'),
         where('email', '==', userEmail)
       )
     );
-
-    console.log('user has commit', querySnapshot.empty);
-    return querySnapshot.empty;
+    return !querySnapshot.empty;
   }
+
+  // async getUserComment(
+  //   bookId: string,
+  //   userEmail: string
+  // ): Promise<IBookCommentToClient | null> {
+  //   let comment: IBookCommentToClient | null = null;
+  //   const querySnapshot = await getDocs(
+  //     query(
+  //       collection(this._firestore, 'books', bookId, 'comments'),
+  //       where('email', '==', userEmail)
+  //     )
+  //   );
+  //   querySnapshot.forEach((doc) => {
+  //     const commentDataFromDB = doc.data() as IBookCommentToDB;
+
+  //     let transformDate: Date = (commentDataFromDB.date as Timestamp).toDate();
+  //     const commentDateToClient: IBookCommentToClient = {
+  //       id: commentDataFromDB.id,
+  //       email: commentDataFromDB.email,
+  //       comment: commentDataFromDB.comment,
+  //       rating: commentDataFromDB.rating,
+  //       date: transformDate,
+  //       photoURL: commentDataFromDB.photoURL,
+  //     };
+  //     comment = commentDateToClient;
+  //   });
+  //   console.log('user comment: ', comment);
+  //   return comment;
+  // }
 
   async deleteComment(bookId: string, commentId: string) {
     await deleteDoc(
