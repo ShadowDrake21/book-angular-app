@@ -185,7 +185,7 @@
       }
     </div>
   </div>
-  <div class="flex justify-between items-start pt-10">
+  <div class="flex justify-between items-start py-10">
     <div class="mb-3 w-60">
       <h3 class="text-2xl font-semibold pb-2">Ratings</h3>
       <p class="rating__item">
@@ -372,7 +372,7 @@
           </div>
         </div>
         } @else {
-        <p>You have not written a review yet</p>
+        <p class="mb-10">You have not written a review yet</p>
         } @if (comments.length) {
         <h3 class="text-2xl font-semibold pb-2">All reviews</h3>
         @for (comment of comments; track $index) {
@@ -437,7 +437,17 @@
         }
       </div>
     </div>
-    <div class="w-60">add to/delete from favourite books</div>
+    <div class="w-60">
+      <h3 class="text-2xl font-semibold pb-2 text-center">Bookmark</h3>
+      <p class="mb-5 text-center">
+        {{ isBookmarked ? "Bookmarked" : "Not bookmarked" }}
+      </p>
+      <app-bookmark-button
+        [isBookmarked]="isBookmarked"
+        (bookmarkedChange)="getBookmarkedChange($event)"
+        class="text-center max-w-full w-full block"
+      ></app-bookmark-button>
+    </div>
   </div>
   } @else {
   <p class="text-3xl font-semibold">Loading...</p>
