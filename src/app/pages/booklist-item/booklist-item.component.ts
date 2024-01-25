@@ -53,7 +53,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
   neededUserInfo: INeededUserInfo = { email: '', photoURL: '' };
   isUserHasComment: boolean = false;
 
-  path!: string;
+  bookId!: string;
   bookExternalData!: IBookExternalInfo;
   loadingBook?: boolean;
 
@@ -96,13 +96,26 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
   commentDeletedResult!: ICommentResult | undefined;
 
   comments: IBookCommentToClient[] = [];
+  userComment: IBookCommentToClient | undefined = undefined;
 
-  async ngOnInit(): Promise<void> {
-    this.subscription = this.authService.user$.subscribe((data) => {
+  ngOnInit(): void {
+    this.subscription = this.authService.user$.subscribe(async (data) => {
       if (!data?.email || !data.photoURL) return;
       this.neededUserInfo.email = data?.email;
       this.neededUserInfo.photoURL = data?.photoURL;
       console.log('our neededInfo: ', this.neededUserInfo);
+      this.commentsService
+        .checkUserHasComment(this.bookId, this.neededUserInfo.email)
+        .then((res) => {
+          console.log(this.bookId, this.neededUserInfo.email);
+          if (res === true) {
+            this.disableForm();
+          }
+        });
+      await this.getAllComments().then(async () => {
+        await this.getUserComment(this.neededUserInfo.email);
+      });
+      console.log('user comment', this.userComment);
     });
 
     const externalDataParams =
@@ -113,10 +126,10 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
       console.log(this.bookExternalData);
     }
 
-    this.path = this.route.snapshot.url[1].path;
+    this.bookId = this.route.snapshot.url[1].path;
 
     this.loadingBook = true;
-    this.booksService.getWorkByKey(this.path).subscribe((res) => {
+    this.booksService.getWorkByKey(this.bookId).subscribe((res) => {
       this.book = res;
       this.mainCover = this.book.covers && this.book.covers[0].toString();
       this.characters = ObjectManipulations.checkIfHasKey(
@@ -139,15 +152,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
       this.getAuthors();
       this.loadingBook = false;
     });
-    if (
-      await this.commentsService.checkUserHasComment(
-        this.path,
-        this.neededUserInfo.email
-      )
-    ) {
-      this.disableForm();
-    }
-    this.getAllComments();
+
     console.log('length: ', this.comments.length);
   }
 
@@ -228,7 +233,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     this.loadingAuthor = false;
   }
 
-  onCommentFormSubmit() {
+  async onCommentFormSubmit() {
     if (!this.commentForm.value.id) {
       this.commentForm.value.id = 'id' + Math.random().toString(16).slice(2);
     }
@@ -250,12 +255,13 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     };
     if (this.commentFormBtn === 'Post') {
       this.commentsService
-        .addNewComment(this.path, commentObj.id, commentObj)
+        .addNewComment(this.bookId, commentObj.id, commentObj)
         .then(() => {
           this.commentPostedResult = {
             isSuccessfull: true,
             message: 'Review successfully added!',
           };
+          this.getUserComment(this.neededUserInfo.email);
           this.disableForm();
         })
         .catch((err) => {
@@ -269,12 +275,13 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
       }, 3000);
     } else {
       this.commentsService
-        .updateComment(this.path, commentObj.id, commentObj)
+        .updateComment(this.bookId, commentObj.id, commentObj)
         .then(() => {
           this.commentEditedResult = {
             isSuccessfull: true,
             message: 'Review successfully edited!',
           };
+          this.getUserComment(this.neededUserInfo.email);
           this.disableForm();
         })
         .catch((err) => {
@@ -287,21 +294,26 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
         this.commentEditedResult = undefined;
       }, 3000);
     }
-    this.getAllComments();
+    await this.getAllComments().then(async () => {
+      await this.getUserComment(this.neededUserInfo.email);
+    });
     this.commentForm.reset();
     this.commentFormBtn = 'Post';
   }
 
-  getAllComments() {
-    this.commentsService.getAllCommentsByBook(this.path).then((comments) => {
-      this.comments = comments;
-    });
+  async getAllComments() {
+    await this.commentsService
+      .getAllCommentsByBook(this.bookId)
+      .then((comments) => {
+        console.log('all comments: ', comments);
+        this.comments = comments;
+      });
   }
 
   editComment(commentId: string) {
     this.commentFormBtn = 'Edit';
     let choosenComment: IBookCommentToClient | undefined = undefined;
-    this.commentsService.getComment(this.path, commentId).then((comments) => {
+    this.commentsService.getComment(this.bookId, commentId).then((comments) => {
       this.enableForm();
       choosenComment = comments[0];
       this.commentForm.controls.comment.enable();
@@ -316,13 +328,16 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
 
   deleteComment(commentId: string) {
     this.commentsService
-      .deleteComment(this.path, commentId)
-      .then(() => {
+      .deleteComment(this.bookId, commentId)
+      .then(async () => {
         this.commentDeletedResult = {
           isSuccessfull: true,
           message: 'Review successfully deleted!',
         };
-        this.getAllComments();
+        await this.getAllComments().then(async () => {
+          await this.getUserComment(this.neededUserInfo.email);
+        });
+        this.getUserComment(this.neededUserInfo.email);
         this.enableForm();
       })
       .catch((err) => {
@@ -336,18 +351,24 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     }, 3000);
   }
 
+  async getUserComment(email: string) {
+    if (this.comments.length) {
+      this.userComment = this.comments.find((item) => item.email === email);
+    } else {
+      this.userComment = undefined;
+    }
+  }
+
   isString(value: any): boolean {
     return typeof value === 'string';
   }
 
   disableForm(): void {
     this.commentForm.controls.comment.disable();
-    this.commentForm.controls.rating.disable();
   }
 
   enableForm(): void {
     this.commentForm.controls.comment.enable();
-    this.commentForm.controls.rating.enable();
   }
 
   ngOnDestroy(): void {
