@@ -44,7 +44,7 @@
         </ul>
       </div>
     </div>
-    <div>
+    <div class="max-w-full w-full">
       <h1 class="font-semibold text-5xl mb-5">
         {{ book.title | truncateText : 100 }}
       </h1>
@@ -93,36 +93,11 @@
       <div class="mb-3">
         <h3 class="text-2xl font-semibold pb-2">Authors</h3>
         @for (author of authors; track $index) {
-        <div class="flex w-full gap-5 mb-10">
-          <div class="max-w-52 w-full h-72 flex-shrink-0">
-            <img
-              [src]="
-                author.photos
-                  ? (author.photos[0].toString() | authorImage : 'L' : 'id')
-                  : '/assets/if there is no image.png'
-              "
-              alt=""
-              class="w-full h-full object-cover"
-            />
-          </div>
-          <div>
-            <h5 class="text-xl font-semibold pb-2">{{ author.name }}</h5>
-            <p *ngIf="isString(author.bio); else noBio">
-              {{ author.bio | truncateText : 350 }}
-            </p>
-            <ng-template #noBio>
-              <p>
-                This author is waiting that someone will write for him or her a
-                normal bio info XD
-              </p>
-            </ng-template>
-            <a
-              class="inline-block mt-5 underline text-blue-700 transition-colors hover:text-blue-800"
-              [routerLink]="['/authorlist', authorKeys[$index]]"
-              >Go to Author page</a
-            >
-          </div>
-        </div>
+        <app-bookitem-author
+          [author]="author"
+          [authorKeys]="authorKeys"
+          [index]="$index"
+        ></app-bookitem-author>
         }
       </div>
       } @else {
@@ -131,69 +106,6 @@
     </div>
   </div>
   <div class="flex justify-between items-start py-10">
-    <!-- <div class="mb-3 w-60">
-      <h3 class="text-2xl font-semibold pb-2">Ratings</h3>
-      <p class="rating__item">
-        Currently reading:
-        <span class="rating__value">{{
-          bookExternalData.currently_reading_count || 0
-        }}</span>
-      </p>
-      <p class="rating__item">
-        Already read:
-        <span class="rating__value">{{
-          bookExternalData.already_read_count || 0
-        }}</span>
-      </p>
-      <p class="rating__item">
-        Want to reading:
-        <span class="rating__value">{{
-          bookExternalData.want_to_read_count || 0
-        }}</span>
-      </p>
-      <p class="rating__item">
-        Average ratings:
-        <span class="rating__value">{{
-          bookExternalData.ratings_average | number : "1.1-2" || 0
-        }}</span>
-      </p>
-      <p class="rating__item">
-        Ratings count:
-        <span class="rating__value">{{
-          bookExternalData.ratings_count || 0
-        }}</span>
-      </p>
-      <p class="rating__item">
-        1 star:
-        <span class="rating__value">{{
-          bookExternalData.ratings_count_1 || 0
-        }}</span>
-      </p>
-      <p class="rating__item">
-        2 star:
-        <span class="rating__value">{{
-          bookExternalData.ratings_count_2 || 0
-        }}</span>
-      </p>
-      <p class="rating__item">
-        3 star:
-        <span class="rating__value">{{
-          bookExternalData.ratings_count_3 || 0
-        }}</span>
-      </p>
-      <p class="rating__item">
-        4 star:
-        <span class="rating__value">{{
-          bookExternalData.ratings_count_4 || 0
-        }}</span>
-      </p>
-      <p class="rating__item">
-        5 star:
-        <span class="rating__value">{{
-          bookExternalData.ratings_count_5 || 0
-        }}</span>
-      </p>
-    </div> -->
     <app-bookitem-ratings
       [ratingData]="bookExternalData"
     ></app-bookitem-ratings>

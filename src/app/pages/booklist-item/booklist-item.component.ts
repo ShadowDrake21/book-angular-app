@@ -31,6 +31,7 @@ import { BookmarkService } from '../../core/services/bookmark.service';
 import { ItemScrollListComponent } from '../../shared/components/item-scroll-list/item-scroll-list.component';
 import { IItemScrollList } from '../../shared/models/itemScrollList.model';
 import { BookitemRatingsComponent } from './components/bookitem-ratings/bookitem-ratings.component';
+import { BookitemAuthorComponent } from './components/bookitem-author/bookitem-author.component';
 
 @Component({
   selector: 'app-booklist-item',
@@ -47,6 +48,7 @@ import { BookitemRatingsComponent } from './components/bookitem-ratings/bookitem
     BookmarkButtonComponent,
     ItemScrollListComponent,
     BookitemRatingsComponent,
+    BookitemAuthorComponent,
   ],
   templateUrl: './booklist-item.component.html',
   styleUrl: './booklist-item.component.scss',
@@ -187,7 +189,6 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
       this.authorKeys.push(authorKey);
       this.booksService.getAuthorByKey(authorKey).subscribe((res) => {
         this.authors.push(res);
-        console.log(this.authors);
       });
     }
     this.loadingAuthor = false;
@@ -318,10 +319,6 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     } else {
       this.userComment = undefined;
     }
-  }
-
-  isString(value: any): boolean {
-    return typeof value === 'string';
   }
 
   disableForm(): void {
