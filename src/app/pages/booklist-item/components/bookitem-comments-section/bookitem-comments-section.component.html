@@ -1,1 +1,85 @@
-<p>bookitem-comments-section works!</p>
+<form [formGroup]="commentForm" (ngSubmit)="onCommentFormSubmit()">
+  <label for="comment" class="block mb-2 text-2xl font-semibold"
+    >Your review</label
+  >
+  <textarea
+    name="comment"
+    id="comment"
+    rows="6"
+    class="block p-2.5 w-full text-base resize-none text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+    [placeholder]="
+      !commentForm.controls.comment.disabled
+        ? 'Write your review here...'
+        : 'You have already written a review'
+    "
+    formControlName="comment"
+    [class.textarea-error]="commentForm.controls.comment.touched && commentForm.controls.comment.errors?.['required']"
+    [class.disabled-textarea]="commentForm.controls.comment.disabled"
+  ></textarea>
+  <div
+    class="validate-error mt-2"
+    *ngIf="commentForm.controls.comment.touched && commentForm.controls.comment.errors?.['required']"
+  >
+    You should write a comment
+  </div>
+  <div class="flex gap-5 items-center my-5">
+    <label for="rating" class="text-xl font-semibold">Your rating</label>
+    <star-rating-control
+      id="rating"
+      formControlName="rating"
+      [staticColor]="'default'"
+      [readOnly]="commentForm.controls.comment.disabled"
+    ></star-rating-control>
+  </div>
+  <div class="validate-error mt-2" *ngIf="!isRatingSet">
+    You should choose a rating
+  </div>
+  <app-button
+    [button-styles]="'width: 100%;'"
+    [text]="commentFormBtn"
+    [disabled]="commentForm.controls.comment.errors?.['required'] || commentForm.controls.comment.disabled"
+  />
+</form>
+<div class="pt-10">
+  <div
+    class="mb-5"
+    *ngIf="commentPostedResult || commentEditedResult || commentDeletedResult"
+  >
+    <p
+      class="text-red-600"
+      [class.successfull]="
+        commentPostedResult?.isSuccessfull ||
+        commentEditedResult?.isSuccessfull ||
+        commentDeletedResult?.isSuccessfull
+      "
+    >
+      {{
+        commentPostedResult?.message ||
+          commentEditedResult?.message ||
+          commentDeletedResult?.message
+      }}
+    </p>
+  </div>
+  @if(userComment) {
+  <h3 class="text-2xl font-semibold pb-2">Your Review</h3>
+  <app-bookitem-comment
+    [comment]="userComment"
+    [isUserComment]="true"
+    (editCommentId)="editComment($event)"
+    (deleteCommentId)="deleteComment($event)"
+  ></app-bookitem-comment>
+  } @else {
+  <p class="mb-10">You have not written a review yet</p>
+  } @if (comments.length) {
+  <h3 class="text-2xl font-semibold pb-2">All reviews</h3>
+  @for (comment of comments; track $index) {
+  <app-bookitem-comment
+    [comment]="comment"
+    [isUserComment]="comment.id === userComment?.id"
+    (editCommentId)="editComment($event)"
+    (deleteCommentId)="deleteComment($event)"
+  ></app-bookitem-comment>
+  } } @else {
+  <p>Write a first opinion on the book!</p>
+  }
+</div>

@@ -1,0 +1,16 @@
+.textarea-error {
+  border-color: var(--error-color);
+  color: var(--error-color);
+}
+
+.textarea-error::placeholder {
+  color: var(--error-color);
+}
+
+.successfull {
+  color: rgb(34, 197, 94);
+}
+
+.disabled-textarea {
+  background-color: #e4e4e4c2;
+}

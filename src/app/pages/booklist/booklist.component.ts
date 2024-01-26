@@ -54,7 +54,6 @@ export class BooklistComponent implements OnInit {
         (res) => {
           this.books = res.works;
           this.loadingBooks = false;
-          console.log('books: ', this.books);
         },
         (err) => {
           this.errorWhileFetching = 'The subject has no books!';
