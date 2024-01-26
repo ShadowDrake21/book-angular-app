@@ -24,7 +24,12 @@
         class="flex justify-center items-center min-h-full h-full"
         *ngIf="loadingBooks || loadingFilterBooks"
       >
-        <p class="text-3xl font-semibold">Loading...</p>
+        <p class="text-3xl font-semibold" *ngIf="!errorWhileFetching">
+          Loading...
+        </p>
+        <p class="text-3xl font-semibold" *ngIf="errorWhileFetching">
+          {{ errorWhileFetching }}
+        </p>
       </div>
     </div>
     } @else {

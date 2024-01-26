@@ -40,11 +40,14 @@ export class BooklistComponent implements OnInit {
   loadingBooks?: boolean;
   isAfterFilter: boolean = false;
 
+  errorWhileFetching: string = '';
+
   loadingFilterBooks?: boolean;
   filterError?: IError | null;
 
   ngOnInit(): void {
     this.getQueryParams();
+    this.errorWhileFetching = '';
     if (this.subjectParam.length) {
       this.loadingBooks = true;
       this.booksService.getBooksBySubject(this.subjectParam, {}).subscribe(
@@ -54,7 +57,7 @@ export class BooklistComponent implements OnInit {
           console.log('books: ', this.books);
         },
         (err) => {
-          console.log('There is no such category');
+          this.errorWhileFetching = 'The subject has no books!';
         }
       );
     }
@@ -67,6 +70,12 @@ export class BooklistComponent implements OnInit {
   }
 
   getFilteredBooks(books: IBook[]) {
+    this.router.navigate([], {
+      queryParams: {
+        subject: null,
+      },
+      queryParamsHandling: 'merge',
+    });
     this.isAfterFilter = true;
     this.loadingFilterBooks = false;
     this.books = books;
@@ -86,13 +95,6 @@ export class BooklistComponent implements OnInit {
     this.isAfterFilter = false;
     this.loadingFilterBooks = false;
     this.filterError = error;
-  }
-
-  isError() {
-    setInterval(() => {
-      console.log('is after filter:', this.isAfterFilter);
-      console.log('error:', this.filterError);
-    }, 1000);
   }
 
   formSearchTitle() {

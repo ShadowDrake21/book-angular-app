@@ -28,6 +28,8 @@ import { Subscription } from 'rxjs';
 import { Timestamp } from '@angular/fire/firestore';
 import { BookmarkButtonComponent } from '../../shared/components/bookmark-button/bookmark-button.component';
 import { BookmarkService } from '../../core/services/bookmark.service';
+import { ItemScrollListComponent } from '../../shared/components/item-scroll-list/item-scroll-list.component';
+import { IItemScrollList } from '../../shared/models/itemScrollList.model';
 
 @Component({
   selector: 'app-booklist-item',
@@ -42,6 +44,7 @@ import { BookmarkService } from '../../core/services/bookmark.service';
     ReactiveFormsModule,
     StarRatingModule,
     BookmarkButtonComponent,
+    ItemScrollListComponent,
   ],
   templateUrl: './booklist-item.component.html',
   styleUrl: './booklist-item.component.scss',
@@ -81,6 +84,10 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
   subjects: string[] = [];
   subjectsBtn: string = 'Show all subjects';
   isAllSubjects: boolean = false;
+
+  charactersListObject!: IItemScrollList;
+  placesListObject!: IItemScrollList;
+  subjectsListObject!: IItemScrollList;
 
   authors: IAuthor[] = [];
   authorKeys: string[] = [];
@@ -143,21 +150,27 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     this.booksService.getWorkByKey(this.bookId).subscribe((res) => {
       this.book = res;
       this.mainCover = this.book.covers && this.book.covers[0].toString();
-      this.characters = ObjectManipulations.checkIfHasKey(
-        this.book,
-        'subject_people'
-      )
-        ? this.book.subject_people.slice(0, this.basicToggleItems)
-        : [];
-      this.places = ObjectManipulations.checkIfHasKey(
-        this.book,
-        'subject_places'
-      )
-        ? this.book.subject_places.slice(0, this.basicToggleItems)
-        : [];
-      this.subjects = ObjectManipulations.checkIfHasKey(this.book, 'subjects')
-        ? this.book.subjects.slice(0, this.basicToggleItems)
-        : [];
+      this.charactersListObject = this.constructListObject(
+        ObjectManipulations.checkIfHasKey(this.book, 'subject_people')
+          ? this.book.subject_people
+          : [],
+        false,
+        'Show all characters'
+      );
+      this.placesListObject = this.constructListObject(
+        ObjectManipulations.checkIfHasKey(this.book, 'subject_places')
+          ? this.book.subject_places
+          : [],
+        false,
+        'Show all places'
+      );
+      this.subjectsListObject = this.constructListObject(
+        ObjectManipulations.checkIfHasKey(this.book, 'subjects')
+          ? this.book.subjects
+          : [],
+        true,
+        'Show all subjects'
+      );
       console.log(this.book);
       this.loadingAuthor = true;
       this.getAuthors();
@@ -178,56 +191,6 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
       this.descriptionBtn = 'Show more';
       this.descriptionShowLength = 300;
       this.isDescriptionFullText = false;
-    }
-  }
-
-  toggleList(type: string) {
-    switch (type) {
-      case 'characters':
-        if (!this.isAllCharacters) {
-          this.characters = [];
-          this.characters = this.book.subject_people;
-          this.isAllCharacters = true;
-          this.charactersBtn = 'Hide';
-        } else {
-          this.characters = [];
-          this.characters = this.book.subject_people.slice(
-            0,
-            this.basicToggleItems
-          );
-          this.isAllCharacters = false;
-          this.charactersBtn = 'Show all characters';
-        }
-        break;
-      case 'places':
-        if (!this.isAllPlaces) {
-          this.places = [];
-          this.places = this.book.subject_places;
-          this.isAllPlaces = true;
-          this.placesBtn = 'Hide';
-        } else {
-          this.places = [];
-          this.places = this.book.subject_places.slice(
-            0,
-            this.basicToggleItems
-          );
-          this.isAllPlaces = false;
-          this.placesBtn = 'Show all';
-        }
-        break;
-      case 'subjects':
-        if (!this.isAllSubjects) {
-          this.subjects = [];
-          this.subjects = this.book.subjects;
-          this.isAllSubjects = true;
-          this.subjectsBtn = 'Hide';
-        } else {
-          this.subjects = [];
-          this.subjects = this.book.subjects.slice(0, this.basicToggleItems);
-          this.isAllSubjects = false;
-          this.subjectsBtn = 'Show all';
-        }
-        break;
     }
   }
 
@@ -406,6 +369,18 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
       .then(() => {
         console.log('bookmark deleted');
       });
+  }
+
+  constructListObject(
+    items: string[],
+    isLinks: boolean,
+    btnText: string
+  ): IItemScrollList {
+    return {
+      items,
+      isLinks,
+      btnText,
+    };
   }
 
   ngOnDestroy(): void {

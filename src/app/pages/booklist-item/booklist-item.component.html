@@ -67,81 +67,26 @@
         </p>
       </div>
       <ng-template #noDescription
-        ><p>This book has no description</p></ng-template
+        ><p class="my-5">This book has no description</p></ng-template
       >
       <div class="flex justify-between pb-10">
         <div class="mb-3 max-w-[30%] w-full">
-          <div
-            class="text-center"
-            *ngIf="book.subject_people; else noCharacters"
-          >
-            <h3 class="text-2xl font-semibold pb-2">Main Characters</h3>
-            <ul class="overflow-y-scroll h-[170px]">
-              @for (people of characters; track $index) {
-              <li class="mb-3">{{ people }}</li>
-              }
-            </ul>
-            <button
-              type="button"
-              (click)="toggleList('characters')"
-              *ngIf="book.subject_people.length > 5"
-              class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 transition-all"
-            >
-              {{ charactersBtn }}
-            </button>
-          </div>
-          <ng-template #noCharacters>
-            <p class="text-center">There is not info about characters</p>
-          </ng-template>
+          <app-item-scroll-list
+            [itemObj]="charactersListObject"
+            [listTitle]="'Main Characters'"
+          ></app-item-scroll-list>
         </div>
         <div class="mb-3 max-w-[30%] w-full">
-          <div class="text-center" *ngIf="book.subject_places; else noPlaces">
-            <h3 class="text-2xl font-semibold pb-2">Main Places</h3>
-            <ul class="overflow-y-scroll h-[170px]">
-              @for (place of places; track $index) {
-              <li class="mb-3">{{ place }}</li>
-              }
-            </ul>
-            <button
-              type="button"
-              (click)="toggleList('places')"
-              *ngIf="book.subject_places.length > 5"
-              class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 transition-all"
-            >
-              {{ placesBtn }}
-            </button>
-          </div>
-          <ng-template #noPlaces>
-            <p class="text-center">There is not info about places</p>
-          </ng-template>
+          <app-item-scroll-list
+            [itemObj]="placesListObject"
+            [listTitle]="'Main Places'"
+          ></app-item-scroll-list>
         </div>
-        <div class="mb-3 text-center max-w-[30%] w-full">
-          <div class="text-center" *ngIf="book.subjects; else noSubjects">
-            <h3 class="text-2xl font-semibold pb-2">Main Subjects</h3>
-            <ul class="overflow-y-scroll h-[170px]">
-              @for (subject of subjects; track $index) {
-              <li class="mb-3">
-                <a
-                  [routerLink]="['/booklist']"
-                  [queryParams]="{ subject: subject.toLowerCase() }"
-                  class="underline text-blue-700 transition-colors hover:text-blue-800"
-                  >{{ subject | titlecase }}</a
-                >
-              </li>
-              }
-            </ul>
-            <button
-              type="button"
-              (click)="toggleList('subjects')"
-              *ngIf="book.subjects.length > 5"
-              class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 transition-all"
-            >
-              {{ subjectsBtn }}
-            </button>
-          </div>
-          <ng-template #noSubjects>
-            <p class="text-center">There is not info about subjects</p>
-          </ng-template>
+        <div class="mb-3 max-w-[30%] w-full">
+          <app-item-scroll-list
+            [itemObj]="subjectsListObject"
+            [listTitle]="'Main Subjects'"
+          ></app-item-scroll-list>
         </div>
       </div>
       @if (!loadingAuthor) {
