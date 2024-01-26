@@ -22,13 +22,14 @@ export class AboutUserComponent implements OnInit {
   aboutUser = aboutUser;
 
   ngOnInit(): void {
-    this.updateUser();
+    // this.updateUser();
     this.getUserInfo();
   }
 
   getUserInfo() {
     this.authService.user$.subscribe((res) => {
       this.user = res;
+      console.log(this.user);
     });
   }
 

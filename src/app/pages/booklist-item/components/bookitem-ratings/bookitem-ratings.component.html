@@ -1,0 +1,47 @@
+<div class="mb-3 w-60">
+  <h3 class="text-2xl font-semibold pb-2">Ratings</h3>
+  <p class="rating__item">
+    Currently reading:
+    <span class="rating__value">{{
+      ratingData.currently_reading_count || 0
+    }}</span>
+  </p>
+  <p class="rating__item">
+    Already read:
+    <span class="rating__value">{{ ratingData.already_read_count || 0 }}</span>
+  </p>
+  <p class="rating__item">
+    Want to reading:
+    <span class="rating__value">{{ ratingData.want_to_read_count || 0 }}</span>
+  </p>
+  <p class="rating__item">
+    Average ratings:
+    <span class="rating__value">{{
+      ratingData.ratings_average | number : "1.1-2" || 0
+    }}</span>
+  </p>
+  <p class="rating__item">
+    Ratings count:
+    <span class="rating__value">{{ ratingData.ratings_count || 0 }}</span>
+  </p>
+  <p class="rating__item">
+    1 star:
+    <span class="rating__value">{{ ratingData.ratings_count_1 || 0 }}</span>
+  </p>
+  <p class="rating__item">
+    2 star:
+    <span class="rating__value">{{ ratingData.ratings_count_2 || 0 }}</span>
+  </p>
+  <p class="rating__item">
+    3 star:
+    <span class="rating__value">{{ ratingData.ratings_count_3 || 0 }}</span>
+  </p>
+  <p class="rating__item">
+    4 star:
+    <span class="rating__value">{{ ratingData.ratings_count_4 || 0 }}</span>
+  </p>
+  <p class="rating__item">
+    5 star:
+    <span class="rating__value">{{ ratingData.ratings_count_5 || 0 }}</span>
+  </p>
+</div>

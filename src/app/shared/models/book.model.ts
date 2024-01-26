@@ -62,3 +62,72 @@ export interface IBook {
   ddc_sort: string;
   image: string;
 }
+
+export interface IWork {
+  description: Description;
+  links: Link[];
+  title: string;
+  covers: number[];
+  subject_places: string[];
+  subjects: string[];
+  subject_people: string[];
+  key: string;
+  authors: Author[];
+  type: Type;
+  first_sentence: FirstSentence;
+  first_publish_date: string;
+  location: string;
+  latest_revision: number;
+  revision: number;
+  created: Created;
+  last_modified: LastModified;
+}
+
+interface Description {
+  type: string;
+  value: string;
+}
+
+interface Link {
+  url: string;
+  title: string;
+  type: string;
+}
+
+interface Type {
+  key: string;
+}
+
+interface Author {
+  author: Type;
+  type: string;
+}
+
+interface FirstSentence {
+  type: string;
+  value: string;
+}
+
+interface Created {
+  type: string;
+  value: string;
+}
+
+interface LastModified {
+  type: string;
+  value: string;
+}
+
+export interface IBookExternalInfo {
+  number_of_pages_median: number;
+  ratings_average: number;
+  ratings_count: number;
+  ratings_count_1: number;
+  ratings_count_2: number;
+  ratings_count_3: number;
+  ratings_count_4: number;
+  ratings_count_5: number;
+  want_to_read_count: number;
+  currently_reading_count: number;
+  already_read_count: number;
+}

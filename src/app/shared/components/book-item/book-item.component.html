@@ -1,6 +1,7 @@
 <a
   class="book__card rounded inline-block overflow-hidden shadow-lg relative"
-  routerLink="/booklist-item/1"
+  [routerLink]="['/booklist-item', keyCode]"
+  [queryParams]="{ externalData: bookExternalDataJustified }"
 >
   <div>
     <img
@@ -8,7 +9,7 @@
       [src]="
         !book.cover_edition_key
           ? '/assets/if there is no image.png'
-          : (book.cover_edition_key | bookImage : 'M')
+          : (book.cover_edition_key | bookImage : 'M' : 'olid')
       "
       alt="Sunset in the mountains"
     />

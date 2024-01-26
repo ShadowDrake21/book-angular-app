@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BooklistCatalogueComponent } from './components/booklist-catalogue/booklist-catalogue.component';
 import { BooklistFilterComponent } from './components/booklist-filter/booklist-filter.component';
@@ -34,20 +40,25 @@ export class BooklistComponent implements OnInit {
   loadingBooks?: boolean;
   isAfterFilter: boolean = false;
 
+  errorWhileFetching: string = '';
+
   loadingFilterBooks?: boolean;
-  filterError?: IError;
+  filterError?: IError | null;
 
   ngOnInit(): void {
     this.getQueryParams();
+    this.errorWhileFetching = '';
     if (this.subjectParam.length) {
       this.loadingBooks = true;
-      this.booksService
-        .getBooksBySubject(this.subjectParam, {})
-        .subscribe((res) => {
+      this.booksService.getBooksBySubject(this.subjectParam, {}).subscribe(
+        (res) => {
           this.books = res.works;
           this.loadingBooks = false;
-          this.subjectParam = '';
-        });
+        },
+        (err) => {
+          this.errorWhileFetching = 'The subject has no books!';
+        }
+      );
     }
   }
 
@@ -58,10 +69,16 @@ export class BooklistComponent implements OnInit {
   }
 
   getFilteredBooks(books: IBook[]) {
+    this.router.navigate([], {
+      queryParams: {
+        subject: null,
+      },
+      queryParamsHandling: 'merge',
+    });
     this.isAfterFilter = true;
     this.loadingFilterBooks = false;
-    console.log('loading in booklist: ', this.loadingBooks);
     this.books = books;
+    this.filterError = null;
   }
 
   getFilterRequest(request: string) {
@@ -73,6 +90,9 @@ export class BooklistComponent implements OnInit {
   }
 
   getFilterError(error: IError) {
+    this.subjectParam = '';
+    this.isAfterFilter = false;
+    this.loadingFilterBooks = false;
     this.filterError = error;
   }
 
