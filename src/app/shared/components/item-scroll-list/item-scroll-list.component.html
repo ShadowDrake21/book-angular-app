@@ -1,1 +1,34 @@
-<p>item-scroll-list works!</p>
+<div class="">
+  <div class="text-center" *ngIf="this.allItems.length; else noItems">
+    <h3 class="text-2xl font-semibold pb-2">{{ listTitle }}</h3>
+    <ul class="overflow-y-scroll h-[170px]">
+      @for (item of showItems; track $index) {
+      <li class="mb-3">
+        @if(this.isLinks) {
+        <a
+          [routerLink]="['/booklist']"
+          [queryParams]="{ subject: item.toLowerCase() }"
+          class="underline text-blue-700 transition-colors hover:text-blue-800"
+          >{{ item | titlecase }}</a
+        >
+        } @else {
+        {{ item }}
+        }
+      </li>
+      }
+    </ul>
+    <button
+      type="button"
+      (click)="toggleList()"
+      *ngIf="allItems.length > 5"
+      class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 transition-all"
+    >
+      {{ btnText }}
+    </button>
+  </div>
+  <ng-template #noItems>
+    <p class="text-center">
+      There is not info about {{ listTitle | lowercase }}
+    </p>
+  </ng-template>
+</div>
