@@ -14,7 +14,7 @@
         class="text-3xl font-semibold mb-3"
         *ngIf="books.length && !loadingFilterBooks && !filterError"
       >
-        Search by: {{ formSearchTitle() | titlecase }}
+        Search by: {{ formSearchTitle() }}
       </h2>
       <app-booklist-catalogue
         [books]="books"
