@@ -33,6 +33,5 @@ export class NotificationsDropdownComponent {
 
   clickedNotificationOutside(): void {
     this.isNotificationOpened = false;
-    console.log('notification outside');
   }
 }

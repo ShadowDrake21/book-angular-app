@@ -21,6 +21,15 @@
   }
 }
 
+.error {
+  background-color: rgba(255, 0, 0, 0.4);
+  border-color: red;
+  font-weight: 600;
+  option {
+    font-weight: 600;
+  }
+}
+
 .filter__item-input:disabled,
 .filter__item-select:disabled {
   cursor: not-allowed;

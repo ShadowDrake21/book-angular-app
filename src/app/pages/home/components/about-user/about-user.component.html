@@ -1,11 +1,11 @@
-<div class="about__user container-big">
+<div class="about__user container-big min-h-[600px]">
   <h3 class="font-semibold text-3xl mb-5">About you</h3>
-  <div class="flex">
-    <div class="w-1/2 text-center">
-      <div class="w-full mb-4">
+  <div class="flex max-h-[470px] h-full">
+    <div class="w-1/2 text-center flex items-center justify-center flex-col">
+      <div class="max-w-full mb-4 overflow-hidden">
         <img
-          [src]="user?.photoURL ?? '/assets/dummy book.jpg'"
-          class="object-cover max-w-full w-full"
+          [src]="user?.photoURL"
+          class="object-cover h-full"
           alt="profile-img"
         />
       </div>

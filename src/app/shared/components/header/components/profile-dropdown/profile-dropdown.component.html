@@ -16,7 +16,7 @@
       <div class="dropdown profile-dropdown">
         <div class="text-left pb-2">
           <h5 class="font-bold">
-            {{ userEmail | truncateText : 22 | uppercase }}
+            {{ userEmail | truncateText : 22 : false | uppercase }}
           </h5>
         </div>
         @for (item of profile; track $index) {

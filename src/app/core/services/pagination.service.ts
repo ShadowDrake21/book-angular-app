@@ -19,8 +19,6 @@ export class PaginationService {
 
   calcNumPages(itemsNum: number): number {
     let pages = Math.ceil(itemsNum / this.itemsPerPage);
-
-    console.log('number of pages:', pages);
     return pages;
   }
 

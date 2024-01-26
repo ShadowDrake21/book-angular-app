@@ -9,11 +9,21 @@ import {
   UserCredential,
   signOut,
   updateProfile,
+  getAuth,
 } from '@angular/fire/auth';
 import { IUser } from '../../shared/models/user.model';
-import { doc, Firestore } from '@angular/fire/firestore';
+import {
+  collection,
+  doc,
+  Firestore,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from '@angular/fire/firestore';
 import { setDoc } from '@firebase/firestore';
 import { IUpdateProfile } from '../../shared/models/profileManipulations.model';
+import { Observable, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -40,10 +50,15 @@ export class AuthService {
   }
 
   private _setUserData(auth: UserCredential): Promise<IUser> {
+    if (this._auth.currentUser)
+      updateProfile(this._auth.currentUser, {
+        photoURL: auth.user.photoURL || '/assets/no profile photo.jpg',
+      });
     const user: IUser = {
       id: auth.user.uid,
       email: auth.user.email,
       lastSignInTime: auth.user.metadata.lastSignInTime,
+      photoURL: auth.user.photoURL,
     };
     const userDocRef = doc(this._firestore, `users/${user.id}`);
     return setDoc(userDocRef, user).then(() => user);
@@ -51,6 +66,21 @@ export class AuthService {
 
   updateProfile(currentUser: User, updateData: IUpdateProfile): Promise<void> {
     return updateProfile(currentUser, updateData);
+  }
+
+  async retrieveUserData(email: string): Promise<IUser[]> {
+    const q = query(
+      collection(this._firestore, 'users'),
+      where('email', '==', email)
+    );
+
+    const querySnapshot = await getDocs(q);
+    let returnArr: IUser[] = [];
+
+    querySnapshot.forEach((doc) => {
+      returnArr.push(doc.data() as IUser);
+    });
+    return returnArr;
   }
 
   logout(): Promise<void> {

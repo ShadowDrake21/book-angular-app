@@ -35,6 +35,11 @@
         (change)="
           disabledUnusedFields(!!filterForm.controls.genre.value, 'author')
         "
+        [class.error]="
+          filterForm.controls.genre.touched &&
+          filterForm.controls.genre.enabled &&
+          !filterForm.value.genre
+        "
       >
         <option [ngValue]="null" disabled>Choose genre</option>
         @for (genre of filterContent.genres; track $index) {
@@ -43,6 +48,16 @@
         </option>
         }
       </select>
+      <p
+        class="text-red-600 pt-2"
+        *ngIf="
+          filterForm.controls.genre.touched &&
+          filterForm.controls.genre.enabled &&
+          !filterForm.value.genre
+        "
+      >
+        Please, choose a genre
+      </p>
     </div>
     <div class="filter__item">
       <h3 class="filter__item-title">Years</h3>
@@ -116,7 +131,11 @@
     <app-button
       text="Search"
       button-styles="width: 100%;"
-      [disabled]="filterForm.invalid || !filterForm.dirty"
+      [disabled]="
+        filterForm.invalid ||
+        !filterForm.dirty ||
+        (filterForm.controls.genre.enabled && !filterForm.value.genre)
+      "
     ></app-button>
   </form>
 </section>

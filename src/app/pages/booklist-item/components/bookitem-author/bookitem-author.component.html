@@ -1,0 +1,30 @@
+<div class="flex w-full gap-5 mb-10">
+  <div class="max-w-52 w-full h-72 flex-shrink-0">
+    <img
+      [src]="
+        author.photos
+          ? (author.photos[0].toString() | authorImage : 'L' : 'id')
+          : '/assets/if there is no image.png'
+      "
+      alt=""
+      class="w-full h-full object-cover"
+    />
+  </div>
+  <div>
+    <h5 class="text-xl font-semibold pb-2">{{ author.name }}</h5>
+    <p *ngIf="isString(author.bio); else noBio">
+      {{ author.bio | truncateText : 350 }}
+    </p>
+    <ng-template #noBio>
+      <p>
+        This author is waiting that someone will write for him or her a normal
+        bio info XD
+      </p>
+    </ng-template>
+    <a
+      class="inline-block mt-5 underline text-blue-700 transition-colors hover:text-blue-800"
+      [routerLink]="['/authorlist', authorKeys[index]]"
+      >Go to Author page</a
+    >
+  </div>
+</div>
