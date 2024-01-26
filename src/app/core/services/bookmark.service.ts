@@ -33,15 +33,6 @@ export class BookmarkService {
     userId: string,
     bookId: string
   ): Promise<boolean> {
-    // const querySnapshot = await getDocs(
-    //   query(
-    //     collection(this._firestore, 'bookmarksByUser', userId, 'books'),
-    //     where('bookId', '==', bookId)
-    //   )
-    // );
-    // console.log('bookmarked book: ', querySnapshot.docs);
-    // return !querySnapshot.empty;
-
     const docRef = doc(
       this._firestore,
       'bookmarksByUser',
