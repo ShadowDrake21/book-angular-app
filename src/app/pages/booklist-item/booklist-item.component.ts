@@ -30,6 +30,7 @@ import { BookmarkButtonComponent } from '../../shared/components/bookmark-button
 import { BookmarkService } from '../../core/services/bookmark.service';
 import { ItemScrollListComponent } from '../../shared/components/item-scroll-list/item-scroll-list.component';
 import { IItemScrollList } from '../../shared/models/itemScrollList.model';
+import { BookitemRatingsComponent } from './components/bookitem-ratings/bookitem-ratings.component';
 
 @Component({
   selector: 'app-booklist-item',
@@ -45,6 +46,7 @@ import { IItemScrollList } from '../../shared/models/itemScrollList.model';
     StarRatingModule,
     BookmarkButtonComponent,
     ItemScrollListComponent,
+    BookitemRatingsComponent,
   ],
   templateUrl: './booklist-item.component.html',
   styleUrl: './booklist-item.component.scss',
@@ -70,20 +72,6 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
   descriptionBtn: string = 'Show more';
   descriptionShowLength: number = 300;
   isDescriptionFullText: boolean = false;
-
-  basicToggleItems: number = 5;
-
-  characters: string[] = [];
-  charactersBtn: string = 'Show all characters';
-  isAllCharacters: boolean = false;
-
-  places: string[] = [];
-  placesBtn: string = 'Show all places';
-  isAllPlaces: boolean = false;
-
-  subjects: string[] = [];
-  subjectsBtn: string = 'Show all subjects';
-  isAllSubjects: boolean = false;
 
   charactersListObject!: IItemScrollList;
   placesListObject!: IItemScrollList;
@@ -141,7 +129,6 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
 
     if (externalDataParams !== null) {
       this.bookExternalData = JSON.parse(externalDataParams);
-      console.log(this.bookExternalData);
     }
 
     this.bookId = this.route.snapshot.url[1].path;

@@ -24,7 +24,6 @@ export class BookItemComponent implements OnChanges {
         7,
         this.book.key.length
       );
-      this.bookExternalData = this.book;
       this.fillBookExternalData();
     }
   }
