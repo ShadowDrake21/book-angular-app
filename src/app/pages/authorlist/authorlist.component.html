@@ -1,1 +1,67 @@
-<p>authorlist works!</p>
+<div>
+  <form
+    class="flex mb-7"
+    [formGroup]="searchAuthorForm"
+    (ngSubmit)="onSearch()"
+  >
+    <div>
+      <app-input
+        [type]="'text'"
+        [label]="'Author'"
+        [placeholder]="'Author name'"
+        formControlName="authorName"
+        [isError]="
+          searchAuthorForm.controls.authorName.invalid &&
+          searchAuthorForm.controls.authorName.touched
+        "
+      ></app-input>
+      @if (searchAuthorForm.controls.authorName.invalid &&
+      searchAuthorForm.controls.authorName.touched ) {
+      <div
+        class="validate-error mt-2"
+        *ngIf="searchAuthorForm.controls.authorName.errors?.['required']"
+      >
+        Search name is required
+      </div>
+      }
+    </div>
+    <app-button
+      [button-styles]="'margin: 10px 0 0 40px'"
+      [text]="'Search'"
+      [disabled]="searchAuthorForm.controls.authorName.errors?.['required']"
+    />
+  </form>
+  <div *ngIf="paginationService.currentPageData$ | async as authorsList">
+    <p class="mb-2">
+      <span class="font-semibold">Found results:</span> {{ numFound }}
+    </p>
+    @if(authorsList.length) { @for (author of authorsList; track author.key) {
+    <h3 class="font-semibold">{{ author.name }}</h3>
+    } } @else {
+    <p>There is no author</p>
+    }
+  </div>
+
+  <div class="pagination">
+    <button
+      class="pagination__btn"
+      (click)="prevPage()"
+      [disabled]="paginationService.isFirstPage"
+    >
+      Previous
+    </button>
+    <div
+      *ngIf="paginationService.currentPage$ | async as currentPage"
+      class="pagination__text"
+    >
+      Current Page: {{ currentPage }}
+    </div>
+    <button
+      (click)="nextPage()"
+      class="pagination__btn"
+      [disabled]="paginationService.isLastPage"
+    >
+      Next
+    </button>
+  </div>
+</div>
