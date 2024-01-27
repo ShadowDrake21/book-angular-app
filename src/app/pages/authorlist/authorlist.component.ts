@@ -3,11 +3,12 @@ import { BooksService } from '../../core/services/books.service';
 import { PaginationService } from '../../core/services/pagination.service';
 import { IAuthor } from '../../shared/models/author.model';
 import { CommonModule } from '@angular/common';
-import { map, switchMap, tap } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputComponent } from '../../shared/components/UI/input/input.component';
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
+import { AuthorlistService } from '../../core/services/authorlist.service';
+import { AuthorItemComponent } from '../../shared/components/author-item/author-item.component';
 
 @Component({
   selector: 'app-authorlist',
@@ -18,57 +19,36 @@ import { ButtonComponent } from '../../shared/components/UI/button/button.compon
     ReactiveFormsModule,
     InputComponent,
     ButtonComponent,
+    AuthorItemComponent,
   ],
-  providers: [PaginationService],
+  providers: [PaginationService, AuthorlistService],
   templateUrl: './authorlist.component.html',
   styleUrl: './authorlist.component.scss',
 })
 export class AuthorlistComponent implements OnInit {
   booksService = inject(BooksService);
+  authorlistService = inject(AuthorlistService);
   paginationService = inject(PaginationService);
 
   searchAuthorForm = new FormGroup({
     authorName: new FormControl(''),
   });
 
-  numFound!: number;
-  loadingAuthors?: boolean;
+  isBeforeFirstSearch: boolean = true;
 
   ngOnInit(): void {
     this.paginationService.itemsPerPage = 30;
-    this.fetchData('gfgfhd');
-  }
-
-  fetchData(searchStr: string) {
-    this.paginationService.currentPageData$ =
-      this.paginationService.currentPage$.pipe(
-        switchMap((currentPage) =>
-          this.booksService.getAuthorsByName(
-            searchStr,
-            (currentPage - 1) * this.paginationService.itemsPerPage,
-            this.paginationService.itemsPerPage
-          )
-        ),
-        tap((res) => {
-          this.numFound = res.numFound;
-          this.loadingAuthors = false;
-
-          this.paginationService.checkLastPage(res.numFound);
-          this.paginationService.checkFirstPage();
-        }),
-        map((res: any) => {
-          return res.docs;
-        })
-      );
+    this.authorlistService.fetchData('gfgfhd');
   }
 
   onSearch() {
     if (!this.searchAuthorForm.value.authorName) {
       return;
     }
-    this.fetchData(this.searchAuthorForm.value.authorName);
+    this.isBeforeFirstSearch = false;
+    this.authorlistService.fetchData(this.searchAuthorForm.value.authorName);
     this.paginationService.goToFirst();
-    this.paginationService.setIfLastPage(this.numFound);
+    this.paginationService.setIfLastPage(this.authorlistService.numFound);
   }
 
   nextPage() {
@@ -79,7 +59,7 @@ export class AuthorlistComponent implements OnInit {
       return;
     }
     this.paginationService.nextPage();
-    this.fetchData(this.searchAuthorForm.value.authorName);
+    this.authorlistService.fetchData(this.searchAuthorForm.value.authorName);
   }
 
   prevPage() {
@@ -91,7 +71,7 @@ export class AuthorlistComponent implements OnInit {
     }
     if (this.paginationService.currentPage$.value > 1) {
       this.paginationService.prevPage();
-      this.fetchData(this.searchAuthorForm.value.authorName);
+      this.authorlistService.fetchData(this.searchAuthorForm.value.authorName);
     }
   }
 }

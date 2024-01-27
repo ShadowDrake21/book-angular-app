@@ -7,6 +7,7 @@ import { InputComponent } from '../../../../shared/components/UI/input/input.com
 import { ButtonComponent } from '../../../../shared/components/UI/button/button.component';
 import { BehaviorSubject, Observable, map, switchMap, tap } from 'rxjs';
 import { PaginationService } from '../../../../core/services/pagination.service';
+import { AuthorlistService } from '../../../../core/services/authorlist.service';
 
 @Component({
   selector: 'app-authors-list',
@@ -18,62 +19,37 @@ import { PaginationService } from '../../../../core/services/pagination.service'
     InputComponent,
     ButtonComponent,
   ],
-  providers: [PaginationService],
+  providers: [PaginationService, AuthorlistService],
   templateUrl: './authors-list.component.html',
   styleUrl: './authors-list.component.scss',
 })
 export class AuthorsListComponent implements OnInit {
   booksService = inject(BooksService);
+  authorlistService = inject(AuthorlistService);
   paginationService = inject(PaginationService);
 
   searchAuthorForm = new FormGroup({
     authorName: new FormControl('Bronte'),
   });
 
-  numFound!: number;
-  loadingAuthors?: boolean;
-
   async ngOnInit() {
     if (!this.searchAuthorForm.value.authorName) {
       return;
     }
-    this.loadingAuthors = true;
+    this.authorlistService.loadingAuthors = true;
 
     await new Promise((resolve) => setTimeout(resolve, 3000));
     this.paginationService.itemsPerPage = 10;
-    this.fetchData(this.searchAuthorForm.value.authorName);
-  }
-
-  fetchData(searchStr: string) {
-    this.paginationService.currentPageData$ =
-      this.paginationService.currentPage$.pipe(
-        switchMap((currentPage) =>
-          this.booksService.getAuthorsByName(
-            searchStr,
-            (currentPage - 1) * this.paginationService.itemsPerPage,
-            this.paginationService.itemsPerPage
-          )
-        ),
-        tap((res) => {
-          this.numFound = res.numFound;
-          this.loadingAuthors = false;
-
-          this.paginationService.checkLastPage(res.numFound);
-          this.paginationService.checkFirstPage();
-        }),
-        map((res: any) => {
-          return res.docs;
-        })
-      );
+    this.authorlistService.fetchData(this.searchAuthorForm.value.authorName);
   }
 
   onSearch() {
     if (!this.searchAuthorForm.value.authorName) {
       return;
     }
-    this.fetchData(this.searchAuthorForm.value.authorName);
+    this.authorlistService.fetchData(this.searchAuthorForm.value.authorName);
     this.paginationService.goToFirst();
-    this.paginationService.setIfLastPage(this.numFound);
+    this.paginationService.setIfLastPage(this.authorlistService.numFound);
   }
 
   nextPage() {
@@ -84,7 +60,7 @@ export class AuthorsListComponent implements OnInit {
       return;
     }
     this.paginationService.nextPage();
-    this.fetchData(this.searchAuthorForm.value.authorName);
+    this.authorlistService.fetchData(this.searchAuthorForm.value.authorName);
   }
 
   prevPage() {
@@ -96,7 +72,7 @@ export class AuthorsListComponent implements OnInit {
     }
     if (this.paginationService.currentPage$.value > 1) {
       this.paginationService.prevPage();
-      this.fetchData(this.searchAuthorForm.value.authorName);
+      this.authorlistService.fetchData(this.searchAuthorForm.value.authorName);
     }
   }
 }
