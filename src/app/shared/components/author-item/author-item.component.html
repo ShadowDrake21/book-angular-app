@@ -1,0 +1,24 @@
+<a
+  class="item__card rounded inline-block overflow-hidden shadow-lg relative"
+  [routerLink]="['/authorlist', author.key]"
+>
+  <div>
+    <img
+      class="item__image"
+      [src]="
+        photoId !== 'no photo'
+          ? (photoId | authorImage : 'L' : 'id')
+          : '/assets/if there is no image.png'
+      "
+      alt="author"
+    />
+  </div>
+  <div
+    class="item__description px-6 py-4 absolute w-full h-full top-0 bg-white bg-opacity-70 opacity-0"
+  >
+    <h3 class="font-bold text-xl mb-2">{{ author.name }}</h3>
+    <p class="text-gray-700 text-base">
+      Work count: <span class="font-semibold">{{ author.work_count }}</span>
+    </p>
+  </div>
+</a>

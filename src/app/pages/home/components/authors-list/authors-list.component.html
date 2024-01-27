@@ -35,17 +35,20 @@
 
   <div *ngIf="paginationService.currentPageData$ | async as authorsList">
     <p class="mb-2">
-      <span class="font-semibold">Found results:</span> {{ numFound }}
+      <span class="font-semibold">Found results:</span>
+      {{ authorlistService.numFound }}
     </p>
     <div class="author__list">
-      @if(authorsList) { @for (author of authorsList; track author.key) {
+      @if(authorsList.length) { @for (author of authorsList; track author.key) {
       <a
         class="author__list-link bg-zinc-300 font-semibold"
         [routerLink]="['/authorlist', author.key]"
         >{{ author.name }}</a
       >
-      } }@else {
-      <p>none</p>
+      } }@else if (authorlistService.loadingAuthors) {
+      <p>Authors loading!</p>
+      }@else {
+      <p>There is no author with such name</p>
       }
     </div>
   </div>
@@ -79,8 +82,6 @@
     >Go to the Authors page</a
   >
   } @else {
-  <p>Loading!</p>
+  <p class="mt-5">Loading!</p>
   }
-
-  <ng-template #noAuthors> There is no author with such name </ng-template>
 </div>

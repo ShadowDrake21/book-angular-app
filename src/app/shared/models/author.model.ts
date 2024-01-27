@@ -49,3 +49,12 @@ export interface LastModified {
   type: string;
   value: string;
 }
+
+export interface IAuthorSearch {
+  key: string;
+  type: string;
+  name: string;
+  top_work: string;
+  work_count: number;
+  _version_: number;
+}
