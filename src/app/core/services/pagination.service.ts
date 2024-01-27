@@ -1,9 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class PaginationService {
   itemsPerPage!: number;
   currentPage$ = new BehaviorSubject(1);

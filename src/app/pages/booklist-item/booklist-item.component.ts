@@ -9,23 +9,12 @@ import { ObjectManipulations } from '../../shared/utils/objectManipulations.util
 import { IAuthor } from '../../shared/models/author.model';
 import { AuthorImagePipe } from '../../shared/pipes/author-image.pipe';
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { RatingChangeEvent, StarRatingModule } from 'angular-star-rating';
+import { ReactiveFormsModule } from '@angular/forms';
+import { StarRatingModule } from 'angular-star-rating';
 import { AuthService } from '../../core/authentication/auth.service';
-import {
-  IBookCommentToClient,
-  IBookCommentToDB,
-  ICommentResult,
-  INeededUserInfo,
-} from '../../shared/models/comment.model';
+import { INeededUserInfo } from '../../shared/models/comment.model';
 import { CommentsService } from '../../core/services/comments.service';
 import { Subscription } from 'rxjs';
-import { Timestamp } from '@angular/fire/firestore';
 import { BookmarkButtonComponent } from '../../shared/components/bookmark-button/bookmark-button.component';
 import { BookmarkService } from '../../core/services/bookmark.service';
 import { ItemScrollListComponent } from '../../shared/components/item-scroll-list/item-scroll-list.component';
@@ -33,6 +22,7 @@ import { IItemScrollList } from '../../shared/models/itemScrollList.model';
 import { BookitemRatingsComponent } from './components/bookitem-ratings/bookitem-ratings.component';
 import { BookitemAuthorComponent } from './components/bookitem-author/bookitem-author.component';
 import { BookitemCommentsSectionComponent } from './components/bookitem-comments-section/bookitem-comments-section.component';
+import { AuthorsService } from '../../core/services/authors.service';
 
 @Component({
   selector: 'app-booklist-item',
@@ -59,6 +49,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
   route = inject(ActivatedRoute);
   authService = inject(AuthService);
   booksService = inject(BooksService);
+  authorsService = inject(AuthorsService);
   commentsService = inject(CommentsService);
   bookmarkService = inject(BookmarkService);
 
@@ -160,7 +151,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     for (const author of this.book.authors) {
       let authorKey = author.author.key.slice(9, author.author.key.length);
       this.authorKeys.push(authorKey);
-      this.booksService.getAuthorByKey(authorKey).subscribe((res) => {
+      this.authorsService.getAuthorByKey(authorKey).subscribe((res) => {
         this.authors.push(res);
       });
     }

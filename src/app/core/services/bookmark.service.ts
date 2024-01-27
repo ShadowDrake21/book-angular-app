@@ -18,9 +18,6 @@ export class BookmarkService {
   private _firestore = inject(Firestore);
 
   async addNewBookBookmark(userId: string, bookId: string) {
-    // await setDoc(doc(this._firestore, 'bookmarksByUser', userId), {
-    //   userId,
-    // });
     await setDoc(
       doc(this._firestore, 'bookmarksByUser', userId, 'books', bookId),
       {

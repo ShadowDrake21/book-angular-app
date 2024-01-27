@@ -1,44 +1,48 @@
-<section class="container-big">
-  <div>
-    <h3 class="font-semibold text-3xl mb-5">Books by genre</h3>
-    @if(loadingFantasy) {
-    <p class="mb-10">Loading!</p>
-    } @else {
-    <app-carousel
-      [contents]="booksFantasy"
-      [title]="'Fantasy'"
-      [carouselLink]="'fantasy'"
-    ></app-carousel>
-    } @if(loadingFantasy) {
-    <p class="mb-10">Loading!</p>
-    } @else {
-    <app-carousel
-      [contents]="booksSport"
-      [title]="'Adventures'"
-      [carouselLink]="'adventures'"
-    ></app-carousel>
-    } @if(loadingLove) {
-    <p class="mb-10">Loading!</p>
-    } @else {
-    <app-carousel
-      [contents]="booksLove"
-      [title]="'Love'"
-      [carouselLink]="'love'"
-    ></app-carousel>
-    } @if(loadingChildren) {
-    <p class="mb-10">Loading!</p>
-    } @else {
-    <app-carousel
-      [contents]="booksChildren"
-      [title]="'Children\'s'"
-      [carouselLink]="'children'"
-    ></app-carousel>
-    }
+<section class="pt-[120px]">
+  <div class="container-big">
+    <div>
+      <h3 class="font-semibold text-3xl mb-5">Books by genre</h3>
+      @if(loadingFantasy) {
+      <p class="mb-10">Loading!</p>
+      } @else {
+      <app-carousel
+        [contents]="booksFantasy"
+        [title]="'Fantasy'"
+        [carouselLink]="'fantasy'"
+      ></app-carousel>
+      } @if(loadingFantasy) {
+      <p class="mb-10">Loading!</p>
+      } @else {
+      <app-carousel
+        [contents]="booksSport"
+        [title]="'Adventures'"
+        [carouselLink]="'adventures'"
+      ></app-carousel>
+      } @if(loadingLove) {
+      <p class="mb-10">Loading!</p>
+      } @else {
+      <app-carousel
+        [contents]="booksLove"
+        [title]="'Love'"
+        [carouselLink]="'love'"
+      ></app-carousel>
+      } @if(loadingChildren) {
+      <p class="mb-10">Loading!</p>
+      } @else {
+      <app-carousel
+        [contents]="booksChildren"
+        [title]="'Children\'s'"
+        [carouselLink]="'children'"
+      ></app-carousel>
+      }
+    </div>
   </div>
 </section>
 <section class="container-big">
-  <h3 class="font-semibold text-3xl">Authors by name</h3>
-  <app-authors-list></app-authors-list>
+  <div>
+    <h3 class="font-semibold text-3xl">Authors by name</h3>
+    <app-authors-list></app-authors-list>
+  </div>
 </section>
 <section class="bg-stone-300">
   <app-about-user></app-about-user>
