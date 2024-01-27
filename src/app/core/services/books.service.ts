@@ -38,17 +38,7 @@ export class BooksService {
     });
   }
 
-  getAuthorsByName(name: string, offest: number, limit: number) {
-    return this.http.get<any>(AUTHORS_API_URL, {
-      params: { q: name, offset: offest, limit: limit },
-    });
-  }
-
   getWorkByKey(key: string) {
     return this.http.get<any>(WORK_URL + key + '.json');
-  }
-
-  getAuthorByKey(key: string) {
-    return this.http.get<any>(AUTHOR_API_URL + key + '.json');
   }
 }

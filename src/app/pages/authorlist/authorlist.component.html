@@ -32,11 +32,12 @@
     />
   </form>
   <div *ngIf="paginationService.currentPageData$ | async as authorsList">
-    <p class="mb-2">
-      <span class="font-semibold">Found results:</span> {{ numFound }}
+    <p class="mb-2" *ngIf="!isBeforeFirstSearch">
+      <span class="font-semibold">Found results:</span>
+      {{ authorlistService.numFound }}
     </p>
     @if(authorsList.length) { @for (author of authorsList; track author.key) {
-    <h3 class="font-semibold">{{ author.name }}</h3>
+    <app-author-item [author]="author"></app-author-item>
     } } @else {
     <p>There is no author</p>
     }
