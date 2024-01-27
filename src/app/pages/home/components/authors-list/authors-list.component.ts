@@ -18,6 +18,7 @@ import { PaginationService } from '../../../../core/services/pagination.service'
     InputComponent,
     ButtonComponent,
   ],
+  providers: [PaginationService],
   templateUrl: './authors-list.component.html',
   styleUrl: './authors-list.component.scss',
 })
