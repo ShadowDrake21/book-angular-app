@@ -10,8 +10,10 @@ export class AuthorlistService {
 
   numFound!: number;
   loadingAuthors?: boolean;
+  isDataAvailable: boolean = true;
 
   fetchData(searchStr: string) {
+    this.isDataAvailable = false;
     this.paginationService.currentPageData$ =
       this.paginationService.currentPage$.pipe(
         switchMap((currentPage) =>
@@ -29,6 +31,7 @@ export class AuthorlistService {
           this.paginationService.checkFirstPage();
         }),
         map((res: any) => {
+          console.log(res.docs);
           return res.docs;
         })
       );

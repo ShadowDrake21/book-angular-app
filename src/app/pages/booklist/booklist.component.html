@@ -1,46 +1,48 @@
-<section class="container-big">
-  <div class="flex gap-5">
-    <div class="min-w-[220px]">
-      <app-booklist-filter
-        (getFilteredBooks)="getFilteredBooks($event)"
-        (getFilterRequest)="getFilterRequest($event)"
-        (getFilterLoading)="getFilterLoading($event)"
-        (getFilterError)="getFilterError($event)"
-      ></app-booklist-filter>
-    </div>
-    @if (subjectParam || isAfterFilter || loadingFilterBooks) {
-    <div class="w-full">
-      <h2
-        class="text-3xl font-semibold mb-3"
-        *ngIf="books.length && !loadingFilterBooks && !filterError"
-      >
-        Search by: {{ formSearchTitle() }}
-      </h2>
-      <app-booklist-catalogue
-        [books]="books"
-        *ngIf="books.length && !loadingFilterBooks && !filterError"
-      ></app-booklist-catalogue>
-      <div
-        class="flex justify-center items-center min-h-full h-full"
-        *ngIf="loadingBooks || loadingFilterBooks"
-      >
-        <p class="text-3xl font-semibold" *ngIf="!errorWhileFetching">
-          Loading...
+<section class="pt-[120px]">
+  <div class="container-big">
+    <div class="flex gap-5">
+      <div class="min-w-[220px]">
+        <app-booklist-filter
+          (getFilteredBooks)="getFilteredBooks($event)"
+          (getFilterRequest)="getFilterRequest($event)"
+          (getFilterLoading)="getFilterLoading($event)"
+          (getFilterError)="getFilterError($event)"
+        ></app-booklist-filter>
+      </div>
+      @if (subjectParam || isAfterFilter || loadingFilterBooks) {
+      <div class="w-full">
+        <h2
+          class="text-3xl font-semibold mb-3"
+          *ngIf="books.length && !loadingFilterBooks && !filterError"
+        >
+          Search by: {{ formSearchTitle() }}
+        </h2>
+        <app-booklist-catalogue
+          [books]="books"
+          *ngIf="books.length && !loadingFilterBooks && !filterError"
+        ></app-booklist-catalogue>
+        <div
+          class="flex justify-center items-center min-h-full h-full"
+          *ngIf="loadingBooks || loadingFilterBooks"
+        >
+          <p class="text-3xl font-semibold" *ngIf="!errorWhileFetching">
+            Loading...
+          </p>
+          <p class="text-3xl font-semibold" *ngIf="errorWhileFetching">
+            {{ errorWhileFetching }}
+          </p>
+        </div>
+      </div>
+      } @else {
+      <div class="w-full flex justify-center items-center">
+        <p class="text-3xl font-semibold" *ngIf="!filterError">
+          There are no books
         </p>
-        <p class="text-3xl font-semibold" *ngIf="errorWhileFetching">
-          {{ errorWhileFetching }}
+        <p class="text-3xl font-semibold" *ngIf="filterError">
+          {{ filterError.message }}
         </p>
       </div>
+      }
     </div>
-    } @else {
-    <div class="w-full flex justify-center items-center">
-      <p class="text-3xl font-semibold" *ngIf="!filterError">
-        There is no books
-      </p>
-      <p class="text-3xl font-semibold" *ngIf="filterError">
-        {{ filterError.message }}
-      </p>
-    </div>
-    }
   </div>
 </section>

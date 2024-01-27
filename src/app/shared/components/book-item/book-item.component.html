@@ -1,11 +1,11 @@
 <a
-  class="book__card rounded inline-block overflow-hidden shadow-lg relative"
+  class="item__card rounded inline-block overflow-hidden shadow-lg relative"
   [routerLink]="['/booklist-item', keyCode]"
   [queryParams]="{ externalData: bookExternalDataJustified }"
 >
   <div>
     <img
-      class="book__image"
+      class="item__image"
       [src]="
         !book.cover_edition_key
           ? '/assets/if there is no image.png'
@@ -15,7 +15,7 @@
     />
   </div>
   <div
-    class="book__description px-6 py-4 absolute w-full h-full top-0 bg-white bg-opacity-70 opacity-0"
+    class="item__description px-6 py-4 absolute w-full h-full top-0 bg-white bg-opacity-70 opacity-0"
   >
     <h3 class="font-bold text-xl mb-2">{{ book.title }}</h3>
     <p class="text-gray-700 text-base">

@@ -1,68 +1,109 @@
-<div>
-  <form
-    class="flex mb-7"
-    [formGroup]="searchAuthorForm"
-    (ngSubmit)="onSearch()"
-  >
-    <div>
-      <app-input
-        [type]="'text'"
-        [label]="'Author'"
-        [placeholder]="'Author name'"
-        formControlName="authorName"
-        [isError]="
-          searchAuthorForm.controls.authorName.invalid &&
-          searchAuthorForm.controls.authorName.touched
-        "
-      ></app-input>
-      @if (searchAuthorForm.controls.authorName.invalid &&
-      searchAuthorForm.controls.authorName.touched ) {
-      <div
-        class="validate-error mt-2"
-        *ngIf="searchAuthorForm.controls.authorName.errors?.['required']"
-      >
-        Search name is required
+<section class="relative pt-[120px] pb-10 min-h-screen h-full">
+  <div class="container-ultra__big">
+    <h2 class="text-3xl font-semibold mb-3">
+      Search author <span *ngIf="searchTitle">: {{ searchTitle }}</span>
+    </h2>
+
+    <form
+      class="flex mb-7"
+      [formGroup]="searchAuthorForm"
+      (ngSubmit)="onSearch()"
+    >
+      <div>
+        <app-input
+          [type]="'text'"
+          [label]="'Author'"
+          [placeholder]="'Author name'"
+          formControlName="authorName"
+          [isError]="
+            searchAuthorForm.controls.authorName.invalid &&
+            searchAuthorForm.controls.authorName.touched
+          "
+        ></app-input>
+        @if (searchAuthorForm.controls.authorName.invalid &&
+        searchAuthorForm.controls.authorName.touched ) {
+        <div
+          class="validate-error mt-2"
+          *ngIf="searchAuthorForm.controls.authorName.errors?.['required']"
+        >
+          Search name is required
+        </div>
+        }
+      </div>
+      <app-button
+        [button-styles]="'margin: 10px 0 0 40px'"
+        [text]="'Search'"
+        [disabled]="searchAuthorForm.controls.authorName.errors?.['required']"
+      />
+    </form>
+    <!-- height -->
+    <div
+      *ngIf="
+        paginationService.currentPageData$ | async as authorsList;
+        else loadingAuthors
+      "
+      class="max-h-full h-full"
+    >
+      <p class="mb-2" *ngIf="!isBeforeFirstSearch">
+        <span class="font-semibold">Found results:</span>
+        {{ authorlistService.numFound }}
+      </p>
+      @if(authorsList.length) {
+      <div class="flex flex-wrap gap-3 justify-center">
+        @for (author of authorsList; track author.key) {
+        <app-author-item [author]="author"></app-author-item>
+        }
       </div>
       }
     </div>
-    <app-button
-      [button-styles]="'margin: 10px 0 0 40px'"
-      [text]="'Search'"
-      [disabled]="searchAuthorForm.controls.authorName.errors?.['required']"
-    />
-  </form>
-  <div *ngIf="paginationService.currentPageData$ | async as authorsList">
-    <p class="mb-2" *ngIf="!isBeforeFirstSearch">
-      <span class="font-semibold">Found results:</span>
-      {{ authorlistService.numFound }}
-    </p>
-    @if(authorsList.length) { @for (author of authorsList; track author.key) {
-    <app-author-item [author]="author"></app-author-item>
-    } } @else {
-    <p>There is no author</p>
-    }
-  </div>
-
-  <div class="pagination">
-    <button
-      class="pagination__btn"
-      (click)="prevPage()"
-      [disabled]="paginationService.isFirstPage"
-    >
-      Previous
-    </button>
     <div
-      *ngIf="paginationService.currentPage$ | async as currentPage"
-      class="pagination__text"
+      *ngIf="!authorlistService.numFound && !authorlistService.loadingAuthors"
+      class="absolute no-authors"
     >
-      Current Page: {{ currentPage }}
+      <p
+        class="text-3xl font-semibold text-center"
+        *ngIf="paginationService.currentPageData$"
+      >
+        No authors with such name
+      </p>
     </div>
-    <button
-      (click)="nextPage()"
-      class="pagination__btn"
-      [disabled]="paginationService.isLastPage"
+    <ng-template #loadingAuthors>
+      <div class="absolute no-authors">
+        @if(authorlistService.loadingAuthors) {
+        <p class="text-3xl font-semibold text-center">Loading...</p>
+        } @else {
+        <p class="text-3xl font-semibold text-center">There are no authors</p>
+        }
+      </div>
+    </ng-template>
+    <div
+      class="pagination"
+      [class.hidden]="
+        authorlistService.isDataAvailable ||
+        authorlistService.loadingAuthors ||
+        authorlistService.numFound === 0
+      "
     >
-      Next
-    </button>
+      <button
+        class="pagination__btn"
+        (click)="prevPage()"
+        [disabled]="paginationService.isFirstPage"
+      >
+        Previous
+      </button>
+      <div
+        *ngIf="paginationService.currentPage$ | async as currentPage"
+        class="pagination__text"
+      >
+        Current Page: {{ currentPage }}
+      </div>
+      <button
+        (click)="nextPage()"
+        class="pagination__btn"
+        [disabled]="paginationService.isLastPage"
+      >
+        Next
+      </button>
+    </div>
   </div>
-</div>
+</section>
