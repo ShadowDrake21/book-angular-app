@@ -6,7 +6,7 @@ import { AUTHORS_API_URL, AUTHOR_API_URL } from '../constants/books.constants';
   providedIn: 'root',
 })
 export class AuthorsService {
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
 
   getAuthorsByName(name: string, offest: number, limit: number) {
     return this.http.get<any>(AUTHORS_API_URL, {

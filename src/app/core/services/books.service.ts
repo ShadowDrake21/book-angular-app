@@ -18,7 +18,7 @@ export interface BooksBySubject {
   providedIn: 'root',
 })
 export class BooksService {
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
 
   getBooksByTitles(title: string, ...[params]: any) {
     return this.http.get<any>(SEARCH_API_URL, {

@@ -35,18 +35,24 @@ export class AuthorlistComponent implements OnInit {
   });
 
   isBeforeFirstSearch: boolean = true;
+  isDataAvailable: boolean = false;
+
+  searchTitle: string = '';
 
   ngOnInit(): void {
-    this.paginationService.itemsPerPage = 30;
-    this.authorlistService.fetchData('gfgfhd');
+    this.paginationService.itemsPerPage = 10;
+    console.log('isDataAvailable: ', this.isDataAvailable);
   }
 
-  onSearch() {
+  async onSearch() {
     if (!this.searchAuthorForm.value.authorName) {
       return;
     }
     this.isBeforeFirstSearch = false;
+    this.authorlistService.loadingAuthors = true;
+    this.searchTitle = this.searchAuthorForm.value.authorName;
     this.authorlistService.fetchData(this.searchAuthorForm.value.authorName);
+    this.authorlistService.isDataAvailable = false;
     this.paginationService.goToFirst();
     this.paginationService.setIfLastPage(this.authorlistService.numFound);
   }
