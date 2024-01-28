@@ -14,6 +14,7 @@ export interface IAuthor {
   title: string;
   key: string;
   birth_date: string;
+  death_date: string;
   latest_revision: number;
   revision: number;
   created: Created;
@@ -24,10 +25,14 @@ export interface ServicesIds {
   viaf: string;
   goodreads: string;
   storygraph: string;
-  isni: string;
   librarything: string;
-  amazon: string;
   wikidata: string;
+  [key: string]: string; // Add an index signature
+}
+
+export interface Bio {
+  type: string;
+  value: string;
 }
 
 export interface Type {
@@ -57,4 +62,9 @@ export interface IAuthorSearch {
   top_work: string;
   work_count: number;
   _version_: number;
+}
+
+export interface IRemoteIdsLinks {
+  text: string;
+  link: string;
 }

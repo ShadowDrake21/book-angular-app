@@ -1,1 +1,132 @@
-<p>authorlist-item works!</p>
+<section class="pt-[120px]">
+  <div class="container-big">
+    @if (!loadingAuthor) {
+    <div class="flex gap-10">
+      <div class="max-w-96 flex-shrink-0">
+        <div class="max-h-[500px] h-full">
+          <img
+            [src]="
+              mainPhoto
+                ? (mainPhoto | authorImage : 'L' : 'id')
+                : '/assets/no author image.png'
+            "
+            alt="author image"
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div class="my-5">
+          <p *ngIf="author.birth_date" class="mb-2">
+            Date of birth:
+            <span class="font-semibold">{{
+              author.birth_date | date : "longDate"
+            }}</span>
+          </p>
+          <p *ngIf="author.death_date" class="mb-2">
+            Date of death:
+            <span class="font-semibold">{{
+              author.death_date | date : "longDate"
+            }}</span>
+          </p>
+          <p *ngIf="author.created" class="mb-2">
+            Page created:
+            <span class="font-semibold">{{
+              author.created.value | date : "medium"
+            }}</span>
+          </p>
+          <p *ngIf="author.last_modified" class="mb-2">
+            Last modified:
+            <span class="font-semibold">{{
+              author.last_modified.value | date : "medium"
+            }}</span>
+          </p>
+        </div>
+
+        <div class="mb-3" *ngIf="author.links">
+          <h3 class="text-2xl font-semibold">Links</h3>
+          <ul class="list-disc pl-5">
+            @for (link of author.links; track $index) {
+            <li
+              class="mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
+            >
+              <a [href]="link.url">{{ link.title }}</a>
+            </li>
+            }
+            <li
+              *ngIf="author.wikipedia as wikipedia"
+              class="mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
+            >
+              <a [href]="wikipedia">Wikipedia</a>
+            </li>
+          </ul>
+        </div>
+        <div class="mb-3">
+          <h3 class="text-2xl font-semibold">Services</h3>
+          <ul class="list-disc pl-5">
+            @for (remoteLink of fullRemoteIdsLinks; track $index) {
+            <li
+              class="mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
+            >
+              <a [href]="remoteLink.link">{{ remoteLink.text | titlecase }}</a>
+            </li>
+            }
+          </ul>
+        </div>
+      </div>
+      <div class="max-w-full w-full overflow-auto">
+        <h1 class="font-semibold text-5xl mb-5">
+          {{ author.name }}
+        </h1>
+        <!-- description!!! -->
+        <div class="mb-5" *ngIf="isString(author.bio); else noBio">
+          <h3 class="text-2xl font-semibold pb-2">Description</h3>
+          <p>
+            {{ author.bio }}
+            <!-- <span class="ml-1"
+              ><button
+                type="button"
+                (click)="showCloseDescription()"
+                class="underline text-blue-700 transition-colors hover:text-blue-800"
+              >
+                {{ descriptionBtn }}
+              </button></span
+            > -->
+          </p>
+        </div>
+        <ng-template #noBio
+          ><p class="my-5">
+            This author is waiting that someone will write for him or her a
+            normal bio info XD
+          </p></ng-template
+        >
+        <div class="flex justify-between pb-10">
+          <div class="mb-3 max-w-[50%] w-full">
+            <app-item-scroll-list
+              [itemObj]="alternateNamesListObject"
+              [listTitle]="'Alternative names'"
+            ></app-item-scroll-list>
+          </div>
+          <div class="mb-3 max-w-[50%] w-full">
+            <app-item-scroll-list
+              [itemObj]="soutceRecordsListObject"
+              [listTitle]="'Source Records'"
+            ></app-item-scroll-list>
+          </div>
+        </div>
+        @if (!loadingBooks) {
+        <div class="overflow-hidden max-w-full w-full">
+          <app-carousel
+            [contents]="authorBooks"
+            [title]="'Author books'"
+            [carouselLink]="author.name"
+          ></app-carousel>
+        </div>
+        } @else {
+        <p class="mb-10">Loading...</p>
+        }
+      </div>
+    </div>
+    } @else {
+    <div>Loading...</div>
+    }
+  </div>
+</section>

@@ -3,7 +3,7 @@
     <div>
       <h3 class="font-semibold text-3xl mb-5">Books by genre</h3>
       @if(loadingFantasy) {
-      <p class="mb-10">Loading!</p>
+      <p class="mb-10">Loading...</p>
       } @else {
       <app-carousel
         [contents]="booksFantasy"
@@ -11,7 +11,7 @@
         [carouselLink]="'fantasy'"
       ></app-carousel>
       } @if(loadingFantasy) {
-      <p class="mb-10">Loading!</p>
+      <p class="mb-10">Loading...</p>
       } @else {
       <app-carousel
         [contents]="booksSport"
@@ -19,7 +19,7 @@
         [carouselLink]="'adventures'"
       ></app-carousel>
       } @if(loadingLove) {
-      <p class="mb-10">Loading!</p>
+      <p class="mb-10">Loading...</p>
       } @else {
       <app-carousel
         [contents]="booksLove"
@@ -27,7 +27,7 @@
         [carouselLink]="'love'"
       ></app-carousel>
       } @if(loadingChildren) {
-      <p class="mb-10">Loading!</p>
+      <p class="mb-10">Loading...</p>
       } @else {
       <app-carousel
         [contents]="booksChildren"
