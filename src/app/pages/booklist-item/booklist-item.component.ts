@@ -104,21 +104,21 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     this.booksService.getWorkByKey(this.bookId).subscribe((res) => {
       this.book = res;
       this.mainCover = this.book.covers && this.book.covers[0].toString();
-      this.charactersListObject = this.constructListObject(
+      this.charactersListObject = ObjectManipulations.constructListObject(
         ObjectManipulations.checkIfHasKey(this.book, 'subject_people')
           ? this.book.subject_people
           : [],
         false,
         'Show all characters'
       );
-      this.placesListObject = this.constructListObject(
+      this.placesListObject = ObjectManipulations.constructListObject(
         ObjectManipulations.checkIfHasKey(this.book, 'subject_places')
           ? this.book.subject_places
           : [],
         false,
         'Show all places'
       );
-      this.subjectsListObject = this.constructListObject(
+      this.subjectsListObject = ObjectManipulations.constructListObject(
         ObjectManipulations.checkIfHasKey(this.book, 'subjects')
           ? this.book.subjects
           : [],
@@ -182,18 +182,6 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
       .then(() => {
         console.log('bookmark deleted');
       });
-  }
-
-  constructListObject(
-    items: string[],
-    isLinks: boolean,
-    btnText: string
-  ): IItemScrollList {
-    return {
-      items,
-      isLinks,
-      btnText,
-    };
   }
 
   ngOnDestroy(): void {
