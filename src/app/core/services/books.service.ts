@@ -41,4 +41,8 @@ export class BooksService {
   getWorkByKey(key: string) {
     return this.http.get<any>(WORK_URL + key + '.json');
   }
+
+  getWorksByAuthor(authorKey: string) {
+    return this.http.get<any>(AUTHOR_API_URL + authorKey + '/works.json');
+  }
 }

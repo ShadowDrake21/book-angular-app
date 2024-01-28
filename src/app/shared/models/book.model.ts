@@ -63,6 +63,20 @@ export interface IBook {
   image: string;
 }
 
+export interface IBookByAuthor {
+  title: string;
+  covers: number[];
+  key: string;
+  authors: Author[];
+  type: string;
+  subjects: string[];
+  location: string;
+  latest_revision: number;
+  revision: number;
+  created: Created;
+  last_modified: LastModified;
+}
+
 export interface IWork {
   description: Description;
   links: Link[];
