@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { AuthorsService } from '../../core/services/authors.service';
 import { ActivatedRoute } from '@angular/router';
 import { IAuthor, IRemoteIdsLinks } from '../../shared/models/author.model';
@@ -12,6 +12,12 @@ import { ObjectManipulations } from '../../shared/utils/objectManipulations.util
 import { CarouselComponent } from '../../shared/components/carousel/carousel.component';
 import { IBook } from '../../shared/models/book.model';
 import { BooksService } from '../../core/services/books.service';
+import { AuthoritemCommentsSectionComponent } from './authoritem-comments-section/authoritem-comments-section.component';
+import { BookmarkService } from '../../core/services/bookmark.service';
+import { Subscription } from 'rxjs';
+import { INeededUserInfo } from '../../shared/models/comment.model';
+import { AuthService } from '../../core/authentication/auth.service';
+import { BookmarkButtonComponent } from '../../shared/components/bookmark-button/bookmark-button.component';
 
 @Component({
   selector: 'app-authorlist-item',
@@ -24,12 +30,20 @@ import { BooksService } from '../../core/services/books.service';
     TruncateTextPipe,
     ItemScrollListComponent,
     CarouselComponent,
+    AuthoritemCommentsSectionComponent,
+    BookmarkButtonComponent,
   ],
 })
-export class AuthorlistItemComponent implements OnInit {
+export class AuthorlistItemComponent implements OnInit, OnDestroy {
   route = inject(ActivatedRoute);
+  authService = inject(AuthService);
   authorsService = inject(AuthorsService);
   booksService = inject(BooksService);
+  bookmarkService = inject(BookmarkService);
+
+  private subscription!: Subscription;
+  neededUserInfo: INeededUserInfo = { email: '', photoURL: '' };
+  isUserHasComment: boolean = false;
 
   loadingAuthor!: boolean;
 
@@ -45,7 +59,25 @@ export class AuthorlistItemComponent implements OnInit {
 
   fullRemoteIdsLinks!: IRemoteIdsLinks[] | null;
 
+  bioBtn: string = 'Show more';
+  bioShowLength: number = 300;
+  isBioFullText: boolean = false;
+
+  isBookmarked: boolean = false;
+
   ngOnInit(): void {
+    this.subscription = this.authService.user$.subscribe(async (data) => {
+      if (!data?.email || !data.photoURL) return;
+      this.neededUserInfo.email = data?.email;
+      this.neededUserInfo.photoURL = data?.photoURL;
+      console.log('our neededInfo: ', this.neededUserInfo);
+      this.bookmarkService
+        .checkUserHasAuthorBookmark(this.neededUserInfo.email, this.authorId)
+        .then((res: boolean) => {
+          this.isBookmarked = res;
+        });
+    });
+
     this.authorId = this.route.snapshot.url[1].path;
     this.loadingAuthor = true;
     this.loadingBooks = true;
@@ -106,7 +138,53 @@ export class AuthorlistItemComponent implements OnInit {
     }
   }
 
+  showCloseBio() {
+    if (!this.author.bio) {
+      return;
+    }
+    let bioLength = this.author.bio.length;
+    if (this.bioBtn === 'Show more') {
+      this.bioBtn = 'Hide';
+      this.bioShowLength = bioLength;
+      this.isBioFullText = true;
+    } else {
+      this.bioBtn = 'Show more';
+      this.bioShowLength = 300;
+      this.isBioFullText = false;
+    }
+  }
+
+  getBookmarkedChange(bookmarkedChange: boolean) {
+    this.isBookmarked = bookmarkedChange;
+
+    if (this.isBookmarked) {
+      this.addBookmark();
+    } else {
+      this.deleteBookmark();
+    }
+  }
+
+  addBookmark() {
+    this.bookmarkService
+      .addNewAuthorBookmark(this.neededUserInfo.email, this.authorId)
+      .then(() => {
+        console.log('bookmark added');
+      });
+  }
+
+  deleteBookmark() {
+    this.bookmarkService
+      .deleteAuthorBookmark(this.neededUserInfo.email, this.authorId)
+      .then(() => {
+        console.log('bookmark deleted');
+      });
+  }
+
   isString(value: any): boolean {
     return typeof value === 'string';
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

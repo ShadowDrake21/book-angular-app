@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   Input,
@@ -7,50 +6,50 @@ import {
   SimpleChanges,
   inject,
 } from '@angular/core';
-import { ButtonComponent } from '../../../../shared/components/UI/button/button.component';
+import { AuthService } from '../../../core/authentication/auth.service';
+import { CommentsService } from '../../../core/services/comments.service';
+import { AuthorsService } from '../../../core/services/authors.service';
+import {
+  IAuthorCommentToClient,
+  IAuthorCommentToDB,
+  IBookCommentToClient,
+  ICommentResult,
+  INeededUserInfo,
+} from '../../../shared/models/comment.model';
+import { CommonModule } from '@angular/common';
+import { ButtonComponent } from '../../../shared/components/UI/button/button.component';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { StarRatingModule } from 'angular-star-rating';
-import {
-  IBookCommentToClient,
-  IBookCommentToDB,
-  ICommentResult,
-  INeededUserInfo,
-} from '../../../../shared/models/comment.model';
-import { AuthService } from '../../../../core/authentication/auth.service';
-import { BooksService } from '../../../../core/services/books.service';
-import { CommentsService } from '../../../../core/services/comments.service';
 import { Timestamp } from '@angular/fire/firestore';
-import { BookitemCommentComponent } from '../bookitem-comment/bookitem-comment.component';
+import { AuthoritemCommentComponent } from '../authoritem-comment/authoritem-comment.component';
 
 @Component({
-  selector: 'app-bookitem-comments-section',
+  selector: 'app-authoritem-comments-section',
   standalone: true,
   imports: [
     CommonModule,
     ButtonComponent,
     ReactiveFormsModule,
-    StarRatingModule,
-    BookitemCommentComponent,
+    AuthoritemCommentComponent,
   ],
-  templateUrl: './bookitem-comments-section.component.html',
-  styleUrl: './bookitem-comments-section.component.scss',
+  templateUrl: './authoritem-comments-section.component.html',
+  styleUrl: './authoritem-comments-section.component.scss',
 })
-export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
+export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
   authService = inject(AuthService);
-  booksService = inject(BooksService);
+  authorsService = inject(AuthorsService);
   commentsService = inject(CommentsService);
 
-  @Input() bookId!: string;
+  @Input() authorId!: string;
   @Input() neededUserInfo: INeededUserInfo = { email: '', photoURL: '' };
 
   commentForm = new FormGroup({
     id: new FormControl(''),
-    rating: new FormControl('', Validators.required),
+    booksNumber: new FormControl('', Validators.required),
     comment: new FormControl('', Validators.required),
   });
 
@@ -63,14 +62,14 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
   commentEditedResult!: ICommentResult | undefined;
   commentDeletedResult!: ICommentResult | undefined;
 
-  comments: IBookCommentToClient[] = [];
-  userComment: IBookCommentToClient | undefined = undefined;
+  comments: IAuthorCommentToClient[] = [];
+  userComment: IAuthorCommentToClient | undefined = undefined;
 
   async ngOnInit(): Promise<void> {
-    this.commentsService
-      .checkUserHasBookComment(this.bookId, this.neededUserInfo.email)
+    await this.commentsService
+      .checkUserHasAuthorComment(this.authorId, this.neededUserInfo.email)
       .then((res) => {
-        console.log(this.bookId, this.neededUserInfo.email);
+        console.log(this.authorId, this.neededUserInfo.email);
         if (res === true) {
           this.disableForm();
         }
@@ -79,7 +78,6 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
       await this.getUserComment(this.neededUserInfo.email);
     });
   }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['neededUserInfo']) {
       this.neededUserInfo = changes['neededUserInfo'].currentValue;
@@ -90,25 +88,23 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
     if (!this.commentForm.value.id) {
       this.commentForm.value.id = 'id' + Math.random().toString(16).slice(2);
     }
-    if (!this.commentForm.value.rating) {
-      this.isRatingSet = false;
+    if (!this.commentForm.value.comment) {
       return;
-    } else if (!this.commentForm.value.comment) {
+    } else if (!this.commentForm.value.booksNumber) {
       return;
     }
-    this.isRatingSet = true;
 
-    const commentObj: IBookCommentToDB = {
+    const commentObj: IAuthorCommentToDB = {
       id: this.commentForm.value.id,
       email: this.neededUserInfo.email,
       comment: this.commentForm.value.comment,
-      rating: parseInt(this.commentForm.value.rating),
+      booksNumber: parseInt(this.commentForm.value.booksNumber),
       date: Timestamp.now(),
       photoURL: this.neededUserInfo.photoURL,
     };
     if (this.commentFormBtn === 'Post') {
       this.commentsService
-        .addNewBookComment(this.bookId, commentObj.id, commentObj)
+        .addNewAuthorComment(this.authorId, commentObj.id, commentObj)
         .then(async () => {
           this.commentPostedResult = {
             isSuccessfull: true,
@@ -131,7 +127,7 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
       }, 3000);
     } else {
       this.commentsService
-        .updateBookComment(this.bookId, commentObj.id, commentObj)
+        .updateAuthorComment(this.authorId, commentObj.id, commentObj)
         .then(async () => {
           this.commentEditedResult = {
             isSuccessfull: true,
@@ -158,33 +154,33 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
   }
 
   async getAllComments() {
-    const comments = await this.commentsService.getAllCommentsByBook(
-      this.bookId
+    const comments = await this.commentsService.getAllCommentsByAuthor(
+      this.authorId
     );
     this.comments = comments;
   }
 
   editComment(commentId: string) {
     this.commentFormBtn = 'Edit';
-    let choosenComment: IBookCommentToClient | undefined = undefined;
+    let choosenComment: IAuthorCommentToClient | undefined = undefined;
     this.commentsService
-      .getBookComment(this.bookId, commentId)
+      .getAuthorComment(this.authorId, commentId)
       .then((comments) => {
         this.enableForm();
         choosenComment = comments[0];
         this.commentForm.controls.comment.enable();
-        this.commentForm.controls.rating.enable();
+        this.commentForm.controls.booksNumber.enable();
         this.commentForm.controls.id.setValue(choosenComment.id);
         this.commentForm.controls.comment.setValue(choosenComment.comment);
-        this.commentForm.controls.rating.setValue(
-          choosenComment.rating.toString()
+        this.commentForm.controls.booksNumber.setValue(
+          choosenComment.booksNumber.toString()
         );
       });
   }
 
   deleteComment(commentId: string) {
     this.commentsService
-      .deleteBookComment(this.bookId, commentId)
+      .deleteAuthorComment(this.authorId, commentId)
       .then(async () => {
         this.commentDeletedResult = {
           isSuccessfull: true,
@@ -216,11 +212,11 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
   }
 
   disableForm(): void {
-    this.commentForm.controls.comment.disable();
+    this.commentForm.disable();
     console.log('form disabled!');
   }
 
   enableForm(): void {
-    this.commentForm.controls.comment.enable();
+    this.commentForm.enable();
   }
 }

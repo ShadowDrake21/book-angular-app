@@ -16,6 +16,8 @@ import {
   where,
 } from '@angular/fire/firestore';
 import {
+  IAuthorCommentToClient,
+  IAuthorCommentToDB,
   IBookCommentToClient,
   IBookCommentToDB,
 } from '../../shared/models/comment.model';
@@ -52,7 +54,7 @@ export class CommentsService {
     return comments;
   }
 
-  async addNewComment(
+  async addNewBookComment(
     bookId: string,
     commentId: string,
     dataObj: IBookCommentToDB
@@ -63,7 +65,7 @@ export class CommentsService {
     );
   }
 
-  async updateComment(
+  async updateBookComment(
     bookId: string,
     commentId: string,
     dataObj: IBookCommentToDB
@@ -79,7 +81,7 @@ export class CommentsService {
     console.log('document updated with id:', docRef.id);
   }
 
-  async getComment(
+  async getBookComment(
     bookId: string,
     commentId: string
   ): Promise<IBookCommentToClient[]> {
@@ -109,8 +111,7 @@ export class CommentsService {
     return comments;
   }
 
-  // zrobić coś takiego, ale na user obiekcie (spis komentarzy)
-  async checkUserHasComment(
+  async checkUserHasBookComment(
     bookId: string,
     userEmail: string
   ): Promise<boolean> {
@@ -123,9 +124,120 @@ export class CommentsService {
     return !querySnapshot.empty;
   }
 
-  async deleteComment(bookId: string, commentId: string) {
+  async deleteBookComment(bookId: string, commentId: string) {
     await deleteDoc(
       doc(this._firestore, 'books', bookId, 'comments', commentId)
+    );
+  }
+
+  // Author
+  async getAllCommentsByAuthor(
+    authorId: string
+  ): Promise<IAuthorCommentToClient[]> {
+    let comments: Array<IAuthorCommentToClient> = [];
+    const querySnapshot = await getDocs(
+      query(
+        collection(this._firestore, 'authors', authorId, 'comments'),
+        orderBy('date', 'desc')
+      )
+    );
+
+    querySnapshot.forEach((doc) => {
+      const commentDataFromDB = doc.data() as IAuthorCommentToDB;
+
+      let transformDate: Date = (commentDataFromDB.date as Timestamp).toDate();
+      const commentDateToClient: IAuthorCommentToClient = {
+        id: commentDataFromDB.id,
+        email: commentDataFromDB.email,
+        comment: commentDataFromDB.comment,
+        booksNumber: commentDataFromDB.booksNumber,
+        date: transformDate,
+        photoURL: commentDataFromDB.photoURL,
+      };
+      comments.push(commentDateToClient);
+    });
+    return comments;
+  }
+
+  async addNewAuthorComment(
+    authorId: string,
+    commentId: string,
+    dataObj: IAuthorCommentToDB
+  ) {
+    await setDoc(
+      doc(this._firestore, 'authors', authorId, 'comments', commentId),
+      dataObj
+    );
+  }
+
+  async updateAuthorComment(
+    authorId: string,
+    commentId: string,
+    dataObj: IAuthorCommentToDB
+  ) {
+    const docRef = doc(
+      this._firestore,
+      'authors',
+      authorId,
+      'comments',
+      commentId
+    );
+
+    await updateDoc(docRef, {
+      comment: dataObj.comment,
+      booksNumber: dataObj.booksNumber,
+      date: dataObj.date,
+    });
+
+    console.log('document updated with id:', docRef.id);
+  }
+
+  async getAuthorComment(
+    authorId: string,
+    commentId: string
+  ): Promise<IAuthorCommentToClient[]> {
+    let comments: Array<IAuthorCommentToClient> = [];
+    const querySnapshot = await getDocs(
+      query(
+        collection(this._firestore, 'authors', authorId, 'comments'),
+        where('id', '==', commentId)
+      )
+    );
+
+    querySnapshot.forEach((doc) => {
+      const commentDataFromDB = doc.data() as IAuthorCommentToDB;
+
+      let transformDate: Date = (commentDataFromDB.date as Timestamp).toDate();
+      const commentDateToClient: IAuthorCommentToClient = {
+        id: commentDataFromDB.id,
+        email: commentDataFromDB.email,
+        comment: commentDataFromDB.comment,
+        booksNumber: commentDataFromDB.booksNumber,
+        date: transformDate,
+        photoURL: commentDataFromDB.photoURL,
+      };
+      comments.push(commentDateToClient);
+    });
+    console.log('edit comment: ', comments);
+    return comments;
+  }
+
+  async checkUserHasAuthorComment(
+    authorId: string,
+    userEmail: string
+  ): Promise<boolean> {
+    const querySnapshot = await getDocs(
+      query(
+        collection(this._firestore, 'authors', authorId, 'comments'),
+        where('email', '==', userEmail)
+      )
+    );
+    return !querySnapshot.empty;
+  }
+
+  async deleteAuthorComment(authorId: string, commentId: string) {
+    await deleteDoc(
+      doc(this._firestore, 'authors', authorId, 'comments', commentId)
     );
   }
 }
