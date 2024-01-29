@@ -34,3 +34,9 @@
 .filter__item-select:disabled {
   cursor: not-allowed;
 }
+
+.clean__btn:disabled {
+  &:hover {
+    color: rgb(17, 24, 39);
+  }
+}
