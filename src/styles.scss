@@ -82,3 +82,33 @@ body {
     }
   }
 }
+
+.loading {
+  height: 520px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__text {
+    margin-bottom: 40px;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+  }
+}
+
+.textarea-error {
+  border-color: var(--error-color);
+  color: var(--error-color);
+}
+
+.textarea-error::placeholder {
+  color: var(--error-color);
+}
+
+.successfull {
+  color: rgb(34, 197, 94);
+}
+
+.disabled-textarea {
+  background-color: #e4e4e4c2;
+}

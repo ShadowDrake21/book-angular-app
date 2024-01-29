@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
   inject,
@@ -26,11 +27,13 @@ import { IError } from '../../shared/models/error.model';
   templateUrl: './booklist.component.html',
   styleUrl: './booklist.component.scss',
 })
-export class BooklistComponent implements OnInit {
+export class BooklistComponent implements OnInit, OnDestroy {
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
   booksService = inject(BooksService);
 
+  queryType: string = 'subject';
+  queryParam!: string;
   subjectSub!: Subscription;
   subjectParam!: string;
 
@@ -48,23 +51,46 @@ export class BooklistComponent implements OnInit {
   ngOnInit(): void {
     this.getQueryParams();
     this.errorWhileFetching = '';
-    if (this.subjectParam.length) {
-      this.loadingBooks = true;
-      this.booksService.getBooksBySubject(this.subjectParam, {}).subscribe(
-        (res) => {
-          this.books = res.works;
-          this.loadingBooks = false;
-        },
-        (err) => {
-          this.errorWhileFetching = 'The subject has no books!';
-        }
-      );
+    if (this.queryParam.length) {
+      switch (this.queryType) {
+        case 'subject':
+          this.loadingBooks = true;
+          this.booksService.getBooksBySubject(this.queryParam).subscribe(
+            (res) => {
+              this.books = res.works;
+              this.loadingBooks = false;
+              console.log(this.books);
+            },
+            (err) => {
+              this.errorWhileFetching = 'The subject has no books!';
+            }
+          );
+          break;
+        case 'author':
+          this.loadingBooks = true;
+          this.booksService
+            .getBooksByAuthor(this.queryParam, { limit: 50 })
+            .subscribe(
+              (res) => {
+                this.books = res.docs;
+                this.loadingBooks = false;
+                console.log('author books: ', this.books);
+              },
+              (err) => {
+                this.errorWhileFetching = 'The author has no books!';
+              }
+            );
+          break;
+      }
     }
   }
 
   getQueryParams(): void {
     this.subjectSub = this.activatedRoute.queryParamMap.subscribe((params) => {
-      this.subjectParam = params.get('subject') || '';
+      this.queryType = params.keys[0];
+      this.queryParam = params.get(this.queryType) || '';
+      console.log(this.queryParam);
+      // this.subjectParam = params.get('subject') || '';
     });
   }
 
@@ -72,6 +98,7 @@ export class BooklistComponent implements OnInit {
     this.router.navigate([], {
       queryParams: {
         subject: null,
+        author: null,
       },
       queryParamsHandling: 'merge',
     });
@@ -90,15 +117,25 @@ export class BooklistComponent implements OnInit {
   }
 
   getFilterError(error: IError) {
-    this.subjectParam = '';
+    this.queryType = '';
+    this.queryParam = '';
     this.isAfterFilter = false;
     this.loadingFilterBooks = false;
     this.filterError = error;
   }
 
+  isAuthorParam(): boolean {
+    return this.queryType === 'author';
+  }
+
   formSearchTitle() {
-    return this.subjectParam
-      ? `genre "${this.subjectParam}"`
+    return this.queryParam
+      ? `${!this.isAuthorParam() ? 'genre' : 'author'} "${this.queryParam}"`
       : this.searchTitle;
+  }
+
+  ngOnDestroy(): void {
+    this.queryType = '';
+    this.queryParam = '';
   }
 }

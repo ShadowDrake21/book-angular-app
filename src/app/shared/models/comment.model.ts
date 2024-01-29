@@ -18,6 +18,24 @@ export interface IBookCommentToClient {
   photoURL: string;
 }
 
+export interface IAuthorCommentToDB {
+  id: string;
+  email: string;
+  comment: string;
+  booksNumber: number;
+  date: Timestamp;
+  photoURL: string;
+}
+
+export interface IAuthorCommentToClient {
+  id: string;
+  email: string;
+  comment: string;
+  booksNumber: number;
+  date: Date;
+  photoURL: string;
+}
+
 // export interface IUserCommentOnBook {
 //   bookId: string;
 //   comment: string;
