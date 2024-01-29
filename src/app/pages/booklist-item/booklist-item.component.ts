@@ -50,7 +50,6 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
   booksService = inject(BooksService);
   authorsService = inject(AuthorsService);
-  commentsService = inject(CommentsService);
   bookmarkService = inject(BookmarkService);
 
   private subscription!: Subscription;

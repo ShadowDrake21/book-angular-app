@@ -50,7 +50,7 @@ export class BooklistFilterComponent implements OnInit {
     genre: new FormControl(null),
     yearFrom: new FormControl(null),
     yearTo: new FormControl(null),
-    limit: new FormControl({ value: 0, disabled: false }),
+    limit: new FormControl({ value: 0, disabled: false }, [Validators.min(1)]),
     sorting: new FormControl(null),
   });
 

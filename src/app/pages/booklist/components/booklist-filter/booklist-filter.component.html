@@ -99,6 +99,14 @@
           formControlName="limit"
         />
       </label>
+      <p
+        class="text-red-600 pt-2"
+        *ngIf="
+        filterForm.controls.limit.errors?.['min']
+      "
+      >
+        Limit should be more or equal to 1
+      </p>
     </div>
     <div class="filter__item">
       <h3 class="filter__item-title">Sorting</h3>
