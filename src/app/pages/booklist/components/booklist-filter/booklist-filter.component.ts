@@ -1,4 +1,12 @@
-import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ButtonComponent } from '../../../../shared/components/UI/button/button.component';
 import { BooklistFilterContent } from './content/booklist-filter.content';
@@ -26,11 +34,13 @@ import { IError } from '../../../../shared/models/error.model';
   templateUrl: './booklist-filter.component.html',
   styleUrl: './booklist-filter.component.scss',
 })
-export class BooklistFilterComponent {
+export class BooklistFilterComponent implements OnInit {
   bookService = inject(BooksService);
   filterContent: IBooklistFilter = BooklistFilterContent;
 
   filteredBooks: IBook[] = [];
+  @Input() authorName: string | null = null;
+  @Input() authorLimit: number | null = null;
   @Output() getFilteredBooks = new EventEmitter<IBook[]>();
   @Output() getFilterRequest = new EventEmitter<string>();
   @Output() getFilterLoading = new EventEmitter<boolean>();
@@ -40,9 +50,14 @@ export class BooklistFilterComponent {
     genre: new FormControl(null),
     yearFrom: new FormControl(null),
     yearTo: new FormControl(null),
-    limit: new FormControl(null),
+    limit: new FormControl({ value: 0, disabled: false }),
     sorting: new FormControl(null),
   });
+
+  ngOnInit(): void {
+    this.filterForm.controls.author.setValue(this.authorName);
+    this.filterForm.controls.limit.setValue(this.authorLimit);
+  }
 
   disabledUnusedFields(bool: boolean, ...fields: string[]) {
     if (bool) {

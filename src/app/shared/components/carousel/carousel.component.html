@@ -16,7 +16,11 @@
   <a
     *ngIf="carouselLink"
     [routerLink]="['/booklist']"
-    [queryParams]="{ subject: carouselLink }"
+    [queryParams]="
+      queryType === 'subject'
+        ? { subject: carouselLink }
+        : { author: carouselLink }
+    "
     class="font-medium text-lg inline-block mt-5 ml-2 text-gray-600 hover:underline"
     >See more of {{ title }}</a
   >

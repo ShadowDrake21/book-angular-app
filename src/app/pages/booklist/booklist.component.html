@@ -3,13 +3,15 @@
     <div class="flex gap-5">
       <div class="min-w-[220px]">
         <app-booklist-filter
+          [authorName]="isAuthorParam() ? queryParam : null"
+          [authorLimit]="isAuthorParam() ? 50 : null"
           (getFilteredBooks)="getFilteredBooks($event)"
           (getFilterRequest)="getFilterRequest($event)"
           (getFilterLoading)="getFilterLoading($event)"
           (getFilterError)="getFilterError($event)"
         ></app-booklist-filter>
       </div>
-      @if (subjectParam || isAfterFilter || loadingFilterBooks) {
+      @if (queryParam || isAfterFilter || loadingFilterBooks) {
       <div class="w-full">
         <h2
           class="text-3xl font-semibold mb-3"

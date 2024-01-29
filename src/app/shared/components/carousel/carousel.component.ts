@@ -28,6 +28,7 @@ import { RouterModule } from '@angular/router';
 export class CarouselComponent implements AfterViewInit {
   @Input({ required: true }) contents: IBook[] = [];
   @Input({ required: true }) title!: string;
+  @Input() queryType: string = 'subject';
   @Input() carouselLink!: string;
   @ViewChild('swiperContainer') swiperContainer!: ElementRef;
   selectedContent: string | null = null;
