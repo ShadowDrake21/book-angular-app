@@ -59,18 +59,17 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
   isRatingSet: boolean = true;
   isUserHasComment: boolean = false;
 
-  commentPostedResult!: ICommentResult | undefined;
-  commentEditedResult!: ICommentResult | undefined;
-  commentDeletedResult!: ICommentResult | undefined;
+  commentActionsResult!: ICommentResult | undefined;
 
   comments: IBookCommentToClient[] = [];
   userComment: IBookCommentToClient | undefined = undefined;
 
+  areUserBtnsActive: boolean = true;
+
   async ngOnInit(): Promise<void> {
-    this.commentsService
+    await this.commentsService
       .checkUserHasComment('books', this.bookId, this.neededUserInfo.email)
       .then((res) => {
-        console.log(this.bookId, this.neededUserInfo.email);
         if (res === true) {
           this.disableForm();
         }
@@ -110,7 +109,7 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
       this.commentsService
         .addNewComment('books', this.bookId, commentObj.id, commentObj)
         .then(async () => {
-          this.commentPostedResult = {
+          this.commentActionsResult = {
             isSuccessfull: true,
             message: 'Review successfully added!',
           };
@@ -118,22 +117,25 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
             await this.getUserComment(this.neededUserInfo.email);
           });
           this.getUserComment(this.neededUserInfo.email);
+          this.areUserBtnsActive = false;
           this.disableForm();
         })
         .catch((err) => {
-          this.commentPostedResult = {
+          this.areUserBtnsActive = false;
+          this.commentActionsResult = {
             isSuccessfull: false,
             message: err.toString(),
           };
         });
       setTimeout(() => {
-        this.commentPostedResult = undefined;
+        this.areUserBtnsActive = true;
+        this.commentActionsResult = undefined;
       }, 3000);
     } else {
       this.commentsService
         .updateComment('books', this.bookId, commentObj.id, commentObj)
         .then(async () => {
-          this.commentEditedResult = {
+          this.commentActionsResult = {
             isSuccessfull: true,
             message: 'Review successfully edited!',
           };
@@ -141,16 +143,19 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
             await this.getUserComment(this.neededUserInfo.email);
           });
           this.getUserComment(this.neededUserInfo.email);
+          this.areUserBtnsActive = false;
           this.disableForm();
         })
         .catch((err) => {
-          this.commentPostedResult = {
+          this.areUserBtnsActive = false;
+          this.commentActionsResult = {
             isSuccessfull: false,
             message: err.toString(),
           };
         });
       setTimeout(() => {
-        this.commentEditedResult = undefined;
+        this.areUserBtnsActive = true;
+        this.commentActionsResult = undefined;
       }, 3000);
     }
     this.commentForm.reset();
@@ -186,7 +191,7 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
     this.commentsService
       .deleteComment('books', this.bookId, commentId)
       .then(async () => {
-        this.commentDeletedResult = {
+        this.commentActionsResult = {
           isSuccessfull: true,
           message: 'Review successfully deleted!',
         };
@@ -197,13 +202,13 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
         this.enableForm();
       })
       .catch((err) => {
-        this.commentDeletedResult = {
+        this.commentActionsResult = {
           isSuccessfull: false,
           message: err.toString(),
         };
       });
     setTimeout(() => {
-      this.commentDeletedResult = undefined;
+      this.commentActionsResult = undefined;
     }, 3000);
   }
 
@@ -217,7 +222,6 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
 
   disableForm(): void {
     this.commentForm.controls.comment.disable();
-    console.log('form disabled!');
   }
 
   enableForm(): void {

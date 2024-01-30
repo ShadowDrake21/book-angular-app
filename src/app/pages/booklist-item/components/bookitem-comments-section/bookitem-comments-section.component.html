@@ -41,23 +41,12 @@
   />
 </form>
 <div class="pt-10">
-  <div
-    class="mb-5"
-    *ngIf="commentPostedResult || commentEditedResult || commentDeletedResult"
-  >
+  <div class="mb-5" *ngIf="commentActionsResult">
     <p
       class="text-red-600"
-      [class.successfull]="
-        commentPostedResult?.isSuccessfull ||
-        commentEditedResult?.isSuccessfull ||
-        commentDeletedResult?.isSuccessfull
-      "
+      [class.successfull]="commentActionsResult.isSuccessfull"
     >
-      {{
-        commentPostedResult?.message ||
-          commentEditedResult?.message ||
-          commentDeletedResult?.message
-      }}
+      {{ commentActionsResult.message }}
     </p>
   </div>
   @if(userComment) {
@@ -65,6 +54,7 @@
   <app-bookitem-comment
     [comment]="userComment"
     [isUserComment]="true"
+    [areUserBtnsActive]="areUserBtnsActive"
     (editCommentId)="editComment($event)"
     (deleteCommentId)="deleteComment($event)"
   ></app-bookitem-comment>
@@ -75,7 +65,6 @@
   @for (comment of comments; track $index) {
   <app-bookitem-comment
     [comment]="comment"
-    [isUserComment]="comment.id === userComment?.id"
     (editCommentId)="editComment($event)"
     (deleteCommentId)="deleteComment($event)"
   ></app-bookitem-comment>

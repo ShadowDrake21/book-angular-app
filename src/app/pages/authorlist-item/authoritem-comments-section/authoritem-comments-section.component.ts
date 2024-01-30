@@ -12,7 +12,6 @@ import { AuthorsService } from '../../../core/services/authors.service';
 import {
   IAuthorCommentToClient,
   IAuthorCommentToDB,
-  IBookCommentToClient,
   ICommentResult,
   INeededUserInfo,
 } from '../../../shared/models/comment.model';
@@ -59,18 +58,17 @@ export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
   isRatingSet: boolean = true;
   isUserHasComment: boolean = false;
 
-  commentPostedResult!: ICommentResult | undefined;
-  commentEditedResult!: ICommentResult | undefined;
-  commentDeletedResult!: ICommentResult | undefined;
+  commentActionsResult!: ICommentResult | undefined;
 
   comments: IAuthorCommentToClient[] = [];
   userComment: IAuthorCommentToClient | undefined = undefined;
+
+  areUserBtnsActive: boolean = true;
 
   async ngOnInit(): Promise<void> {
     await this.commentsService
       .checkUserHasComment('authors', this.authorId, this.neededUserInfo.email)
       .then((res) => {
-        console.log(this.authorId, this.neededUserInfo.email);
         if (res === true) {
           this.disableForm();
         }
@@ -107,7 +105,7 @@ export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
       this.commentsService
         .addNewComment('authors', this.authorId, commentObj.id, commentObj)
         .then(async () => {
-          this.commentPostedResult = {
+          this.commentActionsResult = {
             isSuccessfull: true,
             message: 'Review successfully added!',
           };
@@ -115,22 +113,25 @@ export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
             await this.getUserComment(this.neededUserInfo.email);
           });
           this.getUserComment(this.neededUserInfo.email);
+          this.areUserBtnsActive = false;
           this.disableForm();
         })
         .catch((err) => {
-          this.commentPostedResult = {
+          this.areUserBtnsActive = false;
+          this.commentActionsResult = {
             isSuccessfull: false,
             message: err.toString(),
           };
         });
       setTimeout(() => {
-        this.commentPostedResult = undefined;
+        this.areUserBtnsActive = true;
+        this.commentActionsResult = undefined;
       }, 3000);
     } else {
       this.commentsService
         .updateComment('authors', this.authorId, commentObj.id, commentObj)
         .then(async () => {
-          this.commentEditedResult = {
+          this.commentActionsResult = {
             isSuccessfull: true,
             message: 'Review successfully edited!',
           };
@@ -138,16 +139,19 @@ export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
             await this.getUserComment(this.neededUserInfo.email);
           });
           this.getUserComment(this.neededUserInfo.email);
+          this.areUserBtnsActive = false;
           this.disableForm();
         })
         .catch((err) => {
-          this.commentPostedResult = {
+          this.areUserBtnsActive = false;
+          this.commentActionsResult = {
             isSuccessfull: false,
             message: err.toString(),
           };
         });
       setTimeout(() => {
-        this.commentEditedResult = undefined;
+        this.areUserBtnsActive = true;
+        this.commentActionsResult = undefined;
       }, 3000);
     }
     this.commentForm.reset();
@@ -183,7 +187,7 @@ export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
     this.commentsService
       .deleteComment('authors', this.authorId, commentId)
       .then(async () => {
-        this.commentDeletedResult = {
+        this.commentActionsResult = {
           isSuccessfull: true,
           message: 'Review successfully deleted!',
         };
@@ -194,13 +198,13 @@ export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
         this.enableForm();
       })
       .catch((err) => {
-        this.commentDeletedResult = {
+        this.commentActionsResult = {
           isSuccessfull: false,
           message: err.toString(),
         };
       });
     setTimeout(() => {
-      this.commentDeletedResult = undefined;
+      this.commentActionsResult = undefined;
     }, 3000);
   }
 
@@ -214,7 +218,6 @@ export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
 
   disableForm(): void {
     this.commentForm.disable();
-    console.log('form disabled!');
   }
 
   enableForm(): void {
