@@ -54,29 +54,48 @@ export class CommentsService {
     return comments;
   }
 
-  async addNewBookComment(
-    bookId: string,
+  async addNewComment(
+    entity: string,
+    entityItemId: string,
     commentId: string,
-    dataObj: IBookCommentToDB
+    dataObj: IBookCommentToDB | IAuthorCommentToDB
   ) {
     await setDoc(
-      doc(this._firestore, 'books', bookId, 'comments', commentId),
+      doc(this._firestore, entity, entityItemId, 'comments', commentId),
       dataObj
     );
   }
 
-  async updateBookComment(
-    bookId: string,
+  async updateComment(
+    entity: string,
+    entityItemId: string,
     commentId: string,
-    dataObj: IBookCommentToDB
+    dataObj: IBookCommentToDB | IAuthorCommentToDB
   ) {
-    const docRef = doc(this._firestore, 'books', bookId, 'comments', commentId);
+    const docRef = doc(
+      this._firestore,
+      entity,
+      entityItemId,
+      'comments',
+      commentId
+    );
 
-    await updateDoc(docRef, {
-      comment: dataObj.comment,
-      rating: dataObj.rating,
-      date: dataObj.date,
-    });
+    let updateObj: object = {};
+    if ('rating' in dataObj) {
+      updateObj = {
+        comment: dataObj.comment,
+        rating: dataObj.rating,
+        date: dataObj.date,
+      };
+    } else if ('booksNumber' in dataObj) {
+      updateObj = {
+        comment: dataObj.comment,
+        booksNumber: dataObj.booksNumber,
+        date: dataObj.date,
+      };
+    }
+    console.log('updateObj: ', updateObj);
+    await updateDoc(docRef, updateObj);
 
     console.log('document updated with id:', docRef.id);
   }
@@ -111,26 +130,26 @@ export class CommentsService {
     return comments;
   }
 
-  async checkUserHasBookComment(
-    bookId: string,
+  async checkUserHasComment(
+    entity: string,
+    entityItemId: string,
     userEmail: string
   ): Promise<boolean> {
     const querySnapshot = await getDocs(
       query(
-        collection(this._firestore, 'books', bookId, 'comments'),
+        collection(this._firestore, entity, entityItemId, 'comments'),
         where('email', '==', userEmail)
       )
     );
     return !querySnapshot.empty;
   }
 
-  async deleteBookComment(bookId: string, commentId: string) {
+  async deleteComment(entity: string, entityItemId: string, commentId: string) {
     await deleteDoc(
-      doc(this._firestore, 'books', bookId, 'comments', commentId)
+      doc(this._firestore, entity, entityItemId, 'comments', commentId)
     );
   }
 
-  // Author
   async getAllCommentsByAuthor(
     authorId: string
   ): Promise<IAuthorCommentToClient[]> {
@@ -159,39 +178,6 @@ export class CommentsService {
     return comments;
   }
 
-  async addNewAuthorComment(
-    authorId: string,
-    commentId: string,
-    dataObj: IAuthorCommentToDB
-  ) {
-    await setDoc(
-      doc(this._firestore, 'authors', authorId, 'comments', commentId),
-      dataObj
-    );
-  }
-
-  async updateAuthorComment(
-    authorId: string,
-    commentId: string,
-    dataObj: IAuthorCommentToDB
-  ) {
-    const docRef = doc(
-      this._firestore,
-      'authors',
-      authorId,
-      'comments',
-      commentId
-    );
-
-    await updateDoc(docRef, {
-      comment: dataObj.comment,
-      booksNumber: dataObj.booksNumber,
-      date: dataObj.date,
-    });
-
-    console.log('document updated with id:', docRef.id);
-  }
-
   async getAuthorComment(
     authorId: string,
     commentId: string
@@ -218,26 +204,6 @@ export class CommentsService {
       };
       comments.push(commentDateToClient);
     });
-    console.log('edit comment: ', comments);
     return comments;
-  }
-
-  async checkUserHasAuthorComment(
-    authorId: string,
-    userEmail: string
-  ): Promise<boolean> {
-    const querySnapshot = await getDocs(
-      query(
-        collection(this._firestore, 'authors', authorId, 'comments'),
-        where('email', '==', userEmail)
-      )
-    );
-    return !querySnapshot.empty;
-  }
-
-  async deleteAuthorComment(authorId: string, commentId: string) {
-    await deleteDoc(
-      doc(this._firestore, 'authors', authorId, 'comments', commentId)
-    );
   }
 }
