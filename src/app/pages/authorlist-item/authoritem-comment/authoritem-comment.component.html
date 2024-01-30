@@ -12,12 +12,16 @@
         <button
           class="mr-4 text-gray-600 transition-colors hover:underline hover:text-gray-800"
           (click)="editComment()"
+          [disabled]="!areUserBtnsActive"
+          [class.disabled-btn]="!areUserBtnsActive"
         >
           Edit comment
         </button>
         <button
           class="text-gray-600 transition-colors hover:text-gray-800 hover:underline"
           (click)="deleteComment()"
+          [disabled]="!areUserBtnsActive"
+          [class.disabled-btn]="!areUserBtnsActive"
         >
           Delete comment
         </button>
