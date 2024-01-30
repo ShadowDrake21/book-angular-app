@@ -84,7 +84,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
       this.neededUserInfo.photoURL = data?.photoURL;
       console.log('our neededInfo: ', this.neededUserInfo);
       this.bookmarkService
-        .checkUserHasBookBookmark(this.neededUserInfo.email, this.bookId)
+        .checkUserHasBookmark(this.neededUserInfo.email, 'books', this.bookId)
         .then((res: boolean) => {
           this.isBookmarked = res;
         });
@@ -169,7 +169,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
 
   addBookmark() {
     this.bookmarkService
-      .addNewBookBookmark(this.neededUserInfo.email, this.bookId)
+      .addNewBookmark(this.neededUserInfo.email, 'books', this.bookId)
       .then(() => {
         console.log('bookmark added');
       });
@@ -177,7 +177,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
 
   deleteBookmark() {
     this.bookmarkService
-      .deleteBookBookmark(this.neededUserInfo.email, this.bookId)
+      .deleteBookmark(this.neededUserInfo.email, 'books', this.bookId)
       .then(() => {
         console.log('bookmark deleted');
       });

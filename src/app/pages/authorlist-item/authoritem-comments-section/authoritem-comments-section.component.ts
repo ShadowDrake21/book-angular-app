@@ -39,6 +39,7 @@ import { AuthoritemCommentComponent } from '../authoritem-comment/authoritem-com
   templateUrl: './authoritem-comments-section.component.html',
   styleUrl: './authoritem-comments-section.component.scss',
 })
+// refactoring
 export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
   authService = inject(AuthService);
   authorsService = inject(AuthorsService);
@@ -67,7 +68,7 @@ export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
 
   async ngOnInit(): Promise<void> {
     await this.commentsService
-      .checkUserHasAuthorComment(this.authorId, this.neededUserInfo.email)
+      .checkUserHasComment('authors', this.authorId, this.neededUserInfo.email)
       .then((res) => {
         console.log(this.authorId, this.neededUserInfo.email);
         if (res === true) {
@@ -104,7 +105,7 @@ export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
     };
     if (this.commentFormBtn === 'Post') {
       this.commentsService
-        .addNewAuthorComment(this.authorId, commentObj.id, commentObj)
+        .addNewComment('authors', this.authorId, commentObj.id, commentObj)
         .then(async () => {
           this.commentPostedResult = {
             isSuccessfull: true,
@@ -127,7 +128,7 @@ export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
       }, 3000);
     } else {
       this.commentsService
-        .updateAuthorComment(this.authorId, commentObj.id, commentObj)
+        .updateComment('authors', this.authorId, commentObj.id, commentObj)
         .then(async () => {
           this.commentEditedResult = {
             isSuccessfull: true,
@@ -180,7 +181,7 @@ export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
 
   deleteComment(commentId: string) {
     this.commentsService
-      .deleteAuthorComment(this.authorId, commentId)
+      .deleteComment('authors', this.authorId, commentId)
       .then(async () => {
         this.commentDeletedResult = {
           isSuccessfull: true,

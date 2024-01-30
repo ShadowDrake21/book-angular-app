@@ -68,7 +68,7 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
 
   async ngOnInit(): Promise<void> {
     this.commentsService
-      .checkUserHasBookComment(this.bookId, this.neededUserInfo.email)
+      .checkUserHasComment('books', this.bookId, this.neededUserInfo.email)
       .then((res) => {
         console.log(this.bookId, this.neededUserInfo.email);
         if (res === true) {
@@ -108,7 +108,7 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
     };
     if (this.commentFormBtn === 'Post') {
       this.commentsService
-        .addNewBookComment(this.bookId, commentObj.id, commentObj)
+        .addNewComment('books', this.bookId, commentObj.id, commentObj)
         .then(async () => {
           this.commentPostedResult = {
             isSuccessfull: true,
@@ -131,7 +131,7 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
       }, 3000);
     } else {
       this.commentsService
-        .updateBookComment(this.bookId, commentObj.id, commentObj)
+        .updateComment('books', this.bookId, commentObj.id, commentObj)
         .then(async () => {
           this.commentEditedResult = {
             isSuccessfull: true,
@@ -184,7 +184,7 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
 
   deleteComment(commentId: string) {
     this.commentsService
-      .deleteBookComment(this.bookId, commentId)
+      .deleteComment('books', this.bookId, commentId)
       .then(async () => {
         this.commentDeletedResult = {
           isSuccessfull: true,

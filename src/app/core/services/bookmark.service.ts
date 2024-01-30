@@ -17,25 +17,26 @@ import {
 export class BookmarkService {
   private _firestore = inject(Firestore);
 
-  async addNewBookBookmark(userId: string, bookId: string) {
+  async addNewBookmark(userId: string, entity: string, entityItemId: string) {
     await setDoc(
-      doc(this._firestore, 'bookmarksByUser', userId, 'books', bookId),
+      doc(this._firestore, 'bookmarksByUser', userId, entity, entityItemId),
       {
-        bookId,
+        entityItemId,
       }
     );
   }
 
-  async checkUserHasBookBookmark(
+  async checkUserHasBookmark(
     userId: string,
-    bookId: string
+    entity: string,
+    entityItemId: string
   ): Promise<boolean> {
     const docRef = doc(
       this._firestore,
       'bookmarksByUser',
       userId,
-      'books',
-      bookId
+      entity,
+      entityItemId
     );
     const docSnap = await getDoc(docRef);
 
@@ -47,45 +48,9 @@ export class BookmarkService {
     }
   }
 
-  async deleteBookBookmark(userId: string, bookId: string) {
+  async deleteBookmark(userId: string, entity: string, entityItemId: string) {
     await deleteDoc(
-      doc(this._firestore, 'bookmarksByUser', userId, 'books', bookId)
-    );
-  }
-
-  async addNewAuthorBookmark(userId: string, authorId: string) {
-    await setDoc(
-      doc(this._firestore, 'bookmarksByUser', userId, 'authors', authorId),
-      {
-        authorId,
-      }
-    );
-  }
-
-  async checkUserHasAuthorBookmark(
-    userId: string,
-    authorId: string
-  ): Promise<boolean> {
-    const docRef = doc(
-      this._firestore,
-      'bookmarksByUser',
-      userId,
-      'authors',
-      authorId
-    );
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      console.log('bookmarked', docSnap.data());
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  async deleteAuthorBookmark(userId: string, authorId: string) {
-    await deleteDoc(
-      doc(this._firestore, 'bookmarksByUser', userId, 'authors', authorId)
+      doc(this._firestore, 'bookmarksByUser', userId, entity, entityItemId)
     );
   }
 }
