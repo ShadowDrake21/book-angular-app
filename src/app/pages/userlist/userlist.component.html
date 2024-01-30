@@ -1,1 +1,13 @@
-<p>userlist works!</p>
+<section class="pt-[120px]">
+  <div class="container-big">
+    @if (!loadingUsers) {
+    <div class="flex flex-wrap gap-3 justify-center">
+      @for (user of users; track user.id) {
+      <app-user-item [user]="user"></app-user-item>
+      }
+    </div>
+    } @else {
+    <p>Loading...</p>
+    }
+  </div>
+</section>

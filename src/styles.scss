@@ -47,6 +47,17 @@ body {
       opacity: 1;
     }
   }
+  .item__description {
+    .item__description-info {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      padding: 40px 25px;
+    }
+  }
 }
 
 .item__image {
