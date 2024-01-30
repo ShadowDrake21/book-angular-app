@@ -1,10 +1,69 @@
 <section class="pt-[120px]">
   <div class="container-big">
+    <h2 class="text-3xl font-semibold mb-3" *ngIf="searchTitle">
+      Search user
+      <span>: {{ searchTitle }}</span>
+    </h2>
+    <form
+      class="flex mb-7"
+      [formGroup]="searchUserForm"
+      (ngSubmit)="onSearch()"
+    >
+      <div>
+        <app-input
+          [type]="'text'"
+          [label]="'User'"
+          [placeholder]="'User email'"
+          formControlName="userEmail"
+          [isError]="
+            searchUserForm.controls.userEmail.invalid &&
+            searchUserForm.controls.userEmail.touched
+          "
+        ></app-input>
+        @if (searchUserForm.controls.userEmail.invalid &&
+        searchUserForm.controls.userEmail.touched ) {
+        <div
+          class="validate-error mt-2"
+          *ngIf="searchUserForm.controls.userEmail.errors?.['required']"
+        >
+          Search email is required
+        </div>
+        <div
+          class="validate-error mt-2"
+          *ngIf="searchUserForm.controls.userEmail.errors?.['email']"
+        >
+          {{ searchUserForm.controls.userEmail.value }} is not a valid email
+        </div>
+        }
+      </div>
+      <app-button
+        [button-styles]="'margin: 10px 0 0 40px'"
+        [text]="'Search'"
+        [disabled]="searchUserForm.invalid || !searchUserForm.dirty"
+      />
+    </form>
     @if (!loadingUsers) {
     <div class="flex flex-wrap gap-3 justify-center">
-      @for (user of users; track user.id) {
+      @for (user of visibleUsers; track user.id) {
       <app-user-item [user]="user"></app-user-item>
       }
+    </div>
+    <div class="pagination mb-5">
+      <button
+        class="pagination__btn"
+        (click)="prevPage()"
+        [disabled]="currentPage === 1"
+      >
+        Previous
+      </button>
+      <span class="pagination__text">Current Page: {{ currentPage }}</span>
+      <button
+        class="pagination__btn"
+        (click)="nextPage()"
+        [disabled]="currentPage === numPages()"
+      >
+        Next
+      </button>
     </div>
     } @else {
     <p>Loading...</p>
