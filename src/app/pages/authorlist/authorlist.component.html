@@ -36,7 +36,6 @@
         [disabled]="searchAuthorForm.controls.authorName.errors?.['required']"
       />
     </form>
-    <!-- height -->
     <div
       *ngIf="
         paginationService.currentPageData$ | async as authorsList;
