@@ -1,1 +1,37 @@
-<p>userlist-item works!</p>
+<section class="pt-[120px]">
+  <div class="container-big">
+    @if(!loadingUser){
+    <div class="flex gap-10" *ngIf="user.id !== 'unknown'; else noUser">
+      <div class="max-w-96 flex-shrink-0">
+        <div class="max-h-[500px] h-full">
+          <img
+            [src]="user.photoURL"
+            alt="main cover"
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div class="my-5">
+          <p class="mb-2" *ngIf="user.email !== 'unknown'">
+            Last time in system:
+            <span class="font-semibold">{{
+              user.lastSignInTime | date : "medium"
+            }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="max-w-full w-full">
+        <h1 class="font-semibold text-5xl mb-5">
+          {{ user.email ?? "" | truncateText : 25 }}
+        </h1>
+      </div>
+    </div>
+    <ng-template #noUser>
+      <div class="no-items">
+        <p class="text-3xl font-semibold">No such user</p>
+      </div>
+    </ng-template>
+    } @else {
+    <div class="no-items"><p class="text-3xl font-semibold">Loading...</p></div>
+    }
+  </div>
+</section>

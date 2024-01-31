@@ -189,7 +189,7 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
 
   deleteComment(commentId: string) {
     this.commentsService
-      .deleteComment('books', this.bookId, commentId)
+      .deleteComment('books', this.bookId, commentId, this.neededUserInfo.email)
       .then(async () => {
         this.commentActionsResult = {
           isSuccessfull: true,
