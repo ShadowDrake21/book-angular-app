@@ -63,7 +63,9 @@ export class CommentsService {
     await setDoc(
       doc(this._firestore, entity, entityItemId, 'comments', commentId),
       dataObj
-    );
+    ).then(() => {
+      this.setCommentInUserData(dataObj.email, commentId, entity, dataObj);
+    });
   }
 
   async updateComment(
@@ -144,10 +146,17 @@ export class CommentsService {
     return !querySnapshot.empty;
   }
 
-  async deleteComment(entity: string, entityItemId: string, commentId: string) {
+  async deleteComment(
+    entity: string,
+    entityItemId: string,
+    commentId: string,
+    email: string
+  ) {
     await deleteDoc(
       doc(this._firestore, entity, entityItemId, 'comments', commentId)
-    );
+    ).then(() => {
+      this.deleteCommentInUserData(email, commentId);
+    });
   }
 
   async getAllCommentsByAuthor(
@@ -205,5 +214,72 @@ export class CommentsService {
       comments.push(commentDateToClient);
     });
     return comments;
+  }
+
+  async setCommentInUserData(
+    email: string,
+    commentId: string,
+    entity: string,
+    dataObj: IBookCommentToDB | IAuthorCommentToDB
+  ) {
+    await setDoc(
+      doc(this._firestore, 'usersData', email, 'comments', commentId),
+      { ...dataObj, type: entity }
+    );
+  }
+
+  async deleteCommentInUserData(email: string, commentId: string) {
+    await deleteDoc(
+      doc(this._firestore, 'usersData', email, 'comments', commentId)
+    );
+  }
+
+  async getAllCommentsInUserData(
+    email: string,
+    entity: string
+  ): Promise<Array<IBookCommentToClient | IAuthorCommentToClient>> {
+    let comments: Array<IBookCommentToClient | IAuthorCommentToClient> = [];
+    const querySnapshot = await getDocs(
+      query(
+        collection(this._firestore, 'usersData', email, 'comments'),
+        where('type', '==', entity)
+      )
+    );
+
+    querySnapshot.forEach((doc) => {
+      if (entity === 'books') {
+        const commentDataFromDB = doc.data() as IBookCommentToDB;
+
+        let transformDate: Date = (
+          commentDataFromDB.date as Timestamp
+        ).toDate();
+        const commentDateToClient: IBookCommentToClient = {
+          id: commentDataFromDB.id,
+          email: commentDataFromDB.email,
+          comment: commentDataFromDB.comment,
+          rating: commentDataFromDB.rating,
+          date: transformDate,
+          photoURL: commentDataFromDB.photoURL,
+        };
+        comments.push(commentDateToClient);
+      } else if (entity === 'authors') {
+        const commentDataFromDB = doc.data() as IAuthorCommentToDB;
+
+        let transformDate: Date = (
+          commentDataFromDB.date as Timestamp
+        ).toDate();
+        const commentDateToClient: IAuthorCommentToClient = {
+          id: commentDataFromDB.id,
+          email: commentDataFromDB.email,
+          comment: commentDataFromDB.comment,
+          booksNumber: commentDataFromDB.booksNumber,
+          date: transformDate,
+          photoURL: commentDataFromDB.photoURL,
+        };
+        comments.push(commentDateToClient);
+      }
+    });
+
+    return comments; // Add this return statement
   }
 }

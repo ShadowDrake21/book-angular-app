@@ -3,6 +3,7 @@ import {
   Firestore,
   collection,
   doc,
+  getDoc,
   getDocs,
   orderBy,
   query,
@@ -30,6 +31,19 @@ export class UsersService {
       users.push(user);
     });
     return users;
+  }
+
+  async getUserById(userId: string): Promise<IUser> {
+    const docRef = doc(this._firestore, 'users', userId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data() as IUser;
+    } else {
+      return {
+        id: 'unknown',
+      } as IUser;
+    }
   }
 
   async getUserByEmail(userEmail: string): Promise<IUser[]> {

@@ -185,7 +185,12 @@ export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
 
   deleteComment(commentId: string) {
     this.commentsService
-      .deleteComment('authors', this.authorId, commentId)
+      .deleteComment(
+        'authors',
+        this.authorId,
+        commentId,
+        this.neededUserInfo.email
+      )
       .then(async () => {
         this.commentActionsResult = {
           isSuccessfull: true,
