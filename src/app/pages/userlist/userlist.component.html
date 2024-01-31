@@ -1,1 +1,89 @@
-<p>userlist works!</p>
+<section class="pt-[120px] pb-10 min-h-screen h-full">
+  <div class="container-big">
+    <h2 class="text-3xl font-semibold mb-3" *ngIf="searchTitle">
+      Search user
+      <span>: {{ searchTitle }}</span>
+    </h2>
+    <form
+      class="flex mb-7"
+      [formGroup]="searchUserForm"
+      (ngSubmit)="onSearch()"
+    >
+      <div>
+        <app-input
+          [type]="'text'"
+          [label]="'User'"
+          [placeholder]="'User email'"
+          formControlName="userEmail"
+          [isError]="
+            searchUserForm.controls.userEmail.invalid &&
+            searchUserForm.controls.userEmail.touched
+          "
+        ></app-input>
+        @if (searchUserForm.controls.userEmail.invalid &&
+        searchUserForm.controls.userEmail.touched ) {
+        <div
+          class="validate-error mt-2"
+          *ngIf="searchUserForm.controls.userEmail.errors?.['required']"
+        >
+          Search email is required
+        </div>
+        <div
+          class="validate-error mt-2"
+          *ngIf="searchUserForm.controls.userEmail.errors?.['email']"
+        >
+          {{ searchUserForm.controls.userEmail.value }} is not a valid email
+        </div>
+        }
+      </div>
+      <app-button
+        [button-styles]="'margin: 10px 0 0 40px'"
+        [text]="'Search'"
+        [disabled]="searchUserForm.invalid || !searchUserForm.dirty"
+      />
+    </form>
+    @if (!loadingUsers) {
+    <p class="mb-2">
+      <span class="font-semibold">Found results:</span>
+      {{ users.length }}
+    </p>
+    <div class="flex flex-wrap gap-3 justify-center">
+      @for (user of visibleUsers; track user.id) {
+      <app-user-item [user]="user"></app-user-item>
+      } @if(!users.length && isAfterSearch) {
+      <p>User with such email is not registered in the system</p>
+      }
+    </div>
+    <div class="pagination pb-5" *ngIf="users.length > itemsPerPage">
+      <button
+        class="pagination__btn"
+        (click)="prevPage()"
+        [disabled]="currentPage === 1"
+      >
+        Previous
+      </button>
+      <span class="pagination__text">Current Page: {{ currentPage }}</span>
+      <button
+        class="pagination__btn"
+        (click)="nextPage()"
+        [disabled]="currentPage === numPages()"
+      >
+        Next
+      </button>
+    </div>
+    <div *ngIf="isAfterSearch">
+      <button
+        type="button"
+        (click)="loadAllUsers()"
+        class="font-medium text-lg inline-block mt-5 ml-2 text-gray-600 hover:underline"
+      >
+        Show all users
+      </button>
+    </div>
+    } @else {
+    <div class="no-items">
+      <p class="text-3xl font-semibold text-center">Loading...</p>
+    </div>
+    }
+  </div>
+</section>
