@@ -5,6 +5,8 @@ import { AuthService } from '../../../../core/authentication/auth.service';
 import { User, getAuth } from '@angular/fire/auth';
 import { IUpdateProfile } from '../../../../shared/models/profileManipulations.model';
 import { aboutUser } from '../../mocks/home.mocks';
+import { UsersService } from '../../../../core/services/users.service';
+import { IUser } from '../../../../shared/models/user.model';
 
 @Component({
   selector: 'app-about-user',
@@ -16,39 +18,46 @@ import { aboutUser } from '../../mocks/home.mocks';
 export class AboutUserComponent implements OnInit {
   authService = inject(AuthService);
   booksService = inject(BooksService);
+  usersService = inject(UsersService);
 
   user!: User | null;
 
   aboutUser = aboutUser;
 
-  ngOnInit(): void {
-    // this.updateUser();
+  async ngOnInit(): Promise<void> {
     this.getUserInfo();
   }
 
   getUserInfo() {
     this.authService.user$.subscribe((res) => {
       this.user = res;
+      // this.updateUser();
       console.log(this.user);
     });
   }
 
   updateUser() {
     const auth = getAuth();
-    console.log(auth.currentUser);
-    if (auth.currentUser) {
-      this.authService
-        .updateProfile(auth.currentUser, {
-          displayName: 'Nikola',
-          photoURL:
-            'https://i.ytimg.com/vi/KMto3R0-LBo/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLB7bD0lZBwA0M9q6pY2etk0Wq837g',
-        } as IUpdateProfile)
-        .then(() => {
-          console.log('Profile updated!');
-        })
-        .catch((error) => {
-          console.log('Error while profile updating!', error);
-        });
+    if (this.user?.email) {
+      this.authService.retrieveUserData(this.user?.email).then((res) => {
+        const retrieveUserInfo: IUser = res[0];
+        const updatedData: IUpdateProfile = {
+          displayName: 'Nikola Doktor Book',
+          photoURL: 'https://i.ytimg.com/vi/wy2PERFwae4/maxresdefault.jpg',
+        };
+
+        if (auth.currentUser) {
+          this.authService
+            .updateProfile(auth.currentUser, updatedData)
+            .then(() => {
+              this.usersService.updateUser(retrieveUserInfo.id, updatedData);
+              console.log('Profile updated!');
+            })
+            .catch((error) => {
+              console.log('Error while profile updating!', error);
+            });
+        }
+      });
     }
   }
 }
