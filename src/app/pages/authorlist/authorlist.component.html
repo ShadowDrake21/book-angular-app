@@ -1,4 +1,4 @@
-<section class="relative pt-[120px] pb-10 min-h-screen h-full">
+<section class="pt-[120px] pb-10 min-h-screen h-full">
   <div class="container-ultra__big">
     <h2 class="text-3xl font-semibold mb-3">
       Search author <span *ngIf="searchTitle">: {{ searchTitle }}</span>
@@ -57,7 +57,7 @@
     </div>
     <div
       *ngIf="!authorlistService.numFound && !authorlistService.loadingAuthors"
-      class="absolute no-authors"
+      class="no-items"
     >
       <p
         class="text-3xl font-semibold text-center"
@@ -67,7 +67,7 @@
       </p>
     </div>
     <ng-template #loadingAuthors>
-      <div class="absolute no-authors">
+      <div class="no-items">
         @if(authorlistService.loadingAuthors) {
         <p class="text-3xl font-semibold text-center">Loading...</p>
         } @else {

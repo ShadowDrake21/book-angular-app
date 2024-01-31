@@ -12,6 +12,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-userlist',
@@ -29,22 +30,31 @@ import { CommonModule } from '@angular/common';
 export class UserlistComponent implements OnInit {
   authService = inject(AuthService);
   usersService = inject(UsersService);
+  private _auth = inject(Auth);
 
   searchUserForm = new FormGroup({
     userEmail: new FormControl('', [Validators.required, Validators.email]),
   });
 
+  users: IUser[] = [];
+  loadingUsers!: boolean;
+
   itemsPerPage: number = 8;
   currentPage: number = 1;
   visibleUsers: IUser[] = [];
 
-  users: IUser[] = [];
-  loadingUsers!: boolean;
+  isAfterSearch: boolean = false;
 
   searchTitle: string | null | undefined = '';
 
   ngOnInit(): void {
+    this.loadAllUsers();
+    console.log(this._auth.currentUser);
+  }
+
+  loadAllUsers() {
     this.loadingUsers = true;
+    this.isAfterSearch = false;
     this.usersService
       .getAllUsers()
       .then((res) => {
@@ -55,9 +65,6 @@ export class UserlistComponent implements OnInit {
         this.currentPage = 1;
         this.updateVisibleUsers();
       });
-    setInterval(() => {
-      console.log('form: ', this.searchUserForm);
-    }, 1000);
   }
 
   onSearch() {
@@ -68,6 +75,7 @@ export class UserlistComponent implements OnInit {
       .then((res) => {
         this.users = res;
         this.currentPage = 1;
+        this.isAfterSearch = true;
         this.updateVisibleUsers();
         this.searchTitle = this.searchUserForm.value.userEmail;
         this.loadingUsers = false;
