@@ -17,6 +17,7 @@ import { BookmarkService } from '../../core/services/bookmark.service';
 import { CarouselComponent } from '../../shared/components/carousel/carousel.component';
 import { IBook, IWork } from '../../shared/models/book.model';
 import { IAuthor } from '../../shared/models/author.model';
+import { UserlistItemBookmarksComponent } from '../userlist-item-bookmarks/userlist-item-bookmarks.component';
 
 @Component({
   selector: 'app-userlist-item',
@@ -27,7 +28,7 @@ import { IAuthor } from '../../shared/models/author.model';
     TruncateTextPipe,
     BookitemCommentComponent,
     AuthoritemCommentComponent,
-    CarouselComponent,
+    UserlistItemBookmarksComponent,
   ],
   templateUrl: './userlist-item.component.html',
   styleUrl: './userlist-item.component.scss',
@@ -115,7 +116,6 @@ export class UserlistItemComponent implements OnInit {
             .subscribe((author: IAuthor) => {
               author.key = author.key.slice(9, author.key.length);
               this.userAuthors.push(author);
-              console.log(author);
             });
         });
         this.loadingAuthors = false;
@@ -148,17 +148,6 @@ export class UserlistItemComponent implements OnInit {
         entity
       );
       return res;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async getBookByKey(bookKey: string): Promise<IBook> {
-    try {
-      const book: IBook = this.booksService.getWorkByKey(
-        bookKey
-      ) as unknown as IBook;
-      return book;
     } catch (error) {
       throw error;
     }

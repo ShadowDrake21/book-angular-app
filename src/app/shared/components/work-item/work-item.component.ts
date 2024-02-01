@@ -12,17 +12,18 @@ import { IWork } from '../../models/book.model';
   styleUrl: './work-item.component.scss',
 })
 export class WorkItemComponent implements OnChanges {
-  @Input({ required: true }) book!: IWork;
+  @Input({ required: true }) work!: IWork;
   keyCode!: string;
   mainCover!: string;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['book']) {
-      this.keyCode = changes['book'].currentValue.key.slice(
+    if (changes['work']) {
+      this.keyCode = changes['work'].currentValue.key.slice(
         7,
-        this.book.key.length
+        this.work.key.length
       );
-      this.mainCover = this.book.covers && this.book.covers[0].toString();
+      console.log('key', this.keyCode);
+      this.mainCover = this.work.covers && this.work.covers[0].toString();
     }
   }
 }

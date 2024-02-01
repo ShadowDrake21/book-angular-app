@@ -69,31 +69,12 @@
       </div>
     </div>
     <div class="">
-      @if (!loadingBooks) {
-      <div class="overflow-hidden max-w-full w-full">
-        <app-carousel
-          [contentsWorks]="userBooks"
-          [title]="'Bookmarked books'"
-          [queryType]="'none'"
-        ></app-carousel>
-      </div>
-      } @else {
-      <div class="loading">
-        <p class="loading__text">Loading...</p>
-      </div>
-      }@if (!loadingAuthors) {
-      <div class="overflow-hidden max-w-full w-full">
-        <app-carousel
-          [contentsAuthors]="userAuthors"
-          [title]="'Bookmarked authors'"
-          [queryType]="'none'"
-        ></app-carousel>
-      </div>
-      } @else {
-      <div class="loading">
-        <p class="loading__text">Loading...</p>
-      </div>
-      }
+      <app-userlist-item-bookmarks
+        [works]="userBooks"
+      ></app-userlist-item-bookmarks>
+      <app-userlist-item-bookmarks
+        [authors]="userAuthors"
+      ></app-userlist-item-bookmarks>
     </div>
     } @else {
     <div class=""><p class="text-3xl font-semibold">Loading...</p></div>
