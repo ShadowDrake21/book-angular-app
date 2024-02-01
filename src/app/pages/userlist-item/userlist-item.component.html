@@ -2,7 +2,7 @@
   <div class="container-big">
     @if(!loadingUser){
     <div class="flex gap-10" *ngIf="user.id !== 'unknown'; else noUser">
-      <div class="max-w-96 flex-shrink-0">
+      <div class="max-w-96 flex-shrink-0 h-full">
         <div class="max-h-[500px] h-full">
           <img
             [src]="user.photoURL"
@@ -30,8 +30,73 @@
         <p class="text-3xl font-semibold">No such user</p>
       </div>
     </ng-template>
+    <div class="flex justify-between items-start py-5">
+      <div class="relative max-w-full w-full mx-5 min-h-[300px]">
+        @if(!loadingBookComments) {
+        <h3 class="text-2xl font-semibold pb-2">All user book reviews</h3>
+        @if(userBookComments.length) { @for (comment of userBookComments; track
+        comment.id) {
+        <app-bookitem-comment [comment]="comment"></app-bookitem-comment>
+        } } @else {
+        <div class="no-items w-full">
+          <p class="text-xl font-semibold text-center">
+            User has not written any comment
+          </p>
+        </div>
+        } } @else {
+        <div class="no-items w-full">
+          <p class="text-xl font-semibold text-center">Loading...</p>
+        </div>
+        }
+      </div>
+      <div class="relative max-w-full w-full mx-5 min-h-[300px]">
+        @if(!loadingAuthorComments) {
+        <h3 class="text-2xl font-semibold pb-2">All user author reviews</h3>
+        @if(userAuthorComments.length) { @for(comment of userAuthorComments;
+        track comment.id) {
+        <app-authoritem-comment [comment]="comment"></app-authoritem-comment>
+        } } @else{
+        <div class="no-items w-full">
+          <p class="text-xl font-semibold text-center">
+            User has not written any comment
+          </p>
+        </div>
+        } } @else {
+        <div class="no-items w-full">
+          <p class="text-xl font-semibold text-center">Loading...</p>
+        </div>
+        }
+      </div>
+    </div>
+    <div class="">
+      @if (!loadingBooks) {
+      <div class="overflow-hidden max-w-full w-full">
+        <app-carousel
+          [contentsWorks]="userBooks"
+          [title]="'Bookmarked books'"
+          [queryType]="'none'"
+        ></app-carousel>
+      </div>
+      } @else {
+      <div class="loading">
+        <p class="loading__text">Loading...</p>
+      </div>
+      }@if (!loadingAuthors) {
+      <div class="overflow-hidden max-w-full w-full">
+        <app-carousel
+          [contentsAuthors]="userAuthors"
+          [title]="'Bookmarked authors'"
+          [queryType]="'none'"
+        ></app-carousel>
+      </div>
+      } @else {
+      <div class="loading">
+        <p class="loading__text">Loading...</p>
+      </div>
+      }
+    </div>
     } @else {
-    <div class="no-items"><p class="text-3xl font-semibold">Loading...</p></div>
+    <div class=""><p class="text-3xl font-semibold">Loading...</p></div>
     }
   </div>
 </section>

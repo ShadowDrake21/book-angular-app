@@ -1,0 +1,20 @@
+<div
+  class="item__card cursor-default rounded inline-block overflow-hidden shadow-lg relative"
+>
+  <div>
+    <img
+      class="item__image"
+      [src]="
+        !mainCover
+          ? '/assets/if there is no image.png'
+          : (mainCover | bookImage : 'L' : 'id')
+      "
+      alt="Sunset in the mountains"
+    />
+  </div>
+  <div
+    class="item__description px-6 py-4 absolute w-full h-full top-0 bg-white bg-opacity-70 opacity-0"
+  >
+    <h3 class="font-bold text-xl mb-2">{{ book.title }}</h3>
+  </div>
+</div>
