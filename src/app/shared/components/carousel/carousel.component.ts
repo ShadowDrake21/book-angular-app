@@ -31,11 +31,9 @@ import { AuthorItemComponent } from '../author-item/author-item.component';
   styleUrl: './carousel.component.scss',
 })
 export class CarouselComponent implements AfterViewInit {
-  @Input() contentsBooks: IBook[] = [];
-  @Input() contentsWorks: IWork[] = [];
-  @Input() contentsAuthors: IAuthor[] = [];
+  @Input() contents: IBook[] = [];
   @Input({ required: true }) title!: string;
-  @Input() queryType: 'subject' | 'author' | 'none' = 'subject';
+  @Input() queryType: 'subject' | 'author' = 'subject';
   @Input() carouselLink!: string;
   @ViewChild('swiperContainer') swiperContainer!: ElementRef;
   selectedContent: string | null = null;
@@ -87,10 +85,6 @@ export class CarouselComponent implements AfterViewInit {
 
   setHoverBook(item: IBook | IWork) {
     this.selectedContent = item.title;
-  }
-
-  setHoverAuthor(item: IAuthor) {
-    this.selectedContent = item.name;
   }
 
   clearHoverBook() {

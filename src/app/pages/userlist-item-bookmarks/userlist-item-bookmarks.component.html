@@ -1,0 +1,34 @@
+<section>
+  <div class="flex gap-5 mb-3">
+    <p>
+      <span class="font-semibold">Bookmarks:</span>
+      {{ works.length || authors.length }}
+    </p>
+    <p><span class="font-semibold">Number of pages:</span> {{ numPages() }}</p>
+  </div>
+  <div class="flex gap-3 flex-wrap justify-center">
+    @for (work of visibleWorks; track $index) {
+    <app-work-item [work]="work"></app-work-item>
+    } @for (author of visibleAuthors; track $index) {<app-author-item
+      [author]="author"
+    ></app-author-item
+    >}
+  </div>
+  <div class="pagination mb-5">
+    <button
+      class="pagination__btn"
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+    >
+      Previous
+    </button>
+    <span class="pagination__text">Current Page: {{ currentPage }}</span>
+    <button
+      class="pagination__btn"
+      (click)="nextPage()"
+      [disabled]="currentPage === numPages()"
+    >
+      Next
+    </button>
+  </div>
+</section>
