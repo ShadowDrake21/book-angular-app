@@ -2,7 +2,8 @@
   <p class="font-semibold text-2xl mt-3 mb-5">{{ title }}</p>
   <div #swiperContainer class="swiper-container">
     <div class="swiper-wrapper">
-      <ng-container *ngFor="let book of contents">
+      @if(contentsBooks.length) {
+      <ng-container *ngFor="let book of contentsBooks">
         <div
           (mouseenter)="setHoverBook(book)"
           (mouseleave)="clearHoverBook()"
@@ -11,8 +12,30 @@
           <app-book-item [book]="book"></app-book-item>
         </div>
       </ng-container>
+      } @else if (contentsWorks.length) {
+      <ng-container *ngFor="let book of contentsWorks">
+        <div
+          (mouseenter)="setHoverBook(book)"
+          (mouseleave)="clearHoverBook()"
+          class="swiper-slide relative"
+        >
+          <app-work-item [book]="book"></app-work-item>
+        </div>
+      </ng-container>
+      } @else if(contentsAuthors.length) {
+      <ng-container *ngFor="let author of contentsAuthors">
+        <div
+          (mouseenter)="setHoverAuthor(author)"
+          (mouseleave)="clearHoverBook()"
+          class="swiper-slide relative"
+        >
+          <app-author-item [author]="author"></app-author-item>
+        </div>
+      </ng-container>
+      }
     </div>
   </div>
+
   <a
     *ngIf="carouselLink"
     [routerLink]="['/booklist']"
