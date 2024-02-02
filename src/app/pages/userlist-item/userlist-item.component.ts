@@ -18,6 +18,7 @@ import { CarouselComponent } from '../../shared/components/carousel/carousel.com
 import { IBook, IWork } from '../../shared/models/book.model';
 import { IAuthor } from '../../shared/models/author.model';
 import { UserlistItemBookmarksComponent } from '../userlist-item-bookmarks/userlist-item-bookmarks.component';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-userlist-item',
@@ -96,29 +97,39 @@ export class UserlistItemComponent implements OnInit {
         )) as string[];
         this.loadingBookBookmarks = false;
 
-        this.userBookBookmarks.forEach((bookKey: string) => {
-          this.booksService.getWorkByKey(bookKey).subscribe((book: IWork) => {
-            this.userBooks.push(book);
-            console.log(book);
-          });
-        });
-        this.loadingBooks = false;
-        console.log('book bookmarks length', this.userBookBookmarks.length);
-
         this.userAuthorBookmarks = (await this.getAllBookmarks(
           'authors'
         )) as string[];
         this.loadingAuthorBookmarks = false;
 
-        this.userAuthorBookmarks.forEach((authorKey: string) => {
-          this.authorsService
-            .getAuthorByKey(authorKey)
-            .subscribe((author: IAuthor) => {
-              author.key = author.key.slice(9, author.key.length);
-              this.userAuthors.push(author);
-            });
+        const booksObservables = this.userBookBookmarks.map(
+          (bookKey: string) => {
+            return this.booksService.getWorkByKey(bookKey);
+          }
+        );
+
+        forkJoin(booksObservables).subscribe((books: IWork[]) => {
+          this.userBooks = books;
+          console.log('book bookmarks length', this.userBooks.length);
+          this.loadingBooks = false;
         });
-        this.loadingAuthors = false;
+
+        const authorsObservables = this.userAuthorBookmarks.map(
+          (authorKey: string) => {
+            console.log(' authors obs: ', authorKey);
+            return this.authorsService.getAuthorByKey(authorKey);
+          }
+        );
+
+        forkJoin(authorsObservables).subscribe((authors: IAuthor[]) => {
+          console.log(' authors length', authors.length);
+          authors.forEach((author: IAuthor) => {
+            author.key = author.key.slice(9, author.key.length);
+            this.userAuthors.push(author);
+          });
+          console.log('book authors length', this.userAuthors.length);
+          this.loadingAuthors = false;
+        });
       })
       .catch((err) => {
         this.isUserAvailable = false;
@@ -147,6 +158,7 @@ export class UserlistItemComponent implements OnInit {
         this.user.email,
         entity
       );
+
       return res;
     } catch (error) {
       throw error;

@@ -20,9 +20,10 @@ import { AuthorItemComponent } from '../../shared/components/author-item/author-
   templateUrl: './userlist-item-bookmarks.component.html',
   styleUrl: './userlist-item-bookmarks.component.scss',
 })
-export class UserlistItemBookmarksComponent implements OnInit {
+export class UserlistItemBookmarksComponent implements OnInit, OnChanges {
   route = inject(ActivatedRoute);
 
+  @Input() entity: 'works' | 'authors' = 'works';
   @Input() works: IWork[] = [];
   @Input() authors: IAuthor[] = [];
 
@@ -36,32 +37,25 @@ export class UserlistItemBookmarksComponent implements OnInit {
     console.log('authors: ', this.authors);
     this.updateVisible();
   }
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['works']) {
-  //     this.works = changes['works'].currentValue;
-  //     console.log('changed works: ', changes['works'].currentValue.length);
-  //   }
-  //   if (changes['authors']) {
-  //     this.authors = changes['authors'].currentValue;
-  //     console.log('changed authors: ', this.authors);
-  //   }
-  //   this.currentPage = 1;
-  //   this.updateVisible();
-  // }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['works']) {
+      this.works = changes['works'].currentValue;
+    }
+    if (changes['authors']) {
+      this.authors = changes['authors'].currentValue;
+    }
+    this.currentPage = 1;
+    this.updateVisible();
+  }
 
   updateVisible() {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    console.log('works:', startIndex, endIndex);
-    this.visibleWorks = this.works.slice(startIndex, endIndex);
-
-    this.visibleAuthors = this.authors.slice(startIndex, endIndex);
-
-    console.log(
-      'visibleWorks and visibleAuthors: ',
-      this.visibleWorks,
-      this.visibleAuthors
-    );
+    if (this.entity === 'works') {
+      this.visibleWorks = this.works.slice(startIndex, endIndex);
+    } else {
+      this.visibleAuthors = this.authors.slice(startIndex, endIndex);
+    }
   }
 
   nextPage() {
@@ -79,6 +73,10 @@ export class UserlistItemBookmarksComponent implements OnInit {
   }
 
   numPages(): number {
-    return Math.ceil(8 / this.itemsPerPage);
+    if (this.entity === 'works') {
+      return Math.ceil(this.works.length / this.itemsPerPage);
+    } else {
+      return Math.ceil(this.authors.length / this.itemsPerPage);
+    }
   }
 }

@@ -70,10 +70,14 @@
     </div>
     <div class="">
       <app-userlist-item-bookmarks
+        [entity]="'works'"
         [works]="userBooks"
+        *ngIf="!loadingBooks"
       ></app-userlist-item-bookmarks>
       <app-userlist-item-bookmarks
+        [entity]="'authors'"
         [authors]="userAuthors"
+        *ngIf="!loadingAuthors"
       ></app-userlist-item-bookmarks>
     </div>
     } @else {
