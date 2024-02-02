@@ -19,10 +19,35 @@
           </p>
         </div>
       </div>
-      <div class="max-w-full w-full">
+      <div class="max-w-full w-full relative">
         <h1 class="font-semibold text-5xl mb-5">
           {{ user.email ?? "" | truncateText : 25 }}
         </h1>
+        @if(details) {
+        <div class="mb-5">
+          <h3 class="text-2xl font-semibold pb-2">Details</h3>
+          <p class="mb-2">
+            All book reviews:
+            <span class="font-semibold">{{ details.countBookComments }}</span>
+          </p>
+          <p class="mb-2">
+            All authors reviews:
+            <span class="font-semibold">{{ details.countAuthorComments }}</span>
+          </p>
+          <p class="mb-2">
+            All book bookmarks:
+            <span class="font-semibold">{{ details.countBooks }}</span>
+          </p>
+          <p class="mb-2">
+            All author bookmarks:
+            <span class="font-semibold">{{ details.countAuthors }}</span>
+          </p>
+        </div>
+        } @else {
+        <div class="no-items">
+          <p class="text-3xl font-semibold">Loading...</p>
+        </div>
+        }
       </div>
     </div>
     <ng-template #noUser>
@@ -33,9 +58,9 @@
     <div class="flex justify-between items-start py-5">
       <div class="relative max-w-full w-full mx-5 min-h-[300px]">
         @if(!loadingBookComments) {
-        <h3 class="text-2xl font-semibold pb-2">All user book reviews</h3>
-        @if(userBookComments.length) { @for (comment of userBookComments; track
-        comment.id) {
+        <h3 class="text-2xl font-semibold pb-2">Recent user book reviews</h3>
+        @if(userBookComments.length) { @for (comment of recentBookComments;
+        track comment.id) {
         <app-bookitem-comment [comment]="comment"></app-bookitem-comment>
         } } @else {
         <div class="no-items w-full">
@@ -51,8 +76,8 @@
       </div>
       <div class="relative max-w-full w-full mx-5 min-h-[300px]">
         @if(!loadingAuthorComments) {
-        <h3 class="text-2xl font-semibold pb-2">All user author reviews</h3>
-        @if(userAuthorComments.length) { @for(comment of userAuthorComments;
+        <h3 class="text-2xl font-semibold pb-2">Recent user author reviews</h3>
+        @if(userAuthorComments.length) { @for(comment of recentAuthorComments;
         track comment.id) {
         <app-authoritem-comment [comment]="comment"></app-authoritem-comment>
         } } @else{
@@ -68,17 +93,31 @@
         }
       </div>
     </div>
-    <div class="">
-      <app-userlist-item-bookmarks
-        [entity]="'works'"
-        [works]="userBooks"
-        *ngIf="!loadingBooks"
-      ></app-userlist-item-bookmarks>
-      <app-userlist-item-bookmarks
-        [entity]="'authors'"
-        [authors]="userAuthors"
-        *ngIf="!loadingAuthors"
-      ></app-userlist-item-bookmarks>
+    <div>
+      <div class="relative min-h-[600px]">
+        @if (!loadingBooks) {
+        <app-userlist-item-bookmarks
+          [entity]="'works'"
+          [works]="userBooks"
+        ></app-userlist-item-bookmarks
+        >} @else {
+        <div class="no-items">
+          <p class="text-3xl font-semibold text-center">Loading...</p>
+        </div>
+        }
+      </div>
+      <div class="relative min-h-[600px]">
+        @if (!loadingAuthors) {
+        <app-userlist-item-bookmarks
+          [entity]="'authors'"
+          [authors]="userAuthors"
+        ></app-userlist-item-bookmarks
+        >}@else {
+        <div class="no-items">
+          <p class="text-3xl font-semibold text-center">Loading...</p>
+        </div>
+        }
+      </div>
     </div>
     } @else {
     <div class=""><p class="text-3xl font-semibold">Loading...</p></div>

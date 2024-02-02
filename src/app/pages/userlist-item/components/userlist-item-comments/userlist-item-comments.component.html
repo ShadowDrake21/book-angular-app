@@ -1,0 +1,39 @@
+@if(bookComments) {
+<div class="relative max-w-full w-full mx-5 min-h-[300px]">
+  @if(!loadingComments) {
+  <h3 class="text-2xl font-semibold pb-2">Recent user book reviews</h3>
+  @if(bookComments.length) { @for (comment of recentBookComments; track
+  comment.id) {
+  <app-bookitem-comment [comment]="comment"></app-bookitem-comment>
+  } } @else {
+  <div class="no-items w-full">
+    <p class="text-xl font-semibold text-center">
+      User has not written any comment
+    </p>
+  </div>
+  } } @else {
+  <div class="no-items w-full">
+    <p class="text-xl font-semibold text-center">Loading...</p>
+  </div>
+  }
+</div>
+} @else if(authorComments) {
+<div class="relative max-w-full w-full mx-5 min-h-[300px]">
+  @if(!loadingComments) {
+  <h3 class="text-2xl font-semibold pb-2">Recent user author reviews</h3>
+  @if(authorComments.length) { @for(comment of recentAuthorComments; track
+  comment.id) {
+  <app-authoritem-comment [comment]="comment"></app-authoritem-comment>
+  } } @else{
+  <div class="no-items w-full">
+    <p class="text-xl font-semibold text-center">
+      User has not written any comment
+    </p>
+  </div>
+  } } @else {
+  <div class="no-items w-full">
+    <p class="text-xl font-semibold text-center">Loading...</p>
+  </div>
+  }
+</div>
+}

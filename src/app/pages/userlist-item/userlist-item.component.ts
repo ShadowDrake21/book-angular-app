@@ -17,9 +17,16 @@ import { BookmarkService } from '../../core/services/bookmark.service';
 import { CarouselComponent } from '../../shared/components/carousel/carousel.component';
 import { IBook, IWork } from '../../shared/models/book.model';
 import { IAuthor } from '../../shared/models/author.model';
-import { UserlistItemBookmarksComponent } from '../userlist-item-bookmarks/userlist-item-bookmarks.component';
+import { UserlistItemBookmarksComponent } from './components/userlist-item-bookmarks/userlist-item-bookmarks.component';
 import { forkJoin } from 'rxjs';
+import { UserlistItemCommentsComponent } from './components/userlist-item-comments/userlist-item-comments.component';
 
+interface IUserDetails {
+  countBookComments: number;
+  countAuthorComments: number;
+  countBooks: number;
+  countAuthors: number;
+}
 @Component({
   selector: 'app-userlist-item',
   standalone: true,
@@ -30,6 +37,7 @@ import { forkJoin } from 'rxjs';
     BookitemCommentComponent,
     AuthoritemCommentComponent,
     UserlistItemBookmarksComponent,
+    UserlistItemCommentsComponent,
   ],
   templateUrl: './userlist-item.component.html',
   styleUrl: './userlist-item.component.scss',
@@ -65,6 +73,11 @@ export class UserlistItemComponent implements OnInit {
   loadingAuthors!: boolean;
   userAuthors: IAuthor[] = [];
 
+  recentBookComments: IBookCommentToClient[] = [];
+  recentAuthorComments: IAuthorCommentToClient[] = [];
+
+  details!: IUserDetails;
+
   ngOnInit(): void {
     this.userId = this.route.snapshot.url[1].path;
     console.log(this.userId);
@@ -91,6 +104,26 @@ export class UserlistItemComponent implements OnInit {
           'authors'
         )) as IAuthorCommentToClient[];
         this.loadingAuthorComments = false;
+        console.log(this.userAuthorComments);
+
+        this.userBookComments = this.sortComments(
+          this.userBookComments
+        ) as IBookCommentToClient[];
+        console.log(this.userBookComments);
+
+        this.userAuthorComments = this.sortComments(
+          this.userAuthorComments
+        ) as IAuthorCommentToClient[];
+
+        this.recentBookComments = this.getRecentComments(
+          this.userBookComments,
+          3
+        ) as IBookCommentToClient[];
+
+        this.recentAuthorComments = this.getRecentComments(
+          this.userAuthorComments,
+          3
+        ) as IAuthorCommentToClient[];
 
         this.userBookBookmarks = (await this.getAllBookmarks(
           'books'
@@ -110,26 +143,24 @@ export class UserlistItemComponent implements OnInit {
 
         forkJoin(booksObservables).subscribe((books: IWork[]) => {
           this.userBooks = books;
-          console.log('book bookmarks length', this.userBooks.length);
           this.loadingBooks = false;
         });
 
         const authorsObservables = this.userAuthorBookmarks.map(
           (authorKey: string) => {
-            console.log(' authors obs: ', authorKey);
             return this.authorsService.getAuthorByKey(authorKey);
           }
         );
 
         forkJoin(authorsObservables).subscribe((authors: IAuthor[]) => {
-          console.log(' authors length', authors.length);
           authors.forEach((author: IAuthor) => {
             author.key = author.key.slice(9, author.key.length);
             this.userAuthors.push(author);
           });
-          console.log('book authors length', this.userAuthors.length);
           this.loadingAuthors = false;
         });
+
+        this.details = this.formDetails();
       })
       .catch((err) => {
         this.isUserAvailable = false;
@@ -163,5 +194,33 @@ export class UserlistItemComponent implements OnInit {
     } catch (error) {
       throw error;
     }
+  }
+
+  sortComments(
+    allComments: IBookCommentToClient[] | IAuthorCommentToClient[]
+  ): IBookCommentToClient[] | IAuthorCommentToClient[] {
+    allComments.sort(function compare(a, b) {
+      let dateA = new Date(a.date).getTime();
+      let dateB = new Date(b.date).getTime();
+      return dateB - dateA;
+    });
+    return allComments;
+  }
+
+  getRecentComments(
+    allComments: IBookCommentToClient[] | IAuthorCommentToClient[],
+    count: number
+  ): IBookCommentToClient[] | IAuthorCommentToClient[] {
+    console.log('recent comments', allComments);
+    return allComments.slice(0, count);
+  }
+
+  formDetails(): IUserDetails {
+    return {
+      countBookComments: this.userBookComments.length,
+      countAuthorComments: this.userAuthorComments.length,
+      countBooks: this.userBookBookmarks.length,
+      countAuthors: this.userAuthorBookmarks.length,
+    };
   }
 }

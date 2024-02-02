@@ -17,9 +17,11 @@
   <div
     class="item__description px-6 py-4 absolute w-full h-full top-0 bg-white bg-opacity-70 opacity-0"
   >
-    <h3 class="font-bold text-xl mb-2">{{ book.title }}</h3>
-    <p class="text-gray-700 text-base">
-      {{ book.ratings_average | number : "1.1-1" }}
-    </p>
+    <div class="item__description-info">
+      <h3 class="font-bold text-xl mb-2">{{ book.title }}</h3>
+      <p class="text-gray-700 text-base">
+        {{ book.ratings_average | number : "1.1-1" }}
+      </p>
+    </div>
   </div>
 </a>

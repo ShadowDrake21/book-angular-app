@@ -18,7 +18,7 @@ export const profile: Array<IProfile> = [
     link: '/quotes',
   },
   {
-    title: 'Favourite genger',
+    title: 'Favourite genges',
     link: '/favourie-genres',
   },
   {

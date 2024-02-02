@@ -8,10 +8,10 @@ import {
   inject,
 } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { IWork } from '../../shared/models/book.model';
-import { IAuthor } from '../../shared/models/author.model';
-import { WorkItemComponent } from '../../shared/components/work-item/work-item.component';
-import { AuthorItemComponent } from '../../shared/components/author-item/author-item.component';
+import { IWork } from '../../../../shared/models/book.model';
+import { IAuthor } from '../../../../shared/models/author.model';
+import { WorkItemComponent } from '../../../../shared/components/work-item/work-item.component';
+import { AuthorItemComponent } from '../../../../shared/components/author-item/author-item.component';
 
 @Component({
   selector: 'app-userlist-item-bookmarks',
