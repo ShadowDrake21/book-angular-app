@@ -7,12 +7,10 @@
     <p><span class="font-semibold">Number of pages:</span> {{ numPages() }}</p>
   </div>
   <div class="flex gap-3 flex-wrap justify-center">
-    @for (work of visibleWorks; track $index) {
+    @if (entity === 'works') { @for (work of visibleWorks; track work.key) {
     <app-work-item [work]="work"></app-work-item>
-    } @for (author of visibleAuthors; track $index) {<app-author-item
-      [author]="author"
-    ></app-author-item
-    >}
+    }} @else { @for (author of visibleAuthors; track author.key)
+    {<app-author-item [author]="author"></app-author-item>}}
   </div>
   <div class="pagination mb-5">
     <button
