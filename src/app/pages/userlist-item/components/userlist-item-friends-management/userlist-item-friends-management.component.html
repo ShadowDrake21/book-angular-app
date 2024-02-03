@@ -1,1 +1,21 @@
-<p>userlist-item-friends-management works!</p>
+<div>
+  <h3 class="text-2xl font-semibold pb-3 text-center">Send friend request</h3>
+  <div class="flex flex-col justify-center items-center">
+    <button class="w-16 h-12 mb-5" (click)="onFriendsRequest()">
+      <img
+        src="/assets/friendRequestImg.png"
+        alt=""
+        class="w-full h-full hover:scale-125 transition-all duration-300"
+      />
+    </button>
+    @if (!loadingIsFriendRequestSent) {
+    <p>
+      {{
+        isFriendRequestSent ? "Request was sent" : "Add this user to friends"
+      }}
+    </p>
+    } @else {
+    <p>Loading...</p>
+    }
+  </div>
+</div>

@@ -38,12 +38,7 @@ export class FriendsManagementService {
         recipientEmail
       ),
       dataObj
-    ).then(() => {
-      this.sendFriendRequest('gottenRequests', recipientEmail, senderEmail, {
-        senderEmail,
-        date: dataObj.date,
-      } as IGottenFriendRequestToDB);
-    });
+    );
   }
 
   async checkUserSentOrGotFriendRequest(
@@ -127,33 +122,25 @@ export class FriendsManagementService {
     return friendRequests;
   }
 
-  async deleteSentFriendRequest(
-    entity: string,
-    senderEmail: string,
-    recipientEmail: string
-  ) {
+  async deleteSentFriendRequest(senderEmail: string, recipientEmail: string) {
     await deleteDoc(
       doc(
         this._firestore,
         'friendsManagement',
         senderEmail,
-        entity,
+        'sentRequests',
         recipientEmail
       )
     );
   }
 
-  async deleteGottenFriendRequest(
-    entity: string,
-    senderEmail: string,
-    recipientEmail: string
-  ) {
+  async deleteGottenFriendRequest(senderEmail: string, recipientEmail: string) {
     await deleteDoc(
       doc(
         this._firestore,
         'friendsManagement',
         recipientEmail,
-        entity,
+        'gottenRequests',
         senderEmail
       )
     );
