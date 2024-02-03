@@ -55,68 +55,60 @@
         <p class="text-3xl font-semibold">No such user</p>
       </div>
     </ng-template>
-    <div class="flex justify-between items-start py-5">
+    <div class="flex justify-between items-center py-5">
       <div class="relative max-w-full w-full mx-5 min-h-[300px]">
-        @if(!loadingBookComments) {
-        <h3 class="text-2xl font-semibold pb-2">Recent user book reviews</h3>
-        @if(userBookComments.length) { @for (comment of recentBookComments;
-        track comment.id) {
-        <app-bookitem-comment [comment]="comment"></app-bookitem-comment>
-        } } @else {
-        <div class="no-items w-full">
-          <p class="text-xl font-semibold text-center">
-            User has not written any comment
-          </p>
-        </div>
-        } } @else {
-        <div class="no-items w-full">
-          <p class="text-xl font-semibold text-center">Loading...</p>
-        </div>
-        }
+        <app-userlist-item-comments
+          [type]="'books'"
+          [bookComments]="userBookComments"
+          [loadingComments]="loadingBookComments"
+        ></app-userlist-item-comments>
       </div>
       <div class="relative max-w-full w-full mx-5 min-h-[300px]">
-        @if(!loadingAuthorComments) {
-        <h3 class="text-2xl font-semibold pb-2">Recent user author reviews</h3>
-        @if(userAuthorComments.length) { @for(comment of recentAuthorComments;
-        track comment.id) {
-        <app-authoritem-comment [comment]="comment"></app-authoritem-comment>
-        } } @else{
-        <div class="no-items w-full">
-          <p class="text-xl font-semibold text-center">
-            User has not written any comment
-          </p>
-        </div>
-        } } @else {
-        <div class="no-items w-full">
-          <p class="text-xl font-semibold text-center">Loading...</p>
-        </div>
-        }
+        <app-userlist-item-comments
+          [type]="'authors'"
+          [authorComments]="userAuthorComments"
+          [loadingComments]="loadingAuthorComments"
+        ></app-userlist-item-comments>
       </div>
     </div>
     <div>
       <div class="relative min-h-[600px]">
-        @if (!loadingBooks) {
-        <app-userlist-item-bookmarks
-          [entity]="'works'"
-          [works]="userBooks"
-        ></app-userlist-item-bookmarks
-        >} @else {
-        <div class="no-items">
-          <p class="text-3xl font-semibold text-center">Loading...</p>
+        <div *ngIf="isAnyBook; else noBook">
+          @if (!loadingBooks) {
+          <app-userlist-item-bookmarks
+            [entity]="'works'"
+            [works]="userBooks"
+          ></app-userlist-item-bookmarks
+          >} @else {
+          <div class="no-items">
+            <p class="text-3xl font-semibold text-center">Loading...</p>
+          </div>
+          }
         </div>
-        }
+        <ng-template #noBook>
+          <div class="no-items">
+            <p class="text-3xl font-semibold text-center">No bookmarks</p>
+          </div>
+        </ng-template>
       </div>
       <div class="relative min-h-[600px]">
-        @if (!loadingAuthors) {
-        <app-userlist-item-bookmarks
-          [entity]="'authors'"
-          [authors]="userAuthors"
-        ></app-userlist-item-bookmarks
-        >}@else {
-        <div class="no-items">
-          <p class="text-3xl font-semibold text-center">Loading...</p>
+        <div *ngIf="isAnyAuthor; else noAuthor">
+          @if (!loadingAuthors) {
+          <app-userlist-item-bookmarks
+            [entity]="'authors'"
+            [authors]="userAuthors"
+          ></app-userlist-item-bookmarks
+          >}@else {
+          <div class="no-items">
+            <p class="text-3xl font-semibold text-center">Loading...</p>
+          </div>
+          }
         </div>
-        }
+        <ng-template #noAuthor>
+          <div class="no-items">
+            <p class="text-3xl font-semibold text-center">No bookmarks</p>
+          </div>
+        </ng-template>
       </div>
     </div>
     } @else {

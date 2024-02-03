@@ -24,7 +24,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Timestamp } from '@angular/fire/firestore';
-import { AuthoritemCommentComponent } from '../authoritem-comment/authoritem-comment.component';
+import { AuthoritemCommentComponent } from '../../../shared/components/authoritem-comment/authoritem-comment.component';
 
 @Component({
   selector: 'app-authoritem-comments-section',

@@ -11,8 +11,8 @@ import {
   IBookCommentToClient,
 } from '../../../../shared/models/comment.model';
 import { CommonModule } from '@angular/common';
-import { AuthoritemCommentComponent } from '../../../authorlist-item/authoritem-comment/authoritem-comment.component';
-import { BookitemCommentComponent } from '../../../booklist-item/components/bookitem-comment/bookitem-comment.component';
+import { AuthoritemCommentComponent } from '../../../../shared/components/authoritem-comment/authoritem-comment.component';
+import { BookitemCommentComponent } from '../../../../shared/components/bookitem-comment/bookitem-comment.component';
 
 @Component({
   selector: 'app-userlist-item-comments',
@@ -22,6 +22,7 @@ import { BookitemCommentComponent } from '../../../booklist-item/components/book
   styleUrl: './userlist-item-comments.component.scss',
 })
 export class UserlistItemCommentsComponent implements OnInit, OnChanges {
+  @Input() type: 'books' | 'authors' = 'books';
   @Input() bookComments: IBookCommentToClient[] = [];
   @Input() authorComments: IAuthorCommentToClient[] = [];
   @Input() loadingComments!: boolean;
@@ -31,7 +32,7 @@ export class UserlistItemCommentsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     console.log(this.bookComments);
-    console.log(this.authorComments);
+    console.log(this.recentBookComments);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -46,7 +47,7 @@ export class UserlistItemCommentsComponent implements OnInit, OnChanges {
       ) as IBookCommentToClient[];
 
       this.recentBookComments = this.getRecentComments(
-        this.authorComments,
+        this.bookComments,
         3
       ) as IBookCommentToClient[];
       console.log('recent recentBookComments', this.recentBookComments);
