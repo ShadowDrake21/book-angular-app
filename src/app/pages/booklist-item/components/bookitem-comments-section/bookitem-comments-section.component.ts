@@ -25,7 +25,7 @@ import { AuthService } from '../../../../core/authentication/auth.service';
 import { BooksService } from '../../../../core/services/books.service';
 import { CommentsService } from '../../../../core/services/comments.service';
 import { Timestamp } from '@angular/fire/firestore';
-import { BookitemCommentComponent } from '../bookitem-comment/bookitem-comment.component';
+import { BookitemCommentComponent } from '../../../../shared/components/bookitem-comment/bookitem-comment.component';
 
 @Component({
   selector: 'app-bookitem-comments-section',

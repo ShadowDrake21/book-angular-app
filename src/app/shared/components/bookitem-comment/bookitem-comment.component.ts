@@ -8,7 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { StarRatingModule } from 'angular-star-rating';
-import { IBookCommentToClient } from '../../../../shared/models/comment.model';
+import { IBookCommentToClient } from '../../models/comment.model';
 
 @Component({
   selector: 'app-bookitem-comment',

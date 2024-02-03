@@ -11,8 +11,8 @@ import {
   IAuthorCommentToClient,
   IBookCommentToClient,
 } from '../../shared/models/comment.model';
-import { BookitemCommentComponent } from '../booklist-item/components/bookitem-comment/bookitem-comment.component';
-import { AuthoritemCommentComponent } from '../authorlist-item/authoritem-comment/authoritem-comment.component';
+import { BookitemCommentComponent } from '../../shared/components/bookitem-comment/bookitem-comment.component';
+import { AuthoritemCommentComponent } from '../../shared/components/authoritem-comment/authoritem-comment.component';
 import { BookmarkService } from '../../core/services/bookmark.service';
 import { CarouselComponent } from '../../shared/components/carousel/carousel.component';
 import { IBook, IWork } from '../../shared/models/book.model';
@@ -67,11 +67,15 @@ export class UserlistItemComponent implements OnInit {
   loadingBooks!: boolean;
   userBooks: IWork[] = [];
 
+  isAnyBook: boolean = true;
+
   loadingAuthorBookmarks!: boolean;
   userAuthorBookmarks: string[] = [];
 
   loadingAuthors!: boolean;
   userAuthors: IAuthor[] = [];
+
+  isAnyAuthor: boolean = true;
 
   recentBookComments: IBookCommentToClient[] = [];
   recentAuthorComments: IAuthorCommentToClient[] = [];
@@ -106,34 +110,28 @@ export class UserlistItemComponent implements OnInit {
         this.loadingAuthorComments = false;
         console.log(this.userAuthorComments);
 
-        this.userBookComments = this.sortComments(
-          this.userBookComments
-        ) as IBookCommentToClient[];
-        console.log(this.userBookComments);
-
-        this.userAuthorComments = this.sortComments(
-          this.userAuthorComments
-        ) as IAuthorCommentToClient[];
-
-        this.recentBookComments = this.getRecentComments(
-          this.userBookComments,
-          3
-        ) as IBookCommentToClient[];
-
-        this.recentAuthorComments = this.getRecentComments(
-          this.userAuthorComments,
-          3
-        ) as IAuthorCommentToClient[];
-
         this.userBookBookmarks = (await this.getAllBookmarks(
           'books'
         )) as string[];
         this.loadingBookBookmarks = false;
 
+        if (this.userBookBookmarks.length) {
+          this.isAnyBook = true;
+        } else {
+          this.isAnyBook = false;
+        }
+
         this.userAuthorBookmarks = (await this.getAllBookmarks(
           'authors'
         )) as string[];
+
         this.loadingAuthorBookmarks = false;
+
+        if (this.userAuthorBookmarks.length) {
+          this.isAnyAuthor = true;
+        } else {
+          this.isAnyAuthor = false;
+        }
 
         const booksObservables = this.userBookBookmarks.map(
           (bookKey: string) => {
@@ -194,25 +192,6 @@ export class UserlistItemComponent implements OnInit {
     } catch (error) {
       throw error;
     }
-  }
-
-  sortComments(
-    allComments: IBookCommentToClient[] | IAuthorCommentToClient[]
-  ): IBookCommentToClient[] | IAuthorCommentToClient[] {
-    allComments.sort(function compare(a, b) {
-      let dateA = new Date(a.date).getTime();
-      let dateB = new Date(b.date).getTime();
-      return dateB - dateA;
-    });
-    return allComments;
-  }
-
-  getRecentComments(
-    allComments: IBookCommentToClient[] | IAuthorCommentToClient[],
-    count: number
-  ): IBookCommentToClient[] | IAuthorCommentToClient[] {
-    console.log('recent comments', allComments);
-    return allComments.slice(0, count);
   }
 
   formDetails(): IUserDetails {
