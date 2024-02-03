@@ -20,6 +20,7 @@ import { IAuthor } from '../../shared/models/author.model';
 import { UserlistItemBookmarksComponent } from './components/userlist-item-bookmarks/userlist-item-bookmarks.component';
 import { forkJoin } from 'rxjs';
 import { UserlistItemCommentsComponent } from './components/userlist-item-comments/userlist-item-comments.component';
+import { UserlistItemFriendsManagementComponent } from './components/userlist-item-friends-management/userlist-item-friends-management.component';
 
 interface IUserDetails {
   countBookComments: number;
@@ -38,6 +39,7 @@ interface IUserDetails {
     AuthoritemCommentComponent,
     UserlistItemBookmarksComponent,
     UserlistItemCommentsComponent,
+    UserlistItemFriendsManagementComponent,
   ],
   templateUrl: './userlist-item.component.html',
   styleUrl: './userlist-item.component.scss',
