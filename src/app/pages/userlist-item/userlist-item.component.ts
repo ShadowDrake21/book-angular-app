@@ -86,7 +86,6 @@ export class UserlistItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.url[1].path;
-    console.log(this.userId);
     this.loadingUser = true;
     this.loadingBookComments = true;
     this.loadingAuthorComments = true;

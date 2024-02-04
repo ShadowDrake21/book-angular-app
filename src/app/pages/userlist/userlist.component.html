@@ -51,7 +51,11 @@
       @for (user of visibleUsers; track user.id) {
       <app-user-item [user]="user"></app-user-item>
       } @if(!users.length && isAfterSearch) {
-      <p>User with such email is not registered in the system</p>
+      <div class="no-items">
+        <p class="text-3xl font-semibold text-center">
+          User with such email is not registered in the system
+        </p>
+      </div>
       }
     </div>
     <div class="pagination pb-5" *ngIf="users.length > itemsPerPage">
@@ -75,7 +79,7 @@
       <button
         type="button"
         (click)="loadAllUsers()"
-        class="font-medium text-lg inline-block mt-5 ml-2 text-gray-600 hover:underline"
+        class="font-medium text-lg inline-block mt-5 text-gray-600 hover:underline"
       >
         Show all users
       </button>
