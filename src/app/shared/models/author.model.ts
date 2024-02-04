@@ -19,6 +19,7 @@ export interface IAuthor {
   revision: number;
   created: Created;
   last_modified: LastModified;
+  work_count: number;
 }
 
 export interface ServicesIds {

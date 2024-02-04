@@ -6,7 +6,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { IAuthorCommentToClient } from '../../../shared/models/comment.model';
+import { IAuthorCommentToClient } from '../../models/comment.model';
 import { CommonModule } from '@angular/common';
 
 @Component({

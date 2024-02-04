@@ -8,9 +8,12 @@ import {
 } from '@angular/core';
 import Swiper from 'swiper';
 import { BookImagePipe } from '../../pipes/book-image.pipe';
-import { IBook } from '../../models/book.model';
+import { IBook, IWork } from '../../models/book.model';
 import { BookItemComponent } from '../book-item/book-item.component';
 import { RouterModule } from '@angular/router';
+import { WorkItemComponent } from '../work-item/work-item.component';
+import { IAuthor } from '../../models/author.model';
+import { AuthorItemComponent } from '../author-item/author-item.component';
 
 @Component({
   selector: 'app-carousel',
@@ -19,16 +22,18 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     NgFor,
     BookImagePipe,
-    BookItemComponent,
     RouterModule,
+    BookItemComponent,
+    WorkItemComponent,
+    AuthorItemComponent,
   ],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
 })
 export class CarouselComponent implements AfterViewInit {
-  @Input({ required: true }) contents: IBook[] = [];
+  @Input() contents: IBook[] = [];
   @Input({ required: true }) title!: string;
-  @Input() queryType: string = 'subject';
+  @Input() queryType: 'subject' | 'author' = 'subject';
   @Input() carouselLink!: string;
   @ViewChild('swiperContainer') swiperContainer!: ElementRef;
   selectedContent: string | null = null;
@@ -78,7 +83,7 @@ export class CarouselComponent implements AfterViewInit {
     });
   }
 
-  setHoverBook(item: IBook) {
+  setHoverBook(item: IBook | IWork) {
     this.selectedContent = item.title;
   }
 

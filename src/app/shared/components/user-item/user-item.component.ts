@@ -23,7 +23,6 @@ export class UserItemComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['user']) {
       this.user = changes['user'].currentValue;
-      console.log(this.user.id);
     }
   }
 }

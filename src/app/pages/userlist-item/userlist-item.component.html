@@ -1,1 +1,127 @@
-<p>userlist-item works!</p>
+<section class="pt-[120px]">
+  <div class="container-big">
+    @if(!loadingUser){
+    <div class="flex gap-10" *ngIf="user.id !== 'unknown'; else noUser">
+      <div class="max-w-96 flex-shrink-0 h-full">
+        <div class="max-h-[500px] h-full">
+          <img
+            [src]="user.photoURL"
+            alt="main cover"
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div class="my-5">
+          <p class="mb-2" *ngIf="user.email !== 'unknown'">
+            Last time in system:
+            <span class="font-semibold">{{
+              user.lastSignInTime | date : "medium"
+            }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="relative max-w-full w-full max-h-[500px]">
+        <h1 class="font-semibold text-5xl mb-5">
+          {{ user.email ?? "" | truncateText : 25 }}
+        </h1>
+        @if(details) {
+        <div class="flex">
+          <div class="max-w-[50%] w-full">
+            <h3 class="text-2xl font-semibold pb-2">Details</h3>
+            <p class="mb-2">
+              All book reviews:
+              <span class="font-semibold">{{ details.countBookComments }}</span>
+            </p>
+            <p class="mb-2">
+              All authors reviews:
+              <span class="font-semibold">{{
+                details.countAuthorComments
+              }}</span>
+            </p>
+            <p class="mb-2">
+              All book bookmarks:
+              <span class="font-semibold">{{ details.countBooks }}</span>
+            </p>
+            <p class="mb-2">
+              All author bookmarks:
+              <span class="font-semibold">{{ details.countAuthors }}</span>
+            </p>
+          </div>
+          <div class="max-w-[50%] w-full">
+            <app-userlist-item-friends-management
+              [userEmail]="user.email"
+            ></app-userlist-item-friends-management>
+          </div>
+        </div>
+        } @else {
+        <div class="no-items">
+          <p class="text-3xl font-semibold">Loading...</p>
+        </div>
+        }
+      </div>
+    </div>
+    <ng-template #noUser>
+      <div class="no-items">
+        <p class="text-3xl font-semibold">No such user</p>
+      </div>
+    </ng-template>
+    <div class="flex justify-between items-center py-5">
+      <div class="relative max-w-full w-full mx-5 min-h-[300px]">
+        <app-userlist-item-comments
+          [type]="'books'"
+          [bookComments]="userBookComments"
+          [loadingComments]="loadingBookComments"
+        ></app-userlist-item-comments>
+      </div>
+      <div class="relative max-w-full w-full mx-5 min-h-[300px]">
+        <app-userlist-item-comments
+          [type]="'authors'"
+          [authorComments]="userAuthorComments"
+          [loadingComments]="loadingAuthorComments"
+        ></app-userlist-item-comments>
+      </div>
+    </div>
+    <div>
+      <div class="relative min-h-[600px]">
+        <div *ngIf="isAnyBook; else noBook">
+          @if (!loadingBooks) {
+          <app-userlist-item-bookmarks
+            [entity]="'works'"
+            [works]="userBooks"
+          ></app-userlist-item-bookmarks
+          >} @else {
+          <div class="no-items">
+            <p class="text-3xl font-semibold text-center">Loading...</p>
+          </div>
+          }
+        </div>
+        <ng-template #noBook>
+          <div class="no-items">
+            <p class="text-3xl font-semibold text-center">No bookmarks</p>
+          </div>
+        </ng-template>
+      </div>
+      <div class="relative min-h-[600px]">
+        <div *ngIf="isAnyAuthor; else noAuthor">
+          @if (!loadingAuthors) {
+          <app-userlist-item-bookmarks
+            [entity]="'authors'"
+            [authors]="userAuthors"
+          ></app-userlist-item-bookmarks
+          >}@else {
+          <div class="no-items">
+            <p class="text-3xl font-semibold text-center">Loading...</p>
+          </div>
+          }
+        </div>
+        <ng-template #noAuthor>
+          <div class="no-items">
+            <p class="text-3xl font-semibold text-center">No bookmarks</p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    } @else {
+    <div class=""><p class="text-3xl font-semibold">Loading...</p></div>
+    }
+  </div>
+</section>

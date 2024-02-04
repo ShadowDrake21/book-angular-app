@@ -30,12 +30,12 @@ import { Auth } from '@angular/fire/auth';
 export class UserlistComponent implements OnInit {
   authService = inject(AuthService);
   usersService = inject(UsersService);
-  private _auth = inject(Auth);
 
   searchUserForm = new FormGroup({
     userEmail: new FormControl('', [Validators.required, Validators.email]),
   });
 
+  currentUserEmail!: string | null | undefined;
   users: IUser[] = [];
   loadingUsers!: boolean;
 
@@ -49,7 +49,9 @@ export class UserlistComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAllUsers();
-    console.log(this._auth.currentUser);
+    this.authService.user$.subscribe((data) => {
+      this.currentUserEmail = data?.email;
+    });
   }
 
   loadAllUsers() {
@@ -58,7 +60,9 @@ export class UserlistComponent implements OnInit {
     this.usersService
       .getAllUsers()
       .then((res) => {
-        this.users = res;
+        this.users = res.filter(
+          (user: IUser) => user.email !== this.currentUserEmail
+        );
         this.loadingUsers = false;
       })
       .finally(() => {
@@ -73,7 +77,9 @@ export class UserlistComponent implements OnInit {
     this.usersService
       .getUserByEmail(this.searchUserForm.value.userEmail)
       .then((res) => {
-        this.users = res;
+        this.users = res.filter(
+          (user: IUser) => user.email !== this.currentUserEmail
+        );
         this.currentPage = 1;
         this.isAfterSearch = true;
         this.updateVisibleUsers();
