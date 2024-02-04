@@ -10,6 +10,8 @@ import { User } from '@angular/fire/auth';
 import { TruncateTextPipe } from '../../pipes/truncate-text.pipe';
 import { ProfileDropdownComponent } from './components/profile-dropdown/profile-dropdown.component';
 import { NotificationsDropdownComponent } from './components/notifications-dropdown/notifications-dropdown.component';
+import { ModalComponent } from '../modal/modal.component';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +27,7 @@ import { NotificationsDropdownComponent } from './components/notifications-dropd
     ClickOutsideDirective,
     ProfileDropdownComponent,
     NotificationsDropdownComponent,
+    ModalComponent,
   ],
 })
 export class HeaderComponent {
@@ -33,7 +36,12 @@ export class HeaderComponent {
   public user!: User | null;
   public userEmail: string = '';
 
-  constructor(private authService: AuthService) {
+  searchTerm!: string;
+
+  constructor(
+    private authService: AuthService,
+    protected modalService: ModalService
+  ) {
     this.authService.user$.subscribe((res) => {
       this.user = res;
       if (this.user?.email) {
@@ -43,4 +51,9 @@ export class HeaderComponent {
   }
 
   clickedLi: string = 'background-color: rgb(122, 122, 122); color: #fff;';
+
+  getSearchTerm(value: string) {
+    this.searchTerm = value;
+    this.modalService.open('search-by-title');
+  }
 }
