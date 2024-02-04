@@ -80,48 +80,15 @@
         ></app-userlist-item-comments>
       </div>
     </div>
-    <div>
-      <div class="relative min-h-[600px]">
-        <div *ngIf="isAnyBook; else noBook">
-          @if (!loadingBooks) {
-          <app-userlist-item-bookmarks
-            [entity]="'works'"
-            [works]="userBooks"
-          ></app-userlist-item-bookmarks
-          >} @else {
-          <div class="no-items">
-            <p class="text-3xl font-semibold text-center">Loading...</p>
-          </div>
-          }
-        </div>
-        <ng-template #noBook>
-          <div class="no-items">
-            <p class="text-3xl font-semibold text-center">No bookmarks</p>
-          </div>
-        </ng-template>
-      </div>
-      <div class="relative min-h-[600px]">
-        <div *ngIf="isAnyAuthor; else noAuthor">
-          @if (!loadingAuthors) {
-          <app-userlist-item-bookmarks
-            [entity]="'authors'"
-            [authors]="userAuthors"
-          ></app-userlist-item-bookmarks
-          >}@else {
-          <div class="no-items">
-            <p class="text-3xl font-semibold text-center">Loading...</p>
-          </div>
-          }
-        </div>
-        <ng-template #noAuthor>
-          <div class="no-items">
-            <p class="text-3xl font-semibold text-center">No bookmarks</p>
-          </div>
-        </ng-template>
-      </div>
-    </div>
+    <app-useritem-prebookmars
+      [userEmail]="user.email"
+      (countBooks)="getCountBooks($event)"
+      (countAuthors)="getCountAuthors($event)"
+    ></app-useritem-prebookmars>
     } @else {
-    <div class=""><p class="text-3xl font-semibold">Loading...</p></div>
+    <div class="no-items">
+      <p class="text-3xl font-semibold text-center">User data loading...</p>
+    </div>
     }
   </div>
 </section>
