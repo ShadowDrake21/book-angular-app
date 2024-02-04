@@ -22,6 +22,12 @@ body {
   color: var(--error-color);
 }
 
+.container-small {
+  max-width: 1300px;
+  padding: 0 10px;
+  margin: auto;
+}
+
 .container-normall {
   max-width: 1400px;
   padding: 0 10px;

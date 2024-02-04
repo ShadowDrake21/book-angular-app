@@ -1,0 +1,39 @@
+<div class="container-small pb-5">
+  <div class="pb-3">
+    <h3 class="text-2xl font-semibold mb-3">
+      Favorite {{ entity | titlecase }}
+    </h3>
+    <div class="flex gap-5">
+      <p>
+        <span class="font-semibold">Bookmarks:</span>
+        {{ works.length || authors.length }}
+      </p>
+      <p>
+        <span class="font-semibold">Number of pages:</span> {{ numPages() }}
+      </p>
+    </div>
+  </div>
+  <div class="flex gap-3 flex-wrap justify-center">
+    @if (entity === 'works') { @for (work of visibleWorks; track work.key) {
+    <app-work-item [work]="work"></app-work-item>
+    }} @else { @for (author of visibleAuthors; track author.key)
+    {<app-author-item [author]="author"></app-author-item>}}
+  </div>
+  <div class="pagination mb-5">
+    <button
+      class="pagination__btn"
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+    >
+      Previous
+    </button>
+    <span class="pagination__text">Current Page: {{ currentPage }}</span>
+    <button
+      class="pagination__btn"
+      (click)="nextPage()"
+      [disabled]="currentPage === numPages()"
+    >
+      Next
+    </button>
+  </div>
+</div>

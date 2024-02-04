@@ -17,24 +17,26 @@ import {
 export class BookmarkService {
   private _firestore = inject(Firestore);
 
-  async addNewBookmark(userId: string, entity: string, entityItemId: string) {
+  async addNewBookmark(email: string, entity: string, entityItemId: string) {
     await setDoc(
-      doc(this._firestore, 'bookmarksByUser', userId, entity, entityItemId),
+      doc(this._firestore, 'bookmarksByUser', email, entity, entityItemId),
       {
         entityItemId,
       }
-    );
+    ).then(() => {
+      this.setBookmarkInUserData(email, entityItemId, entity);
+    });
   }
 
   async checkUserHasBookmark(
-    userId: string,
+    email: string,
     entity: string,
     entityItemId: string
   ): Promise<boolean> {
     const docRef = doc(
       this._firestore,
       'bookmarksByUser',
-      userId,
+      email,
       entity,
       entityItemId
     );
@@ -48,9 +50,49 @@ export class BookmarkService {
     }
   }
 
-  async deleteBookmark(userId: string, entity: string, entityItemId: string) {
+  async deleteBookmark(email: string, entity: string, entityItemId: string) {
     await deleteDoc(
-      doc(this._firestore, 'bookmarksByUser', userId, entity, entityItemId)
+      doc(this._firestore, 'bookmarksByUser', email, entity, entityItemId)
+    ).then(() => {
+      this.deleteBookmarkInUserData(email, entityItemId);
+    });
+  }
+
+  async setBookmarkInUserData(
+    email: string,
+    entityItemId: string,
+    entity: string
+  ) {
+    await setDoc(
+      doc(this._firestore, 'usersData', email, 'bookmarks', entityItemId),
+      { id: entityItemId, type: entity }
     );
+  }
+
+  async deleteBookmarkInUserData(email: string, entityItemId: string) {
+    await deleteDoc(
+      doc(this._firestore, 'usersData', email, 'bookmarks', entityItemId)
+    );
+  }
+
+  async getAllBookmarksInUserData(
+    email: string,
+    entity: string
+  ): Promise<Array<string>> {
+    let bookmarks: Array<string> = [];
+    const querySnapshot = await getDocs(
+      query(
+        collection(this._firestore, 'usersData', email, 'bookmarks'),
+        where('type', '==', entity)
+      )
+    );
+
+    querySnapshot.forEach((doc) => {
+      const bookmarkData = doc.data()['id'] as string;
+
+      bookmarks.push(bookmarkData);
+    });
+
+    return bookmarks;
   }
 }

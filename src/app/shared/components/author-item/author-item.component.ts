@@ -14,7 +14,7 @@ import { AuthorsService } from '../../../core/services/authors.service';
 })
 export class AuthorItemComponent implements OnInit {
   authorsService = inject(AuthorsService);
-  @Input({ required: true }) author!: IAuthorSearch;
+  @Input() author!: IAuthorSearch | IAuthor;
 
   photoId: string = '';
   loadingPhoto?: boolean;
