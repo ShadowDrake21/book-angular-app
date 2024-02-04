@@ -54,8 +54,8 @@ export const routes: Routes = [
   {
     path: 'favourite-books',
     loadComponent: () =>
-      import('./pages/favbooks/favbooks.component').then(
-        (m) => m.FavbooksComponent
+      import('./pages/favorites/favorites.component').then(
+        (m) => m.FavoritesComponent
       ),
   },
   {

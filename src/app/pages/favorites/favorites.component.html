@@ -1,0 +1,16 @@
+<section class="pt-[120px]">
+  <div class="container-big">
+    @if(!loadingUserEmail && userEmail){
+    <h1 class="font-semibold text-4xl mb-5 text-center">
+      Favorites of user {{ userEmail | truncateText : 30 }}
+    </h1>
+    <app-useritem-prebookmars
+      [userEmail]="userEmail"
+    ></app-useritem-prebookmars>
+    } @else {
+    <div class="no-items">
+      <p class="text-3xl font-semibold text-center">User data loading...</p>
+    </div>
+    }
+  </div>
+</section>
