@@ -14,13 +14,12 @@ import {
 import { BookitemCommentComponent } from '../../shared/components/bookitem-comment/bookitem-comment.component';
 import { AuthoritemCommentComponent } from '../../shared/components/authoritem-comment/authoritem-comment.component';
 import { BookmarkService } from '../../core/services/bookmark.service';
-import { CarouselComponent } from '../../shared/components/carousel/carousel.component';
-import { IBook, IWork } from '../../shared/models/book.model';
+import { IWork } from '../../shared/models/book.model';
 import { IAuthor } from '../../shared/models/author.model';
-import { UserlistItemBookmarksComponent } from './components/userlist-item-bookmarks/userlist-item-bookmarks.component';
 import { forkJoin } from 'rxjs';
 import { UserlistItemCommentsComponent } from './components/userlist-item-comments/userlist-item-comments.component';
 import { UserlistItemFriendsManagementComponent } from './components/userlist-item-friends-management/userlist-item-friends-management.component';
+import { UseritemBookmarksComponent } from '../../shared/components/useritem-bookmarks/useritem-bookmarks.component';
 
 interface IUserDetails {
   countBookComments: number;
@@ -37,7 +36,7 @@ interface IUserDetails {
     TruncateTextPipe,
     BookitemCommentComponent,
     AuthoritemCommentComponent,
-    UserlistItemBookmarksComponent,
+    UseritemBookmarksComponent,
     UserlistItemCommentsComponent,
     UserlistItemFriendsManagementComponent,
   ],
