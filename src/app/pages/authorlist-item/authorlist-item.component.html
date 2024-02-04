@@ -74,7 +74,7 @@
       </div>
       <div class="max-w-full w-full overflow-auto">
         <h1 class="font-semibold text-5xl mb-5">
-          {{ author.name }}
+          {{ author.name | truncateText : 50 }}
         </h1>
         <div class="mb-5" *ngIf="isString(author.bio); else noBio">
           <h3 class="text-2xl font-semibold pb-2">Description</h3>
