@@ -58,9 +58,34 @@
   </nav>
 </header>
 <popup-modal id="search-by-title">
-  <h1>Search books by title: {{ searchTerm }}</h1>
-  <p style="padding-bottom: 1500px">
-    Close with the button below or by clicking the background.
-  </p>
-  <button (click)="modalService.close()">Close</button>
+  <div class="min-h-[85vh] h-full relative">
+    <h3 class="text-2xl font-semibold pb-2">
+      Search books by title: {{ searchTerm }}
+    </h3>
+    @if(!loadingFoundBooks) { @if (foundBooks.length>0) {
+    <app-booklist-catalogue
+      [books]="foundBooks"
+      [itemsPerPage]="10"
+    ></app-booklist-catalogue>
+    } @else {
+    <div class="no-items">
+      <p class="text-3xl font-semibold text-center">
+        There are no books with such title
+      </p>
+    </div>
+    } } @else {
+    <div class="no-items">
+      <p class="text-3xl font-semibold text-center">Loading...</p>
+    </div>
+    }
+
+    <div class="w-[46px] h-[30px] absolute bottom-0 left-0">
+      <button
+        (click)="modalService.close()"
+        class="font-medium text-lg inline-block text-gray-600 hover:underline"
+      >
+        Close
+      </button>
+    </div>
+  </div>
 </popup-modal>

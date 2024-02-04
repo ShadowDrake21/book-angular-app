@@ -8,7 +8,7 @@ import {
   inject,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { BooklistCatalogueComponent } from './components/booklist-catalogue/booklist-catalogue.component';
+import { BooklistCatalogueComponent } from '../../shared/components/booklist-catalogue/booklist-catalogue.component';
 import { BooklistFilterComponent } from './components/booklist-filter/booklist-filter.component';
 import { Subscription } from 'rxjs';
 import { BooksService } from '../../core/services/books.service';

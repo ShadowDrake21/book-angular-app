@@ -12,6 +12,9 @@ import { ProfileDropdownComponent } from './components/profile-dropdown/profile-
 import { NotificationsDropdownComponent } from './components/notifications-dropdown/notifications-dropdown.component';
 import { ModalComponent } from '../modal/modal.component';
 import { ModalService } from '../../../services/modal.service';
+import { BooksService } from '../../../core/services/books.service';
+import { BooklistCatalogueComponent } from '../booklist-catalogue/booklist-catalogue.component';
+import { IBook } from '../../models/book.model';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +31,7 @@ import { ModalService } from '../../../services/modal.service';
     ProfileDropdownComponent,
     NotificationsDropdownComponent,
     ModalComponent,
+    BooklistCatalogueComponent,
   ],
 })
 export class HeaderComponent {
@@ -37,9 +41,12 @@ export class HeaderComponent {
   public userEmail: string = '';
 
   searchTerm!: string;
+  loadingFoundBooks!: boolean;
+  foundBooks: IBook[] = [];
 
   constructor(
     private authService: AuthService,
+    private booksService: BooksService,
     protected modalService: ModalService
   ) {
     this.authService.user$.subscribe((res) => {
@@ -54,6 +61,15 @@ export class HeaderComponent {
 
   getSearchTerm(value: string) {
     this.searchTerm = value;
+    this.loadingFoundBooks = true;
+    this.getBooksByTitle(this.searchTerm);
     this.modalService.open('search-by-title');
+  }
+
+  getBooksByTitle(searchTerm: string) {
+    this.booksService.getBooksByTitle(searchTerm).subscribe((res) => {
+      this.foundBooks = res.docs;
+      this.loadingFoundBooks = false;
+    });
   }
 }
