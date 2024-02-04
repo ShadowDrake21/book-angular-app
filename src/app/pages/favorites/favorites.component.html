@@ -1,0 +1,51 @@
+<section class="pt-[120px]">
+  <div class="container-big">
+    @if(!loadingUserEmail && userEmail){
+    <div class="relative min-h-[600px]">
+      <h1 class="font-semibold text-4xl mb-5 text-center">
+        Favorites of user {{ userEmail | truncateText : 30 }}
+      </h1>
+      <div *ngIf="isAnyBook; else noBook">
+        @if (!loadingBooks) {
+        <app-userlist-item-bookmarks
+          [entity]="'works'"
+          [works]="userBooks"
+        ></app-userlist-item-bookmarks
+        >} @else {
+        <div class="no-items">
+          <p class="text-3xl font-semibold text-center">Loading...</p>
+        </div>
+        }
+      </div>
+      <ng-template #noBook>
+        <div class="no-items">
+          <p class="text-3xl font-semibold text-center">No bookmarks</p>
+        </div>
+      </ng-template>
+    </div>
+    <div class="relative min-h-[600px]">
+      <div *ngIf="isAnyAuthor; else noAuthor">
+        @if (!loadingAuthors) {
+        <app-userlist-item-bookmarks
+          [entity]="'authors'"
+          [authors]="userAuthors"
+        ></app-userlist-item-bookmarks
+        >}@else {
+        <div class="no-items">
+          <p class="text-3xl font-semibold text-center">Loading...</p>
+        </div>
+        }
+      </div>
+      <ng-template #noAuthor>
+        <div class="no-items">
+          <p class="text-3xl font-semibold text-center">No bookmarks</p>
+        </div>
+      </ng-template>
+    </div>
+    } @else {
+    <div class="no-items">
+      <p class="text-3xl font-semibold text-center">User data loading...</p>
+    </div>
+    }
+  </div>
+</section>

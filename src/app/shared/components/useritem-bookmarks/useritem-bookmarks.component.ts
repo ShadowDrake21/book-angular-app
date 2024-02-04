@@ -8,19 +8,19 @@ import {
   inject,
 } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { IWork } from '../../../../shared/models/book.model';
-import { IAuthor } from '../../../../shared/models/author.model';
-import { WorkItemComponent } from '../../../../shared/components/work-item/work-item.component';
-import { AuthorItemComponent } from '../../../../shared/components/author-item/author-item.component';
+import { IWork } from '../../models/book.model';
+import { IAuthor } from '../../models/author.model';
+import { WorkItemComponent } from '../work-item/work-item.component';
+import { AuthorItemComponent } from '../author-item/author-item.component';
 
 @Component({
   selector: 'app-userlist-item-bookmarks',
   standalone: true,
   imports: [CommonModule, RouterModule, WorkItemComponent, AuthorItemComponent],
-  templateUrl: './userlist-item-bookmarks.component.html',
-  styleUrl: './userlist-item-bookmarks.component.scss',
+  templateUrl: './useritem-bookmarks.component.html',
+  styleUrl: './useritem-bookmarks.component.scss',
 })
-export class UserlistItemBookmarksComponent implements OnInit, OnChanges {
+export class UseritemBookmarksComponent implements OnInit, OnChanges {
   route = inject(ActivatedRoute);
 
   @Input() entity: 'works' | 'authors' = 'works';
