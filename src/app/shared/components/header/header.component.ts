@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +10,11 @@ import { User } from '@angular/fire/auth';
 import { TruncateTextPipe } from '../../pipes/truncate-text.pipe';
 import { ProfileDropdownComponent } from './components/profile-dropdown/profile-dropdown.component';
 import { NotificationsDropdownComponent } from './components/notifications-dropdown/notifications-dropdown.component';
+import { ModalComponent } from '../modal/modal.component';
+import { ModalService } from '../../../services/modal.service';
+import { BooksService } from '../../../core/services/books.service';
+import { BooklistCatalogueComponent } from '../booklist-catalogue/booklist-catalogue.component';
+import { IBook } from '../../models/book.model';
 
 @Component({
   selector: 'app-header',
@@ -30,6 +35,8 @@ import { NotificationsDropdownComponent } from './components/notifications-dropd
 export class HeaderComponent {
   faEnvelope = faEnvelope;
 
+  @Output() searchTerm = new EventEmitter<string>();
+
   public user!: User | null;
   public userEmail: string = '';
 
@@ -43,4 +50,8 @@ export class HeaderComponent {
   }
 
   clickedLi: string = 'background-color: rgb(122, 122, 122); color: #fff;';
+
+  getSearchTerm(value: string) {
+    this.searchTerm.emit(value);
+  }
 }

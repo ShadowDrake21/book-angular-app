@@ -20,7 +20,7 @@ export interface BooksBySubject {
 export class BooksService {
   private http = inject(HttpClient);
 
-  getBooksByTitles(title: string, ...[params]: any) {
+  getBooksByTitle(title: string, ...[params]: any) {
     return this.http.get<any>(SEARCH_API_URL, {
       params: { title: title, ...params },
     });
