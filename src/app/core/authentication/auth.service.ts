@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, NgZone } from '@angular/core';
 import {
   Auth,
   authState,
@@ -10,6 +10,12 @@ import {
   signOut,
   updateProfile,
   getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  onAuthStateChanged,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from '@angular/fire/auth';
 import { IUser } from '../../shared/models/user.model';
 import {
@@ -23,7 +29,7 @@ import {
 } from '@angular/fire/firestore';
 import { setDoc } from '@firebase/firestore';
 import { IUpdateProfile } from '../../shared/models/profileManipulations.model';
-import { Observable, Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -31,12 +37,53 @@ import { Observable, Subscription } from 'rxjs';
 export class AuthService {
   private _firestore = inject(Firestore);
   private _auth = inject(Auth);
+  private _ngZone = inject(NgZone);
+  private _router = inject(Router);
 
   authState$ = authState(this._auth);
   user$ = user(this._auth);
   idToken$ = idToken(this._auth);
 
   email!: string;
+
+  userData: any;
+
+  constructor() {
+    onAuthStateChanged(this._auth, (user: any) => {
+      if (user) {
+        this.userData = user;
+        localStorage.setItem('user', JSON.stringify(this.userData));
+        JSON.parse(localStorage.getItem('user')!);
+      } else {
+        localStorage.setItem('user', 'null');
+        JSON.parse(localStorage.getItem('user')!);
+      }
+    });
+  }
+
+  getAuthFire() {
+    return this._auth.currentUser;
+  }
+
+  get isLoggedIn(): boolean {
+    const token = localStorage.getItem('user');
+    const user = JSON.parse(token as string);
+    return user !== null ? true : false;
+  }
+
+  register(email: string, password: string) {
+    return createUserWithEmailAndPassword(this._auth, email, password)
+      .then((res) => {
+        this.userData = res.user;
+        this._ngZone.run(() => {
+          this.sendEmailVerification();
+          this._router.navigate(['/home']);
+        });
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }
 
   login(email: string, password: string): Promise<IUser> {
     return signInWithEmailAndPassword(
@@ -82,6 +129,30 @@ export class AuthService {
       returnArr.push(doc.data() as IUser);
     });
     return returnArr;
+  }
+
+  googleAuth() {
+    return this.loginWithPopup(new GoogleAuthProvider());
+  }
+
+  loginWithPopup(provider: any) {
+    return signInWithPopup(this._auth, provider).then(() => {
+      this._router.navigate(['home']);
+    });
+  }
+
+  async sendPasswordResetEmails(email: string) {
+    sendPasswordResetEmail(this._auth, email)
+      .then(() => {
+        window.alert('Password reset email sent, check your inbox.');
+      })
+      .catch((error) => {
+        window.alert(error.message);
+      });
+  }
+
+  sendEmailVerification() {
+    return sendEmailVerification(this._auth.currentUser as User);
   }
 
   logout(): Promise<void> {
