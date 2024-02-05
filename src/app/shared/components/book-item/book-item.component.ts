@@ -1,7 +1,15 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { IBook, IBookExternalInfo } from '../../models/book.model';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { BookImagePipe } from '../../pipes/book-image.pipe';
 
 @Component({
@@ -12,7 +20,9 @@ import { BookImagePipe } from '../../pipes/book-image.pipe';
   styleUrl: './book-item.component.scss',
 })
 export class BookItemComponent implements OnChanges {
+  protected router = inject(Router);
   @Input({ required: true }) book!: IBook;
+  @Output() linkUsed = new EventEmitter<boolean>();
   keyCode!: string;
 
   bookExternalData!: IBookExternalInfo;
@@ -44,5 +54,12 @@ export class BookItemComponent implements OnChanges {
     };
 
     this.bookExternalDataJustified = JSON.stringify(this.bookExternalData);
+  }
+
+  moveToItem() {
+    this.router.navigate(['/booklist-item', this.keyCode], {
+      queryParams: { externalData: this.bookExternalDataJustified },
+    });
+    this.linkUsed.emit(true);
   }
 }

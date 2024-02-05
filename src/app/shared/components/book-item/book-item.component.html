@@ -1,7 +1,6 @@
 <a
-  class="item__card rounded inline-block overflow-hidden shadow-lg relative"
-  [routerLink]="['/booklist-item', keyCode]"
-  [queryParams]="{ externalData: bookExternalDataJustified }"
+  class="item__card rounded inline-block overflow-hidden shadow-lg relative cursor-pointer"
+  (click)="moveToItem()"
 >
   <div>
     <img

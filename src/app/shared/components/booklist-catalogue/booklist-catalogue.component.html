@@ -4,7 +4,7 @@
 </div>
 <div class="flex gap-3 flex-wrap justify-center">
   @for (book of visibleBooks; track book.cover_edition_key) {
-  <app-book-item [book]="book"></app-book-item>
+  <app-book-item [book]="book" (linkUsed)="linkUsed.emit(true)"></app-book-item>
   }
 </div>
 <div class="pagination mb-5">
