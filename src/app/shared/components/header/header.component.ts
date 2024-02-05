@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -30,25 +30,17 @@ import { IBook } from '../../models/book.model';
     ClickOutsideDirective,
     ProfileDropdownComponent,
     NotificationsDropdownComponent,
-    ModalComponent,
-    BooklistCatalogueComponent,
   ],
 })
 export class HeaderComponent {
   faEnvelope = faEnvelope;
 
+  @Output() searchTerm = new EventEmitter<string>();
+
   public user!: User | null;
   public userEmail: string = '';
 
-  searchTerm!: string;
-  loadingFoundBooks!: boolean;
-  foundBooks: IBook[] = [];
-
-  constructor(
-    private authService: AuthService,
-    private booksService: BooksService,
-    protected modalService: ModalService
-  ) {
+  constructor(private authService: AuthService) {
     this.authService.user$.subscribe((res) => {
       this.user = res;
       if (this.user?.email) {
@@ -60,16 +52,6 @@ export class HeaderComponent {
   clickedLi: string = 'background-color: rgb(122, 122, 122); color: #fff;';
 
   getSearchTerm(value: string) {
-    this.searchTerm = value;
-    this.loadingFoundBooks = true;
-    this.getBooksByTitle(this.searchTerm);
-    this.modalService.open('search-by-title');
-  }
-
-  getBooksByTitle(searchTerm: string) {
-    this.booksService.getBooksByTitle(searchTerm).subscribe((res) => {
-      this.foundBooks = res.docs;
-      this.loadingFoundBooks = false;
-    });
+    this.searchTerm.emit(value);
   }
 }

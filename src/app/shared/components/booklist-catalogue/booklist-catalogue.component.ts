@@ -1,8 +1,10 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { IBook } from '../../models/book.model';
@@ -18,6 +20,7 @@ import { BookItemComponent } from '../book-item/book-item.component';
 export class BooklistCatalogueComponent implements OnInit, OnChanges {
   @Input({ required: true }) books: IBook[] = [];
   @Input() itemsPerPage: number = 8;
+  @Output() linkUsed = new EventEmitter<boolean>();
   currentPage: number = 1;
   visibleBooks: IBook[] = [];
   ngOnInit(): void {
