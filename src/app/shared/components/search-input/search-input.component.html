@@ -1,4 +1,15 @@
-<form class="search-box">
-  <button class="btn-search"><fa-icon [icon]="faSearch"></fa-icon></button>
-  <input type="text" class="input-search" placeholder="Type to Search..." />
+<form
+  class="search-box"
+  [formGroup]="searchByTitleForm"
+  (ngSubmit)="onSubmit()"
+>
+  <button class="btn-search" type="submit">
+    <fa-icon [icon]="faSearch"></fa-icon>
+  </button>
+  <input
+    type="text"
+    class="input-search"
+    placeholder="Type to Search..."
+    formControlName="title"
+  />
 </form>

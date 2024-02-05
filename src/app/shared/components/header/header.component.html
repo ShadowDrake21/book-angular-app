@@ -39,7 +39,7 @@
       </li>
     </ul>
     <div>
-      <app-search-input />
+      <app-search-input (searchTerm)="getSearchTerm($event)" />
     </div>
     <div class="user-actions__list flex justify-between h-full text-center">
       <app-notifications-dropdown
