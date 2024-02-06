@@ -1,0 +1,15 @@
+<mat-form-field class="w-full">
+  <mat-label class="text-[1.3rem]">Choose a date</mat-label>
+  <input
+    matInput
+    [matDatepicker]="picker"
+    [max]="today"
+    [(ngModel)]="value"
+    (dateChange)="onChange(value)"
+    (blur)="onTouched()"
+  />
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+{{ value }}
