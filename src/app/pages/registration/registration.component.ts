@@ -9,15 +9,8 @@ import {
 import { AuthService } from '../../core/authentication/auth.service';
 import { InputComponent } from '../../shared/components/UI/input/input.component';
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
-import { DatepickerComponent } from '../../shared/components/UI/datepicker/datepicker.component';
 import { RouterModule } from '@angular/router';
-import {
-  RECAPTCHA_SETTINGS,
-  RecaptchaFormsModule,
-  RecaptchaModule,
-  RecaptchaSettings,
-} from 'ng-recaptcha';
-import { environment } from '../../../environments/environment';
+import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-registration',
@@ -27,7 +20,6 @@ import { environment } from '../../../environments/environment';
     ReactiveFormsModule,
     InputComponent,
     ButtonComponent,
-    DatepickerComponent,
     RouterModule,
     RecaptchaFormsModule,
     RecaptchaModule,
@@ -50,21 +42,23 @@ export class RegistrationComponent implements OnInit {
       Validators.minLength(6),
       Validators.maxLength(20),
     ]),
-    birthday: new FormControl('', Validators.required),
     recaptcha: new FormControl(null, Validators.required),
   });
 
-  ngOnInit(): void {
-    setInterval(() => {
-      console.log(
-        'valid: ',
-        this.registrationForm.valid,
-        'touched: ',
-        this.registrationForm.touched
-      );
-      console.log(this.registrationForm.value);
-    }, 2000);
-  }
+  ngOnInit(): void {}
 
-  onSubmit() {}
+  async onSubmit() {
+    if (
+      !this.registrationForm.value.email ||
+      !this.registrationForm.value.password ||
+      !this.registrationForm.value.name
+    )
+      return;
+    console.log(this.registrationForm.value);
+    await this.authService.register(
+      this.registrationForm.value.email,
+      this.registrationForm.value.password,
+      this.registrationForm.value.name
+    );
+  }
 }

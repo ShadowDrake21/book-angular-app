@@ -5,7 +5,7 @@
     </div>
     <form
       *ngIf="!isInSystem; else confirmation"
-      class="max-w-lg w-full mt-10 pb-5 text-center"
+      class="max-w-lg w-full mt-5 pb-5 text-center"
       [formGroup]="loginForm"
       (ngSubmit)="onSubmit()"
     >
@@ -76,6 +76,11 @@
         [disabled]="loginForm.invalid || loginForm.untouched"
       />
     </form>
+    <!-- fix bugs!!! -->
+    <div *ngIf="!isInSystem" class="text-center pb-4">
+      <p class="pb-4">or</p>
+      <app-google-btn />
+    </div>
     <div *ngIf="!isInSystem" class="text-center">
       <p class="pb-3">
         Don't have an account?
