@@ -5,13 +5,10 @@
   }
 }
 ::ng-deep.mat-form-field-underline {
-  /*change color of underline*/
-
   background-color: #9b9b9b !important;
 }
 
 ::ng-deep.mat-form-field-ripple {
-  /*change color of underline when focused*/
   background-color: #9b9b9b !important;
 }
 
@@ -21,4 +18,19 @@
 
 ::ng-deep.mat-mdc-text-field-wrapper:hover .mat-mdc-form-field-focus-overlay {
   opacity: 0 !important;
+}
+
+mat-form-field.invalid-error {
+  mat-label {
+    color: var(--error-color);
+  }
+  .mat-form-field-underline {
+    background-color: var(--error-color);
+  }
+  mat-datepicker-toggle {
+    color: var(--error-color);
+  }
+  mat-hint {
+    color: var(--error-color);
+  }
 }

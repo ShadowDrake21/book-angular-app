@@ -1,4 +1,4 @@
-<mat-form-field class="w-full">
+<mat-form-field class="w-full" [class.invalid-error]="isError">
   <mat-label class="text-[1.3rem]">Choose a date</mat-label>
   <input
     matInput
@@ -12,4 +12,3 @@
   <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
-{{ value }}
