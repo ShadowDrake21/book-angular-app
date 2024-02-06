@@ -1,4 +1,4 @@
-import { Component, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -39,6 +39,7 @@ import {
   styleUrl: './datepicker.component.scss',
 })
 export class DatepickerComponent implements ControlValueAccessor, Validator {
+  @Input() isError: boolean = false;
   today = new Date();
 
   value: string = '';

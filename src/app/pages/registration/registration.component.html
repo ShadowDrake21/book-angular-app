@@ -1,5 +1,7 @@
 <section class="min-h-screen">
-  <div class="flex items-center flex-col container mx-auto min-h-screen pt-10">
+  <div
+    class="flex items-center flex-col container mx-auto min-h-screen justify-center"
+  >
     <form
       class="max-w-lg w-full mt-10 pb-5 text-center"
       [formGroup]="registrationForm"
@@ -161,11 +163,40 @@
       <!-- Password -->
       <!-- birthday -->
       <div class="mt-4">
-        <app-datepicker formControlName="birthday"></app-datepicker>
+        <app-datepicker
+          formControlName="birthday"
+          [isError]="
+            registrationForm.controls.birthday.invalid &&
+            registrationForm.controls.birthday.touched
+          "
+        ></app-datepicker>
+        @if (registrationForm.controls.birthday.touched) { @if
+        (registrationForm.controls.birthday.invalid ) {
+        <div
+          class="validate-error mt-2"
+          *ngIf="registrationForm.controls.birthday.errors?.['required']"
+        >
+          Birthday is required
+        </div>
+        } }
       </div>
       <!-- birthday -->
+      <div class="flex flex-col justify-center pt-5">
+        <re-captcha
+          formControlName="recaptcha"
+          required
+          siteKey="6LeO1mgpAAAAAD1o9cROkyy23c9IFZoOB1zZQCvD"
+          style="margin: 0 auto"
+        ></re-captcha>
+        <div
+          *ngIf="registrationForm.controls.recaptcha.untouched"
+          class="validate-error pt-2"
+        >
+          Captcha must be solved
+        </div>
+      </div>
       <app-button
-        [button-styles]="'margin-top: 40px'"
+        [button-styles]="'margin-top: 20px'"
         [text]="'Sign-In'"
         [disabled]="registrationForm.invalid || registrationForm.untouched"
       />
@@ -173,7 +204,7 @@
     <div class="text-center">
       <p class="pb-3">
         Already have an account?
-        <a routerLink="/registration" class="text-blue-700">Sign-In</a>
+        <a routerLink="/login" class="text-blue-700">Sign-In</a>
       </p>
     </div>
   </div>

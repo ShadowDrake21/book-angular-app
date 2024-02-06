@@ -10,6 +10,14 @@ import { AuthService } from '../../core/authentication/auth.service';
 import { InputComponent } from '../../shared/components/UI/input/input.component';
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
 import { DatepickerComponent } from '../../shared/components/UI/datepicker/datepicker.component';
+import { RouterModule } from '@angular/router';
+import {
+  RECAPTCHA_SETTINGS,
+  RecaptchaFormsModule,
+  RecaptchaModule,
+  RecaptchaSettings,
+} from 'ng-recaptcha';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-registration',
@@ -20,7 +28,11 @@ import { DatepickerComponent } from '../../shared/components/UI/datepicker/datep
     InputComponent,
     ButtonComponent,
     DatepickerComponent,
+    RouterModule,
+    RecaptchaFormsModule,
+    RecaptchaModule,
   ],
+
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss',
 })
@@ -39,6 +51,7 @@ export class RegistrationComponent implements OnInit {
       Validators.maxLength(20),
     ]),
     birthday: new FormControl('', Validators.required),
+    recaptcha: new FormControl(null, Validators.required),
   });
 
   ngOnInit(): void {
