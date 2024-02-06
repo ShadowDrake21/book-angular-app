@@ -71,12 +71,13 @@ export class AuthService {
     return user !== null ? true : false;
   }
 
-  register(email: string, password: string) {
+  async register(email: string, password: string, name: string) {
     return createUserWithEmailAndPassword(this._auth, email, password)
       .then((res) => {
         this.userData = res.user;
         this._ngZone.run(() => {
           this.sendEmailVerification();
+          this._setUserData(res, name);
           this._router.navigate(['/home']);
         });
       })
@@ -85,7 +86,7 @@ export class AuthService {
       });
   }
 
-  login(email: string, password: string): Promise<IUser> {
+  async login(email: string, password: string): Promise<IUser> {
     return signInWithEmailAndPassword(
       this._auth,
       email.trim(),
@@ -96,14 +97,19 @@ export class AuthService {
     });
   }
 
-  private _setUserData(auth: UserCredential): Promise<IUser> {
+  private _setUserData(
+    auth: UserCredential,
+    name: string = 'unknown'
+  ): Promise<IUser> {
     if (this._auth.currentUser)
       updateProfile(this._auth.currentUser, {
+        displayName: name,
         photoURL: auth.user.photoURL || '/assets/no profile photo.jpg',
       });
     const user: IUser = {
       id: auth.user.uid,
       email: auth.user.email,
+      name: auth.user.displayName || name,
       lastSignInTime: auth.user.metadata.lastSignInTime,
       photoURL: auth.user.photoURL || '/assets/no profile photo.jpg',
     };

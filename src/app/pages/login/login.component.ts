@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/authentication/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { GoogleBtnComponent } from '../../shared/components/UI/google-btn/google-btn.component';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ import { Subscription } from 'rxjs';
     ButtonComponent,
     ReactiveFormsModule,
     RouterModule,
+    GoogleBtnComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -42,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   authSubscription!: Subscription;
   isInSystem: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(protected authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.checkAuthState();

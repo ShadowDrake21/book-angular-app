@@ -161,26 +161,6 @@
       </div>
       }
       <!-- Password -->
-      <!-- birthday -->
-      <div class="mt-4">
-        <app-datepicker
-          formControlName="birthday"
-          [isError]="
-            registrationForm.controls.birthday.invalid &&
-            registrationForm.controls.birthday.touched
-          "
-        ></app-datepicker>
-        @if (registrationForm.controls.birthday.touched) { @if
-        (registrationForm.controls.birthday.invalid ) {
-        <div
-          class="validate-error mt-2"
-          *ngIf="registrationForm.controls.birthday.errors?.['required']"
-        >
-          Birthday is required
-        </div>
-        } }
-      </div>
-      <!-- birthday -->
       <div class="flex flex-col justify-center pt-5">
         <re-captcha
           formControlName="recaptcha"
