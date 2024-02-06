@@ -1,0 +1,180 @@
+<section class="min-h-screen">
+  <div class="flex items-center flex-col container mx-auto min-h-screen pt-10">
+    <form
+      class="max-w-lg w-full mt-10 pb-5 text-center"
+      [formGroup]="registrationForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <h2 class="text-4xl font-bold mb-1">Sign-Up</h2>
+      <!-- @if(failedLoginSet.isFailed) {
+      <p class="text-black bg-red-500 p-3 my-5">
+        {{ failedLoginSet.message }}
+      </p>
+      } -->
+      <!-- email -->
+      <app-input
+        [type]="'email'"
+        [label]="'Email'"
+        [placeholder]="'Email'"
+        formControlName="email"
+        [isError]="
+          registrationForm.controls.email.invalid &&
+          registrationForm.controls.email.touched
+        "
+      ></app-input>
+      @if (registrationForm.controls.email.invalid &&
+      registrationForm.controls.email.touched ) {
+      <div
+        class="validate-error mt-2"
+        *ngIf="registrationForm.controls.email.errors?.['required']"
+      >
+        Email is required
+      </div>
+      <div
+        class="validate-error mt-2"
+        *ngIf="registrationForm.controls.email.errors?.['email']"
+      >
+        {{ registrationForm.controls.email.value }} is not a valid email
+      </div>
+      }
+      <!-- email -->
+      <!-- name -->
+      <app-input
+        [type]="'text'"
+        [label]="'Name'"
+        [placeholder]="'Name'"
+        formControlName="name"
+        [isError]="
+          registrationForm.controls.name.invalid &&
+          registrationForm.controls.name.touched
+        "
+      ></app-input>
+      @if (registrationForm.controls.name.invalid &&
+      registrationForm.controls.name.touched ) {
+      <div
+        class="validate-error mt-2"
+        *ngIf="registrationForm.controls.name.errors?.['required']"
+      >
+        Name is required
+      </div>
+      }
+      <!-- name -->
+      <!-- Password -->
+      <app-input
+        [type]="'password'"
+        [label]="'Password'"
+        [placeholder]="'Password'"
+        formControlName="password"
+        [isError]="
+          (registrationForm.controls.password.invalid &&
+            registrationForm.controls.password.touched) ||
+          (registrationForm.value.passwordConfirmation !==
+            registrationForm.value.password &&
+            registrationForm.controls.password.dirty &&
+            registrationForm.controls.passwordConfirmation.dirty)
+        "
+      ></app-input>
+      @if( registrationForm.controls.password.touched ) { @if
+      (registrationForm.controls.password.invalid ) {
+      <div
+        class="validate-error mt-2"
+        *ngIf="registrationForm.controls.password.errors?.['required']"
+      >
+        Password is required
+      </div>
+      <div
+        class="validate-error mt-2"
+        *ngIf="registrationForm.controls.password.errors?.['minlength']"
+      >
+        Password should have at least 6 characters
+      </div>
+      <div
+        class="validate-error mt-2"
+        *ngIf="registrationForm.controls.password.errors?.['maxlength']"
+      >
+        Password should have less than 20 characters
+      </div>
+      } }@if(registrationForm.controls.password.dirty &&
+      registrationForm.controls.passwordConfirmation.dirty &&
+      registrationForm.value.passwordConfirmation !==
+      registrationForm.value.password) {
+      <div
+        class="validate-error mt-2"
+        *ngIf="
+          registrationForm.value.passwordConfirmation !==
+          registrationForm.value.password
+        "
+      >
+        Passwords are not the same
+      </div>
+      }
+      <!-- Password -->
+      <!-- Password -->
+      <app-input
+        [type]="'password'"
+        [label]="'Confirm password'"
+        [placeholder]="'Confirm password'"
+        formControlName="passwordConfirmation"
+        [isError]="
+          (registrationForm.controls.passwordConfirmation.invalid &&
+            registrationForm.controls.passwordConfirmation.touched) ||
+          (registrationForm.value.passwordConfirmation !==
+            registrationForm.value.password &&
+            registrationForm.controls.password.dirty &&
+            registrationForm.controls.passwordConfirmation.dirty)
+        "
+      ></app-input>
+      @if(registrationForm.controls.passwordConfirmation.touched) { @if
+      (registrationForm.controls.passwordConfirmation.invalid ) {
+      <div
+        class="validate-error mt-2"
+        *ngIf="registrationForm.controls.passwordConfirmation.errors?.['required']"
+      >
+        Confirmation of password is required
+      </div>
+      <div
+        class="validate-error mt-2"
+        *ngIf="registrationForm.controls.password.errors?.['minlength']"
+      >
+        Confirmation password should have at least 6 characters
+      </div>
+      <div
+        class="validate-error mt-2"
+        *ngIf="registrationForm.controls.password.errors?.['maxlength']"
+      >
+        Password should have less than 20 characters
+      </div>
+      } } @if(registrationForm.controls.password.dirty &&
+      registrationForm.controls.passwordConfirmation.dirty &&
+      registrationForm.value.passwordConfirmation !==
+      registrationForm.value.password) {
+      <div
+        class="validate-error mt-3"
+        *ngIf="
+          registrationForm.value.passwordConfirmation !==
+          registrationForm.value.password
+        "
+      >
+        Passwords are not the same
+      </div>
+      }
+      <!-- Password -->
+      <!-- birthday -->
+      <div class="mt-4">
+        <app-datepicker formControlName="birthday"></app-datepicker>
+      </div>
+      <!-- birthday -->
+      <app-button
+        [button-styles]="'margin-top: 40px'"
+        [text]="'Sign-In'"
+        [disabled]="registrationForm.invalid || registrationForm.untouched"
+      />
+    </form>
+    <div class="text-center">
+      <p class="pb-3">
+        Already have an account?
+        <a routerLink="/registration" class="text-blue-700">Sign-In</a>
+      </p>
+    </div>
+  </div>
+</section>

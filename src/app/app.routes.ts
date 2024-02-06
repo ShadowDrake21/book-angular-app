@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
 import { secureInnerPageGuard } from './core/guards/secure-inner-page.guard';
 
 export const routes: Routes = [
@@ -11,13 +10,12 @@ export const routes: Routes = [
     // canActivate: [secureInnerPageGuard],
   },
   {
-    path: 'register',
-    component: RegisterComponent,
+    path: 'registration',
     // canActivate: [secureInnerPageGuard],
-    // loadComponent: () =>
-    //   import('./pages/register/register.component').then(
-    //     (m) => m.RegisterComponent
-    //   ),
+    loadComponent: () =>
+      import('./pages/registration/registration.component').then(
+        (m) => m.RegistrationComponent
+      ),
   },
   {
     path: 'home',
