@@ -21,18 +21,21 @@ export class AboutUserComponent implements OnInit {
   usersService = inject(UsersService);
 
   user!: User | null;
+  loadingUser!: boolean;
 
   aboutUser = aboutUser;
 
   async ngOnInit(): Promise<void> {
+    this.loadingUser = true;
     this.getUserInfo();
   }
 
   getUserInfo() {
     this.authService.user$.subscribe((res) => {
       this.user = res;
+      this.loadingUser = false;
       // this.updateUser();
-      console.log(this.user);
+      console.log(this.user?.photoURL);
     });
   }
 
