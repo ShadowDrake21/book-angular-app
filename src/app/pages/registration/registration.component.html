@@ -1,6 +1,7 @@
 <section class="min-h-screen">
   <div
     class="flex items-center flex-col container mx-auto min-h-screen justify-center"
+    *ngIf="!registrationMessage; else registered"
   >
     <form
       class="max-w-lg w-full mt-10 pb-5 text-center"
@@ -188,4 +189,17 @@
       </p>
     </div>
   </div>
+
+  <ng-template #registered>
+    <div
+      class="flex items-center flex-col container mx-auto min-h-screen justify-center"
+    >
+      <p class="font-semibold text-2xl pb-5">{{ registrationMessage }}</p>
+      <!-- <p class="text-center">
+        <a routerLink="/login" class="text-blue-700 text-xl block mt-2"
+          >Back to login page</a
+        >
+      </p> -->
+    </div>
+  </ng-template>
 </section>

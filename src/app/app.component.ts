@@ -46,6 +46,7 @@ export class AppComponent implements OnInit {
         this.isUnnavPage =
           event.url === '/' ||
           event.url === '/login' ||
+          event.url === '/login/reset-password' ||
           event.url === '/registration';
       } else if (!(event instanceof NavigationEnd)) {
         return;
