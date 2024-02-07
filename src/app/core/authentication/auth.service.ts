@@ -37,7 +37,6 @@ import { Router } from '@angular/router';
 export class AuthService {
   private _firestore = inject(Firestore);
   private _auth = inject(Auth);
-  private _ngZone = inject(NgZone);
   private _router = inject(Router);
 
   authState$ = authState(this._auth);
@@ -71,18 +70,25 @@ export class AuthService {
     return user !== null ? true : false;
   }
 
-  async register(email: string, password: string, name: string) {
-    return createUserWithEmailAndPassword(this._auth, email, password)
+  async register(
+    email: string,
+    password: string,
+    name: string
+  ): Promise<string> {
+    return createUserWithEmailAndPassword(
+      this._auth,
+      email.trim(),
+      password.trim()
+    )
       .then((res) => {
         this.userData = res.user;
-        this._ngZone.run(() => {
-          this.sendEmailVerification();
-          this._setUserData(res, name);
-          this._router.navigate(['/home']);
-        });
+        this.sendEmailVerification();
+        this._setUserData(res, name.trim());
+        localStorage.setItem('user', 'null');
+        return 'Your account successfully registered';
       })
       .catch((error) => {
-        console.log(error.message);
+        return error.message;
       });
   }
 
@@ -147,13 +153,13 @@ export class AuthService {
     });
   }
 
-  async sendPasswordResetEmails(email: string) {
-    sendPasswordResetEmail(this._auth, email)
+  async sendPasswordResetEmails(email: string): Promise<string> {
+    return sendPasswordResetEmail(this._auth, email)
       .then(() => {
-        window.alert('Password reset email sent, check your inbox.');
+        return 'Password reset email sent, check your inbox.';
       })
       .catch((error) => {
-        window.alert(error.message);
+        return error.message;
       });
   }
 

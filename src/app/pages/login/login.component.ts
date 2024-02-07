@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { InputComponent } from '../../shared/components/UI/input/input.component';
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
 import {
@@ -28,6 +28,8 @@ import { GoogleBtnComponent } from '../../shared/components/UI/google-btn/google
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  protected authService = inject(AuthService);
+  private router = inject(Router);
   loginForm = new FormGroup({
     email: new FormControl('', Validators.email),
     password: new FormControl('', [
@@ -44,10 +46,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   authSubscription!: Subscription;
   isInSystem: boolean = false;
 
-  constructor(protected authService: AuthService, private router: Router) {}
-
   ngOnInit(): void {
-    this.checkAuthState();
+    if (localStorage.getItem('user') !== 'null') {
+      this.checkAuthState();
+    }
   }
 
   onSubmit() {
@@ -64,7 +66,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .login(this.loginForm.value.email, this.loginForm.value.password)
       .then(() => {
         console.log('User is login');
-        this.router.navigate(['home']);
+        this.router.navigate(['/home']);
         this.checkAuthState();
       })
       .catch((error) => {
@@ -81,6 +83,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .then(() => {
         console.log('user is logged out');
         this.router.navigate(['/']);
+        this.checkAuthState();
       })
       .catch((error) => {
         console.error(error);

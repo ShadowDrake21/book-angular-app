@@ -9,7 +9,7 @@ import {
 import { AuthService } from '../../core/authentication/auth.service';
 import { InputComponent } from '../../shared/components/UI/input/input.component';
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 
 @Component({
@@ -28,8 +28,9 @@ import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss',
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent {
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   registrationForm = new FormGroup({
     email: new FormControl('', Validators.email),
@@ -45,7 +46,7 @@ export class RegistrationComponent implements OnInit {
     recaptcha: new FormControl(null, Validators.required),
   });
 
-  ngOnInit(): void {}
+  registrationMessage!: string;
 
   async onSubmit() {
     if (
@@ -55,10 +56,13 @@ export class RegistrationComponent implements OnInit {
     )
       return;
     console.log(this.registrationForm.value);
-    await this.authService.register(
+    this.registrationMessage = await this.authService.register(
       this.registrationForm.value.email,
       this.registrationForm.value.password,
       this.registrationForm.value.name
     );
+    console.log('registration: ', this.registrationMessage);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    this.router.navigate(['/login']);
   }
 }
