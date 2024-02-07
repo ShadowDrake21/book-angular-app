@@ -19,6 +19,7 @@ import { ModalService } from '../../../core/services/modal.service';
 })
 export class ModalComponent implements OnInit, OnDestroy {
   @Input() id!: string;
+  @Input() styles: string = 'min-h-full';
   isOpen = false;
   private element: any;
 
