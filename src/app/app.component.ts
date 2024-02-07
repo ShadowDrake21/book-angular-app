@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   private booksService = inject(BooksService);
   protected modalService = inject(ModalService);
 
-  isLoginPage: boolean = false;
+  isUnnavPage: boolean = false;
   searchTerm!: string;
   loadingFoundBooks!: boolean;
   foundBooks: IBook[] = [];
@@ -43,7 +43,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.isLoginPage = event.url === '/' || event.url === '/login';
+        this.isUnnavPage =
+          event.url === '/' ||
+          event.url === '/login' ||
+          event.url === '/login/reset-password' ||
+          event.url === '/registration';
       } else if (!(event instanceof NavigationEnd)) {
         return;
       }

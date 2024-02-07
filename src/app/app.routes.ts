@@ -1,9 +1,24 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
+import { secureInnerPageGuard } from './core/guards/secure-inner-page.guard';
+import { ResetPasswordComponent } from './pages/login/components/reset-password/reset-password.component';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  {
+    path: 'login',
+    component: LoginComponent,
+    // canActivate: [secureInnerPageGuard],
+  },
+  { path: 'login/reset-password', component: ResetPasswordComponent },
+  {
+    path: 'registration',
+    // canActivate: [secureInnerPageGuard],
+    loadComponent: () =>
+      import('./pages/registration/registration.component').then(
+        (m) => m.RegistrationComponent
+      ),
+  },
   {
     path: 'home',
     loadComponent: () =>

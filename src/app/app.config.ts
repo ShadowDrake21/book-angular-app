@@ -28,7 +28,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
     provideHttpClient(),
-    provideAnimations(),
     importProvidersFrom(StarRatingModule.forRoot()),
+    provideAnimations(),
   ],
 };
