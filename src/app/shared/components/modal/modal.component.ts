@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { ModalService } from '../../../services/modal.service';
+import { ModalService } from '../../../core/services/modal.service';
 
 @Component({
   selector: 'popup-modal',
