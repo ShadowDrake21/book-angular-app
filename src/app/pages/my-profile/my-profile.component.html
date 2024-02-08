@@ -1,5 +1,36 @@
 <section id="my-profile" class="pt-[120px]">
   <div class="container-big">
-    <app-profile-info [user]="user"></app-profile-info>
+    <div class="flex justify-between gap-5">
+      <div class="w-full">
+        <app-profile-info [user]="user"></app-profile-info>
+        <p>books</p>
+        <p>authors</p>
+        <p>num of books and authors</p>
+        <p>friends</p>
+        <p>favourite genres</p>
+        <p>counts of stars and book by author</p>
+      </div>
+      <div class="w-96">
+        <app-profile-challenges
+          [challenge]="challenge"
+        ></app-profile-challenges>
+        <app-profile-challenges
+          [challenge]="challenge"
+        ></app-profile-challenges>
+        <app-profile-challenges
+          [challenge]="challenge"
+        ></app-profile-challenges>
+        <app-profile-challenges
+          [challenge]="challenge"
+        ></app-profile-challenges>
+        <button
+          type="button"
+          class="w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+          (click)="viewChallenges()"
+        >
+          {{ "View challenges" | titlecase }}
+        </button>
+      </div>
+    </div>
   </div>
 </section>
