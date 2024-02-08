@@ -120,7 +120,6 @@ export class AuthService {
       lastSignInTime: auth.user.metadata.lastSignInTime,
       photoURL: auth.user.photoURL || '/assets/no profile photo.jpg',
     };
-    console.log('user', user);
     const userDocRef = doc(this._firestore, `users/${user.id}`);
     return setDoc(userDocRef, user).then(() => user);
   }

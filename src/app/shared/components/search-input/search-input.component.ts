@@ -29,8 +29,6 @@ export class SearchInputComponent {
     if (this.searchByTitleForm.value.title) {
       this.searchTerm.emit(this.searchByTitleForm.value.title);
       this.searchByTitleForm.reset();
-    } else {
-      console.log('Empty search');
     }
   }
 }

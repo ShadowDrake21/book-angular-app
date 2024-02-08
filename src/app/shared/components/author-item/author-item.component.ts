@@ -20,7 +20,6 @@ export class AuthorItemComponent implements OnInit {
   loadingPhoto?: boolean;
 
   ngOnInit(): void {
-    console.log('author: ', this.author);
     this.loadingPhoto = true;
     this.getPhoto();
   }

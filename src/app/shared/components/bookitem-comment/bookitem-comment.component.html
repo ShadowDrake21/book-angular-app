@@ -39,14 +39,7 @@
       {{ comment.comment }}
     </p>
     <div class="flex justify-between items-center">
-      <div class="mt-4 flex items-center space-x-4 py-6">
-        <div class="">
-          <img
-            class="w-24 h-24 rounded-full object-cover"
-            [src]="comment.photoURL"
-            alt=""
-          />
-        </div>
+      <div class="mt-4 items-center space-x-4 py-6">
         <div class="text-sm font-semibold">
           {{ comment.email }} •
           <span class="font-normal"> {{ comment.date | date : "medium" }}</span>

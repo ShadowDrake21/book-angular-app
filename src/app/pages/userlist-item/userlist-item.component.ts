@@ -92,7 +92,6 @@ export class UserlistItemComponent implements OnInit {
           'authors'
         )) as IAuthorCommentToClient[];
         this.loadingAuthorComments = false;
-        console.log(this.userAuthorComments);
         await new Promise((resolve) => setTimeout(resolve, 1000));
         this.details = this.formDetails();
       })
@@ -127,11 +126,9 @@ export class UserlistItemComponent implements OnInit {
 
   getCountBooks(value: number) {
     this.countBooks = value;
-    console.log('getcountbooks:', this.countBooks);
   }
 
   getCountAuthors(value: number) {
     this.countAuthors = value;
-    console.log('getcountauthors:', this.countAuthors);
   }
 }

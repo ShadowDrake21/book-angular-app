@@ -50,7 +50,6 @@ export class UseritemPrebookmarsComponent implements OnInit {
   isAnyAuthor: boolean = true;
 
   async ngOnInit(): Promise<void> {
-    console.log('prebookmarks', this.userEmail);
     this.loadingBookBookmarks = true;
     this.loadingAuthorBookmarks = true;
     this.loadingBooks = true;

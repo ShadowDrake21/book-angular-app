@@ -65,7 +65,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService
       .login(this.loginForm.value.email, this.loginForm.value.password)
       .then(() => {
-        console.log('User is login');
         this.router.navigate(['/home']);
         this.checkAuthState();
       })
@@ -81,7 +80,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService
       .logout()
       .then(() => {
-        console.log('user is logged out');
         this.router.navigate(['/']);
         this.checkAuthState();
       })

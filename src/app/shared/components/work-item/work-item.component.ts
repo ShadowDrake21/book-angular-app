@@ -22,7 +22,7 @@ export class WorkItemComponent implements OnChanges {
         7,
         this.work.key.length
       );
-      console.log('key', this.keyCode);
+
       this.mainCover = this.work.covers && this.work.covers[0].toString();
     }
   }

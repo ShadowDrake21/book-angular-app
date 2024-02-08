@@ -55,13 +55,11 @@ export class RegistrationComponent {
       !this.registrationForm.value.name
     )
       return;
-    console.log(this.registrationForm.value);
     this.registrationMessage = await this.authService.register(
       this.registrationForm.value.email,
       this.registrationForm.value.password,
       this.registrationForm.value.name
     );
-    console.log('registration: ', this.registrationMessage);
     await new Promise((resolve) => setTimeout(resolve, 2000));
     this.router.navigate(['/login']);
   }
