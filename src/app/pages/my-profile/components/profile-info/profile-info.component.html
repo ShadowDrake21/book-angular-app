@@ -1,4 +1,4 @@
-<div>
+<div class="w-full">
   <div class="flex gap-10 max-h-full h-full">
     <div class="h-[250px] w-[250px] flex-shrink-0 rounded-full overflow-hidden">
       <img
@@ -56,20 +56,33 @@
             label="Name"
             placeholder="Name"
             formControlName="name"
+            [isError]="editProfileForm.controls.name.errors?.['maxlength']"
           ></app-input>
-          <!-- [isError]="editProfileForm.controls.name.errors?.['maxlength']" -->
-
+          <div
+            class="validate-error mt-2"
+            *ngIf="editProfileForm.controls.name.errors?.['maxlength']"
+          >
+            Name should have less than 40 characters
+          </div>
           <app-input
             type="text"
             label="Photo URL"
             placeholder="Photo URL"
             formControlName="image"
           ></app-input>
-          <app-button
-            [button-styles]="'margin-top: 20px'"
-            [text]="'Edit'"
-            [disabled]="editProfileForm.invalid || editProfileForm.untouched"
-          />
+          <div class="flex gap-3">
+            <app-button
+              [button-styles]="'margin-top: 20px'"
+              [text]="'Edit'"
+              [disabled]="editProfileForm.invalid || editProfileForm.untouched"
+            />
+            <button
+              class="font-medium text-lg inline-block mt-5 ml-2 text-gray-600 hover:underline"
+              (click)="isEdit = false"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
       }

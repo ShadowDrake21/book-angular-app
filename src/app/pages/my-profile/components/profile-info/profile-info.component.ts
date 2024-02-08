@@ -10,19 +10,19 @@ import {
   inject,
 } from '@angular/core';
 import { User, getAuth } from '@angular/fire/auth';
-import { TruncateTextPipe } from '../../../shared/pipes/truncate-text.pipe';
-import { ModalService } from '../../../core/services/modal.service';
-import { ModalComponent } from '../../../shared/components/modal/modal.component';
+import { TruncateTextPipe } from '../../../../shared/pipes/truncate-text.pipe';
+import { ModalService } from '../../../../core/services/modal.service';
+import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { InputComponent } from '../../../shared/components/UI/input/input.component';
-import { ButtonComponent } from '../../../shared/components/UI/button/button.component';
-import { AuthService } from '../../../core/authentication/auth.service';
-import { IUser } from '../../../shared/models/user.model';
+import { InputComponent } from '../../../../shared/components/UI/input/input.component';
+import { ButtonComponent } from '../../../../shared/components/UI/button/button.component';
+import { AuthService } from '../../../../core/authentication/auth.service';
+import { IUser } from '../../../../shared/models/user.model';
 
 @Component({
   selector: 'app-profile-info',
@@ -37,7 +37,7 @@ import { IUser } from '../../../shared/models/user.model';
   templateUrl: './profile-info.component.html',
   styleUrl: './profile-info.component.scss',
 })
-export class ProfileInfoComponent implements OnInit, OnChanges {
+export class ProfileInfoComponent implements OnChanges {
   authService = inject(AuthService);
   @Input() user!: User | null;
 
@@ -47,8 +47,6 @@ export class ProfileInfoComponent implements OnInit, OnChanges {
   });
 
   isEdit!: boolean;
-
-  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['user']) {
