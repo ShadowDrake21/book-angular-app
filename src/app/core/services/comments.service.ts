@@ -47,7 +47,6 @@ export class CommentsService {
         comment: commentDataFromDB.comment,
         rating: commentDataFromDB.rating,
         date: transformDate,
-        photoURL: commentDataFromDB.photoURL,
       };
       comments.push(commentDateToClient);
     });
@@ -96,10 +95,7 @@ export class CommentsService {
         date: dataObj.date,
       };
     }
-    console.log('updateObj: ', updateObj);
     await updateDoc(docRef, updateObj);
-
-    console.log('document updated with id:', docRef.id);
   }
 
   async getBookComment(
@@ -124,11 +120,9 @@ export class CommentsService {
         comment: commentDataFromDB.comment,
         rating: commentDataFromDB.rating,
         date: transformDate,
-        photoURL: commentDataFromDB.photoURL,
       };
       comments.push(commentDateToClient);
     });
-    console.log('edit comment: ', comments);
     return comments;
   }
 
@@ -180,7 +174,6 @@ export class CommentsService {
         comment: commentDataFromDB.comment,
         booksNumber: commentDataFromDB.booksNumber,
         date: transformDate,
-        photoURL: commentDataFromDB.photoURL,
       };
       comments.push(commentDateToClient);
     });
@@ -209,7 +202,6 @@ export class CommentsService {
         comment: commentDataFromDB.comment,
         booksNumber: commentDataFromDB.booksNumber,
         date: transformDate,
-        photoURL: commentDataFromDB.photoURL,
       };
       comments.push(commentDateToClient);
     });
@@ -259,7 +251,6 @@ export class CommentsService {
           comment: commentDataFromDB.comment,
           rating: commentDataFromDB.rating,
           date: transformDate,
-          photoURL: commentDataFromDB.photoURL,
         };
         comments.push(commentDateToClient);
       } else if (entity === 'authors') {
@@ -274,12 +265,11 @@ export class CommentsService {
           comment: commentDataFromDB.comment,
           booksNumber: commentDataFromDB.booksNumber,
           date: transformDate,
-          photoURL: commentDataFromDB.photoURL,
         };
         comments.push(commentDateToClient);
       }
     });
 
-    return comments; // Add this return statement
+    return comments;
   }
 }

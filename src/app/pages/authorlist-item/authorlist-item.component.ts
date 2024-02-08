@@ -42,7 +42,7 @@ export class AuthorlistItemComponent implements OnInit, OnDestroy {
   bookmarkService = inject(BookmarkService);
 
   private subscription!: Subscription;
-  neededUserInfo: INeededUserInfo = { email: '', photoURL: '' };
+  neededUserInfo: INeededUserInfo = { email: '' };
   isUserHasComment: boolean = false;
 
   loadingAuthor!: boolean;
@@ -69,8 +69,6 @@ export class AuthorlistItemComponent implements OnInit, OnDestroy {
     this.subscription = this.authService.user$.subscribe(async (data) => {
       if (!data?.email || !data.photoURL) return;
       this.neededUserInfo.email = data?.email;
-      this.neededUserInfo.photoURL = data?.photoURL;
-      console.log('our neededInfo: ', this.neededUserInfo);
       this.bookmarkService
         .checkUserHasBookmark(
           this.neededUserInfo.email,
@@ -112,7 +110,6 @@ export class AuthorlistItemComponent implements OnInit, OnDestroy {
         this.authorBooks = res.docs;
         this.loadingBooks = false;
       });
-      console.log(this.author);
       this.loadingAuthor = false;
     });
   }
@@ -169,19 +166,19 @@ export class AuthorlistItemComponent implements OnInit, OnDestroy {
   }
 
   addBookmark() {
-    this.bookmarkService
-      .addNewBookmark(this.neededUserInfo.email, 'authors', this.authorId)
-      .then(() => {
-        console.log('bookmark added');
-      });
+    this.bookmarkService.addNewBookmark(
+      this.neededUserInfo.email,
+      'authors',
+      this.authorId
+    );
   }
 
   deleteBookmark() {
-    this.bookmarkService
-      .deleteBookmark(this.neededUserInfo.email, 'authors', this.authorId)
-      .then(() => {
-        console.log('bookmark deleted');
-      });
+    this.bookmarkService.deleteBookmark(
+      this.neededUserInfo.email,
+      'authors',
+      this.authorId
+    );
   }
 
   isString(value: any): boolean {

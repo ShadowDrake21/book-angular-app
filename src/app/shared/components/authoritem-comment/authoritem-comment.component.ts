@@ -25,7 +25,6 @@ export class AuthoritemCommentComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['areUserBtnsActive']) {
-      console.log('change', changes['areUserBtnsActive'].currentValue);
       this.areUserBtnsActive = changes['areUserBtnsActive'].currentValue;
     }
   }

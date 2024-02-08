@@ -53,7 +53,6 @@ export class ProfileInfoComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['user']) {
       this.user = changes['user'].currentValue;
-      console.log('in profile-info changes', this.user);
       if (this.user?.displayName) {
         this.editProfileForm.patchValue({
           name: this.user.displayName,
@@ -64,7 +63,6 @@ export class ProfileInfoComponent implements OnInit, OnChanges {
   }
 
   onEdit() {
-    console.log(this.editProfileForm.value);
     const auth = getAuth();
     if (auth.currentUser) {
       const displayName = this.editProfileForm.value.name;

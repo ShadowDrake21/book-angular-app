@@ -43,7 +43,6 @@ export class ProfileDropdownComponent {
     this.authService
       .logout()
       .then(() => {
-        console.log('user is logged out');
         this.router.navigate(['/']);
       })
       .catch((error) => {

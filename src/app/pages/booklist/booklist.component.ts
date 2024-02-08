@@ -59,7 +59,6 @@ export class BooklistComponent implements OnInit, OnDestroy {
             (res) => {
               this.books = res.works;
               this.loadingBooks = false;
-              console.log(this.books);
             },
             (err) => {
               this.errorWhileFetching = 'The subject has no books!';
@@ -74,7 +73,6 @@ export class BooklistComponent implements OnInit, OnDestroy {
               (res) => {
                 this.books = res.docs;
                 this.loadingBooks = false;
-                console.log('author books: ', this.books);
               },
               (err) => {
                 this.errorWhileFetching = 'The author has no books!';
@@ -89,8 +87,6 @@ export class BooklistComponent implements OnInit, OnDestroy {
     this.subjectSub = this.activatedRoute.queryParamMap.subscribe((params) => {
       this.queryType = params.keys[0];
       this.queryParam = params.get(this.queryType) || '';
-      console.log(this.queryParam);
-      // this.subjectParam = params.get('subject') || '';
     });
   }
 

@@ -31,7 +31,6 @@ export class AuthorlistService {
           this.paginationService.checkFirstPage();
         }),
         map((res: any) => {
-          console.log(res.docs);
           return res.docs;
         })
       );

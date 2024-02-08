@@ -28,14 +28,7 @@ export class ItemScrollListComponent implements OnInit, OnChanges {
   btnText: string = '';
 
   ngOnInit(): void {
-    console.log('itemObj: ', this.itemObj);
     this.destructureItemListObject();
-    console.log(
-      'destructured: ',
-      this.showItems,
-      this.isAllItems,
-      this.btnText
-    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {

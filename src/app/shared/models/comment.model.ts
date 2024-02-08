@@ -6,7 +6,6 @@ export interface IBookCommentToDB {
   comment: string;
   rating: number;
   date: Timestamp;
-  photoURL: string;
 }
 
 export interface IBookCommentToClient {
@@ -15,7 +14,6 @@ export interface IBookCommentToClient {
   comment: string;
   rating: number;
   date: Date;
-  photoURL: string;
 }
 
 export interface IAuthorCommentToDB {
@@ -24,7 +22,6 @@ export interface IAuthorCommentToDB {
   comment: string;
   booksNumber: number;
   date: Timestamp;
-  photoURL: string;
 }
 
 export interface IAuthorCommentToClient {
@@ -33,15 +30,7 @@ export interface IAuthorCommentToClient {
   comment: string;
   booksNumber: number;
   date: Date;
-  photoURL: string;
 }
-
-// export interface IUserCommentOnBook {
-//   bookId: string;
-//   comment: string;
-//   rating: number;
-//   date: Date;
-// }
 
 export interface ICommentResult {
   isSuccessfull: boolean;
@@ -50,5 +39,4 @@ export interface ICommentResult {
 
 export interface INeededUserInfo {
   email: string;
-  photoURL: string;
 }

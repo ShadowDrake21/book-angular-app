@@ -43,7 +43,6 @@ export class BookmarkService {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log('bookmarked', docSnap.data());
       return true;
     } else {
       return false;

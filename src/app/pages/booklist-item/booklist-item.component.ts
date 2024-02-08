@@ -53,7 +53,7 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
   bookmarkService = inject(BookmarkService);
 
   private subscription!: Subscription;
-  neededUserInfo: INeededUserInfo = { email: '', photoURL: '' };
+  neededUserInfo: INeededUserInfo = { email: '' };
   isUserHasComment: boolean = false;
 
   bookId!: string;
@@ -81,8 +81,6 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     this.subscription = this.authService.user$.subscribe(async (data) => {
       if (!data?.email || !data.photoURL) return;
       this.neededUserInfo.email = data?.email;
-      this.neededUserInfo.photoURL = data?.photoURL;
-      console.log('our neededInfo: ', this.neededUserInfo);
       this.bookmarkService
         .checkUserHasBookmark(this.neededUserInfo.email, 'books', this.bookId)
         .then((res: boolean) => {
@@ -124,7 +122,6 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
         true,
         'Show all subjects'
       );
-      console.log(this.book);
       this.loadingAuthor = true;
       this.getAuthors();
       this.loadingBook = false;
@@ -170,17 +167,13 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
   addBookmark() {
     this.bookmarkService
       .addNewBookmark(this.neededUserInfo.email, 'books', this.bookId)
-      .then(() => {
-        console.log('bookmark added');
-      });
+      .then(() => {});
   }
 
   deleteBookmark() {
     this.bookmarkService
       .deleteBookmark(this.neededUserInfo.email, 'books', this.bookId)
-      .then(() => {
-        console.log('bookmark deleted');
-      });
+      .then(() => {});
   }
 
   ngOnDestroy(): void {

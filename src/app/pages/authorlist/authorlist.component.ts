@@ -41,7 +41,6 @@ export class AuthorlistComponent implements OnInit {
 
   ngOnInit(): void {
     this.paginationService.itemsPerPage = 10;
-    console.log('isDataAvailable: ', this.isDataAvailable);
   }
 
   async onSearch() {
