@@ -8,43 +8,71 @@
       />
     </div>
     <div class="w-full">
-      <div class="flex flex-col gap-y-3 pb-5">
-        <div class="profile__titles w-full pb-3">
-          <h2 class="text-4xl font-semibold">
-            {{
-              user?.displayName !== null || user?.displayName !== undefined
-                ? user?.displayName
-                : ("" | truncateText : 20)
-            }}
-          </h2>
-          <h3 class="text-xl font-semibold">
-            {{
-              user?.email !== null || user?.email !== undefined
-                ? user?.email
-                : ("" | truncateText : 20)
-            }}
-          </h3>
+      @if(!isEdit){
+      <div>
+        <div class="flex flex-col gap-y-3 pb-5">
+          <div class="profile__titles w-full pb-3">
+            <h2 class="text-4xl font-semibold">
+              {{
+                user?.displayName !== null || user?.displayName !== undefined
+                  ? user?.displayName
+                  : ("" | truncateText : 20)
+              }}
+            </h2>
+            <h3 class="text-xl font-semibold">
+              {{
+                user?.email !== null || user?.email !== undefined
+                  ? user?.email
+                  : ("" | truncateText : 20)
+              }}
+            </h3>
+          </div>
+          <p>
+            <span class="font-semibold">Activity:</span> Joined in
+            {{ user?.metadata?.creationTime | date : "MMMM y" }}
+          </p>
+          <p>
+            <span class="font-semibold">Last active:</span>
+            {{ user?.metadata?.lastSignInTime | date : "longDate" }}
+          </p>
+          <p>
+            <span class="font-semibold">Email verified:</span>
+            {{ user?.emailVerified }}
+          </p>
         </div>
-        <p>
-          <span class="font-semibold">Activity:</span> Joined in
-          {{ user?.metadata?.creationTime | date : "MMMM y" }}
-        </p>
-        <p>
-          <span class="font-semibold">Last active:</span>
-          {{ user?.metadata?.lastSignInTime | date : "longDate" }}
-        </p>
-        <p>
-          <span class="font-semibold">Email verified:</span>
-          {{ user?.emailVerified }}
-        </p>
+        <button
+          type="button"
+          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+          (click)="isEdit = true"
+        >
+          Edit an account
+        </button>
       </div>
-      <button
-        type="button"
-        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-        (click)="openEditModal.emit(true)"
-      >
-        Edit an account
-      </button>
+      } @else {
+      <div>
+        <form [formGroup]="editProfileForm" (ngSubmit)="onEdit()">
+          <app-input
+            type="text"
+            label="Name"
+            placeholder="Name"
+            formControlName="name"
+          ></app-input>
+          <!-- [isError]="editProfileForm.controls.name.errors?.['maxlength']" -->
+
+          <app-input
+            type="text"
+            label="Photo URL"
+            placeholder="Photo URL"
+            formControlName="image"
+          ></app-input>
+          <app-button
+            [button-styles]="'margin-top: 20px'"
+            [text]="'Edit'"
+            [disabled]="editProfileForm.invalid || editProfileForm.untouched"
+          />
+        </form>
+      </div>
+      }
     </div>
   </div>
 </div>
