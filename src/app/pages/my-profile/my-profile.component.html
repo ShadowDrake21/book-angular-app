@@ -1,32 +1,5 @@
-<section class="pt-[120px]">
+<section id="my-profile" class="pt-[120px]">
   <div class="container-big">
-    <app-profile-info
-      [user]="user"
-      (openEditModal)="openEditModal()"
-    ></app-profile-info>
+    <app-profile-info [user]="user"></app-profile-info>
   </div>
 </section>
-<popup-modal
-  id="edit-modal"
-  [styles]="
-    'width: 500px; height: 500px; position: absolute;bottom: 0;top: 0;left: 0;right: 0; margin: auto;'
-  "
->
-  <div class="max-w-[500px] w-full">
-    <form [formGroup]="editProfileForm" (ngSubmit)="onEdit()">
-      <app-input
-        [type]="'text'"
-        [label]="'Name'"
-        [placeholder]="'Name'"
-        formControlName="name"
-        [isError]="editProfileForm.controls.name.errors?.['maxlength']"
-      ></app-input>
-
-      <input
-        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-        id="file_input"
-        type="file"
-      />
-    </form>
-  </div>
-</popup-modal>

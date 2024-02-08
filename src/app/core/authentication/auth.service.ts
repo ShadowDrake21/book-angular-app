@@ -25,6 +25,7 @@ import {
   getDoc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from '@angular/fire/firestore';
 import { setDoc } from '@firebase/firestore';
@@ -126,6 +127,15 @@ export class AuthService {
 
   updateProfile(currentUser: User, updateData: IUpdateProfile): Promise<void> {
     return updateProfile(currentUser, updateData);
+  }
+
+  async updateUserData(userId: string, updateData: IUpdateProfile) {
+    const userRef = doc(this._firestore, `users/${userId}`);
+
+    await updateDoc(userRef, {
+      name: updateData.displayName,
+      photoURL: updateData.photoURL,
+    });
   }
 
   async retrieveUserData(email: string): Promise<IUser[]> {
