@@ -1,9 +1,9 @@
 <div class="relative min-h-[600px]">
-  <div *ngIf="isAnyBook; else noBook">
-    @if (!loadingBooks) {
+  <div *ngIf="favouriteBooksService.isAnyBook; else noBook">
+    @if (!favouriteBooksService.loadingBooks) {
     <app-userlist-item-bookmarks
       [entity]="'works'"
-      [works]="userBooks"
+      [works]="favouriteBooksService.userBooks"
     ></app-userlist-item-bookmarks
     >} @else {
     <div class="no-items">

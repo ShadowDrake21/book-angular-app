@@ -1,4 +1,4 @@
-<div class="relative min-h-[120px] pt-4 w-1/4 text-center">
+<div class="relative min-h-40 pt-4 w-1/4 text-center">
   @if(!loadingStatistics){
   <p class="pb-1 text-sm">
     {{ this.bookComments.length }} ratings ({{
@@ -13,6 +13,10 @@
   <p class="pb-1 text-sm">
     {{ this.avgBookCountAuthor | number : "1.0-1" }} books avg read of each
     author
+  </p>
+  <p class="pb-1 text-sm">{{ this.favouriteBooks.length }} favourite books</p>
+  <p class="pb-1 text-sm">
+    {{ this.favouriteAuthors.length }} favourite authors
   </p>
   } @else {
   <div class="no-items">
