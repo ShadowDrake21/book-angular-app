@@ -1,0 +1,28 @@
+<div class="pt-10">
+  <div class="pb-3">
+    <h4 class="profile__titles pb-2 font-semibold">
+      {{ user?.displayName + "'s favourite authors" | uppercase }}
+    </h4>
+  </div>
+  <div class="relative min-h-48">
+    <div
+      class="relative min-h-48 flex flex-wrap gap-2"
+      *ngIf="isAnyAuthor; else noAuthor"
+    >
+      @if (!loadingAuthors) { @for (author of userAuthors; track author.key) {
+      <div class="max-w-52">
+        <app-author-item [author]="author"></app-author-item>
+      </div>
+      }} @else {
+      <div class="no-items">
+        <p class="text-3xl font-semibold text-center">Loading...</p>
+      </div>
+      }
+    </div>
+    <ng-template #noAuthor>
+      <div class="no-items">
+        <p class="text-3xl font-semibold text-center">No favourite authors</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

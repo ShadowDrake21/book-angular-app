@@ -1,0 +1,19 @@
+<div class="relative min-h-[600px]">
+  <div *ngIf="isAnyBook; else noBook">
+    @if (!loadingBooks) {
+    <app-userlist-item-bookmarks
+      [entity]="'works'"
+      [works]="userBooks"
+    ></app-userlist-item-bookmarks
+    >} @else {
+    <div class="no-items">
+      <p class="text-3xl font-semibold text-center">Loading...</p>
+    </div>
+    }
+  </div>
+  <ng-template #noBook>
+    <div class="no-items">
+      <p class="text-3xl font-semibold text-center">No bookmarks</p>
+    </div>
+  </ng-template>
+</div>

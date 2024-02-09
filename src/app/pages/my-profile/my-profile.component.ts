@@ -3,15 +3,23 @@ import { Component, OnInit, inject } from '@angular/core';
 import { AuthService } from '../../core/authentication/auth.service';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
 import { User } from '@angular/fire/auth';
-import { ModalComponent } from '../../shared/components/modal/modal.component';
 import { ProfileChallengesComponent } from './components/profile-challenges/profile-challenges.component';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { IChallenge } from '../../shared/models/challenge.model';
+import { ProfileBooksComponent } from './components/profile-books/profile-books.component';
+import { ProfileAuthorsComponent } from './components/profile-authors/profile-authors.component';
 
 @Component({
   selector: 'app-my-profile',
   standalone: true,
-  imports: [CommonModule, ProfileInfoComponent, ProfileChallengesComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ProfileInfoComponent,
+    ProfileChallengesComponent,
+    ProfileBooksComponent,
+    ProfileAuthorsComponent,
+  ],
   templateUrl: './my-profile.component.html',
   styleUrl: './my-profile.component.scss',
 })

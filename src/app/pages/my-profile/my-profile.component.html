@@ -3,12 +3,20 @@
     <div class="flex justify-between gap-5">
       <div class="w-full">
         <app-profile-info [user]="user"></app-profile-info>
-        <p>books</p>
-        <p>authors</p>
+        <div>
+          <app-profile-books [user]="user"></app-profile-books>
+          <app-profile-authors [user]="user"></app-profile-authors>
+
+          <a
+            class="font-medium float-end text-lg inline-block mt-5 mx-2 text-gray-600 hover:underline"
+            routerLink="/favourites"
+            >More...</a
+          >
+        </div>
         <p>num of books and authors</p>
+        <p>counts of stars and book by author</p>
         <p>friends</p>
         <p>favourite genres</p>
-        <p>counts of stars and book by author</p>
       </div>
       <div class="w-96">
         <app-profile-challenges
