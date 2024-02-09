@@ -21,7 +21,7 @@ import { forkJoin } from 'rxjs';
   templateUrl: './profile-authors.component.html',
   styleUrl: './profile-authors.component.scss',
 })
-export class ProfileAuthorsComponent implements OnInit, OnChanges {
+export class ProfileAuthorsComponent implements OnInit {
   private authorsService = inject(AuthorsService);
   private bookmarkService = inject(BookmarkService);
 
@@ -35,17 +35,10 @@ export class ProfileAuthorsComponent implements OnInit, OnChanges {
 
   isAnyAuthor: boolean = true;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.loadingAuthorBookmarks = true;
     this.loadingAuthors = true;
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['user']) {
-      this.user = changes['user'].currentValue;
-      if (this.user) {
-        this.loadingItems();
-      }
-    }
+    await this.loadingItems();
   }
 
   async loadingItems() {

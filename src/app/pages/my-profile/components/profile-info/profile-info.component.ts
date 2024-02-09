@@ -38,7 +38,7 @@ import { IUser } from '../../../../shared/models/user.model';
   styleUrl: './profile-info.component.scss',
 })
 export class ProfileInfoComponent implements OnChanges {
-  authService = inject(AuthService);
+  private authService = inject(AuthService);
   @Input() user!: User | null;
 
   editProfileForm = new FormGroup({

@@ -21,7 +21,7 @@ import { WorkItemComponent } from '../../../../shared/components/work-item/work-
   templateUrl: './profile-books.component.html',
   styleUrl: './profile-books.component.scss',
 })
-export class ProfileBooksComponent implements OnInit, OnChanges {
+export class ProfileBooksComponent implements OnInit {
   private booksService = inject(BooksService);
   private bookmarkService = inject(BookmarkService);
 
@@ -35,18 +35,10 @@ export class ProfileBooksComponent implements OnInit, OnChanges {
 
   isAnyBook: boolean = true;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.loadingBookBookmarks = true;
     this.loadingBooks = true;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['user']) {
-      this.user = changes['user'].currentValue;
-      if (this.user) {
-        this.loadingItems();
-      }
-    }
+    await this.loadingItems();
   }
 
   async loadingItems() {
