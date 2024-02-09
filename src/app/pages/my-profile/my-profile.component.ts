@@ -8,6 +8,7 @@ import { Router, RouterModule } from '@angular/router';
 import { IChallenge } from '../../shared/models/challenge.model';
 import { ProfileBooksComponent } from './components/profile-books/profile-books.component';
 import { ProfileAuthorsComponent } from './components/profile-authors/profile-authors.component';
+import { ProfileStatisticsComponent } from './components/profile-statistics/profile-statistics.component';
 
 @Component({
   selector: 'app-my-profile',
@@ -19,6 +20,7 @@ import { ProfileAuthorsComponent } from './components/profile-authors/profile-au
     ProfileChallengesComponent,
     ProfileBooksComponent,
     ProfileAuthorsComponent,
+    ProfileStatisticsComponent,
   ],
   templateUrl: './my-profile.component.html',
   styleUrl: './my-profile.component.scss',
@@ -27,6 +29,7 @@ export class MyProfileComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  loadingUser!: boolean;
   user: User | null = null;
 
   challenge: IChallenge = {
@@ -37,8 +40,10 @@ export class MyProfileComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.loadingUser = true;
     this.authService.user$.subscribe((data: User | null) => {
       this.user = data;
+      this.loadingUser = false;
     });
   }
 

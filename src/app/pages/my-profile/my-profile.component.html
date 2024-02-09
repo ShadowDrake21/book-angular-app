@@ -1,19 +1,25 @@
 <section id="my-profile" class="pt-[120px]">
   <div class="container-big">
+    @if (!loadingUser) {
     <div class="flex justify-between gap-5">
       <div class="w-full">
         <app-profile-info [user]="user"></app-profile-info>
         <div>
+          <app-profile-statistics
+            [userEmail]="user?.email"
+          ></app-profile-statistics>
+        </div>
+
+        <div>
           <app-profile-books [user]="user"></app-profile-books>
           <app-profile-authors [user]="user"></app-profile-authors>
-
           <a
             class="font-medium float-end text-lg inline-block mt-5 mx-2 text-gray-600 hover:underline"
             routerLink="/favourites"
             >More...</a
           >
         </div>
-        <p>num of books and authors</p>
+
         <p>counts of stars and book by author</p>
         <p>friends</p>
         <p>favourite genres</p>
@@ -40,5 +46,10 @@
         </button>
       </div>
     </div>
+    } @else {
+    <div class="no-items">
+      <p class="text-3xl font-semibold text-center">User data loading...</p>
+    </div>
+    }
   </div>
 </section>

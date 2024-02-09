@@ -1,0 +1,22 @@
+<div class="relative min-h-[120px] pt-4 w-1/4 text-center">
+  @if(!loadingStatistics){
+  <p class="pb-1 text-sm">
+    {{ this.bookComments.length }} ratings ({{
+      this.avgRatingBooks | number : "1.1-2"
+    }}
+    avg)
+  </p>
+  <p class="pb-1 text-sm">{{ this.bookComments.length }} reviews on books</p>
+  <p class="pb-1 text-sm">
+    {{ this.authorComments.length }} reviews on authors
+  </p>
+  <p class="pb-1 text-sm">
+    {{ this.avgBookCountAuthor | number : "1.0-1" }} books avg read of each
+    author
+  </p>
+  } @else {
+  <div class="no-items">
+    <p class="text-xl font-semibold text-center">Loading...</p>
+  </div>
+  }
+</div>

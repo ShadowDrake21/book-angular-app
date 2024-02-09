@@ -2,7 +2,7 @@
   <div class="flex gap-10 max-h-full h-full">
     <div class="h-[250px] w-[250px] flex-shrink-0 rounded-full overflow-hidden">
       <img
-        [src]="user?.photoURL"
+        [src]="user?.photoURL || '/assets/no profile photo.jpg'"
         alt="user photo"
         class="w-full h-full object-cover"
       />
