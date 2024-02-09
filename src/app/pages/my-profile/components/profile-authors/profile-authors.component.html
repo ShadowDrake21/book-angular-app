@@ -7,9 +7,10 @@
   <div class="relative min-h-48">
     <div
       class="relative min-h-48 flex flex-wrap gap-2"
-      *ngIf="isAnyAuthor; else noAuthor"
+      *ngIf="favouriteAuthorsService.isAnyAuthor; else noAuthor"
     >
-      @if (!loadingAuthors) { @for (author of userAuthors; track author.key) {
+      @if (!favouriteAuthorsService.loadingAuthors) { @for (author of
+      visibleAuthors; track author.key) {
       <div class="max-w-52">
         <app-author-item [author]="author"></app-author-item>
       </div>

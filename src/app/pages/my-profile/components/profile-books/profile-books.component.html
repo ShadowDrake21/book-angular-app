@@ -7,9 +7,10 @@
   <div class="relative min-h-48">
     <div
       class="relative min-h-48 flex flex-wrap gap-2"
-      *ngIf="isAnyBook; else noBook"
+      *ngIf="favouriteBooksService.isAnyBook; else noBook"
     >
-      @if (!loadingBooks) { @for (work of userBooks; track work.key) {
+      @if (!favouriteBooksService.loadingBooks) { @for (work of visibleBooks;
+      track work.key) {
       <div class="max-w-52">
         <app-work-item [work]="work"></app-work-item>
       </div>

@@ -1,9 +1,9 @@
 <div class="relative min-h-[600px]">
-  <div *ngIf="isAnyAuthor; else noAuthor">
-    @if (!loadingAuthors) {
+  <div *ngIf="favouriteAuthorsService.isAnyAuthor; else noAuthor">
+    @if (!favouriteAuthorsService.loadingAuthors) {
     <app-userlist-item-bookmarks
       [entity]="'authors'"
-      [authors]="userAuthors"
+      [authors]="favouriteAuthorsService.userAuthors"
     ></app-userlist-item-bookmarks
     >}@else {
     <div class="no-items">
