@@ -1,0 +1,10 @@
+<div>
+  <app-useritem-prebookmarks-books
+    [email]="userEmail"
+    (countBooks)="countBooks.emit($event)"
+  ></app-useritem-prebookmarks-books>
+  <app-useritem-prebookmarks-authors
+    [email]="userEmail"
+    (countAuthors)="countAuthors.emit($event)"
+  ></app-useritem-prebookmarks-authors>
+</div>

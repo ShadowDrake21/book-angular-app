@@ -6,7 +6,7 @@ import { AuthService } from '../../core/authentication/auth.service';
 import { BookmarkService } from '../../core/services/bookmark.service';
 import { UseritemBookmarksComponent } from '../../shared/components/useritem-bookmarks/useritem-bookmarks.component';
 import { TruncateTextPipe } from '../../shared/pipes/truncate-text.pipe';
-import { UseritemPrebookmarsComponent } from '../../shared/components/useritem-prebookmars/useritem-prebookmars.component';
+import { UseritemPrebookmarksComponent } from '../../shared/components/useritem-prebookmarks/useritem-prebookmarks.component';
 
 @Component({
   selector: 'app-favbooks',
@@ -15,7 +15,7 @@ import { UseritemPrebookmarsComponent } from '../../shared/components/useritem-p
     CommonModule,
     UseritemBookmarksComponent,
     TruncateTextPipe,
-    UseritemPrebookmarsComponent,
+    UseritemPrebookmarksComponent,
   ],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.scss',

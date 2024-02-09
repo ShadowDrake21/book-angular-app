@@ -67,7 +67,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'favourite-books',
+    path: 'favourites',
     loadComponent: () =>
       import('./pages/favorites/favorites.component').then(
         (m) => m.FavoritesComponent

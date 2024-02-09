@@ -94,4 +94,18 @@ export class BookmarkService {
 
     return bookmarks;
   }
+
+  async getAllBookmarks(
+    entity: string,
+    userEmail: string | null | undefined
+  ): Promise<string[] | undefined> {
+    try {
+      if (!userEmail) return;
+      const res = await this.getAllBookmarksInUserData(userEmail, entity);
+
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
