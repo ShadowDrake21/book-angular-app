@@ -1,4 +1,4 @@
-<section id="my-profile" class="pt-[120px]">
+<section id="my-profile" class="pt-[120px] pb-10">
   <div class="container-big">
     @if (!loadingUser) {
     <div class="flex justify-between gap-5">
@@ -20,28 +20,30 @@
           >
         </div>
         <app-profile-friends [user]="user"></app-profile-friends>
-        <p>favourite genres</p>
       </div>
       <div class="w-96">
-        <app-profile-challenges
-          [challenge]="challenge"
-        ></app-profile-challenges>
-        <app-profile-challenges
-          [challenge]="challenge"
-        ></app-profile-challenges>
-        <app-profile-challenges
-          [challenge]="challenge"
-        ></app-profile-challenges>
-        <app-profile-challenges
-          [challenge]="challenge"
-        ></app-profile-challenges>
-        <button
-          type="button"
-          class="w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-          (click)="viewChallenges()"
-        >
-          {{ "View challenges" | titlecase }}
-        </button>
+        <div>
+          <app-profile-challenges
+            [challenge]="challenge"
+          ></app-profile-challenges>
+          <app-profile-challenges
+            [challenge]="challenge"
+          ></app-profile-challenges>
+          <app-profile-challenges
+            [challenge]="challenge"
+          ></app-profile-challenges>
+          <app-profile-challenges
+            [challenge]="challenge"
+          ></app-profile-challenges>
+          <button
+            type="button"
+            class="w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+            (click)="viewChallenges()"
+          >
+            {{ "View challenges" | titlecase }}
+          </button>
+        </div>
+        <app-profile-genres [user]="user"></app-profile-genres>
       </div>
     </div>
     } @else {
