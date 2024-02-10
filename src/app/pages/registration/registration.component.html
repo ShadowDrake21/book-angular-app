@@ -60,6 +60,12 @@
       >
         Name is required
       </div>
+      <div
+        class="validate-error mt-2"
+        *ngIf="registrationForm.controls.name.errors?.['maxlength']"
+      >
+        Name should have less than 40 characters
+      </div>
       }
       <!-- name -->
       <!-- Password -->
@@ -195,11 +201,6 @@
       class="flex items-center flex-col container mx-auto min-h-screen justify-center"
     >
       <p class="font-semibold text-2xl pb-5">{{ registrationMessage }}</p>
-      <!-- <p class="text-center">
-        <a routerLink="/login" class="text-blue-700 text-xl block mt-2"
-          >Back to login page</a
-        >
-      </p> -->
     </div>
   </ng-template>
 </section>

@@ -1,0 +1,44 @@
+<div class="pt-[60px]">
+  <div class="pb-3">
+    <h4 class="profile__titles pb-2 font-semibold">
+      {{ user?.displayName + "'s friends" | uppercase }}
+    </h4>
+  </div>
+  <div class="flex flex-wrap gap-3 px-3">
+    @for (friend of visibleFriends; track $index) {
+    <a
+      [routerLink]="['/userlist', friendDummy.id]"
+      class="relative inline-block friend-item"
+    >
+      <div class="w-[200px] h-[200px]">
+        <img
+          [src]="friendDummy.photoURL"
+          alt="friend"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <div class="friend-hover">
+        <h5 class="font-semibold text-white">
+          {{ friendDummy.name }}
+        </h5>
+      </div> </a
+    >}
+  </div>
+  <div class="pagination mb-5">
+    <button
+      class="pagination__btn"
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+    >
+      Previous
+    </button>
+    <span class="pagination__text">Current Page: {{ currentPage }}</span>
+    <button
+      class="pagination__btn"
+      (click)="nextPage()"
+      [disabled]="currentPage === numPages()"
+    >
+      Next
+    </button>
+  </div>
+</div>

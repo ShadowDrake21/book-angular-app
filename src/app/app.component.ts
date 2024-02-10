@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
-import { ModalService } from './services/modal.service';
+import { ModalService } from './core/services/modal.service';
 import { BooksService } from './core/services/books.service';
 import { IBook } from './shared/models/book.model';
 import { BooklistCatalogueComponent } from './shared/components/booklist-catalogue/booklist-catalogue.component';

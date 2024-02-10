@@ -17,7 +17,7 @@ import { BookmarkService } from '../../core/services/bookmark.service';
 import { UserlistItemCommentsComponent } from './components/userlist-item-comments/userlist-item-comments.component';
 import { UserlistItemFriendsManagementComponent } from './components/userlist-item-friends-management/userlist-item-friends-management.component';
 import { UseritemBookmarksComponent } from '../../shared/components/useritem-bookmarks/useritem-bookmarks.component';
-import { UseritemPrebookmarsComponent } from '../../shared/components/useritem-prebookmars/useritem-prebookmars.component';
+import { UseritemPrebookmarksComponent } from '../../shared/components/useritem-prebookmarks/useritem-prebookmarks.component';
 
 interface IUserDetails {
   countBookComments: number;
@@ -37,7 +37,7 @@ interface IUserDetails {
     UserlistItemFriendsManagementComponent,
     UseritemBookmarksComponent,
     UserlistItemCommentsComponent,
-    UseritemPrebookmarsComponent,
+    UseritemPrebookmarksComponent,
   ],
   templateUrl: './userlist-item.component.html',
   styleUrl: './userlist-item.component.scss',
@@ -92,7 +92,6 @@ export class UserlistItemComponent implements OnInit {
           'authors'
         )) as IAuthorCommentToClient[];
         this.loadingAuthorComments = false;
-        console.log(this.userAuthorComments);
         await new Promise((resolve) => setTimeout(resolve, 1000));
         this.details = this.formDetails();
       })
@@ -127,11 +126,9 @@ export class UserlistItemComponent implements OnInit {
 
   getCountBooks(value: number) {
     this.countBooks = value;
-    console.log('getcountbooks:', this.countBooks);
   }
 
   getCountAuthors(value: number) {
     this.countAuthors = value;
-    console.log('getcountauthors:', this.countAuthors);
   }
 }

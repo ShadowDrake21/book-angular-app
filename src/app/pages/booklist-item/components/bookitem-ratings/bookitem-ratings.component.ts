@@ -9,10 +9,6 @@ import { CommonModule } from '@angular/common';
   templateUrl: './bookitem-ratings.component.html',
   styleUrl: './bookitem-ratings.component.scss',
 })
-export class BookitemRatingsComponent implements OnInit {
+export class BookitemRatingsComponent {
   @Input({ required: true }) ratingData!: IBookExternalInfo;
-
-  ngOnInit(): void {
-    console.log('rating: ', this.ratingData);
-  }
 }

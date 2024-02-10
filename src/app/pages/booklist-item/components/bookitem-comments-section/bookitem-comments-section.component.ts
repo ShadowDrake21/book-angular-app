@@ -46,7 +46,7 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
   commentsService = inject(CommentsService);
 
   @Input() bookId!: string;
-  @Input() neededUserInfo: INeededUserInfo = { email: '', photoURL: '' };
+  @Input() neededUserInfo: INeededUserInfo = { email: '' };
 
   commentForm = new FormGroup({
     id: new FormControl(''),
@@ -103,7 +103,6 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
       comment: this.commentForm.value.comment,
       rating: parseInt(this.commentForm.value.rating),
       date: Timestamp.now(),
-      photoURL: this.neededUserInfo.photoURL,
     };
     if (this.commentFormBtn === 'Post') {
       this.commentsService

@@ -118,7 +118,6 @@ export class FriendsManagementService {
         friendRequests.push(requestDataToClient);
       }
     });
-    console.log('get request:', friendRequests);
     return friendRequests;
   }
 

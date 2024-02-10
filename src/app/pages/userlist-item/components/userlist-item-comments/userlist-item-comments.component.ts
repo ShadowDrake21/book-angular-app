@@ -30,10 +30,7 @@ export class UserlistItemCommentsComponent implements OnInit, OnChanges {
   recentBookComments: IBookCommentToClient[] = [];
   recentAuthorComments: IAuthorCommentToClient[] = [];
 
-  ngOnInit(): void {
-    console.log(this.bookComments);
-    console.log(this.recentBookComments);
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['loadingComments']) {
@@ -41,7 +38,6 @@ export class UserlistItemCommentsComponent implements OnInit, OnChanges {
     }
     if (changes['bookComments']) {
       this.bookComments = changes['bookComments'].currentValue;
-      console.log(this.bookComments);
       this.bookComments = this.sortComments(
         this.bookComments
       ) as IBookCommentToClient[];
@@ -50,11 +46,9 @@ export class UserlistItemCommentsComponent implements OnInit, OnChanges {
         this.bookComments,
         3
       ) as IBookCommentToClient[];
-      console.log('recent recentBookComments', this.recentBookComments);
     }
     if (changes['authorComments']) {
       this.authorComments = changes['authorComments'].currentValue;
-      console.log(this.authorComments);
 
       this.authorComments = this.sortComments(
         this.authorComments
@@ -64,7 +58,6 @@ export class UserlistItemCommentsComponent implements OnInit, OnChanges {
         this.authorComments,
         3
       ) as IAuthorCommentToClient[];
-      console.log('recent author', this.recentAuthorComments);
     }
   }
 
@@ -83,7 +76,6 @@ export class UserlistItemCommentsComponent implements OnInit, OnChanges {
     allComments: IBookCommentToClient[] | IAuthorCommentToClient[],
     count: number
   ): IBookCommentToClient[] | IAuthorCommentToClient[] {
-    console.log('recent comments', allComments);
     return allComments.slice(0, count);
   }
 }

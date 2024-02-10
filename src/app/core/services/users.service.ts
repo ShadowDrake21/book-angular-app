@@ -69,9 +69,6 @@ export class UsersService {
     let updateObj: object = {
       photoURL: updateDataObj.photoURL,
     };
-    console.log('updateObj: ', updateObj);
     await updateDoc(docRef, updateObj);
-
-    console.log('document updated with id:', docRef.id);
   }
 }

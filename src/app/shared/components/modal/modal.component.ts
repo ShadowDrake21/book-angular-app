@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { ModalService } from '../../../services/modal.service';
+import { ModalService } from '../../../core/services/modal.service';
 
 @Component({
   selector: 'popup-modal',
@@ -19,6 +19,7 @@ import { ModalService } from '../../../services/modal.service';
 })
 export class ModalComponent implements OnInit, OnDestroy {
   @Input() id!: string;
+  @Input() styles: string = 'min-h-full';
   isOpen = false;
   private element: any;
 

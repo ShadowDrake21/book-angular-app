@@ -34,7 +34,6 @@ export class UseritemBookmarksComponent implements OnInit, OnChanges {
   visibleAuthors: IAuthor[] = [];
 
   ngOnInit(): void {
-    console.log('authors: ', this.authors);
     this.updateVisible();
   }
   ngOnChanges(changes: SimpleChanges): void {

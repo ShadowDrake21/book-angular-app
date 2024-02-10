@@ -1,0 +1,25 @@
+<div class="w-96 mb-3 mt-3">
+  <div class="flex justify-between profile__titles">
+    <h4 class="pb-2 font-semibold w-full">
+      {{ "favourite genres" | uppercase }}
+    </h4>
+    <a routerLink="/my-favorite-genres" class="inline-block text-sm genre"
+      >edit</a
+    >
+  </div>
+  <div class="pt-3">
+    @for (genre of genres; track $index) { @if (genre === genres[genres.length -
+    1]) {<a
+      [routerLink]="['/booklist']"
+      [queryParams]="{ subject: genre }"
+      class="inline-block text-sm genre"
+      >{{ genre | titlecase }}</a
+    >} @else {
+    <a
+      [routerLink]="['/booklist']"
+      [queryParams]="{ subject: genre }"
+      class="inline-block ml-1 text-sm genre"
+      >{{ genre | titlecase }}</a
+    >,} }
+  </div>
+</div>

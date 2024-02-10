@@ -19,3 +19,9 @@ export interface IGottenFriendRequestToClient {
   senderEmail: string;
   date: Date;
 }
+
+export interface IFriend {
+  id: string;
+  name: string;
+  photoURL: string;
+}
