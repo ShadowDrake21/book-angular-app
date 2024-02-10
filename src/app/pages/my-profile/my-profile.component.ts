@@ -10,6 +10,7 @@ import { ProfileBooksComponent } from './components/profile-books/profile-books.
 import { ProfileAuthorsComponent } from './components/profile-authors/profile-authors.component';
 import { ProfileStatisticsComponent } from './components/profile-statistics/profile-statistics.component';
 import { ProfileFriendsComponent } from './components/profile-friends/profile-friends.component';
+import { ProfileGenresComponent } from './components/profile-genres/profile-genres.component';
 
 @Component({
   selector: 'app-my-profile',
@@ -23,6 +24,7 @@ import { ProfileFriendsComponent } from './components/profile-friends/profile-fr
     ProfileAuthorsComponent,
     ProfileStatisticsComponent,
     ProfileFriendsComponent,
+    ProfileGenresComponent,
   ],
   templateUrl: './my-profile.component.html',
   styleUrl: './my-profile.component.scss',
