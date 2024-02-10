@@ -8,10 +8,6 @@ import {
   inject,
 } from '@angular/core';
 import { UseritemBookmarksComponent } from '../../../useritem-bookmarks/useritem-bookmarks.component';
-import { AuthorsService } from '../../../../../core/services/authors.service';
-import { BookmarkService } from '../../../../../core/services/bookmark.service';
-import { IAuthor } from '../../../../models/author.model';
-import { forkJoin } from 'rxjs';
 import { FavouriteAuthorsService } from '../../../../../core/services/favourite-authors.service';
 
 @Component({

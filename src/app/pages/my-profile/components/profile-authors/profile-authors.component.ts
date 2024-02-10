@@ -1,18 +1,8 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { AuthorItemComponent } from '../../../../shared/components/author-item/author-item.component';
 import { CommonModule } from '@angular/common';
-import { AuthorsService } from '../../../../core/services/authors.service';
-import { BookmarkService } from '../../../../core/services/bookmark.service';
 import { User } from '@angular/fire/auth';
 import { IAuthor } from '../../../../shared/models/author.model';
-import { forkJoin } from 'rxjs';
 import { FavouriteAuthorsService } from '../../../../core/services/favourite-authors.service';
 
 @Component({
