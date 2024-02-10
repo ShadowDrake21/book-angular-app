@@ -9,6 +9,7 @@ import { IChallenge } from '../../shared/models/challenge.model';
 import { ProfileBooksComponent } from './components/profile-books/profile-books.component';
 import { ProfileAuthorsComponent } from './components/profile-authors/profile-authors.component';
 import { ProfileStatisticsComponent } from './components/profile-statistics/profile-statistics.component';
+import { ProfileFriendsComponent } from './components/profile-friends/profile-friends.component';
 
 @Component({
   selector: 'app-my-profile',
@@ -21,6 +22,7 @@ import { ProfileStatisticsComponent } from './components/profile-statistics/prof
     ProfileBooksComponent,
     ProfileAuthorsComponent,
     ProfileStatisticsComponent,
+    ProfileFriendsComponent,
   ],
   templateUrl: './my-profile.component.html',
   styleUrl: './my-profile.component.scss',
