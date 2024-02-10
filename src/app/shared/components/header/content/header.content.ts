@@ -3,26 +3,26 @@ import { IProfile } from '../../../models/dropmenu.model';
 export const profile: Array<IProfile> = [
   {
     title: 'Profile',
-    link: '/profile',
+    link: '/my-profile',
   },
   {
     title: 'Friends',
-    link: '/friends',
+    link: '/my-friends',
   },
   {
-    title: 'Reading Challenge',
-    link: '/reading-challenge',
+    title: 'Reading Challenges',
+    link: '/my-reading-challenges',
   },
   {
     title: 'Quotes',
-    link: '/quotes',
+    link: '/my-quotes',
   },
   {
     title: 'Favourite genges',
-    link: '/favourie-genres',
+    link: '/my-favorite-genres',
   },
   {
-    title: 'Account setting',
-    link: '/profile',
+    title: 'Account settings',
+    link: '/my-account-settings',
   },
 ];

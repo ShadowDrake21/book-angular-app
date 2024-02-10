@@ -34,33 +34,6 @@ export class AboutUserComponent implements OnInit {
     this.authService.user$.subscribe((res) => {
       this.user = res;
       this.loadingUser = false;
-      // this.updateUser();
-      console.log(this.user?.photoURL);
     });
-  }
-
-  updateUser() {
-    const auth = getAuth();
-    if (this.user?.email) {
-      this.authService.retrieveUserData(this.user?.email).then((res) => {
-        const retrieveUserInfo: IUser = res[0];
-        const updatedData: IUpdateProfile = {
-          displayName: 'Nikola Doktor Book',
-          photoURL: 'https://i.ytimg.com/vi/wy2PERFwae4/maxresdefault.jpg',
-        };
-
-        if (auth.currentUser) {
-          this.authService
-            .updateProfile(auth.currentUser, updatedData)
-            .then(() => {
-              this.usersService.updateUser(retrieveUserInfo.id, updatedData);
-              console.log('Profile updated!');
-            })
-            .catch((error) => {
-              console.log('Error while profile updating!', error);
-            });
-        }
-      });
-    }
   }
 }

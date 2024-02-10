@@ -100,14 +100,4 @@ export class HomeComponent implements OnInit {
         this.loadingChildren = false;
       });
   }
-
-  isLogin = setInterval(() => {
-    this.authService.authState$.subscribe((res) => {
-      if (res && res.uid) {
-        console.log('user is logged in');
-      } else {
-        console.log('user is not logged in');
-      }
-    });
-  }, 2000);
 }

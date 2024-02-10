@@ -23,9 +23,7 @@ export class BooklistCatalogueComponent implements OnInit, OnChanges {
   @Output() linkUsed = new EventEmitter<boolean>();
   currentPage: number = 1;
   visibleBooks: IBook[] = [];
-  ngOnInit(): void {
-    console.log('old', this.books);
-  }
+  ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['books']) {
       this.books = changes['books'].currentValue;

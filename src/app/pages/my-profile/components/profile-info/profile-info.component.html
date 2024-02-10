@@ -1,0 +1,91 @@
+<div class="w-full">
+  <div class="flex gap-10 max-h-full h-full">
+    <div class="h-[250px] w-[250px] flex-shrink-0 rounded-full overflow-hidden">
+      <img
+        [src]="user?.photoURL || '/assets/no profile photo.jpg'"
+        alt="user photo"
+        class="w-full h-full object-cover"
+      />
+    </div>
+    <div class="w-full">
+      @if(!isEdit){
+      <div>
+        <div class="flex flex-col gap-y-3 pb-5">
+          <div class="profile__titles w-full pb-3">
+            <h2 class="text-4xl font-semibold">
+              {{
+                user?.displayName !== null || user?.displayName !== undefined
+                  ? user?.displayName
+                  : ("" | truncateText : 20)
+              }}
+            </h2>
+            <h3 class="text-xl font-semibold">
+              {{
+                user?.email !== null || user?.email !== undefined
+                  ? user?.email
+                  : ("" | truncateText : 20)
+              }}
+            </h3>
+          </div>
+          <p>
+            <span class="font-semibold">Activity:</span> Joined in
+            {{ user?.metadata?.creationTime | date : "MMMM y" }}
+          </p>
+          <p>
+            <span class="font-semibold">Last active:</span>
+            {{ user?.metadata?.lastSignInTime | date : "longDate" }}
+          </p>
+          <p>
+            <span class="font-semibold">Email verified:</span>
+            {{ user?.emailVerified }}
+          </p>
+        </div>
+        <button
+          type="button"
+          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+          (click)="isEdit = true"
+        >
+          Edit an account
+        </button>
+      </div>
+      } @else {
+      <div>
+        <form [formGroup]="editProfileForm" (ngSubmit)="onEdit()">
+          <app-input
+            type="text"
+            label="Name"
+            placeholder="Name"
+            formControlName="name"
+            [isError]="editProfileForm.controls.name.errors?.['maxlength']"
+          ></app-input>
+          <div
+            class="validate-error mt-2"
+            *ngIf="editProfileForm.controls.name.errors?.['maxlength']"
+          >
+            Name should have less than 40 characters
+          </div>
+          <app-input
+            type="text"
+            label="Photo URL"
+            placeholder="Photo URL"
+            formControlName="image"
+          ></app-input>
+          <div class="flex gap-3">
+            <app-button
+              [button-styles]="'margin-top: 20px'"
+              [text]="'Edit'"
+              [disabled]="editProfileForm.invalid || editProfileForm.untouched"
+            />
+            <button
+              class="font-medium text-lg inline-block mt-5 ml-2 text-gray-600 hover:underline"
+              (click)="isEdit = false"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+      }
+    </div>
+  </div>
+</div>

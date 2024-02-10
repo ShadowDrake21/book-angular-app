@@ -67,7 +67,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'favourite-books',
+    path: 'favourites',
     loadComponent: () =>
       import('./pages/favorites/favorites.component').then(
         (m) => m.FavoritesComponent
@@ -85,6 +85,48 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/about-developer/about-developer.component').then(
         (m) => m.AboutDeveloperComponent
+      ),
+  },
+  {
+    path: 'my-profile',
+    loadComponent: () =>
+      import('./pages/my-profile/my-profile.component').then(
+        (m) => m.MyProfileComponent
+      ),
+  },
+  {
+    path: 'my-friends',
+    loadComponent: () =>
+      import('./pages/my-friends/my-friends.component').then(
+        (m) => m.MyFriendsComponent
+      ),
+  },
+  {
+    path: 'my-reading-challenges',
+    loadComponent: () =>
+      import(
+        './pages/my-reading-challenges/my-reading-challenges.component'
+      ).then((m) => m.MyReadingChallengesComponent),
+  },
+  {
+    path: 'my-quotes',
+    loadComponent: () =>
+      import('./pages/my-quotes/my-quotes.component').then(
+        (m) => m.MyQuotesComponent
+      ),
+  },
+  {
+    path: 'my-favorite-genres',
+    loadComponent: () =>
+      import('./pages/my-favourite-genres/my-favourite-genres.component').then(
+        (m) => m.MyFavouriteGenresComponent
+      ),
+  },
+  {
+    path: 'my-account-settings',
+    loadComponent: () =>
+      import('./pages/my-account-settings/my-account-settings.component').then(
+        (m) => m.MyAccountSettingsComponent
       ),
   },
 ];

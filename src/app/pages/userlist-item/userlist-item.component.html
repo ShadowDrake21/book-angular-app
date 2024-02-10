@@ -80,11 +80,11 @@
         ></app-userlist-item-comments>
       </div>
     </div>
-    <app-useritem-prebookmars
+    <app-useritem-prebookmarks
       [userEmail]="user.email"
       (countBooks)="getCountBooks($event)"
       (countAuthors)="getCountAuthors($event)"
-    ></app-useritem-prebookmars>
+    ></app-useritem-prebookmarks>
     } @else {
     <div class="no-items">
       <p class="text-3xl font-semibold text-center">User data loading...</p>

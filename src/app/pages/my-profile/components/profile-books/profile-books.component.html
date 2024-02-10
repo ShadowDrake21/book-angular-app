@@ -1,0 +1,29 @@
+<div class="pt-5">
+  <div class="pb-3">
+    <h4 class="profile__titles pb-2 font-semibold">
+      {{ user?.displayName + "'s favourite books" | uppercase }}
+    </h4>
+  </div>
+  <div class="relative min-h-48">
+    <div
+      class="relative min-h-48 flex flex-wrap gap-2"
+      *ngIf="favouriteBooksService.isAnyBook; else noBook"
+    >
+      @if (!favouriteBooksService.loadingBooks) { @for (work of visibleBooks;
+      track work.key) {
+      <div class="max-w-52">
+        <app-work-item [work]="work"></app-work-item>
+      </div>
+      }} @else {
+      <div class="no-items">
+        <p class="text-3xl font-semibold text-center">Loading...</p>
+      </div>
+      }
+    </div>
+    <ng-template #noBook>
+      <div class="no-items">
+        <p class="text-3xl font-semibold text-center">No favourite books</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

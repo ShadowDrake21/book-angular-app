@@ -25,6 +25,7 @@ import {
   getDoc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from '@angular/fire/firestore';
 import { setDoc } from '@firebase/firestore';
@@ -85,7 +86,7 @@ export class AuthService {
         this.sendEmailVerification();
         this._setUserData(res, name.trim());
         localStorage.setItem('user', 'null');
-        return 'Your account successfully registered';
+        return 'Your account successfully registered. Check your inbox to activate an account';
       })
       .catch((error) => {
         return error.message;
@@ -99,13 +100,13 @@ export class AuthService {
       password.trim()
     ).then((auth) => {
       this.email = email;
-      return this._setUserData(auth);
+      return this._setUserData(auth, auth.user.displayName);
     });
   }
 
   private _setUserData(
     auth: UserCredential,
-    name: string = 'unknown'
+    name: string | null
   ): Promise<IUser> {
     if (this._auth.currentUser)
       updateProfile(this._auth.currentUser, {
@@ -119,13 +120,21 @@ export class AuthService {
       lastSignInTime: auth.user.metadata.lastSignInTime,
       photoURL: auth.user.photoURL || '/assets/no profile photo.jpg',
     };
-    console.log('user', user);
     const userDocRef = doc(this._firestore, `users/${user.id}`);
     return setDoc(userDocRef, user).then(() => user);
   }
 
   updateProfile(currentUser: User, updateData: IUpdateProfile): Promise<void> {
     return updateProfile(currentUser, updateData);
+  }
+
+  async updateUserData(userId: string, updateData: IUpdateProfile) {
+    const userRef = doc(this._firestore, `users/${userId}`);
+
+    await updateDoc(userRef, {
+      name: updateData.displayName,
+      photoURL: updateData.photoURL,
+    });
   }
 
   async retrieveUserData(email: string): Promise<IUser[]> {

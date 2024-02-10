@@ -38,9 +38,6 @@ export class UserlistItemFriendsManagementComponent
       if (!data?.email || !this.userEmail) return;
       this.ourEmail = data?.email;
       this.loadingOurEmail = false;
-      console.log('emails: ', this.userEmail, this.ourEmail);
-      console.log('this.loading our email');
-
       await this.friendsManagementService
         .checkUserSentOrGotFriendRequest(
           'sentRequests',
