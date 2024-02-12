@@ -1,3 +1,19 @@
 <section class="pt-[120px]">
-  <div class="container-big"><p>my-friends works!</p></div>
+  <div class="container-big">
+    <mat-tab-group (selectedTabChange)="selectedTabChange($event)">
+      <mat-tab label="My friends"> Content 1 </mat-tab>
+      <mat-tab label="Inbox requests">
+        @if(selectedTab === 1) {
+        <app-inbox-requests
+          [allGottenRequests]="allGottenRequests"
+          [user]="user"
+        ></app-inbox-requests>
+        }
+      </mat-tab>
+      <mat-tab label="Send requests"> Content 3 </mat-tab>
+      <mat-tab label="Accepted"> Content 1 </mat-tab>
+      <mat-tab label="Rejected"> Content 2 </mat-tab>
+      <mat-tab label="Rejected from the other side"> Content 3 </mat-tab>
+    </mat-tab-group>
+  </div>
 </section>
