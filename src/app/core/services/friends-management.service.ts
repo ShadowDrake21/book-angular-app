@@ -144,4 +144,42 @@ export class FriendsManagementService {
       )
     );
   }
+
+  async getAllGottenFriendRequests(
+    email: string
+  ): Promise<IGottenFriendRequestToClient[]> {
+    let friendRequests: Array<IGottenFriendRequestToClient> = [];
+    const querySnapshot = await getDocs(
+      collection(this._firestore, 'friendsManagement', email, 'gottenRequests')
+    );
+    querySnapshot.forEach((doc) => {
+      const requestDataFromDB = doc.data() as IGottenFriendRequestToDB;
+
+      let transformDate: Date = (requestDataFromDB.date as Timestamp).toDate();
+      const requestDataToClient: IGottenFriendRequestToClient = {
+        senderEmail: requestDataFromDB.senderEmail,
+        date: transformDate,
+      };
+      friendRequests.push(requestDataToClient);
+    });
+    return friendRequests;
+  }
+
+  async acceptFriendRequest(
+    entity: string,
+    senderEmail: string,
+    recipientEmail: string,
+    dataObj: ISentFriendRequestToDB | IGottenFriendRequestToDB
+  ) {
+    await setDoc(
+      doc(
+        this._firestore,
+        'friendsManagement',
+        senderEmail,
+        entity,
+        recipientEmail
+      ),
+      dataObj
+    );
+  }
 }
