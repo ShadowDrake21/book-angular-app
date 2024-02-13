@@ -25,3 +25,8 @@ export interface IFriend {
   name: string;
   photoURL: string;
 }
+
+export interface IRequestManipulation {
+  actionType: 'accept' | 'reject';
+  senderEmail: string;
+}
