@@ -1,19 +1,34 @@
 <section class="pt-[120px]">
   <div class="container-big">
-    <mat-tab-group (selectedTabChange)="selectedTabChange($event)">
-      <mat-tab label="My friends"> Content 1 </mat-tab>
+    <mat-tab-group
+      (selectedTabChange)="selectedTabChange($event)"
+      animationDuration="0ms"
+    >
+      <mat-tab label="My friends">
+        @if(selectedTab === 1) {<app-friends-list></app-friends-list>}
+      </mat-tab>
       <mat-tab label="Inbox requests">
         @if(selectedTab === 1) {
         <app-inbox-requests
           [allGottenRequests]="allGottenRequests"
           [user]="user"
+          (isUpdate)="getContentInbox()"
         ></app-inbox-requests>
         }
       </mat-tab>
-      <mat-tab label="Send requests"> Content 3 </mat-tab>
-      <mat-tab label="Accepted"> Content 1 </mat-tab>
-      <mat-tab label="Rejected"> Content 2 </mat-tab>
-      <mat-tab label="Rejected from the other side"> Content 3 </mat-tab>
+      <mat-tab label="Sent requests"
+        >@if(selectedTab === 2) {
+        <app-sent-requests
+          [allSentRequests]="allSentRequests"
+        ></app-sent-requests>
+        }</mat-tab
+      >
+      <mat-tab label="Accepted">
+        @if(selectedTab === 3) {<app-accepted-requests></app-accepted-requests>}
+      </mat-tab>
+      <mat-tab label="Rejected">
+        @if(selectedTab === 4) {<app-rejected-requests></app-rejected-requests>}
+      </mat-tab>
     </mat-tab-group>
   </div>
 </section>
