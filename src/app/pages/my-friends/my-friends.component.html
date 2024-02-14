@@ -5,7 +5,10 @@
       animationDuration="0ms"
     >
       <mat-tab label="My friends">
-        @if(selectedTab === 1) {<app-friends-list></app-friends-list>}
+        @if(selectedTab === 0) {<app-friends-list
+          [allAcceptedRequests]="allAcceptedRequests"
+        ></app-friends-list
+        >}
       </mat-tab>
       <mat-tab label="Inbox requests">
         @if(selectedTab === 1) {

@@ -28,10 +28,6 @@ export class RejectedRequestsComponent implements OnInit, OnChanges {
     this.loadingRequests = true;
     if (changes['allRejectedRequests']) {
       this.allRejectedRequests = changes['allRejectedRequests'].currentValue;
-      console.log(
-        'all rejected requests after changes: ',
-        this.allRejectedRequests
-      );
       this.loadingRequests = false;
     }
   }

@@ -1,1 +1,19 @@
-<p>friends-list works!</p>
+<div class="relative min-h-60 pt-5">
+  @if (!loadingFriends) { @if(friends.length > 0){
+  <div class="flex justify-center flex-wrap gap-3">
+    @for (friend of friends; track $index) {
+    <p>{{ friend.email }}</p>
+    }
+  </div>
+  } @else {
+  <div class="no-items">
+    <p class="text-3xl font-semibold text-center">
+      You did not reject any request
+    </p>
+  </div>
+  } } @else {
+  <div class="no-items">
+    <p class="text-3xl font-semibold text-center">Loading...</p>
+  </div>
+  }
+</div>
