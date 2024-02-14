@@ -56,6 +56,10 @@ export class MyFriendsComponent implements OnInit {
       this.getContentInbox();
     } else if (event.index === 2) {
       this.getContentSent();
+    } else if (event.index === 3) {
+      this.getContentAccepted();
+    } else if (event.index === 4) {
+      this.getContentRejected();
     }
   }
 

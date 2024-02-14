@@ -56,7 +56,7 @@ export class InboxRequestsComponent implements OnInit, OnChanges {
       'accepted',
       senderEmail,
       this.user?.email,
-      { senderEmail, date: Timestamp.now() }
+      { senderEmail: this.user.email, date: Timestamp.now() }
     );
     await this.friendsManagementService.manipulateFriendRequest(
       'accepted',
@@ -81,7 +81,7 @@ export class InboxRequestsComponent implements OnInit, OnChanges {
       'rejected',
       senderEmail,
       this.user?.email,
-      { senderEmail: senderEmail, date: Timestamp.now() }
+      { senderEmail: this.user.email, date: Timestamp.now() }
     );
     await this.friendsManagementService.manipulateFriendRequest(
       'rejected',

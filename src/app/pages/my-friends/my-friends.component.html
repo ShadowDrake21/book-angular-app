@@ -20,14 +20,22 @@
         >@if(selectedTab === 2) {
         <app-sent-requests
           [allSentRequests]="allSentRequests"
+          [user]="user"
+          (isUpdate)="getContentSent()"
         ></app-sent-requests>
         }</mat-tab
       >
       <mat-tab label="Accepted">
-        @if(selectedTab === 3) {<app-accepted-requests></app-accepted-requests>}
+        @if(selectedTab === 3) {<app-accepted-requests
+          [allAcceptedRequests]="allAcceptedRequests"
+        ></app-accepted-requests
+        >}
       </mat-tab>
       <mat-tab label="Rejected">
-        @if(selectedTab === 4) {<app-rejected-requests></app-rejected-requests>}
+        @if(selectedTab === 4) {<app-rejected-requests
+          [allRejectedRequests]="allRejectedRequests"
+        ></app-rejected-requests
+        >}
       </mat-tab>
     </mat-tab-group>
   </div>
