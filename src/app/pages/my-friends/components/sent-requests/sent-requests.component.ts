@@ -12,22 +12,24 @@ import {
 import { FriendsManagementService } from '../../../../core/services/friends-management.service';
 import { User } from '@angular/fire/auth';
 import { ISentFriendRequestToClient } from '../../../../shared/models/friendsManagement.model';
+import { SentRequestItemComponent } from '../sent-request-item/sent-request-item.component';
 
 @Component({
   selector: 'app-sent-requests',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SentRequestItemComponent],
   templateUrl: './sent-requests.component.html',
   styleUrl: './sent-requests.component.scss',
 })
 export class SentRequestsComponent implements OnInit, OnChanges {
+  private friendsManagementService = inject(FriendsManagementService);
   @Input() allSentRequests: ISentFriendRequestToClient[] = [];
   @Input() user!: User | null;
+  @Output() isUpdate = new EventEmitter<boolean>();
   loadingRequests!: boolean;
 
   ngOnInit(): void {
     this.loadingRequests = true;
-    console.log('all sent requests: ', this.allSentRequests);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -37,5 +39,19 @@ export class SentRequestsComponent implements OnInit, OnChanges {
       console.log('all sent requests after changes: ', this.allSentRequests);
       this.loadingRequests = false;
     }
+  }
+
+  async requestDelete(deleteEmail: string) {
+    if (!this.user?.email) return;
+    console.log('deleteEmail:', deleteEmail);
+    await this.friendsManagementService.deleteSentFriendRequest(
+      this.user?.email,
+      deleteEmail
+    );
+    await this.friendsManagementService.deleteGottenFriendRequest(
+      this.user?.email,
+      deleteEmail
+    );
+    this.isUpdate.emit(true);
   }
 }
