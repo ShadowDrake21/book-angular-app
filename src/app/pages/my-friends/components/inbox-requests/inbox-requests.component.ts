@@ -42,10 +42,6 @@ export class InboxRequestsComponent implements OnInit, OnChanges {
     this.loadingRequests = true;
     if (changes['allGottenRequests']) {
       this.allGottenRequests = changes['allGottenRequests'].currentValue;
-      console.log(
-        'all gotten requests after changes: ',
-        this.allGottenRequests
-      );
       this.loadingRequests = false;
     }
   }

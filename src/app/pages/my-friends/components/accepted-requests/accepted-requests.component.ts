@@ -28,10 +28,6 @@ export class AcceptedRequestsComponent implements OnInit, OnChanges {
     this.loadingRequests = true;
     if (changes['allAcceptedRequests']) {
       this.allAcceptedRequests = changes['allAcceptedRequests'].currentValue;
-      console.log(
-        'all accepted requests after changes: ',
-        this.allAcceptedRequests
-      );
       this.loadingRequests = false;
     }
   }

@@ -36,7 +36,7 @@ export class MyFriendsComponent implements OnInit {
   loadingUser!: boolean;
   user: User | null = null;
 
-  selectedTab!: number;
+  selectedTab: number = 0;
   allGottenRequests: IGottenFriendRequestToClient[] = [];
   allSentRequests: ISentFriendRequestToClient[] = [];
   allAcceptedRequests: IGottenFriendRequestToClient[] = [];
@@ -47,12 +47,15 @@ export class MyFriendsComponent implements OnInit {
     this.authService.user$.subscribe((data: User | null) => {
       this.user = data;
       this.loadingUser = false;
+      this.getContentAccepted();
     });
   }
 
   async selectedTabChange(event: MatTabChangeEvent) {
     this.selectedTab = event.index;
-    if (event.index === 1) {
+    if (event.index === 0) {
+      this.getContentAccepted();
+    } else if (event.index === 1) {
       this.getContentInbox();
     } else if (event.index === 2) {
       this.getContentSent();

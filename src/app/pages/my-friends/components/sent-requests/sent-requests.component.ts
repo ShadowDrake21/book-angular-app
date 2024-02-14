@@ -36,14 +36,12 @@ export class SentRequestsComponent implements OnInit, OnChanges {
     this.loadingRequests = true;
     if (changes['allSentRequests']) {
       this.allSentRequests = changes['allSentRequests'].currentValue;
-      console.log('all sent requests after changes: ', this.allSentRequests);
       this.loadingRequests = false;
     }
   }
 
   async requestDelete(deleteEmail: string) {
     if (!this.user?.email) return;
-    console.log('deleteEmail:', deleteEmail);
     await this.friendsManagementService.deleteSentFriendRequest(
       this.user?.email,
       deleteEmail
