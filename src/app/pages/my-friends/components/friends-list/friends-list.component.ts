@@ -3,6 +3,7 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
   inject,
@@ -28,6 +29,7 @@ export class FriendsListComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.loadingRequests = true;
+    this.loadingFriends = true;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -40,11 +42,13 @@ export class FriendsListComponent implements OnInit, OnChanges {
   }
 
   getAllFriends() {
-    this.loadingFriends = true;
     this.allAcceptedRequests.forEach(async (request) => {
       await this.usersService
         .getUserByEmail(request.senderEmail)
-        .then((friend) => this.friends.push(friend[0]));
+        .then((friend) => {
+          console.log('friend: ', friend[0]);
+          this.friends.push(friend[0]);
+        });
     });
     this.loadingFriends = false;
     console.log('all friends: ', this.friends);
