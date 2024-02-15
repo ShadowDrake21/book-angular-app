@@ -13,6 +13,8 @@ import { SentRequestsComponent } from './components/sent-requests/sent-requests.
 import { AcceptedRequestsComponent } from './components/accepted-requests/accepted-requests.component';
 import { RejectedRequestsComponent } from './components/rejected-requests/rejected-requests.component';
 import { FriendsListComponent } from './components/friends-list/friends-list.component';
+import { UsersService } from '../../core/services/users.service';
+import { IUser } from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-my-friends',
@@ -31,6 +33,7 @@ import { FriendsListComponent } from './components/friends-list/friends-list.com
 })
 export class MyFriendsComponent implements OnInit {
   private authService = inject(AuthService);
+  private usersService = inject(UsersService);
   private friendsManagementService = inject(FriendsManagementService);
 
   loadingUser!: boolean;
@@ -41,6 +44,8 @@ export class MyFriendsComponent implements OnInit {
   allSentRequests: ISentFriendRequestToClient[] = [];
   allAcceptedRequests: IGottenFriendRequestToClient[] = [];
   allRejectedRequests: IGottenFriendRequestToClient[] = [];
+
+  friends: IUser[] = [];
 
   ngOnInit(): void {
     this.loadingUser = true;
@@ -54,6 +59,7 @@ export class MyFriendsComponent implements OnInit {
   async selectedTabChange(event: MatTabChangeEvent) {
     this.selectedTab = event.index;
     if (event.index === 0) {
+      this.friends = [];
       this.getContentAccepted();
     } else if (event.index === 1) {
       this.getContentInbox();
@@ -90,6 +96,7 @@ export class MyFriendsComponent implements OnInit {
         this.user?.email,
         'accepted'
       )) as IGottenFriendRequestToClient[];
+    this.getAllFriends();
   }
 
   async getContentRejected() {
@@ -99,5 +106,15 @@ export class MyFriendsComponent implements OnInit {
         this.user?.email,
         'rejected'
       )) as IGottenFriendRequestToClient[];
+  }
+
+  getAllFriends() {
+    this.allAcceptedRequests.forEach(async (request) => {
+      await this.usersService
+        .getUserByEmail(request.senderEmail)
+        .then((friend) => {
+          this.friends.push(friend[0]);
+        });
+    });
   }
 }

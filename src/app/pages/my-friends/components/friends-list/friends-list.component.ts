@@ -3,54 +3,35 @@ import {
   Component,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   SimpleChanges,
-  inject,
 } from '@angular/core';
-import { IGottenFriendRequestToClient } from '../../../../shared/models/friendsManagement.model';
 import { IUser } from '../../../../shared/models/user.model';
-import { UsersService } from '../../../../core/services/users.service';
+import { FriendsListItemComponent } from '../friends-list-item/friends-list-item.component';
+import { TruncateTextPipe } from '../../../../shared/pipes/truncate-text.pipe';
 
 @Component({
   selector: 'app-friends-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FriendsListItemComponent],
   templateUrl: './friends-list.component.html',
   styleUrl: './friends-list.component.scss',
 })
 export class FriendsListComponent implements OnInit, OnChanges {
-  private usersService = inject(UsersService);
-  @Input() allAcceptedRequests: IGottenFriendRequestToClient[] = [];
+  @Input() friends: IUser[] = [];
 
   loadingRequests!: boolean;
-  friends: IUser[] = [];
-  loadingFriends!: boolean;
+  loadingFriends: boolean = true;
 
-  ngOnInit(): void {
-    this.loadingRequests = true;
+  async ngOnInit(): Promise<void> {
     this.loadingFriends = true;
+    await new Promise((resolve) => setTimeout(resolve, 2500));
+    this.loadingFriends = false;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.loadingRequests = true;
-    if (changes['allAcceptedRequests']) {
-      this.allAcceptedRequests = changes['allAcceptedRequests'].currentValue;
-      this.loadingRequests = false;
-      this.getAllFriends();
+    if (changes['friends']) {
+      this.friends = changes['friends'].currentValue;
     }
-  }
-
-  getAllFriends() {
-    this.allAcceptedRequests.forEach(async (request) => {
-      await this.usersService
-        .getUserByEmail(request.senderEmail)
-        .then((friend) => {
-          console.log('friend: ', friend[0]);
-          this.friends.push(friend[0]);
-        });
-    });
-    this.loadingFriends = false;
-    console.log('all friends: ', this.friends);
   }
 }

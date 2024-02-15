@@ -2,13 +2,13 @@
   @if (!loadingFriends) { @if(friends.length > 0){
   <div class="flex justify-center flex-wrap gap-3">
     @for (friend of friends; track $index) {
-    <p>{{ friend.email }}</p>
+    <app-friends-list-item [friend]="friend"></app-friends-list-item>
     }
   </div>
   } @else {
   <div class="no-items">
     <p class="text-3xl font-semibold text-center">
-      You did not reject any request
+      You did not have any friends
     </p>
   </div>
   } } @else {
