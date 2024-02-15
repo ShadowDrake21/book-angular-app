@@ -26,30 +26,73 @@ export class UserlistItemFriendsManagementComponent
 
   private subscription!: Subscription;
   ourEmail: string = '';
+
   isFriendRequestSent: boolean = false;
+  isFriendRequestGotten: boolean = false;
+  isFriendRequestAccepted: boolean = false;
+  isFriendRequestRejected: boolean = false;
+
   loadingOurEmail?: boolean;
-  loadingIsFriendRequestSent?: boolean;
+  loadingIsFriendRequest?: boolean;
 
   // zrobić akceptację, uchylenie zapytu + stronę z główną informacją
   ngOnInit(): void {
     this.loadingOurEmail = true;
-    this.loadingIsFriendRequestSent = true;
+    this.loadingIsFriendRequest = true;
     this.subscription = this.authService.user$.subscribe(async (data) => {
       if (!data?.email || !this.userEmail) return;
       this.ourEmail = data?.email;
       this.loadingOurEmail = false;
-      await this.friendsManagementService
-        .checkUserSentOrGotFriendRequest(
-          'sentRequests',
-          this.ourEmail,
-          this.userEmail,
-          'recipientEmail'
-        )
-        .then((res: boolean) => {
-          this.isFriendRequestSent = res;
-          this.loadingIsFriendRequestSent = false;
-        });
+      await this.getAllMarks().then(
+        () => (this.loadingIsFriendRequest = false)
+      );
     });
+  }
+
+  async getAllMarks() {
+    if (!this.userEmail) return;
+    await this.friendsManagementService
+      .checkUserFriendRequest(
+        'sentRequests',
+        this.ourEmail,
+        this.userEmail,
+        'recipientEmail'
+      )
+      .then((res: boolean) => {
+        this.isFriendRequestSent = res;
+      });
+    await this.friendsManagementService
+      .checkUserFriendRequest(
+        'gottenRequests',
+        this.ourEmail,
+        this.userEmail,
+        'senderEmail'
+      )
+      .then((res: boolean) => {
+        this.isFriendRequestGotten = res;
+      });
+    await this.friendsManagementService
+      .checkUserFriendRequest(
+        'accepted',
+        this.ourEmail,
+        this.userEmail,
+        'senderEmail'
+      )
+      .then((res: boolean) => {
+        this.isFriendRequestAccepted = res;
+        console.log('accepted: ', res);
+      });
+    await this.friendsManagementService
+      .checkUserFriendRequest(
+        'rejected',
+        this.ourEmail,
+        this.userEmail,
+        'senderEmail'
+      )
+      .then((res: boolean) => {
+        this.isFriendRequestRejected = res;
+        console.log('rejected: ', res);
+      });
   }
 
   async onFriendsRequest() {
