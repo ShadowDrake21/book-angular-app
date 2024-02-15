@@ -41,7 +41,7 @@ export class FriendsManagementService {
     );
   }
 
-  async checkUserSentOrGotFriendRequest(
+  async checkUserFriendRequest(
     entity: string,
     emailA: string,
     emailB: string,
@@ -142,6 +142,64 @@ export class FriendsManagementService {
         'gottenRequests',
         senderEmail
       )
+    );
+  }
+
+  async getAllGottenFriendRequests(
+    email: string,
+    entity: 'gottenRequests' | 'accepted' | 'rejected'
+  ): Promise<IGottenFriendRequestToClient[]> {
+    let friendRequests: Array<IGottenFriendRequestToClient> = [];
+    const querySnapshot = await getDocs(
+      collection(this._firestore, 'friendsManagement', email, entity)
+    );
+    querySnapshot.forEach((doc) => {
+      const requestDataFromDB = doc.data() as IGottenFriendRequestToDB;
+
+      let transformDate: Date = (requestDataFromDB.date as Timestamp).toDate();
+      const requestDataToClient: IGottenFriendRequestToClient = {
+        senderEmail: requestDataFromDB.senderEmail,
+        date: transformDate,
+      };
+      friendRequests.push(requestDataToClient);
+    });
+    return friendRequests;
+  }
+
+  async getAllSentFriendRequests(
+    email: string
+  ): Promise<ISentFriendRequestToClient[]> {
+    let friendRequests: Array<ISentFriendRequestToClient> = [];
+    const querySnapshot = await getDocs(
+      collection(this._firestore, 'friendsManagement', email, 'sentRequests')
+    );
+    querySnapshot.forEach((doc) => {
+      const requestDataFromDB = doc.data() as ISentFriendRequestToDB;
+      let transformDate: Date = (requestDataFromDB.date as Timestamp).toDate();
+      const requestDataToClient: ISentFriendRequestToClient = {
+        recipientEmail: requestDataFromDB.recipientEmail,
+        date: transformDate,
+      };
+      friendRequests.push(requestDataToClient);
+    });
+    return friendRequests;
+  }
+
+  async manipulateFriendRequest(
+    entity: string,
+    senderEmail: string,
+    recipientEmail: string,
+    dataObj: ISentFriendRequestToDB | IGottenFriendRequestToDB
+  ) {
+    await setDoc(
+      doc(
+        this._firestore,
+        'friendsManagement',
+        senderEmail,
+        entity,
+        recipientEmail
+      ),
+      dataObj
     );
   }
 }

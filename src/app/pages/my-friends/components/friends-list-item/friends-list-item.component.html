@@ -1,0 +1,18 @@
+<a
+  class="p-5 bg-white rounded-xl inline-block"
+  [routerLink]="['/userlist', friend.id]"
+>
+  <div class="flex justify-center">
+    <img
+      [src]="friend.photoURL"
+      alt="friend photo"
+      class="w-32 h-32 rounded-full object-cover"
+    />
+  </div>
+  <div class="text-center pt-4">
+    <h3 class="text-xl font-semibold">
+      {{ (friend.email !== null ? friend.email : "") | truncateText : 25 }}
+    </h3>
+    <h4 class="text-base font-semibold">{{ friend.name }}</h4>
+  </div>
+</a>

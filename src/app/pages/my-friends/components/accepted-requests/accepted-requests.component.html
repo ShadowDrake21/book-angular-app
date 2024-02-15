@@ -1,0 +1,19 @@
+<div class="relative min-h-60 pt-5">
+  @if (!loadingRequests) {@if(allAcceptedRequests.length > 0){
+  <div class="flex justify-center flex-wrap gap-3">
+    @for (request of allAcceptedRequests; track $index) {
+    <app-accepted-request-item [request]="request"></app-accepted-request-item>
+    }
+  </div>
+  } @else {
+  <div class="no-items">
+    <p class="text-3xl font-semibold text-center">
+      You did not accepted any request
+    </p>
+  </div>
+  } } @else {
+  <div class="no-items">
+    <p class="text-3xl font-semibold text-center">Loading...</p>
+  </div>
+  }
+</div>

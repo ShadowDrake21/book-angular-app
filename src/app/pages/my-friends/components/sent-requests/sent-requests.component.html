@@ -1,0 +1,22 @@
+<div class="relative min-h-60 pt-5">
+  @if (!loadingRequests) {@if(allSentRequests.length > 0){
+  <div class="flex justify-center flex-wrap gap-3">
+    @for (request of allSentRequests; track $index) {
+    <app-sent-request-item
+      [request]="request"
+      (requestDelete)="requestDelete($event)"
+    ></app-sent-request-item>
+    }
+  </div>
+  } @else {
+  <div class="no-items">
+    <p class="text-3xl font-semibold text-center">
+      You did not send any request
+    </p>
+  </div>
+  } } @else {
+  <div class="no-items">
+    <p class="text-3xl font-semibold text-center">Loading...</p>
+  </div>
+  }
+</div>

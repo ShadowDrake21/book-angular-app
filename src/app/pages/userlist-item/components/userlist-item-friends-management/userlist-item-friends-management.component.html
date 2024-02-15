@@ -1,18 +1,43 @@
 <div>
   <h3 class="text-2xl font-semibold pb-3 text-center">Send friend request</h3>
   <div class="flex flex-col justify-center items-center">
-    <button class="w-16 h-12 mb-5" (click)="onFriendsRequest()">
+    @if (!loadingIsFriendRequest) {
+    <button
+      class="w-16 h-12 mb-5"
+      (click)="onFriendsRequest()"
+      *ngIf="
+        !isFriendRequestGotten &&
+        !isFriendRequestAccepted &&
+        !isFriendRequestRejected
+      "
+    >
       <img
         src="/assets/friendRequestImg.png"
         alt=""
         class="w-full h-full hover:scale-125 transition-all duration-300"
       />
     </button>
-    @if (!loadingIsFriendRequestSent) {
-    <p>
+
+    <p
+      *ngIf="
+        !isFriendRequestGotten &&
+        !isFriendRequestAccepted &&
+        !isFriendRequestRejected
+      "
+      class="font-semibold"
+    >
       {{
         isFriendRequestSent ? "Request was sent" : "Add this user to friends"
       }}
+    </p>
+    <p *ngIf="isFriendRequestGotten" class="font-semibold">
+      User has sent you a friend request
+    </p>
+    <p *ngIf="isFriendRequestAccepted" class="font-semibold">
+      You're already friends!
+    </p>
+    <p *ngIf="isFriendRequestRejected" class="font-semibold">
+      {{ "You cannot be friends :( Rejected offer" }}
     </p>
     } @else {
     <p>Loading...</p>

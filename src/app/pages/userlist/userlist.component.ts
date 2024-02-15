@@ -28,8 +28,8 @@ import { Auth } from '@angular/fire/auth';
   styleUrl: './userlist.component.scss',
 })
 export class UserlistComponent implements OnInit {
-  authService = inject(AuthService);
-  usersService = inject(UsersService);
+  private authService = inject(AuthService);
+  private usersService = inject(UsersService);
 
   searchUserForm = new FormGroup({
     userEmail: new FormControl('', [Validators.required, Validators.email]),

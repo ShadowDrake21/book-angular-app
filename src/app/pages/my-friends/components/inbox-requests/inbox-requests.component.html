@@ -1,0 +1,20 @@
+<div class="relative min-h-60 pt-5">
+  @if (!loadingRequests) {@if(allGottenRequests.length > 0){
+  <div class="flex justify-center flex-wrap gap-3">
+    @for (request of allGottenRequests; track $index) {
+    <app-inbox-request-item
+      [request]="request"
+      (requestReaction)="getRequestManipulation($event)"
+    ></app-inbox-request-item>
+    }
+  </div>
+  } @else {
+  <div class="no-items">
+    <p class="text-3xl font-semibold text-center">Your inbox is empty</p>
+  </div>
+  } } @else {
+  <div class="no-items">
+    <p class="text-3xl font-semibold text-center">Loading...</p>
+  </div>
+  }
+</div>

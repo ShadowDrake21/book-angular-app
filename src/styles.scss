@@ -153,3 +153,31 @@ body {
     background-color: #c4c4c4;
   }
 }
+
+.mat-mdc-tab-label-container {
+  border-bottom-width: 0 !important;
+}
+
+.mdc-tab-indicator {
+  display: none !important;
+}
+
+.mdc-tab {
+  padding: 15px 0 !important;
+}
+
+.mdc-tab.mdc-tab--active {
+  background: #c4c4c4 !important;
+}
+
+.mdc-tab__text-label {
+  font-size: 18px !important;
+  line-height: 26px !important;
+}
+
+.mat-mdc-tab-group.mat-mdc-tab-group-stretch-tabs
+  > .mat-mdc-tab-header
+  .mat-mdc-tab {
+  display: flex;
+  align-items: center;
+}
