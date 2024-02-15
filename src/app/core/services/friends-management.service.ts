@@ -41,7 +41,7 @@ export class FriendsManagementService {
     );
   }
 
-  async checkUserSentOrGotFriendRequest(
+  async checkUserFriendRequest(
     entity: string,
     emailA: string,
     emailB: string,
