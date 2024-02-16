@@ -1,1 +1,6 @@
-<p>reading-challenge works!</p>
+@for (challenge of challenges; track $index) {
+<div>
+  <p>{{ challenge.title }}</p>
+  <img [src]="challenge.image" alt="" />
+</div>
+}

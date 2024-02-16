@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import { InputComponent } from '../../../../shared/components/UI/input/input.component';
 import { ButtonComponent } from '../../../../shared/components/UI/button/button.component';
 import {
@@ -21,6 +28,7 @@ import { MEDIA_STORAGE_PATH } from '../../../../core/constants/storage.constants
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from '../../../../../environments/environment';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { ChallengesService } from '../../../../core/services/challenges.service';
 
 @Component({
   selector: 'app-add-reading-challenge',
@@ -40,7 +48,9 @@ export class AddReadingChallengeComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private storageService = inject(StorageService);
   private snackBar = inject(MatSnackBar);
-  private router = inject(Router);
+  private challengesService = inject(ChallengesService);
+
+  @Output() isNewChallenge = new EventEmitter<boolean>();
 
   addChallengeForm = new FormGroup({
     title: new FormControl(''),
@@ -81,6 +91,7 @@ export class AddReadingChallengeComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.isNewChallenge.emit(false);
     console.log(this.addChallengeForm.value);
     this.uploadImage();
   }
@@ -104,8 +115,24 @@ export class AddReadingChallengeComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((downloadUrl) => {
+        if (
+          !this.user?.email ||
+          !this.addChallengeForm.value.title ||
+          !this.addChallengeForm.value.count
+        )
+          return;
         this.submitted = false;
-        this.router.navigate([`/${downloadUrl}`]);
+        this.challengesService
+          .addNewChallenge(this.user?.email, {
+            id: 'challenge' + Math.random().toString(16).slice(2),
+            title: this.addChallengeForm.value.title,
+            total: parseInt(this.addChallengeForm.value.count),
+            read: 0,
+            image: downloadUrl,
+          })
+          .then(() => {
+            this.isNewChallenge.emit(true);
+          });
       });
   }
 
