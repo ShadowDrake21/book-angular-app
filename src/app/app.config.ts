@@ -9,6 +9,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { StarRatingModule } from 'angular-star-rating';
 import { AppComponent } from './app.component';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,5 +32,16 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     importProvidersFrom(StarRatingModule.forRoot()),
     provideAnimations(),
+    {
+      provide: FIREBASE_OPTIONS,
+      useValue: {
+        projectId: 'book-angular-app-942db',
+        appId: '1:869230915901:web:c1e5aadce79caeb1145554',
+        storageBucket: 'book-angular-app-942db.appspot.com',
+        apiKey: 'AIzaSyCCCCrPfDLKCXuMlepAL9B9O23xqaUJtkI',
+        authDomain: 'book-angular-app-942db.firebaseapp.com',
+        messagingSenderId: '869230915901',
+      },
+    },
   ],
 };
