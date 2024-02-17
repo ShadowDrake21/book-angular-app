@@ -1,4 +1,4 @@
-<div class="w-full mb-3">
+<div class="w-full pb-3">
   <h4 class="profile__titles pb-2 font-semibold text-xl">
     {{ challenge.title | uppercase }}
   </h4>
@@ -10,11 +10,13 @@
         class="object-cover h-full w-full"
       />
     </div>
-    <div class="w-full">
+    <div class="w-full text-center relative">
       <div class="mx-auto flex h-full items-center gap-5">
         <button
           type="button"
-          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-7 py-5 mb-2"
+          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-7 py-5 mb-2 disabled:bg-gray-500 disabled:cursor-not-allowed"
+          (click)="minusBook()"
+          [disabled]="this.challenge.read <= 0"
         >
           -
         </button>
@@ -42,15 +44,33 @@
               ></div>
             </div>
           </div>
-          <span class="block text-base text-gray-500 pb-3 text-center"
-            >You're on track!</span
-          >
+          <span class="block text-base text-gray-500 pb-3 text-center">{{
+            subtitle
+          }}</span>
         </div>
         <button
           type="button"
-          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-7 py-5 me-2 mb-2"
+          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-7 py-5 me-2 mb-2 disabled:bg-gray-500 disabled:cursor-not-allowed"
+          (click)="plusBook()"
+          [disabled]="this.challenge.read >= this.challenge.total"
         >
           +
+        </button>
+      </div>
+      <div *ngIf="isEdit" class="flex gap-5 absolute bottom-0 left-0 right-0">
+        <button
+          type="button"
+          class="flex-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+          (click)="updateChallenge()"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          class="flex-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          (click)="cancelEdit()"
+        >
+          Cancel
         </button>
       </div>
     </div>
