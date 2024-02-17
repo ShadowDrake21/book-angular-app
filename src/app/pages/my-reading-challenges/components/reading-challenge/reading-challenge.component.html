@@ -1,9 +1,40 @@
-<div>
-  @for (challenge of challenges; track $index) {
-  <app-reading-challenge-item
-    [challenge]="challenge"
-    [email]="user?.email"
-    (isRemovedChallenge)="$event && updateChallenges()"
-  ></app-reading-challenge-item>
-  }
+<div class="py-10">
+  <div class="relative min-h-[260px] pt-5">
+    <h4 class="pb-2 font-semibold text-3xl">Finished challenges</h4>
+    @if (!loadingFinishedChallenges) { @if(finishedChallenges.length > 0) {@for
+    (challenge of finishedChallenges; track $index) {
+    <app-reading-challenge-item
+      [challenge]="challenge"
+      [isFinished]="true"
+      (challengeOnRemove)="removeChallenge($event, 'finishedChallenges')"
+    ></app-reading-challenge-item>
+    }} @else {
+    <div class="no-items">
+      <p class="text-3xl font-semibold">
+        You don't have any finished challenge
+      </p>
+    </div>
+    }} @else {
+    <div class="no-items"><p class="text-3xl font-semibold">Loading...</p></div>
+    }
+  </div>
+  <!-- PAGINATION -->
+  <div class="relative min-h-[260px] pt-5">
+    <h4 class="pb-2 font-semibold text-3xl">Active challenges</h4>
+    @if (! loadingActiveChallenges) {@if(activeChallenges.length > 0) { @for
+    (challenge of activeChallenges; track $index) {
+    <app-reading-challenge-item
+      [challenge]="challenge"
+      [email]="user?.email"
+      (challengeOnRemove)="removeChallenge($event)"
+      (challengeOnUpdate)="updateChallenge($event)"
+    ></app-reading-challenge-item>
+    }}@else {
+    <div class="no-items">
+      <p class="text-3xl font-semibold">You don't have any active challenge</p>
+    </div>
+    }}@else {
+    <div class="no-items"><p class="text-3xl font-semibold">Loading...</p></div>
+    }
+  </div>
 </div>
