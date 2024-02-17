@@ -3,6 +3,7 @@
   <app-reading-challenge-item
     [challenge]="challenge"
     [email]="user?.email"
+    (isRemovedChallenge)="$event && updateChallenges()"
   ></app-reading-challenge-item>
   }
 </div>

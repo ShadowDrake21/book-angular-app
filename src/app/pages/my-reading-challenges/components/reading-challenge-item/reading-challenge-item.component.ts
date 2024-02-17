@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
   inject,
 } from '@angular/core';
@@ -23,6 +25,7 @@ export class ReadingChallengeItemComponent implements OnInit {
   private challengesService = inject(ChallengesService);
   @Input({ required: true }) challenge!: IChallenge;
   @Input({ required: true }) email!: string | null | undefined;
+  @Output() isRemovedChallenge = new EventEmitter<boolean>();
 
   progressBarWidth!: string;
   progressBarTitle!: string;
@@ -94,5 +97,12 @@ export class ReadingChallengeItemComponent implements OnInit {
     this.challenge.read = this.oldReadCount;
     this.updateProgressBar();
     this.subtitleChange();
+  }
+
+  async removeChallenge() {
+    if (!this.email) return;
+    this.isRemovedChallenge.emit(false);
+    await this.challengesService.deleteChallenge(this.email, this.challenge.id);
+    this.isRemovedChallenge.emit(true);
   }
 }
