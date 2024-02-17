@@ -1,6 +1,7 @@
-@for (challenge of challenges; track $index) {
 <div>
-  <p>{{ challenge.title }}</p>
-  <img [src]="challenge.image" alt="" />
+  @for (challenge of challenges; track $index) {
+  <app-reading-challenge-item
+    [challenge]="challenge"
+  ></app-reading-challenge-item>
+  }
 </div>
-}
