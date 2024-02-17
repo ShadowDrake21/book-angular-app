@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -21,11 +22,13 @@ import { ChallengesService } from '../../../../core/services/challenges.service'
   templateUrl: './reading-challenge-item.component.html',
   styleUrl: './reading-challenge-item.component.scss',
 })
-export class ReadingChallengeItemComponent implements OnInit {
+export class ReadingChallengeItemComponent implements OnInit, OnChanges {
   private challengesService = inject(ChallengesService);
   @Input({ required: true }) challenge!: IChallenge;
-  @Input({ required: true }) email!: string | null | undefined;
-  @Output() isRemovedChallenge = new EventEmitter<boolean>();
+  @Input() email!: string | null | undefined;
+  @Input() isFinished: boolean = false;
+  @Output() challengeOnRemove = new EventEmitter<string>();
+  @Output() challengeOnUpdate = new EventEmitter<IChallenge>();
 
   progressBarWidth!: string;
   progressBarTitle!: string;
@@ -36,6 +39,12 @@ export class ReadingChallengeItemComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('challenge:', this.challenge);
+    this.oldReadCount = this.challenge.read;
+    this.updateProgressBar();
+    this.subtitleChange();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.oldReadCount = this.challenge.read;
     this.updateProgressBar();
     this.subtitleChange();
@@ -66,16 +75,12 @@ export class ReadingChallengeItemComponent implements OnInit {
     this.subtitleChange();
   }
 
-  async updateChallenge() {
-    if (this.oldReadCount === this.challenge.read || !this.email) {
-      return;
+  updateChallenge() {
+    if (this.oldReadCount === this.challenge.read) {
+      this.cancelEdit();
     }
     this.isEdit = false;
-    await this.challengesService.updateChallenge(
-      this.email,
-      this.challenge.id,
-      this.challenge
-    );
+    this.challengeOnUpdate.emit(this.challenge);
     this.oldReadCount = this.challenge.read;
   }
 
@@ -97,12 +102,5 @@ export class ReadingChallengeItemComponent implements OnInit {
     this.challenge.read = this.oldReadCount;
     this.updateProgressBar();
     this.subtitleChange();
-  }
-
-  async removeChallenge() {
-    if (!this.email) return;
-    this.isRemovedChallenge.emit(false);
-    await this.challengesService.deleteChallenge(this.email, this.challenge.id);
-    this.isRemovedChallenge.emit(true);
   }
 }

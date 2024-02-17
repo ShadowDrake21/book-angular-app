@@ -5,6 +5,7 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  orderBy,
   query,
   setDoc,
   updateDoc,
@@ -17,16 +18,16 @@ import { IChallenge } from '../../shared/models/challenge.model';
 export class ChallengesService {
   private _firestore = inject(Firestore);
 
-  async addNewChallenge(email: string, challenge: IChallenge) {
+  async addNewChallenge(email: string, entity: string, challenge: IChallenge) {
     await setDoc(
-      doc(this._firestore, 'usersData', email, 'challenges', challenge.id),
+      doc(this._firestore, 'usersData', email, entity, challenge.id),
       challenge
     );
   }
 
-  async deleteChallenge(email: string, challengeId: string) {
+  async deleteChallenge(email: string, entity: string, challengeId: string) {
     await deleteDoc(
-      doc(this._firestore, 'usersData', email, 'challenges', challengeId)
+      doc(this._firestore, 'usersData', email, entity, challengeId)
     );
   }
 
@@ -39,7 +40,7 @@ export class ChallengesService {
       this._firestore,
       'usersData',
       email,
-      'challenges',
+      'activeChallenges',
       challengeId
     );
     let updateObj: object = {
@@ -52,10 +53,13 @@ export class ChallengesService {
     await updateDoc(docRef, updateObj);
   }
 
-  async getAllChallenges(email: string): Promise<IChallenge[]> {
+  async getAllChallenges(email: string, entity: string): Promise<IChallenge[]> {
     let challenges: Array<IChallenge> = [];
     const querySnapshot = await getDocs(
-      query(collection(this._firestore, 'usersData', email, 'challenges'))
+      query(
+        collection(this._firestore, 'usersData', email, entity),
+        orderBy('title', 'asc')
+      )
     );
 
     querySnapshot.forEach((doc) => {

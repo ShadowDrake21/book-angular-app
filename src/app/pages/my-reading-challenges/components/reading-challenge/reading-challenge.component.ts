@@ -33,30 +33,89 @@ export class ReadingChallengeComponent implements OnInit, OnChanges, OnDestroy {
   user!: User | null;
   destroy$: Subject<null> = new Subject();
 
-  challenges: IChallenge[] = [];
-  progressBarWidth!: string;
-  progressBarTitle!: string;
+  loadingActiveChallenges!: boolean;
+  activeChallenges: IChallenge[] = [];
+
+  loadingFinishedChallenges!: boolean;
+  finishedChallenges: IChallenge[] = [];
 
   ngOnInit(): void {
+    this.loadingActiveChallenges = true;
+    this.loadingFinishedChallenges = true;
     this.authService.user$
       .pipe(takeUntil(this.destroy$))
       .subscribe(async (user: User | null) => {
         this.user = user;
-        await this.updateChallenges();
+        await this.getActiveChallenges().then(
+          () => (this.loadingActiveChallenges = false)
+        );
+        await this.getFinishedChallenges().then(
+          () => (this.loadingFinishedChallenges = false)
+        );
       });
   }
 
-  async updateChallenges() {
+  async getActiveChallenges() {
     if (!this.user?.email) return;
-    this.challenges = (await this.challengesService.getAllChallenges(
-      this.user?.email
+    this.activeChallenges = (await this.challengesService.getAllChallenges(
+      this.user?.email,
+      'activeChallenges'
     )) as IChallenge[];
+  }
+
+  async getFinishedChallenges() {
+    if (!this.user?.email) return;
+    this.finishedChallenges = (await this.challengesService.getAllChallenges(
+      this.user?.email,
+      'finishedChallenges'
+    )) as IChallenge[];
+  }
+
+  async removeChallenge(
+    challengeId: string,
+    entity: string = 'activeChallenges'
+  ) {
+    if (!this.user?.email) return;
+    await this.challengesService.deleteChallenge(
+      this.user?.email,
+      entity,
+      challengeId
+    );
+    if (entity === 'activeChallenges') {
+      await this.getActiveChallenges();
+    } else {
+      await this.getFinishedChallenges();
+    }
+  }
+
+  async updateChallenge(challenge: IChallenge) {
+    if (!this.user?.email) return;
+    if (challenge.total === challenge.read) {
+      await this.challengesService.addNewChallenge(
+        this.user?.email,
+        'finishedChallenges',
+        challenge
+      );
+      await this.challengesService.deleteChallenge(
+        this.user?.email,
+        'activeChallenges',
+        challenge.id
+      );
+      await this.getFinishedChallenges();
+      await this.getActiveChallenges();
+    } else {
+      await this.challengesService.updateChallenge(
+        this.user?.email,
+        challenge.id,
+        challenge
+      );
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isNewChallenge']) {
       this.isNewChallenge = changes['isNewChallenge'].currentValue;
-      if (this.isNewChallenge) this.updateChallenges();
+      if (this.isNewChallenge) this.getActiveChallenges();
     }
   }
 

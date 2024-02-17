@@ -123,7 +123,7 @@ export class AddReadingChallengeComponent implements OnInit, OnDestroy {
           return;
         this.submitted = false;
         this.challengesService
-          .addNewChallenge(this.user?.email, {
+          .addNewChallenge(this.user?.email, 'activeChallenges', {
             id: 'challenge' + Math.random().toString(16).slice(2),
             title: this.addChallengeForm.value.title,
             total: parseInt(this.addChallengeForm.value.count),
