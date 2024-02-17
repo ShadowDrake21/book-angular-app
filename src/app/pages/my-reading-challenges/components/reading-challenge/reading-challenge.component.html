@@ -2,6 +2,7 @@
   @for (challenge of challenges; track $index) {
   <app-reading-challenge-item
     [challenge]="challenge"
+    [email]="user?.email"
   ></app-reading-challenge-item>
   }
 </div>
