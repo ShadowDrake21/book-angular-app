@@ -15,11 +15,12 @@ import { ChallengesService } from '../../../../core/services/challenges.service'
 import { User } from '@angular/fire/auth';
 import { Subject, takeUntil } from 'rxjs';
 import { IChallenge } from '../../../../shared/models/challenge.model';
+import { ReadingChallengeItemComponent } from '../reading-challenge-item/reading-challenge-item.component';
 
 @Component({
   selector: 'app-reading-challenge',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReadingChallengeItemComponent],
   templateUrl: './reading-challenge.component.html',
   styleUrl: './reading-challenge.component.scss',
 })
@@ -33,6 +34,8 @@ export class ReadingChallengeComponent implements OnInit, OnChanges, OnDestroy {
   destroy$: Subject<null> = new Subject();
 
   challenges: IChallenge[] = [];
+  progressBarWidth!: string;
+  progressBarTitle!: string;
 
   ngOnInit(): void {
     this.authService.user$

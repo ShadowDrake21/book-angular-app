@@ -132,6 +132,8 @@ export class AddReadingChallengeComponent implements OnInit, OnDestroy {
           })
           .then(() => {
             this.isNewChallenge.emit(true);
+            this.addChallengeForm.reset();
+            this.image = undefined;
           });
       });
   }

@@ -1,0 +1,58 @@
+<div class="w-full mb-3">
+  <h4 class="profile__titles pb-2 font-semibold text-xl">
+    {{ challenge.title | uppercase }}
+  </h4>
+  <div class="flex gap-5 p-3">
+    <div class="max-w-96 w-full max-h-60">
+      <img
+        [src]="challenge.image"
+        alt="challenge"
+        class="object-cover h-full w-full"
+      />
+    </div>
+    <div class="w-full">
+      <div class="mx-auto flex h-full items-center gap-5">
+        <button
+          type="button"
+          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-7 py-5 mb-2"
+        >
+          -
+        </button>
+        <div class="w-full">
+          <a routerLink="/favourites" class="block mb-2 text-lg hover:underline"
+            >Your have read {{ challenge.read }} of
+            {{ challenge.total }} books.</a
+          >
+
+          <div class="pb-3">
+            <div class="flex justify-between mb-1">
+              <span class="text-lg font-medium text-gray-700 dark:text-white"
+                >Progress</span
+              >
+              <span
+                class="text-base font-medium text-gray-700 dark:text-white"
+                >{{ progressBarTitle }}</span
+              >
+            </div>
+
+            <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+              <div
+                class="bg-gray-600 h-2.5 rounded-full"
+                [style]="progressBarWidth"
+              ></div>
+            </div>
+          </div>
+          <span class="block text-base text-gray-500 pb-3 text-center"
+            >You're on track!</span
+          >
+        </div>
+        <button
+          type="button"
+          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-7 py-5 me-2 mb-2"
+        >
+          +
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
