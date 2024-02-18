@@ -2,44 +2,12 @@
   @if (user?.email) {
   <app-reading-challenge-finished
     [email]="user?.email"
-  ></app-reading-challenge-finished
+    [isReload]="isFinishedReload"
+  ></app-reading-challenge-finished>
+  <app-reading-challenge-active
+    [email]="user?.email"
+    [isNewChallenge]="isNewChallenge"
+    (isFinishedReload)="getIsFinishedReload($event)"
+  ></app-reading-challenge-active
   >}
-  <!-- PAGINATION -->
-  <div class="relative min-h-[260px] pt-5">
-    <h4 class="pb-2 font-semibold text-3xl">Active challenges</h4>
-    @if (! loadingActiveChallenges) {@if(activeChallenges.length > 0) { @for
-    (challenge of visibleActiveChallenges; track $index) {
-    <app-reading-challenge-item
-      [challenge]="challenge"
-      [email]="user?.email"
-      (challengeOnRemove)="removeChallenge($event)"
-      (challengeOnUpdate)="updateChallenge($event)"
-    ></app-reading-challenge-item>
-    }}@else {
-    <div class="no-items">
-      <p class="text-3xl font-semibold">You don't have any active challenge</p>
-    </div>
-    }}@else {
-    <div class="no-items"><p class="text-3xl font-semibold">Loading...</p></div>
-    }
-    <div class="pagination mb-5">
-      <button
-        class="pagination__btn"
-        (click)="prevPage('active')"
-        [disabled]="currentActivePage === 1"
-      >
-        Previous
-      </button>
-      <span class="pagination__text"
-        >Current Page: {{ currentActivePage }}</span
-      >
-      <button
-        class="pagination__btn"
-        (click)="nextPage('active')"
-        [disabled]="currentActivePage === numPages('active')"
-      >
-        Next
-      </button>
-    </div>
-  </div>
 </div>

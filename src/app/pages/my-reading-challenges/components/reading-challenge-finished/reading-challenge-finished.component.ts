@@ -39,7 +39,16 @@ export class ReadingChallengeFinishedComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {}
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
+    if (changes['isReload']) {
+      this.isReload = changes['isReload'].currentValue;
+      if (this.isReload) {
+        await this.getFinishedChallenges();
+        this.paginationLiteService.currentPage = 1;
+        this.paginationLiteService.updateVisibleElements();
+      }
+    }
+  }
 
   async getFinishedChallenges() {
     if (!this.email) return;
@@ -48,6 +57,9 @@ export class ReadingChallengeFinishedComponent implements OnInit, OnChanges {
       'finishedChallenges'
     )) as IChallenge[];
     this.paginationLiteService.elements = this.finishedChallenges;
+    this.paginationLiteService.updateVisibleElements();
+    if (this.paginationLiteService.visibleElements.length === 0)
+      this.paginationLiteService.currentPage--;
     this.paginationLiteService.updateVisibleElements();
   }
 

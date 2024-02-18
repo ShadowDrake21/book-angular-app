@@ -23,12 +23,12 @@ import { ChallengesService } from '../../../../core/services/challenges.service'
   styleUrl: './reading-challenge-item.component.scss',
 })
 export class ReadingChallengeItemComponent implements OnInit, OnChanges {
-  private challengesService = inject(ChallengesService);
   @Input({ required: true }) challenge!: IChallenge;
   @Input() email!: string | null | undefined;
   @Input() isFinished: boolean = false;
   @Output() challengeOnRemove = new EventEmitter<string>();
   @Output() challengeOnUpdate = new EventEmitter<IChallenge>();
+  @Output() challengeWhileUpdate = new EventEmitter<boolean>();
 
   progressBarWidth!: string;
   progressBarTitle!: string;
@@ -59,7 +59,9 @@ export class ReadingChallengeItemComponent implements OnInit, OnChanges {
   }
 
   minusBook() {
-    if (!this.isEdit) this.isEdit = true;
+    if (!this.isEdit) {
+      this.setBoolValuesWhileEditing(true);
+    }
     this.challenge.read--;
     console.log(`You have read ${this.challenge.read}`);
     this.updateProgressBar();
@@ -67,7 +69,9 @@ export class ReadingChallengeItemComponent implements OnInit, OnChanges {
   }
 
   plusBook() {
-    if (!this.isEdit) this.isEdit = true;
+    if (!this.isEdit) {
+      this.setBoolValuesWhileEditing(true);
+    }
     this.challenge.read++;
     console.log(`You have read ${this.challenge.read}`);
     this.updateProgressBar();
@@ -78,7 +82,7 @@ export class ReadingChallengeItemComponent implements OnInit, OnChanges {
     if (this.oldReadCount === this.challenge.read) {
       this.cancelEdit();
     }
-    this.isEdit = false;
+    this.setBoolValuesWhileEditing(false);
     this.challengeOnUpdate.emit(this.challenge);
     this.oldReadCount = this.challenge.read;
   }
@@ -97,9 +101,14 @@ export class ReadingChallengeItemComponent implements OnInit, OnChanges {
   }
 
   cancelEdit() {
-    this.isEdit = false;
+    this.setBoolValuesWhileEditing(false);
     this.challenge.read = this.oldReadCount;
     this.updateProgressBar();
     this.subtitleChange();
+  }
+
+  setBoolValuesWhileEditing(value: boolean) {
+    this.isEdit = value;
+    this.challengeWhileUpdate.emit(this.isEdit);
   }
 }
