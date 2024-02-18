@@ -2,7 +2,7 @@
   <div class="relative min-h-[260px] pt-5">
     <h4 class="pb-2 font-semibold text-3xl">Finished challenges</h4>
     @if (!loadingFinishedChallenges) { @if(finishedChallenges.length > 0) {@for
-    (challenge of finishedChallenges; track $index) {
+    (challenge of visibleFinishedChallenges; track $index) {
     <app-reading-challenge-item
       [challenge]="challenge"
       [isFinished]="true"
@@ -17,12 +17,31 @@
     }} @else {
     <div class="no-items"><p class="text-3xl font-semibold">Loading...</p></div>
     }
+    <div class="pagination mb-5">
+      <button
+        class="pagination__btn"
+        (click)="prevPage('finished')"
+        [disabled]="currentFinishedPage === 1"
+      >
+        Previous
+      </button>
+      <span class="pagination__text"
+        >Current Page: {{ currentFinishedPage }}</span
+      >
+      <button
+        class="pagination__btn"
+        (click)="nextPage('finished')"
+        [disabled]="currentFinishedPage === numPages('finished')"
+      >
+        Next
+      </button>
+    </div>
   </div>
   <!-- PAGINATION -->
   <div class="relative min-h-[260px] pt-5">
     <h4 class="pb-2 font-semibold text-3xl">Active challenges</h4>
     @if (! loadingActiveChallenges) {@if(activeChallenges.length > 0) { @for
-    (challenge of activeChallenges; track $index) {
+    (challenge of visibleActiveChallenges; track $index) {
     <app-reading-challenge-item
       [challenge]="challenge"
       [email]="user?.email"
@@ -36,5 +55,24 @@
     }}@else {
     <div class="no-items"><p class="text-3xl font-semibold">Loading...</p></div>
     }
+    <div class="pagination mb-5">
+      <button
+        class="pagination__btn"
+        (click)="prevPage('active')"
+        [disabled]="currentActivePage === 1"
+      >
+        Previous
+      </button>
+      <span class="pagination__text"
+        >Current Page: {{ currentActivePage }}</span
+      >
+      <button
+        class="pagination__btn"
+        (click)="nextPage('active')"
+        [disabled]="currentActivePage === numPages('active')"
+      >
+        Next
+      </button>
+    </div>
   </div>
 </div>
