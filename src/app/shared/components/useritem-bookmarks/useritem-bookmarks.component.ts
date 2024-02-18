@@ -12,30 +12,29 @@ import { IWork } from '../../models/book.model';
 import { IAuthor } from '../../models/author.model';
 import { WorkItemComponent } from '../work-item/work-item.component';
 import { AuthorItemComponent } from '../author-item/author-item.component';
+import { PaginationLiteService } from '../../../core/services/pagination-lite.service';
 
 @Component({
   selector: 'app-userlist-item-bookmarks',
   standalone: true,
   imports: [CommonModule, RouterModule, WorkItemComponent, AuthorItemComponent],
+  providers: [PaginationLiteService],
   templateUrl: './useritem-bookmarks.component.html',
   styleUrl: './useritem-bookmarks.component.scss',
 })
 export class UseritemBookmarksComponent implements OnInit, OnChanges {
-  route = inject(ActivatedRoute);
+  protected paginationLiteService = inject(PaginationLiteService);
+  private route = inject(ActivatedRoute);
 
   @Input() entity: 'works' | 'authors' = 'works';
   @Input() works: IWork[] = [];
   @Input() authors: IAuthor[] = [];
 
-  itemsPerPage: number = 4;
-  currentPage: number = 1;
-
-  visibleWorks: IWork[] = [];
-  visibleAuthors: IAuthor[] = [];
-
   ngOnInit(): void {
-    this.updateVisible();
+    this.paginationLiteService.itemsPerPage = 4;
+    this.paginationUsage();
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['works']) {
       this.works = changes['works'].currentValue;
@@ -43,39 +42,16 @@ export class UseritemBookmarksComponent implements OnInit, OnChanges {
     if (changes['authors']) {
       this.authors = changes['authors'].currentValue;
     }
-    this.currentPage = 1;
-    this.updateVisible();
+    this.paginationLiteService.currentPage = 1;
+    this.paginationUsage();
   }
 
-  updateVisible() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
+  paginationUsage() {
     if (this.entity === 'works') {
-      this.visibleWorks = this.works.slice(startIndex, endIndex);
+      this.paginationLiteService.elements = this.works;
     } else {
-      this.visibleAuthors = this.authors.slice(startIndex, endIndex);
+      this.paginationLiteService.elements = this.authors;
     }
-  }
-
-  nextPage() {
-    if (this.currentPage < this.numPages()) {
-      this.currentPage++;
-      this.updateVisible();
-    }
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.updateVisible();
-    }
-  }
-
-  numPages(): number {
-    if (this.entity === 'works') {
-      return Math.ceil(this.works.length / this.itemsPerPage);
-    } else {
-      return Math.ceil(this.authors.length / this.itemsPerPage);
-    }
+    this.paginationLiteService.updateVisibleElements();
   }
 }

@@ -1,3 +1,10 @@
 <section class="pt-[120px]">
-  <div class="container-big"><p>my-reading-challenges works!</p></div>
+  <div class="container-big">
+    <app-add-reading-challenge
+      (isNewChallenge)="getIsNewChallenge($event)"
+    ></app-add-reading-challenge>
+    <app-reading-challenge
+      [isNewChallenge]="isNewChallenge"
+    ></app-reading-challenge>
+  </div>
 </section>

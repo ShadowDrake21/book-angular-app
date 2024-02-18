@@ -6,52 +6,34 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import { IBook } from '../../models/book.model';
 import { BookItemComponent } from '../book-item/book-item.component';
+import { PaginationLiteService } from '../../../core/services/pagination-lite.service';
 
 @Component({
   selector: 'app-booklist-catalogue',
   standalone: true,
   imports: [BookItemComponent],
+  providers: [PaginationLiteService],
   templateUrl: './booklist-catalogue.component.html',
   styleUrl: './booklist-catalogue.component.scss',
 })
-export class BooklistCatalogueComponent implements OnInit, OnChanges {
+export class BooklistCatalogueComponent implements OnChanges {
+  protected paginationLiteService = inject(PaginationLiteService);
+
   @Input({ required: true }) books: IBook[] = [];
   @Input() itemsPerPage: number = 8;
   @Output() linkUsed = new EventEmitter<boolean>();
-  currentPage: number = 1;
-  visibleBooks: IBook[] = [];
-  ngOnInit(): void {}
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['books']) {
       this.books = changes['books'].currentValue;
-      this.currentPage = 1;
-      this.updateVisibleBooks();
+      this.paginationLiteService.currentPage = 1;
+      this.paginationLiteService.itemsPerPage = this.itemsPerPage;
+      this.paginationLiteService.elements = this.books;
+      this.paginationLiteService.updateVisibleElements();
     }
-  }
-  updateVisibleBooks() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.visibleBooks = this.books.slice(startIndex, endIndex);
-  }
-
-  nextPage() {
-    if (this.currentPage < this.numPages()) {
-      this.currentPage++;
-      this.updateVisibleBooks();
-    }
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.updateVisibleBooks();
-    }
-  }
-
-  numPages(): number {
-    return Math.ceil(this.books.length / this.itemsPerPage);
   }
 }
