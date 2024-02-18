@@ -37,6 +37,7 @@ export class MyProfileComponent implements OnInit {
   user: User | null = null;
 
   challenge: IChallenge = {
+    id: 'challenge' + Math.random().toString(16).slice(2),
     title: 'Fantasy on 2024',
     total: 77,
     read: 46,

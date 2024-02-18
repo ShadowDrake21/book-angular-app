@@ -1,0 +1,13 @@
+<div class="py-10">
+  @if (user?.email) {
+  <app-reading-challenge-finished
+    [email]="user?.email"
+    [isReload]="isFinishedReload"
+  ></app-reading-challenge-finished>
+  <app-reading-challenge-active
+    [email]="user?.email"
+    [isNewChallenge]="isNewChallenge"
+    (isFinishedReload)="getIsFinishedReload($event)"
+  ></app-reading-challenge-active
+  >}
+</div>

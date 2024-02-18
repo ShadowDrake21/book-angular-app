@@ -5,7 +5,7 @@
     </h4>
   </div>
   <div class="flex flex-wrap gap-3 px-3">
-    @for (friend of visibleFriends; track $index) {
+    @for (friend of paginationLiteService.visibleElements; track $index) {
     <a
       [routerLink]="['/userlist', friendDummy.id]"
       class="relative inline-block friend-item"
@@ -27,16 +27,20 @@
   <div class="pagination mb-5">
     <button
       class="pagination__btn"
-      (click)="prevPage()"
-      [disabled]="currentPage === 1"
+      (click)="paginationLiteService.prevPage()"
+      [disabled]="paginationLiteService.currentPage === 1"
     >
       Previous
     </button>
-    <span class="pagination__text">Current Page: {{ currentPage }}</span>
+    <span class="pagination__text"
+      >Current Page: {{ paginationLiteService.currentPage }}</span
+    >
     <button
       class="pagination__btn"
-      (click)="nextPage()"
-      [disabled]="currentPage === numPages()"
+      (click)="paginationLiteService.nextPage()"
+      [disabled]="
+        paginationLiteService.currentPage === paginationLiteService.numPages()
+      "
     >
       Next
     </button>
