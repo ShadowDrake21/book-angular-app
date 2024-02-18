@@ -1,22 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { RouterModule } from '@angular/router';
 import { IFriend } from '../../../../shared/models/friendsManagement.model';
+import { PaginationLiteService } from '../../../../core/services/pagination-lite.service';
 
 @Component({
   selector: 'app-profile-friends',
   standalone: true,
   imports: [CommonModule, RouterModule],
+  providers: [PaginationLiteService],
   templateUrl: './profile-friends.component.html',
   styleUrl: './profile-friends.component.scss',
 })
 export class ProfileFriendsComponent implements OnInit {
-  @Input() user!: User | null;
-  itemsPerPage: number = 5;
-  currentPage: number = 1;
+  protected paginationLiteService = inject(PaginationLiteService);
 
-  visibleFriends: IFriend[] = [];
+  @Input() user!: User | null;
+
   friendDummy: IFriend = {
     id: 'hq3aIcRwKQRnYqOoISCFw606aV72',
     name: 'Hater',
@@ -33,30 +34,7 @@ export class ProfileFriendsComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.updateVisible();
-  }
-
-  updateVisible() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.visibleFriends = this.friends.slice(startIndex, endIndex);
-  }
-
-  nextPage() {
-    if (this.currentPage < this.numPages()) {
-      this.currentPage++;
-      this.updateVisible();
-    }
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.updateVisible();
-    }
-  }
-
-  numPages(): number {
-    return Math.ceil(this.friends.length / this.itemsPerPage);
+    this.paginationLiteService.elements = this.friends;
+    this.paginationLiteService.updateVisibleElements();
   }
 }

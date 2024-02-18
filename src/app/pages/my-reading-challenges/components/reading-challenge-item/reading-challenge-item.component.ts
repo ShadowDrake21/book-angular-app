@@ -38,7 +38,6 @@ export class ReadingChallengeItemComponent implements OnInit, OnChanges {
   oldReadCount!: number;
 
   ngOnInit(): void {
-    console.log('challenge:', this.challenge);
     this.oldReadCount = this.challenge.read;
     this.updateProgressBar();
     this.subtitleChange();
