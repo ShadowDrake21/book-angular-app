@@ -1,42 +1,9 @@
 <div class="py-10">
-  <div class="relative min-h-[260px] pt-5">
-    <h4 class="pb-2 font-semibold text-3xl">Finished challenges</h4>
-    @if (!loadingFinishedChallenges) { @if(finishedChallenges.length > 0) {@for
-    (challenge of visibleFinishedChallenges; track $index) {
-    <app-reading-challenge-item
-      [challenge]="challenge"
-      [isFinished]="true"
-      (challengeOnRemove)="removeChallenge($event, 'finishedChallenges')"
-    ></app-reading-challenge-item>
-    }} @else {
-    <div class="no-items">
-      <p class="text-3xl font-semibold">
-        You don't have any finished challenge
-      </p>
-    </div>
-    }} @else {
-    <div class="no-items"><p class="text-3xl font-semibold">Loading...</p></div>
-    }
-    <div class="pagination mb-5">
-      <button
-        class="pagination__btn"
-        (click)="prevPage('finished')"
-        [disabled]="currentFinishedPage === 1"
-      >
-        Previous
-      </button>
-      <span class="pagination__text"
-        >Current Page: {{ currentFinishedPage }}</span
-      >
-      <button
-        class="pagination__btn"
-        (click)="nextPage('finished')"
-        [disabled]="currentFinishedPage === numPages('finished')"
-      >
-        Next
-      </button>
-    </div>
-  </div>
+  @if (user?.email) {
+  <app-reading-challenge-finished
+    [email]="user?.email"
+  ></app-reading-challenge-finished
+  >}
   <!-- PAGINATION -->
   <div class="relative min-h-[260px] pt-5">
     <h4 class="pb-2 font-semibold text-3xl">Active challenges</h4>

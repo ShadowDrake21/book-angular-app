@@ -9,29 +9,35 @@
         {{ works.length || authors.length }}
       </p>
       <p>
-        <span class="font-semibold">Number of pages:</span> {{ numPages() }}
+        <span class="font-semibold">Number of pages:</span>
+        {{ paginationLiteService.numPages() }}
       </p>
     </div>
   </div>
   <div class="flex gap-3 flex-wrap justify-center">
-    @if (entity === 'works') { @for (work of visibleWorks; track work.key) {
+    @if (entity === 'works') { @for (work of
+    paginationLiteService.visibleElements; track work.key) {
     <app-work-item [work]="work"></app-work-item>
-    }} @else { @for (author of visibleAuthors; track author.key)
-    {<app-author-item [author]="author"></app-author-item>}}
+    }} @else { @for (author of paginationLiteService.visibleElements; track
+    author.key) {<app-author-item [author]="author"></app-author-item>}}
   </div>
   <div class="pagination mb-5">
     <button
       class="pagination__btn"
-      (click)="prevPage()"
-      [disabled]="currentPage === 1"
+      (click)="paginationLiteService.prevPage()"
+      [disabled]="paginationLiteService.currentPage === 1"
     >
       Previous
     </button>
-    <span class="pagination__text">Current Page: {{ currentPage }}</span>
+    <span class="pagination__text"
+      >Current Page: {{ paginationLiteService.currentPage }}</span
+    >
     <button
       class="pagination__btn"
-      (click)="nextPage()"
-      [disabled]="currentPage === numPages()"
+      (click)="paginationLiteService.nextPage()"
+      [disabled]="
+        paginationLiteService.currentPage === paginationLiteService.numPages()
+      "
     >
       Next
     </button>

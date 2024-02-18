@@ -16,17 +16,25 @@ import { User } from '@angular/fire/auth';
 import { Subject, takeUntil } from 'rxjs';
 import { IChallenge } from '../../../../shared/models/challenge.model';
 import { ReadingChallengeItemComponent } from '../reading-challenge-item/reading-challenge-item.component';
+import { PaginationLiteService } from '../../../../core/services/pagination-lite.service';
+import { ReadingChallengeFinishedComponent } from '../reading-challenge-finished/reading-challenge-finished.component';
 
 @Component({
   selector: 'app-reading-challenge',
   standalone: true,
-  imports: [CommonModule, ReadingChallengeItemComponent],
+  imports: [
+    CommonModule,
+    ReadingChallengeItemComponent,
+    ReadingChallengeFinishedComponent,
+  ],
+  providers: [PaginationLiteService],
   templateUrl: './reading-challenge.component.html',
   styleUrl: './reading-challenge.component.scss',
 })
 export class ReadingChallengeComponent implements OnInit, OnChanges, OnDestroy {
   private authService = inject(AuthService);
   private challengesService = inject(ChallengesService);
+  protected paginationLiteService = inject(PaginationLiteService);
 
   @Input() isNewChallenge!: boolean;
 

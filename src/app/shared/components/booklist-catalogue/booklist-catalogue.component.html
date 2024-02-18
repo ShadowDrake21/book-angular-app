@@ -1,25 +1,33 @@
 <div class="flex gap-5 mb-3">
   <p><span class="font-semibold">Found results:</span> {{ books.length }}</p>
-  <p><span class="font-semibold">Number of pages:</span> {{ numPages() }}</p>
+  <p>
+    <span class="font-semibold">Number of pages:</span>
+    {{ paginationLiteService.numPages() }}
+  </p>
 </div>
 <div class="flex gap-3 flex-wrap justify-center">
-  @for (book of visibleBooks; track book.cover_edition_key) {
+  @for (book of paginationLiteService.visibleElements; track
+  book.cover_edition_key) {
   <app-book-item [book]="book" (linkUsed)="linkUsed.emit(true)"></app-book-item>
   }
 </div>
 <div class="pagination mb-5">
   <button
     class="pagination__btn"
-    (click)="prevPage()"
-    [disabled]="currentPage === 1"
+    (click)="paginationLiteService.prevPage()"
+    [disabled]="paginationLiteService.currentPage === 1"
   >
     Previous
   </button>
-  <span class="pagination__text">Current Page: {{ currentPage }}</span>
+  <span class="pagination__text"
+    >Current Page: {{ paginationLiteService.currentPage }}</span
+  >
   <button
     class="pagination__btn"
-    (click)="nextPage()"
-    [disabled]="currentPage === numPages()"
+    (click)="paginationLiteService.nextPage()"
+    [disabled]="
+      paginationLiteService.currentPage === paginationLiteService.numPages()
+    "
   >
     Next
   </button>
