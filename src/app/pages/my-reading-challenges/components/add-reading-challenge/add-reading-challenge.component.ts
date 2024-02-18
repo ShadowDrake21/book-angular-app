@@ -14,6 +14,7 @@ import {
   FormControlName,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { TruncateTextPipe } from '../../../../shared/pipes/truncate-text.pipe';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
@@ -53,9 +54,16 @@ export class AddReadingChallengeComponent implements OnInit, OnDestroy {
   @Output() isNewChallenge = new EventEmitter<boolean>();
 
   addChallengeForm = new FormGroup({
-    title: new FormControl(''),
-    count: new FormControl(''),
-    image: new FormControl(''),
+    title: new FormControl('', [
+      Validators.minLength(4),
+      Validators.maxLength(40),
+    ]),
+    count: new FormControl(null, [
+      Validators.required,
+      Validators.min(1),
+      Validators.max(9999),
+    ]),
+    image: new FormControl('', Validators.required),
   });
 
   user!: User | null;

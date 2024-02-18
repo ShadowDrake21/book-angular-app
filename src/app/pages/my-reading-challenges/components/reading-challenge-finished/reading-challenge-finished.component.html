@@ -11,8 +11,6 @@
   <div class="no-items">
     <p class="text-3xl font-semibold">You don't have any finished challenge</p>
   </div>
-  }} @else {
-  <div class="no-items"><p class="text-3xl font-semibold">Loading...</p></div>
   }
   <div class="pagination mb-5">
     <button
@@ -35,5 +33,7 @@
       Next
     </button>
   </div>
+  } @else {
+  <div class="no-items"><p class="text-3xl font-semibold">Loading...</p></div>
+  }
 </div>
-<!-- zrobić refactoring dla active challenges -->
