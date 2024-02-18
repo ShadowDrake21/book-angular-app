@@ -33,6 +33,12 @@ export class ReadingChallengeComponent implements OnInit, OnChanges, OnDestroy {
   user!: User | null;
   destroy$: Subject<null> = new Subject();
 
+  itemsPerPage: number = 5;
+  currentActivePage: number = 1;
+  currentFinishedPage: number = 1;
+  visibleActiveChallenges: IChallenge[] = [];
+  visibleFinishedChallenges: IChallenge[] = [];
+
   loadingActiveChallenges!: boolean;
   activeChallenges: IChallenge[] = [];
 
@@ -46,12 +52,14 @@ export class ReadingChallengeComponent implements OnInit, OnChanges, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(async (user: User | null) => {
         this.user = user;
-        await this.getActiveChallenges().then(
-          () => (this.loadingActiveChallenges = false)
-        );
-        await this.getFinishedChallenges().then(
-          () => (this.loadingFinishedChallenges = false)
-        );
+        await this.getActiveChallenges().then(() => {
+          this.updateVisibleChallenges('active');
+          this.loadingActiveChallenges = false;
+        });
+        await this.getFinishedChallenges().then(() => {
+          this.updateVisibleChallenges('finished');
+          this.loadingFinishedChallenges = false;
+        });
       });
   }
 
@@ -61,6 +69,7 @@ export class ReadingChallengeComponent implements OnInit, OnChanges, OnDestroy {
       this.user?.email,
       'activeChallenges'
     )) as IChallenge[];
+    this.updateVisibleChallenges('active');
   }
 
   async getFinishedChallenges() {
@@ -69,6 +78,7 @@ export class ReadingChallengeComponent implements OnInit, OnChanges, OnDestroy {
       this.user?.email,
       'finishedChallenges'
     )) as IChallenge[];
+    this.updateVisibleChallenges('finished');
   }
 
   async removeChallenge(
@@ -116,6 +126,60 @@ export class ReadingChallengeComponent implements OnInit, OnChanges, OnDestroy {
     if (changes['isNewChallenge']) {
       this.isNewChallenge = changes['isNewChallenge'].currentValue;
       if (this.isNewChallenge) this.getActiveChallenges();
+    }
+  }
+
+  updateVisibleChallenges(type: 'active' | 'finished') {
+    if (type === 'active') {
+      const startIndex = (this.currentActivePage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      this.visibleActiveChallenges = this.activeChallenges.slice(
+        startIndex,
+        endIndex
+      );
+    } else {
+      const startIndex = (this.currentFinishedPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      this.visibleFinishedChallenges = this.finishedChallenges.slice(
+        startIndex,
+        endIndex
+      );
+    }
+  }
+
+  nextPage(type: 'active' | 'finished') {
+    if (type === 'active') {
+      if (this.currentActivePage < this.numPages(type)) {
+        this.currentActivePage++;
+        this.updateVisibleChallenges(type);
+      }
+    } else {
+      if (this.currentFinishedPage < this.numPages(type)) {
+        this.currentFinishedPage++;
+        this.updateVisibleChallenges(type);
+      }
+    }
+  }
+
+  prevPage(type: 'active' | 'finished') {
+    if (type === 'active') {
+      if (this.currentActivePage > 1) {
+        this.currentActivePage--;
+        this.updateVisibleChallenges(type);
+      }
+    } else {
+      if (this.currentFinishedPage > 1) {
+        this.currentFinishedPage--;
+        this.updateVisibleChallenges(type);
+      }
+    }
+  }
+
+  numPages(type: 'active' | 'finished'): number {
+    if (type === 'active') {
+      return Math.ceil(this.activeChallenges.length / this.itemsPerPage);
+    } else {
+      return Math.ceil(this.finishedChallenges.length / this.itemsPerPage);
     }
   }
 
