@@ -48,7 +48,7 @@
       {{ users.length }}
     </p>
     <div class="flex flex-wrap gap-3 justify-center">
-      @for (user of visibleUsers; track user.id) {
+      @for (user of paginationLiteService.visibleElements; track user.id) {
       <app-user-item [user]="user"></app-user-item>
       } @if(!users.length && isAfterSearch) {
       <div class="no-items">
@@ -58,19 +58,26 @@
       </div>
       }
     </div>
-    <div class="pagination pb-5" *ngIf="users.length > itemsPerPage">
+    <div
+      class="pagination pb-5"
+      *ngIf="users.length > paginationLiteService.itemsPerPage"
+    >
       <button
         class="pagination__btn"
-        (click)="prevPage()"
-        [disabled]="currentPage === 1"
+        (click)="paginationLiteService.prevPage()"
+        [disabled]="paginationLiteService.currentPage === 1"
       >
         Previous
       </button>
-      <span class="pagination__text">Current Page: {{ currentPage }}</span>
+      <span class="pagination__text"
+        >Current Page: {{ paginationLiteService.currentPage }}</span
+      >
       <button
         class="pagination__btn"
-        (click)="nextPage()"
-        [disabled]="currentPage === numPages()"
+        (click)="paginationLiteService.nextPage()"
+        [disabled]="
+          paginationLiteService.currentPage === paginationLiteService.numPages()
+        "
       >
         Next
       </button>
