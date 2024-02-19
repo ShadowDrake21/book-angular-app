@@ -4,26 +4,32 @@
       {{ user?.displayName + "'s friends" | uppercase }}
     </h4>
   </div>
-  <div class="flex flex-wrap gap-3 px-3">
-    @for (friend of paginationLiteService.visibleElements; track $index) {
+  <div class="relative flex flex-wrap gap-3 px-3 min-h-[200px]">
+    @if(!loadingFriends) { @for (friend of
+    paginationLiteService.visibleElements; track $index) {
     <a
-      [routerLink]="['/userlist', friendDummy.id]"
+      [routerLink]="['/userlist', friend.id]"
       class="relative inline-block friend-item"
     >
       <div class="w-[200px] h-[200px]">
         <img
-          [src]="friendDummy.photoURL"
+          [src]="friend.photoURL"
           alt="friend"
           class="w-full h-full object-cover"
         />
       </div>
       <div class="friend-hover">
         <h5 class="font-semibold text-white">
-          {{ friendDummy.name }}
+          {{ friend.name || "unknown" }}
         </h5>
       </div> </a
-    >}
+    >} } @else {
+    <div class="no-items">
+      <p class="text-3xl font-semibold text-center">Loading...</p>
+    </div>
+    }
   </div>
+  @if(!loadingFriends){
   <div class="pagination mb-5">
     <button
       class="pagination__btn"
@@ -45,4 +51,5 @@
       Next
     </button>
   </div>
+  }
 </div>

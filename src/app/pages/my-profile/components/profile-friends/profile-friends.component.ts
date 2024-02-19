@@ -2,8 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { RouterModule } from '@angular/router';
-import { IFriend } from '../../../../shared/models/friendsManagement.model';
+import {
+  IFriend,
+  IGottenFriendRequestToClient,
+} from '../../../../shared/models/friendsManagement.model';
 import { PaginationLiteService } from '../../../../core/services/pagination-lite.service';
+import { FriendsManagementService } from '../../../../core/services/friends-management.service';
+import { IUser } from '../../../../shared/models/user.model';
+import { UsersService } from '../../../../core/services/users.service';
 
 @Component({
   selector: 'app-profile-friends',
@@ -15,26 +21,36 @@ import { PaginationLiteService } from '../../../../core/services/pagination-lite
 })
 export class ProfileFriendsComponent implements OnInit {
   protected paginationLiteService = inject(PaginationLiteService);
+  private friendsManagementService = inject(FriendsManagementService);
+  private usersService = inject(UsersService);
 
   @Input() user!: User | null;
 
-  friendDummy: IFriend = {
-    id: 'hq3aIcRwKQRnYqOoISCFw606aV72',
-    name: 'Hater',
-    photoURL:
-      'https://4.bp.blogspot.com/-q-RQCz9hZx8/VKg1RYm568I/AAAAAAAARyg/uE8UHQrvess/s1600/Being%2BCalled%2Ba%2BHater.png',
-  };
-  friends: IFriend[] = [
-    this.friendDummy,
-    this.friendDummy,
-    this.friendDummy,
-    this.friendDummy,
-    this.friendDummy,
-    this.friendDummy,
-  ];
+  loadingFriends!: boolean;
+  allFriendsRequests: IGottenFriendRequestToClient[] = [];
+  allFriends: IUser[] = [];
 
-  ngOnInit(): void {
-    this.paginationLiteService.elements = this.friends;
+  async ngOnInit(): Promise<void> {
+    this.loadingFriends = true;
+    if (this.user?.email) {
+      this.allFriendsRequests =
+        (await this.friendsManagementService.getAllGottenFriendRequests(
+          this.user?.email,
+          'accepted'
+        )) as IGottenFriendRequestToClient[];
+
+      await Promise.all(
+        this.allFriendsRequests.map(async (request) => {
+          const res = await this.usersService.getUserByEmail(
+            request.senderEmail
+          );
+          this.allFriends.push(res[0]);
+        })
+      );
+    }
+
+    this.paginationLiteService.elements = this.allFriends;
     this.paginationLiteService.updateVisibleElements();
+    this.loadingFriends = false;
   }
 }
