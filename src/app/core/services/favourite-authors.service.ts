@@ -47,6 +47,7 @@ export class FavouriteAuthorsService {
         author.key = author.key.slice(9, author.key.length);
         this.userAuthors.push(author);
       });
+      this.loadingAuthors = false;
     });
   }
 }

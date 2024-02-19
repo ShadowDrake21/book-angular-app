@@ -18,17 +18,8 @@ export class ProfileAuthorsComponent implements OnInit {
 
   @Input({ required: true }) user!: User | null;
 
-  visibleAuthors: IAuthor[] = [];
-
   async ngOnInit(): Promise<void> {
     this.favouriteAuthorsService.userEmail = this.user?.email;
-    await this.favouriteAuthorsService.loadingItems().then(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      this.favouriteAuthorsService.loadingAuthors = false;
-      this.visibleAuthors = this.favouriteAuthorsService.userAuthors.slice(
-        0,
-        5
-      );
-    });
+    await this.favouriteAuthorsService.loadingItems();
   }
 }

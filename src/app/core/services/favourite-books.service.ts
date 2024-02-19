@@ -40,6 +40,7 @@ export class FavouriteBooksService {
 
     forkJoin(booksObservables).subscribe((books: IWork[]) => {
       this.userBooks = books;
+      this.loadingBooks = false;
     });
   }
 }
