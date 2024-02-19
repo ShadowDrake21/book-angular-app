@@ -1,3 +1,51 @@
 <section class="pt-[120px]">
-  <div class="container-big"><p>my-quotes works!</p></div>
+  <div class="container-big">
+    <form [formGroup]="quoteForm" (ngSubmit)="onQuoteSubmit()">
+      <label for="text" class="block mb-2 text-2xl font-semibold"
+        >Quote text</label
+      >
+      <textarea
+        name="text"
+        id="text"
+        rows="6"
+        class="block p-2.5 w-full text-base resize-none text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+        [placeholder]="'Write your review here...'"
+        formControlName="text"
+        [class.textarea-error]="quoteForm.controls.text.touched && quoteForm.controls.text.errors?.['required']"
+      ></textarea>
+      <div
+        class="validate-error mt-2"
+        *ngIf="quoteForm.controls.text.touched && quoteForm.controls.text.errors?.['required']"
+      >
+        You should write a quote
+      </div>
+      <div class="flex justify-between items-center pt-5">
+        <div class="my-5 flex items-center gap-[15px] w-1/2">
+          <label for="author" class="text-lg font-semibold flex-shrink-0"
+            >Quote author</label
+          >
+          <input
+            type="text"
+            id="author"
+            class="block w-full flex-shrink-0 px-2 py-3 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+            formControlName="author"
+            placeholder="Write quote author here..."
+          />
+          <p
+            class="validate-error pt-2 block flex-shrink-0"
+            *ngIf="
+        quoteForm.controls.author.touched && quoteForm.controls.author.errors?.['required']
+        "
+          >
+            You should write an author
+          </p>
+        </div>
+        <app-button
+          [button-styles]="'width: 100%;'"
+          [text]="'Add quote'"
+          [disabled]="quoteForm.invalid || quoteForm.untouched"
+        />
+      </div>
+    </form>
+  </div>
 </section>
