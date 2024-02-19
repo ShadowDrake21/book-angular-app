@@ -18,6 +18,22 @@ import { IChallenge } from '../../shared/models/challenge.model';
 export class ChallengesService {
   private _firestore = inject(Firestore);
 
+  async getAllChallenges(email: string, entity: string): Promise<IChallenge[]> {
+    let challenges: Array<IChallenge> = [];
+    const querySnapshot = await getDocs(
+      query(
+        collection(this._firestore, 'usersData', email, entity),
+        orderBy('title', 'asc')
+      )
+    );
+
+    querySnapshot.forEach((doc) => {
+      const challengeFromDB = doc.data() as IChallenge;
+      challenges.push(challengeFromDB);
+    });
+    return challenges;
+  }
+
   async addNewChallenge(email: string, entity: string, challenge: IChallenge) {
     await setDoc(
       doc(this._firestore, 'usersData', email, entity, challenge.id),
@@ -51,21 +67,5 @@ export class ChallengesService {
       image: dataObj.image,
     };
     await updateDoc(docRef, updateObj);
-  }
-
-  async getAllChallenges(email: string, entity: string): Promise<IChallenge[]> {
-    let challenges: Array<IChallenge> = [];
-    const querySnapshot = await getDocs(
-      query(
-        collection(this._firestore, 'usersData', email, entity),
-        orderBy('title', 'asc')
-      )
-    );
-
-    querySnapshot.forEach((doc) => {
-      const challengeFromDB = doc.data() as IChallenge;
-      challenges.push(challengeFromDB);
-    });
-    return challenges;
   }
 }
