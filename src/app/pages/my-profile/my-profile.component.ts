@@ -11,6 +11,7 @@ import { ProfileAuthorsComponent } from './components/profile-authors/profile-au
 import { ProfileStatisticsComponent } from './components/profile-statistics/profile-statistics.component';
 import { ProfileFriendsComponent } from './components/profile-friends/profile-friends.component';
 import { ProfileGenresComponent } from './components/profile-genres/profile-genres.component';
+import { ChallengesService } from '../../core/services/challenges.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -31,6 +32,7 @@ import { ProfileGenresComponent } from './components/profile-genres/profile-genr
 })
 export class MyProfileComponent implements OnInit {
   private authService = inject(AuthService);
+  private challengesService = inject(ChallengesService);
   private router = inject(Router);
 
   loadingUser!: boolean;
@@ -44,12 +46,27 @@ export class MyProfileComponent implements OnInit {
     image: 'https://i.insider.com/61117f8f2a24d0001862714c?width=700',
   };
 
+  loadingChallenges!: boolean;
+  challenges: IChallenge[] = [];
+
   ngOnInit(): void {
     this.loadingUser = true;
+    this.loadingChallenges = true;
     this.authService.user$.subscribe((data: User | null) => {
       this.user = data;
       this.loadingUser = false;
+      this.getUserChallenges();
     });
+  }
+
+  getUserChallenges() {
+    if (!this.user?.email) return;
+    this.challengesService
+      .getAllChallenges(this.user?.email, 'activeChallenges')
+      .then((challenges: IChallenge[]) => {
+        this.challenges = challenges;
+        this.loadingChallenges = false;
+      });
   }
 
   viewChallenges() {
