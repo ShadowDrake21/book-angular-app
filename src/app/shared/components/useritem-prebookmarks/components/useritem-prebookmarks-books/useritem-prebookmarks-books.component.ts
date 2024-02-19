@@ -27,12 +27,7 @@ export class UseritemPrebookmarksBooksComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.favouriteBooksService.userEmail = this.email;
-    await this.favouriteBooksService.loadingItems().then(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      this.favouriteBooksService.loadingBooks = false;
-      console.log(this.favouriteBooksService.userBooks);
-    });
-    this.favouriteBooksService.loadingBooks = false;
+    await this.favouriteBooksService.loadingItems();
     this.countBooks.emit(this.favouriteBooksService.userBookBookmarks.length);
   }
 }
