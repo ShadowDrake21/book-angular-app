@@ -47,5 +47,16 @@
         />
       </div>
     </form>
+    <div class="pt-5">
+      <div class="mb-5" *ngIf="quoteActionResult">
+        <p
+          class="text-red-600"
+          [class.successfull]="quoteActionResult.isSuccessfull"
+        >
+          {{ quoteActionResult.message }}
+        </p>
+        <app-quotes-list></app-quotes-list>
+      </div>
+    </div>
   </div>
 </section>
