@@ -3,3 +3,8 @@ export interface IQuote {
   text: string;
   author: string;
 }
+
+export interface IQuoteResult {
+  isSuccessfull: boolean;
+  message: string;
+}
