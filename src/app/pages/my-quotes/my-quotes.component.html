@@ -64,11 +64,21 @@
             </div>
           </div>
         </div>
-        <app-button
-          [button-styles]="'width: 100%;'"
-          [text]="'Add quote'"
-          [disabled]="quoteForm.invalid || quoteForm.untouched"
-        />
+        <div class="flex gap-5">
+          <button
+            type="button"
+            class="flex-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-normal rounded-lg text-[19px] px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:text-[#c6c6c6] disabled:bg-transparent disabled:border-[#c6c6c6] disabled:border"
+            (click)="cancelManipulate()"
+            [disabled]="quoteForm.untouched"
+          >
+            Cancel
+          </button>
+          <app-button
+            [button-styles]="'width: 100%;'"
+            [text]="quoteBtnText + ' quote'"
+            [disabled]="quoteForm.invalid || quoteForm.untouched"
+          />
+        </div>
       </div>
     </form>
     <div class="pt-5">
@@ -81,11 +91,23 @@
         </p>
       </div>
       <h2 class="text-3xl font-semibold mb-3">All quotes</h2>
-      <app-quotes-list
-        [quotes]="quotes"
-        (onEdit)="editUserQuote($event)"
-        (onDelete)="deleteUserQuote($event)"
-      ></app-quotes-list>
+      <div class="relative min-h-60">
+        @if (!loadingQuotes) { @if (quotes.length > 0) {
+        <app-quotes-list
+          [quotes]="quotes"
+          (onEdit)="editUserQuote($event)"
+          (onDelete)="deleteUserQuote($event)"
+        ></app-quotes-list
+        >} @else {
+        <div class="no-items">
+          <p class="text-3xl font-semibold text-center">There are no quotes</p>
+        </div>
+        } } @else {
+        <div class="no-items">
+          <p class="text-3xl font-semibold text-center">Quotes loading...</p>
+        </div>
+        }
+      </div>
     </div>
   </div>
 </section>
