@@ -39,6 +39,7 @@ export class MyQuotesComponent implements OnInit {
     workTitle: new FormControl(''),
   });
 
+  loadingQuotes!: boolean;
   quotes: IQuote[] = [];
   quoteActionResult!: IQuoteResult | undefined;
   quoteBtnText: 'Add' | 'Update' = 'Add';
@@ -46,6 +47,7 @@ export class MyQuotesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadingUser = true;
+    this.loadingQuotes = true;
     this.authService.user$.subscribe(async (user: User | null) => {
       this.user = user;
       this.loadingUser = false;
@@ -102,6 +104,7 @@ export class MyQuotesComponent implements OnInit {
           message: 'Quote successfully deleted!',
         };
       }
+      this.loadingQuotes = true;
       await this.loadUserQuotes();
     } catch (error: any) {
       this.quoteActionResult = {
@@ -144,6 +147,7 @@ export class MyQuotesComponent implements OnInit {
   async loadUserQuotes() {
     if (!this.user?.email) return;
     this.quotes = await this.quotesService.getAllQuotes(this.user?.email);
+    this.loadingQuotes = false;
   }
 
   async editUserQuote(quoteId: string) {
@@ -168,5 +172,10 @@ export class MyQuotesComponent implements OnInit {
     await this.handleQuoteAction(
       this.quotesService.deleteQuote(this.user.email, quoteId)
     );
+  }
+
+  cancelManipulate() {
+    this.quoteBtnText = 'Add';
+    this.quoteForm.reset();
   }
 }
