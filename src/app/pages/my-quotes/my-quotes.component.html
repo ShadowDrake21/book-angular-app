@@ -1,7 +1,8 @@
-<section class="pt-[120px]">
+<section class="pt-[120px] pb-10">
   <div class="container-big">
+    <h2 class="text-3xl font-semibold mb-3">Add quote</h2>
     <form [formGroup]="quoteForm" (ngSubmit)="onQuoteSubmit()">
-      <label for="text" class="block mb-2 text-2xl font-semibold"
+      <label for="text" class="block mb-2 text-xl font-semibold"
         >Quote text</label
       >
       <textarea
@@ -19,26 +20,49 @@
       >
         You should write a quote
       </div>
-      <div class="flex justify-between items-center pt-5">
-        <div class="my-5 flex items-center gap-[15px] w-1/2">
-          <label for="author" class="text-lg font-semibold flex-shrink-0"
-            >Quote author</label
-          >
-          <input
-            type="text"
-            id="author"
-            class="block w-full flex-shrink-0 px-2 py-3 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-            formControlName="author"
-            placeholder="Write quote author here..."
-          />
-          <p
-            class="validate-error pt-2 block flex-shrink-0"
-            *ngIf="
+      <div class="flex items-center justify-between pt-5">
+        <div class="flex gap-10">
+          <div>
+            <div class="my-5 flex items-center gap-[15px] w-full">
+              <label for="author" class="text-xl font-semibold flex-shrink-0"
+                >Quote author</label
+              >
+              <input
+                type="text"
+                id="author"
+                class="block flex-shrink-0 px-3 py-3 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                formControlName="author"
+                placeholder="Write quote author here..."
+              />
+            </div>
+            <p
+              class="validate-error pt-2 block flex-shrink-0"
+              *ngIf="
         quoteForm.controls.author.touched && quoteForm.controls.author.errors?.['required']
         "
-          >
-            You should write an author
-          </p>
+            >
+              You should write an author
+            </p>
+          </div>
+          <div>
+            <div class="my-5 flex items-center gap-[15px] w-full">
+              <label
+                for="workTitle"
+                class="tooltip text-xl font-semibold flex-shrink-0 cursor-pointer"
+                >Quote source *
+                <span class="tooltipText font-normal"
+                  >This is not a required field.</span
+                ></label
+              >
+              <input
+                type="text"
+                id="workTitle"
+                class="block flex-shrink-0 px-3 py-3 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                formControlName="workTitle"
+                placeholder="Write quote source here..."
+              />
+            </div>
+          </div>
         </div>
         <app-button
           [button-styles]="'width: 100%;'"
@@ -55,8 +79,13 @@
         >
           {{ quoteActionResult.message }}
         </p>
-        <app-quotes-list></app-quotes-list>
       </div>
+      <h2 class="text-3xl font-semibold mb-3">All quotes</h2>
+      <app-quotes-list
+        [quotes]="quotes"
+        (onEdit)="editUserQuote($event)"
+        (onDelete)="deleteUserQuote($event)"
+      ></app-quotes-list>
     </div>
   </div>
 </section>
