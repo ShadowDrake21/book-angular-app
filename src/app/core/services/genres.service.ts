@@ -54,13 +54,13 @@ export class GenresService {
 
   async addGenresGroup(email: string, genres: IGenre[]) {
     for (const genre of genres) {
-      await this.addNewGenre(email, genre);
+      if (genre.id) await this.addNewGenre(email, genre.id, genre);
     }
   }
 
-  async addNewGenre(email: string, genre: IGenre) {
+  async addNewGenre(email: string, genreId: string, genre: IGenre) {
     await setDoc(
-      doc(this._firestore, 'usersData', email, 'genres', genre.id),
+      doc(this._firestore, 'usersData', email, 'genres', genreId),
       genre
     );
   }
@@ -75,6 +75,7 @@ export class GenresService {
       id: dataObj.id,
       name: dataObj.name,
     };
+    if (dataObj.type) updateObj = { ...updateObj, type: dataObj.type };
     await updateDoc(docRef, updateObj);
   }
 }

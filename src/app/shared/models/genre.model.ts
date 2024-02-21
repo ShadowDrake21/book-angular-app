@@ -1,9 +1,5 @@
 export interface IGenre {
-  id: string;
-  name: string;
-}
-
-export interface IAvailableGenre {
+  id?: string;
   name: string;
   type?: string;
 }
