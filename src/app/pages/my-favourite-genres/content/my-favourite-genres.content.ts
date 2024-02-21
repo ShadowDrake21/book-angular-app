@@ -1,6 +1,6 @@
-import { IAvailableGenre } from '../../../shared/models/genre.model';
+import { IGenre } from '../../../shared/models/genre.model';
 
-export const myFavouriteGenresContent: IAvailableGenre[] = [
+export const myFavouriteGenresContent: IGenre[] = [
   { name: 'drama' },
   { name: 'comedy' },
   { name: 'death' },
