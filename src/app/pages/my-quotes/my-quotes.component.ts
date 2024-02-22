@@ -12,6 +12,7 @@ import { ButtonComponent } from '../../shared/components/UI/button/button.compon
 import { User } from '@angular/fire/auth';
 import { AuthService } from '../../core/authentication/auth.service';
 import { IQuote, IQuoteResult } from '../../shared/models/quote.model';
+import { IItemResult } from '../../shared/models/general.model';
 
 @Component({
   selector: 'app-my-quotes',
@@ -41,7 +42,7 @@ export class MyQuotesComponent implements OnInit {
 
   loadingQuotes!: boolean;
   quotes: IQuote[] = [];
-  quoteActionResult!: IQuoteResult | undefined;
+  quoteActionResult!: IItemResult | undefined;
   quoteBtnText: 'Add' | 'Update' = 'Add';
   isOnDelete!: boolean;
 

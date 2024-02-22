@@ -18,7 +18,6 @@ import { StarRatingModule } from 'angular-star-rating';
 import {
   IBookCommentToClient,
   IBookCommentToDB,
-  ICommentResult,
   INeededUserInfo,
 } from '../../../../shared/models/comment.model';
 import { AuthService } from '../../../../core/authentication/auth.service';
@@ -26,6 +25,7 @@ import { BooksService } from '../../../../core/services/books.service';
 import { CommentsService } from '../../../../core/services/comments.service';
 import { Timestamp } from '@angular/fire/firestore';
 import { BookitemCommentComponent } from '../../../../shared/components/bookitem-comment/bookitem-comment.component';
+import { IItemResult } from '../../../../shared/models/general.model';
 
 @Component({
   selector: 'app-bookitem-comments-section',
@@ -59,7 +59,7 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
   isRatingSet: boolean = true;
   isUserHasComment: boolean = false;
 
-  commentActionsResult!: ICommentResult | undefined;
+  commentActionsResult!: IItemResult | undefined;
 
   comments: IBookCommentToClient[] = [];
   userComment: IBookCommentToClient | undefined = undefined;

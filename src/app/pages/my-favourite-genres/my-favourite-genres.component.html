@@ -19,15 +19,23 @@
       </div>
       }
     </div>
-    <div class="relative min-h-20 mb-10">
-      @if (!loadingGenres ){ @if (selectedGenres.length > 0) {
-      <h3 class="text-2xl font-semibold pb-2">Selected genres</h3>
-      <div class="flex gap-5 flex-wrap">
+    <div class="mb-5 text-center" *ngIf="genreActionResult">
+      <p
+        class="text-red-600"
+        [class.successfull]="genreActionResult.isSuccessfull"
+      >
+        {{ genreActionResult.message }}
+      </p>
+    </div>
+    <div class="relative min-h-20 mb-10 text-center">
+      @if (!loadingGenres){ @if (selectedGenres.length > 0) {
+      <h3 class="text-2xl font-semibold pb-3">Selected genres</h3>
+      <div class="flex gap-5 flex-wrap justify-center">
         @for (selectedGenre of selectedGenres; track $index) {
         <p>{{ selectedGenre.name | symbolReplace : "_" : " " | titlecase }}</p>
         }
       </div>
-      <div class="pt-5">
+      <div class="pt-5" *ngIf="hasNewGenres">
         <button
           type="button"
           class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
@@ -38,6 +46,7 @@
         <button
           type="button"
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          (click)="cancelChanges('add')"
         >
           Cancel
         </button>
@@ -54,10 +63,10 @@
       </div>
       }
     </div>
-    <div class="relative min-h-20">
-      @if (deletedGenres.length > 0){
+    <div class="relative min-h-20 text-center">
+      @if (!loadingGenres && deletedGenres.length > 0){
       <h3 class="text-2xl font-semibold pb-2">Genres for removal</h3>
-      <div class="flex gap-5 flex-wrap">
+      <div class="flex gap-5 flex-wrap justify-center">
         @for (deletedGenre of deletedGenres; track $index) {
         <p>{{ deletedGenre.name | symbolReplace : "_" : " " | titlecase }}</p>
         }
@@ -73,13 +82,10 @@
         <button
           type="button"
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          (click)="cancelChanges('delete')"
         >
-          Reset
+          Cancel
         </button>
-      </div>
-      } @else {
-      <div class="no-items">
-        <p class="text-3xl font-semibold text-center">No genres for deletion</p>
       </div>
       }
     </div>
