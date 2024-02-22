@@ -12,7 +12,6 @@ import { AuthorsService } from '../../../core/services/authors.service';
 import {
   IAuthorCommentToClient,
   IAuthorCommentToDB,
-  ICommentResult,
   INeededUserInfo,
 } from '../../../shared/models/comment.model';
 import { CommonModule } from '@angular/common';
@@ -25,6 +24,7 @@ import {
 } from '@angular/forms';
 import { Timestamp } from '@angular/fire/firestore';
 import { AuthoritemCommentComponent } from '../../../shared/components/authoritem-comment/authoritem-comment.component';
+import { IItemResult } from '../../../shared/models/general.model';
 
 @Component({
   selector: 'app-authoritem-comments-section',
@@ -58,7 +58,7 @@ export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
   isRatingSet: boolean = true;
   isUserHasComment: boolean = false;
 
-  commentActionsResult!: ICommentResult | undefined;
+  commentActionsResult!: IItemResult | undefined;
 
   comments: IAuthorCommentToClient[] = [];
   userComment: IAuthorCommentToClient | undefined = undefined;

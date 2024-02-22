@@ -32,11 +32,6 @@ export interface IAuthorCommentToClient {
   date: Date;
 }
 
-export interface ICommentResult {
-  isSuccessfull: boolean;
-  message: string;
-}
-
 export interface INeededUserInfo {
   email: string;
 }

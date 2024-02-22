@@ -36,12 +36,16 @@ export class GenresService {
     return genres;
   }
 
-  async getGenre(email: string, genreId: string): Promise<IGenre[]> {
+  async getGenre(
+    email: string,
+    searchField: string,
+    searchValue: string
+  ): Promise<IGenre[]> {
     let genres: Array<IGenre> = [];
     const querySnapshot = await getDocs(
       query(
         collection(this._firestore, 'usersData', email, 'genres'),
-        where('id', '==', genreId)
+        where(searchField, '==', searchValue)
       )
     );
 
@@ -66,6 +70,7 @@ export class GenresService {
   }
 
   async deleteGenresGroup(email: string, genresIds: string[]) {
+    console.log(genresIds);
     for (const genreId of genresIds) {
       await this.deleteGenre(email, genreId);
     }
@@ -73,7 +78,9 @@ export class GenresService {
 
   async deleteGenre(email: string, genreId: string) {
     console.log('delete', genreId);
-    await deleteDoc(doc(this._firestore, 'userData', email, 'genres', genreId));
+    await deleteDoc(
+      doc(this._firestore, 'usersData', email, 'genres', genreId)
+    );
   }
 
   async updateGenre(email: string, genreId: string, dataObj: IGenre) {
