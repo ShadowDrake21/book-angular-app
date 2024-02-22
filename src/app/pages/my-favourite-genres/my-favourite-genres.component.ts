@@ -28,6 +28,7 @@ export class MyFavouriteGenresComponent implements OnInit {
   userGenres: IGenre[] = [];
 
   selectedGenres: IGenre[] = [];
+  deletedGenres: IGenre[] = [];
 
   async ngOnInit(): Promise<void> {
     this.loadingUser = true;
@@ -42,10 +43,15 @@ export class MyFavouriteGenresComponent implements OnInit {
   async getUserGenres() {
     if (!this.user?.email) return;
     this.userGenres = await this.genresService.getAllGenres(this.user?.email);
+    console.log(this.userGenres);
+    this.userGenres.forEach((genre: IGenre) => {
+      this.selectedGenres.push(genre);
+    });
     this.loadingGenres = false;
   }
 
   toggleChooseGenre(choosenGenre: IGenre) {
+    // no ids for delete
     const btnSelector: Element | null = document.querySelector(
       `#${choosenGenre.name}`
     );
@@ -54,9 +60,15 @@ export class MyFavouriteGenresComponent implements OnInit {
       this.selectedGenres = this.selectedGenres.filter(
         (genre: IGenre) => genre.name !== choosenGenre.name
       );
+      if (this.isGenreSaved(choosenGenre))
+        this.deletedGenres.push(choosenGenre);
     } else {
       btnSelector?.classList.add('btn-active');
       this.selectedGenres.push(choosenGenre);
+      if (this.isGenreOnDelete(choosenGenre))
+        this.deletedGenres = this.deletedGenres.filter(
+          (genreOnDelete: IGenre) => genreOnDelete.name !== choosenGenre.name
+        );
     }
     console.log('selectedGenres: ', this.selectedGenres);
   }
@@ -67,6 +79,18 @@ export class MyFavouriteGenresComponent implements OnInit {
       this.user?.email,
       this.formNewSelectedGroup()
     );
+  }
+
+  async deleteUserGenres() {
+    if (!this.user?.email) return;
+    let deleteGenresIds: string[] = [];
+    this.deletedGenres.forEach((deleteGenre: IGenre) => {
+      if (deleteGenre.id) deleteGenresIds.push(deleteGenre.id);
+    });
+    console.log(deleteGenresIds);
+    await this.genresService
+      .deleteGenresGroup(this.user.email, deleteGenresIds)
+      .then(() => (this.deletedGenres = []));
   }
 
   formNewSelectedGroup(): IGenre[] {
@@ -88,6 +112,17 @@ export class MyFavouriteGenresComponent implements OnInit {
         newSelectedGenres.push(element);
       }
     }
+    console.log('new selected genres: ', newSelectedGenres);
     return newSelectedGenres;
+  }
+
+  isGenreSaved(genre: IGenre): boolean {
+    return this.userGenres.some((userGenre) => userGenre.name === genre.name);
+  }
+
+  isGenreOnDelete(genre: IGenre): boolean {
+    return this.deletedGenres.some(
+      (genreOnDelete) => genreOnDelete.name === genre.name
+    );
   }
 }

@@ -65,7 +65,14 @@ export class GenresService {
     );
   }
 
+  async deleteGenresGroup(email: string, genresIds: string[]) {
+    for (const genreId of genresIds) {
+      await this.deleteGenre(email, genreId);
+    }
+  }
+
   async deleteGenre(email: string, genreId: string) {
+    console.log('delete', genreId);
     await deleteDoc(doc(this._firestore, 'userData', email, 'genres', genreId));
   }
 

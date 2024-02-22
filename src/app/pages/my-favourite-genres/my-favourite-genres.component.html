@@ -1,20 +1,26 @@
 <section class="pt-[120px]">
   <div class="container-big">
     <h2 class="text-3xl font-semibold mb-3">Choose literature genres</h2>
-    <div class="flex gap-5 flex-wrap pb-20">
-      @for (availableGenre of availableGenres; track $index) {
+    <div class="relative flex gap-5 flex-wrap mb-20 min-h-[200px]">
+      @if (!loadingGenres) { @for (availableGenre of availableGenres; track
+      $index) {
       <button
         [id]="availableGenre.name"
         type="button"
+        [class.btn-active]="isGenreSaved(availableGenre)"
         class="genre-btn text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
         (click)="toggleChooseGenre(availableGenre)"
       >
         {{ availableGenre.name | symbolReplace : "_" : " " | titlecase }}
       </button>
+      }} @else {
+      <div class="no-items">
+        <p class="text-3xl font-semibold text-center">Genres loading...</p>
+      </div>
       }
     </div>
-    <div>
-      @if (selectedGenres.length > 0) {
+    <div class="relative min-h-20 mb-10">
+      @if (!loadingGenres ){ @if (selectedGenres.length > 0) {
       <h3 class="text-2xl font-semibold pb-2">Selected genres</h3>
       <div class="flex gap-5 flex-wrap">
         @for (selectedGenre of selectedGenres; track $index) {
@@ -35,6 +41,45 @@
         >
           Cancel
         </button>
+      </div>
+      } @else{
+      <div class="no-items">
+        <p class="text-3xl font-semibold text-center">No selected genres</p>
+      </div>
+      }} @else {
+      <div class="no-items">
+        <p class="text-3xl font-semibold text-center">
+          Selected genres loading...
+        </p>
+      </div>
+      }
+    </div>
+    <div class="relative min-h-20">
+      @if (deletedGenres.length > 0){
+      <h3 class="text-2xl font-semibold pb-2">Genres for removal</h3>
+      <div class="flex gap-5 flex-wrap">
+        @for (deletedGenre of deletedGenres; track $index) {
+        <p>{{ deletedGenre.name | symbolReplace : "_" : " " | titlecase }}</p>
+        }
+      </div>
+      <div class="pt-5">
+        <button
+          type="button"
+          class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          (click)="deleteUserGenres()"
+        >
+          Delete
+        </button>
+        <button
+          type="button"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        >
+          Reset
+        </button>
+      </div>
+      } @else {
+      <div class="no-items">
+        <p class="text-3xl font-semibold text-center">No genres for deletion</p>
       </div>
       }
     </div>
