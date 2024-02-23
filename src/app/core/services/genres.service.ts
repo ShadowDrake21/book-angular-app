@@ -11,7 +11,6 @@ import {
   updateDoc,
   where,
 } from '@angular/fire/firestore';
-import { IQuote } from '../../shared/models/quote.model';
 import { IGenre } from '../../shared/models/genre.model';
 
 @Injectable({
@@ -40,7 +39,7 @@ export class GenresService {
     email: string,
     searchField: string,
     searchValue: string
-  ): Promise<IGenre[]> {
+  ): Promise<IGenre> {
     let genres: Array<IGenre> = [];
     const querySnapshot = await getDocs(
       query(
@@ -53,7 +52,7 @@ export class GenresService {
       const genreFromDB = doc.data() as IGenre;
       genres.push(genreFromDB);
     });
-    return genres;
+    return genres[0];
   }
 
   async addGenresGroup(email: string, genres: IGenre[]) {
@@ -70,14 +69,12 @@ export class GenresService {
   }
 
   async deleteGenresGroup(email: string, genresIds: string[]) {
-    console.log(genresIds);
     for (const genreId of genresIds) {
       await this.deleteGenre(email, genreId);
     }
   }
 
   async deleteGenre(email: string, genreId: string) {
-    console.log('delete', genreId);
     await deleteDoc(
       doc(this._firestore, 'usersData', email, 'genres', genreId)
     );

@@ -101,7 +101,7 @@ export class CommentsService {
   async getBookComment(
     bookId: string,
     commentId: string
-  ): Promise<IBookCommentToClient[]> {
+  ): Promise<IBookCommentToClient> {
     let comments: Array<IBookCommentToClient> = [];
     const querySnapshot = await getDocs(
       query(
@@ -123,7 +123,7 @@ export class CommentsService {
       };
       comments.push(commentDateToClient);
     });
-    return comments;
+    return comments[0];
   }
 
   async checkUserHasComment(

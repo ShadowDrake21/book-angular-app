@@ -173,9 +173,9 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
     let choosenComment: IBookCommentToClient | undefined = undefined;
     this.commentsService
       .getBookComment(this.bookId, commentId)
-      .then((comments) => {
+      .then((comment) => {
         this.enableForm();
-        choosenComment = comments[0];
+        choosenComment = comment;
         this.commentForm.controls.comment.enable();
         this.commentForm.controls.rating.enable();
         this.commentForm.controls.id.setValue(choosenComment.id);

@@ -157,8 +157,8 @@ export class MyQuotesComponent implements OnInit {
     let choosenQuote: IQuote | undefined = undefined;
     await this.quotesService
       .getQuote(this.user.email, quoteId)
-      .then((quotes) => {
-        choosenQuote = quotes[0];
+      .then((quote) => {
+        choosenQuote = quote;
         this.quoteForm.controls.id.setValue(choosenQuote.id);
         this.quoteForm.controls.text.setValue(choosenQuote.text);
         this.quoteForm.controls.author.setValue(choosenQuote.author);
