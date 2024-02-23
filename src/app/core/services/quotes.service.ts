@@ -35,7 +35,7 @@ export class QuotesService {
     return quotes;
   }
 
-  async getQuote(email: string, quoteId: string): Promise<IQuote[]> {
+  async getQuote(email: string, quoteId: string): Promise<IQuote> {
     let quotes: Array<IQuote> = [];
     const querySnapshot = await getDocs(
       query(
@@ -48,7 +48,7 @@ export class QuotesService {
       const quoteFromDB = doc.data() as IQuote;
       quotes.push(quoteFromDB);
     });
-    return quotes;
+    return quotes[0];
   }
 
   async addNewQuote(email: string, quote: IQuote) {
