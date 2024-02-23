@@ -1,4 +1,5 @@
-<div class="w-96 mb-3 mt-3">
+<div class="relative w-96 mb-3 mt-3 min-h-[120px]">
+  @if (!loadingGenres) {
   <div class="flex justify-between profile__titles">
     <h4 class="pb-2 font-semibold w-full">
       {{ "favourite genres" | uppercase }}
@@ -7,19 +8,40 @@
       >edit</a
     >
   </div>
+  @if (genres.length > 0) {
   <div class="pt-3">
     @for (genre of genres; track $index) { @if (genre === genres[genres.length -
-    1]) {<a
+    1]) {
+    {{ " "
+    }}<a
       [routerLink]="['/booklist']"
-      [queryParams]="{ subject: genre }"
+      [queryParams]="
+        genre.type
+          ? { subject: genre.type + ':' + genre.name }
+          : { subject: genre.name }
+      "
       class="inline-block text-sm genre"
-      >{{ genre | titlecase }}</a
+      >{{ genre.name | symbolReplace : "_" : " " | titlecase }}</a
     >} @else {
     <a
       [routerLink]="['/booklist']"
-      [queryParams]="{ subject: genre }"
+      [queryParams]="
+        genre.type
+          ? { subject: genre.type + ':' + genre.name }
+          : { subject: genre.name }
+      "
       class="inline-block ml-1 text-sm genre"
-      >{{ genre | titlecase }}</a
+      >{{ genre.name | symbolReplace : "_" : " " | titlecase }}</a
     >,} }
   </div>
+  } @else {
+  <div class="no-items">
+    <p class="text-xl font-semibold text-center">No favourite genres</p>
+  </div>
+  } } @else {
+
+  <div class="no-items">
+    <p class="text-xl font-semibold text-center">Loading...</p>
+  </div>
+  }
 </div>
