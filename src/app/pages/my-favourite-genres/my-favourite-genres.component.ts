@@ -5,7 +5,7 @@ import { User } from '@angular/fire/auth';
 import { IGenre } from '../../shared/models/genre.model';
 import { AuthService } from '../../core/authentication/auth.service';
 import { myFavouriteGenresContent } from './content/my-favourite-genres.content';
-import { SymbolReplacePipe } from './pipes/symbol-replace.pipe';
+import { SymbolReplacePipe } from '../../shared/utils/symbol-replace.pipe';
 import { TextDeletePipe } from '../../shared/pipes/text-delete.pipe';
 import { IItemResult } from '../../shared/models/general.model';
 
