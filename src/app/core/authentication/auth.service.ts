@@ -16,6 +16,7 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   GoogleAuthProvider,
+  PhoneAuthCredential,
 } from '@angular/fire/auth';
 import { IUser } from '../../shared/models/user.model';
 import {
@@ -177,6 +178,7 @@ export class AuthService {
   }
 
   logout(): Promise<void> {
+    localStorage.removeItem('phone');
     return signOut(this._auth);
   }
 
