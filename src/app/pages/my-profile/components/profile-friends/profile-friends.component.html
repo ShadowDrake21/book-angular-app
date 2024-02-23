@@ -5,7 +5,7 @@
     </h4>
   </div>
   <div class="relative flex flex-wrap gap-3 px-3 min-h-[200px]">
-    @if(!loadingFriends) { @for (friend of
+    @if(!loadingFriends) {@if(allFriends.length > 0) { @for (friend of
     paginationLiteService.visibleElements; track $index) {
     <a
       [routerLink]="['/userlist', friend.id]"
@@ -24,6 +24,10 @@
         </h5>
       </div> </a
     >} } @else {
+    <div class="no-items">
+      <p class="text-3xl font-semibold text-center">No friends</p>
+    </div>
+    }} @else {
     <div class="no-items">
       <p class="text-3xl font-semibold text-center">Loading...</p>
     </div>

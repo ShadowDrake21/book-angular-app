@@ -2,6 +2,93 @@
   <div class="container-big">
     @if (!deleteMessage) { @if (!loadingUser) {
     <app-profile-info [user]="user" [isSettings]="true"></app-profile-info>
+    <div class="pt-5 min-h-10">
+      <div *ngIf="!isChangePhone" class="flex gap-5 items-center h-full">
+        <h5 class="font-semibold">Your phone</h5>
+        <p>{{ phone || "unknown" }}</p>
+        <button
+          type="button"
+          (click)="changePhone(true)"
+          class="font-medium text-lg inline-block ml-2 text-gray-600 hover:underline"
+        >
+          Change
+        </button>
+      </div>
+      <form
+        class="max-w-lg"
+        [formGroup]="phoneForm"
+        (ngSubmit)="onSubmit()"
+        *ngIf="isChangePhone"
+      >
+        <div class="flex justify-between items-end">
+          <div>
+            <label
+              for="phone-input"
+              class="flex-shrink-0 block mb-2 text-base font-medium text-gray-900 dark:text-white"
+              >Phone number:</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none"
+              >
+                <svg
+                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 19 18"
+                >
+                  <path
+                    d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="phone-input"
+                aria-describedby="helper-text-explanation"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="+48 22 1234567"
+                formControlName="phone"
+              />
+            </div>
+          </div>
+
+          <app-button
+            button-styles="display: inline-block;"
+            text="Save a phone"
+            [disabled]="phoneForm.invalid || !phoneForm.controls.phone.dirty"
+          ></app-button>
+          <button
+            type="button"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-[14px] dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            (click)="changePhone(false)"
+          >
+            Cancel
+          </button>
+        </div>
+        <div class="pt-2 text-center">
+          <div
+            class="validate-error mt-2"
+            *ngIf="phoneForm.controls.phone.errors?.['required'] &&  phoneForm.controls.phone.touched"
+          >
+            Phone is required
+          </div>
+          <div
+            class="validate-error mt-2"
+            *ngIf="phoneForm.controls.phone.errors?.['minlength']"
+          >
+            Phone should have more than or equal to 6 letters
+          </div>
+          <div
+            class="validate-error mt-2"
+            *ngIf="phoneForm.controls.phone.errors?.['maxlength']"
+          >
+            Phone should not have more than 15 letters
+          </div>
+        </div>
+      </form>
+    </div>
     <div *ngIf="!user?.emailVerified" class="flex items-center gap-3 pt-5">
       <h5 class="pb-3 font-semibold">Have you not verified an email yet?</h5>
       <button
@@ -13,6 +100,13 @@
         Send an email verification
       </button>
     </div>
+    <p
+      *ngIf="verificationMessage"
+      [class.successfull]="verificationMessage.isSuccessfull"
+      [class.error]="!verificationMessage.isSuccessfull"
+    >
+      {{ verificationMessage.message }}
+    </p>
     <div class="flex items-center gap-3 pt-5">
       <h5 class="pb-3 font-semibold">Wanna sign-out?</h5>
       <button

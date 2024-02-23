@@ -53,6 +53,7 @@ export class ProfileInfoComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['user']) {
       this.user = changes['user'].currentValue;
+      console.log('image', this.user?.photoURL);
       if (this.user?.displayName) {
         this.editProfileForm.patchValue({
           name: this.user.displayName,

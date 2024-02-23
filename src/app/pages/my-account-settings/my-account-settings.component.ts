@@ -4,11 +4,25 @@ import { AuthService } from '../../core/authentication/auth.service';
 import { ProfileInfoComponent } from '../my-profile/components/profile-info/profile-info.component';
 import { User } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { IError } from '../../shared/models/error.model';
+import { IItemResult } from '../../shared/models/general.model';
+import { ButtonComponent } from '../../shared/components/UI/button/button.component';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-my-account-settings',
   standalone: true,
-  imports: [CommonModule, ProfileInfoComponent],
+  imports: [
+    CommonModule,
+    ProfileInfoComponent,
+    ButtonComponent,
+    ReactiveFormsModule,
+  ],
   templateUrl: './my-account-settings.component.html',
   styleUrl: './my-account-settings.component.scss',
 })
@@ -16,10 +30,22 @@ export class MyAccountSettingsComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  phoneForm = new FormGroup({
+    phone: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(15),
+    ]),
+  });
+
   loadingUser!: boolean;
   user: User | null = null;
 
+  phone: string | null = null;
+  isChangePhone!: boolean;
+
   deleteMessage!: string;
+  verificationMessage!: IItemResult | null;
 
   ngOnInit(): void {
     this.loadingUser = true;
@@ -27,13 +53,47 @@ export class MyAccountSettingsComponent implements OnInit {
     this.authService.user$.subscribe((data: User | null) => {
       this.user = data;
       this.loadingUser = false;
+      this.getPhone();
+      if (this.phone) this.phoneForm.setValue({ phone: this.phone });
     });
   }
 
+  // jwt token rewrite
+
+  getPhone() {
+    this.phone = localStorage.getItem('phone');
+  }
+
+  changePhone(value: boolean) {
+    this.isChangePhone = value;
+  }
+
+  onSubmit() {
+    const formPhone = this.phoneForm.value.phone;
+    if (!formPhone || formPhone === this.phone) return;
+    localStorage.setItem('phone', formPhone);
+    this.phone = formPhone;
+    this.isChangePhone = false;
+  }
+
   sendVerification() {
-    this.authService.sendEmailVerification().then(() => {
-      console.log('Email verification was delived!');
-    });
+    this.authService
+      .sendEmailVerification()
+      .then(() => {
+        this.verificationMessage = {
+          isSuccessfull: true,
+          message: 'Email verification was delived!',
+        };
+        setTimeout(() => {
+          this.verificationMessage = null;
+        }, 3000);
+      })
+      .catch((error: any) => {
+        this.verificationMessage = {
+          isSuccessfull: false,
+          message: error.message,
+        };
+      });
   }
 
   signout() {
