@@ -23,7 +23,7 @@
       </div>
       <div class="w-96">
         <div class="relative min-h-60">
-          @if (!loadingChallenges) {
+          @if (!loadingChallenges) { @if (challenges.length > 0) {
           <div class="pr-3 max-h-[500px] overflow-y-scroll">
             @for (challenge of challenges; track challenge.id) {
             <app-profile-challenges
@@ -38,7 +38,11 @@
           >
             {{ "View challenges" | titlecase }}
           </button>
-          } @else {
+          }@else {
+          <div class="no-items">
+            <p class="text-xl font-semibold text-center">No challenges</p>
+          </div>
+          }} @else {
           <div class="no-items">
             <p class="text-xl font-semibold text-center">Loading...</p>
           </div>

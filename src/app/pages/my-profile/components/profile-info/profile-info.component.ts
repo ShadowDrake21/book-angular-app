@@ -39,7 +39,9 @@ import { IUser } from '../../../../shared/models/user.model';
 })
 export class ProfileInfoComponent implements OnChanges {
   private authService = inject(AuthService);
+
   @Input() user!: User | null;
+  @Input() isSettings: boolean = false;
 
   editProfileForm = new FormGroup({
     name: new FormControl('', Validators.maxLength(40)),
