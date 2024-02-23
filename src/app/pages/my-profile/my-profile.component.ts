@@ -38,14 +38,6 @@ export class MyProfileComponent implements OnInit {
   loadingUser!: boolean;
   user: User | null = null;
 
-  challenge: IChallenge = {
-    id: 'challenge' + Math.random().toString(16).slice(2),
-    title: 'Fantasy on 2024',
-    total: 77,
-    read: 46,
-    image: 'https://i.insider.com/61117f8f2a24d0001862714c?width=700',
-  };
-
   loadingChallenges!: boolean;
   challenges: IChallenge[] = [];
 

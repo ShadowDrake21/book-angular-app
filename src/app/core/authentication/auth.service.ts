@@ -16,6 +16,7 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   GoogleAuthProvider,
+  PhoneAuthCredential,
 } from '@angular/fire/auth';
 import { IUser } from '../../shared/models/user.model';
 import {
@@ -177,6 +178,19 @@ export class AuthService {
   }
 
   logout(): Promise<void> {
+    localStorage.removeItem('phone');
     return signOut(this._auth);
+  }
+
+  async deleteAccount(): Promise<string> {
+    const user = this._auth.currentUser;
+    return user
+      ?.delete()
+      .then(() => {
+        return 'Goodbay, my friend. I hope you will come back soon!';
+      })
+      .catch((error) => {
+        return error.message;
+      });
   }
 }
