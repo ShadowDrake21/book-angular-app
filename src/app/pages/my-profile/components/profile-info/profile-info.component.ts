@@ -39,7 +39,9 @@ import { IUser } from '../../../../shared/models/user.model';
 })
 export class ProfileInfoComponent implements OnChanges {
   private authService = inject(AuthService);
+
   @Input() user!: User | null;
+  @Input() isSettings: boolean = false;
 
   editProfileForm = new FormGroup({
     name: new FormControl('', Validators.maxLength(40)),
@@ -51,6 +53,7 @@ export class ProfileInfoComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['user']) {
       this.user = changes['user'].currentValue;
+      console.log('image', this.user?.photoURL);
       if (this.user?.displayName) {
         this.editProfileForm.patchValue({
           name: this.user.displayName,
