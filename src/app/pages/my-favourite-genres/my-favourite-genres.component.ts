@@ -62,9 +62,9 @@ export class MyFavouriteGenresComponent implements OnInit {
     this.operationName = '';
   }
 
-  toggleChooseGenre(choosenGenre: IGenre) {
+  toggleChooseGenre(chosenGenre: IGenre) {
     const btnSelector: Element | null = document.querySelector(
-      `#${choosenGenre.name}`
+      `#${chosenGenre.name}`
     );
     console.log('saved ', this.userGenres);
     if (btnSelector?.classList.contains('btn-active')) {
@@ -74,13 +74,13 @@ export class MyFavouriteGenresComponent implements OnInit {
       this.operationName = 'add';
       btnSelector?.classList.remove('btn-active');
       this.selectedGenres = this.selectedGenres.filter(
-        (genre: IGenre) => genre.name !== choosenGenre.name
+        (genre: IGenre) => genre.name !== chosenGenre.name
       );
       this.newGenres = this.newGenres.filter(
-        (genre: IGenre) => genre.name !== choosenGenre.name
+        (genre: IGenre) => genre.name !== chosenGenre.name
       );
-      if (this.isGenreSaved(choosenGenre)) {
-        this.deletedGenres.push(choosenGenre);
+      if (this.isGenreSaved(chosenGenre)) {
+        this.deletedGenres.push(chosenGenre);
       } else if (this.newGenres.length === 0) {
         this.hasNewGenres = false;
       }
@@ -90,13 +90,13 @@ export class MyFavouriteGenresComponent implements OnInit {
       }
       this.operationName = 'delete';
       btnSelector?.classList.add('btn-active');
-      this.selectedGenres.push(choosenGenre);
-      this.newGenres.push(choosenGenre);
-      if (this.isGenreOnDelete(choosenGenre)) {
+      this.selectedGenres.push(chosenGenre);
+      this.newGenres.push(chosenGenre);
+      if (this.isGenreOnDelete(chosenGenre)) {
         this.deletedGenres = this.deletedGenres.filter(
-          (genreOnDelete: IGenre) => genreOnDelete.name !== choosenGenre.name
+          (genreOnDelete: IGenre) => genreOnDelete.name !== chosenGenre.name
         );
-      } else if (!this.isGenreSaved(choosenGenre)) {
+      } else if (!this.isGenreSaved(chosenGenre)) {
         this.hasNewGenres = true;
       }
     }
@@ -127,13 +127,11 @@ export class MyFavouriteGenresComponent implements OnInit {
       let localDeletedGenresIds: string[] = [];
       await Promise.all(
         this.deletedGenres.map(async (deletedGenre: IGenre) => {
-          const genreFromDB = (
-            (await this.genresService.getGenre(
-              userEmail,
-              'name',
-              deletedGenre.name
-            )) as IGenre[]
-          )[0];
+          const genreFromDB = await this.genresService.getGenre(
+            userEmail,
+            'name',
+            deletedGenre.name
+          );
           localDeletedGenres.push(genreFromDB);
         })
       );
