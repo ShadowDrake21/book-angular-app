@@ -27,6 +27,7 @@
               }}
             </h3>
           </div>
+          @if (!isSettings) {
           <p>
             <span class="font-semibold">Activity:</span> Joined in
             {{ user?.metadata?.creationTime | date : "MMMM y" }}
@@ -35,6 +36,7 @@
             <span class="font-semibold">Last active:</span>
             {{ user?.metadata?.lastSignInTime | date : "longDate" }}
           </p>
+          }
           <p>
             <span class="font-semibold">Email verified:</span>
             {{ user?.emailVerified }}
