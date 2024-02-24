@@ -27,9 +27,8 @@ import { INotification } from '../../../../models/notification.model';
   styleUrl: './notifications-dropdown.component.scss',
 })
 export class NotificationsDropdownComponent implements OnInit {
-  private notificationService = inject(NotificationsService);
+  private notificationsService = inject(NotificationsService);
 
-  @Input({ required: true }) userEmail: string = '';
   @Input({ required: true }) clickedLi!: string;
 
   faBell = faBell;
@@ -41,7 +40,7 @@ export class NotificationsDropdownComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.loadingNotifications = true;
-    this.notifications = await this.notificationService.loadingNotifications();
+    this.notifications = await this.notificationsService.loadingNotifications();
 
     this.notifications = this.notifications.slice(
       this.notifications.length - 2,

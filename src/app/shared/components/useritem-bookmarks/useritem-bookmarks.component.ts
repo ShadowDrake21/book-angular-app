@@ -24,7 +24,6 @@ import { PaginationLiteService } from '../../../core/services/pagination-lite.se
 })
 export class UseritemBookmarksComponent implements OnInit, OnChanges {
   protected paginationLiteService = inject(PaginationLiteService);
-  private route = inject(ActivatedRoute);
 
   @Input() entity: 'works' | 'authors' = 'works';
   @Input() works: IWork[] = [];
