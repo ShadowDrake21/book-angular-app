@@ -6,6 +6,7 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  orderBy,
   query,
   setDoc,
   where,
@@ -151,7 +152,10 @@ export class FriendsManagementService {
   ): Promise<IGottenFriendRequestToClient[]> {
     let friendRequests: Array<IGottenFriendRequestToClient> = [];
     const querySnapshot = await getDocs(
-      collection(this._firestore, 'friendsManagement', email, entity)
+      query(
+        collection(this._firestore, 'friendsManagement', email, entity),
+        orderBy('date', 'asc')
+      )
     );
     querySnapshot.forEach((doc) => {
       const requestDataFromDB = doc.data() as IGottenFriendRequestToDB;

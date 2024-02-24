@@ -88,6 +88,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'notifications',
+    loadComponent: () =>
+      import('./pages/notifications/notifications.component').then(
+        (m) => m.NotificationsComponent
+      ),
+  },
+  {
     path: 'my-profile',
     loadComponent: () =>
       import('./pages/my-profile/my-profile.component').then(

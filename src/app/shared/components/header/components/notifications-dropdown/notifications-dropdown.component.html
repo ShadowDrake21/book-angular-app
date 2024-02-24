@@ -18,21 +18,38 @@
           <h6 class="font-bold mb-1">
             {{ "notifications" | uppercase }}
           </h6>
-          <a href="#">View all notifications</a>
+          <a routerLink="notifications">View all notifications</a>
         </div>
-        @for (item of notifications; track $index) {
+        @if (!loadingNotifications) {@if(notifications.length > 0) { @for (item
+        of notifications; track $index) {
         <div class="dropdown-item flex gap-5 border-t">
           <div class="dropdown-wrapper shrink-0">
-            <img [src]="item.img" class="dropdown-img" alt="" />
+            <img [src]="item.photoURL" class="dropdown-img" alt="photo" />
           </div>
           <div>
             <div>
-              <span class="font-bold hover:underline">{{ item.user }}</span
+              <span class="font-bold hover:underline">{{
+                item.name || item.request.senderEmail | truncateText : 15
+              }}</span
               >{{ " " }}
-              <span class="hover:underline">{{ item.text }}</span>
+              <span class="hover:underline"
+                >You have got a new request to friends</span
+              >
             </div>
-            <span class="text-xs text-gray-500">{{ item.date }}</span>
+            <span class="text-xs text-gray-500">{{
+              item.request.date | date : "medium"
+            }}</span>
           </div>
+        </div>
+        }}@else {
+        <div>
+          <p class="text-lg font-semibold text-center">No notifications</p>
+        </div>
+        }} @else {
+        <div>
+          <p class="text-lg font-semibold text-center">
+            Notifications loading...
+          </p>
         </div>
         }
       </div>
