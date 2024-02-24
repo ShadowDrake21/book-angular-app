@@ -3,6 +3,7 @@
     <mat-tab-group
       (selectedTabChange)="selectedTabChange($event)"
       animationDuration="0ms"
+      #tabGroup
     >
       <mat-tab label="My friends">
         @if(selectedTab === 0) {<app-friends-list
@@ -11,8 +12,7 @@
         >}
       </mat-tab>
       <mat-tab label="Inbox requests">
-        @if(selectedTab === 1) {
-        <app-inbox-requests
+        @if(selectedTab === 1) {<app-inbox-requests
           [allGottenRequests]="allGottenRequests"
           [user]="user"
           (isUpdate)="getContentInbox()"
