@@ -1,6 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
-import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild,
+  inject,
+} from '@angular/core';
+import {
+  MatTab,
+  MatTabChangeEvent,
+  MatTabGroup,
+  MatTabsModule,
+} from '@angular/material/tabs';
 import { AuthService } from '../../core/authentication/auth.service';
 import { User } from '@angular/fire/auth';
 import { FriendsManagementService } from '../../core/services/friends-management.service';
@@ -15,6 +27,8 @@ import { RejectedRequestsComponent } from './components/rejected-requests/reject
 import { FriendsListComponent } from './components/friends-list/friends-list.component';
 import { UsersService } from '../../core/services/users.service';
 import { IUser } from '../../shared/models/user.model';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-my-friends',
@@ -35,6 +49,9 @@ export class MyFriendsComponent implements OnInit {
   private authService = inject(AuthService);
   private usersService = inject(UsersService);
   private friendsManagementService = inject(FriendsManagementService);
+  private activatedRoute = inject(ActivatedRoute);
+
+  @ViewChild('tabGroup') tabGroup!: MatTabGroup;
 
   loadingUser!: boolean;
   user: User | null = null;
@@ -45,14 +62,26 @@ export class MyFriendsComponent implements OnInit {
   allAcceptedRequests: IGottenFriendRequestToClient[] = [];
   allRejectedRequests: IGottenFriendRequestToClient[] = [];
 
+  queryParam!: string;
+  queryType!: string;
+  optionSub!: Subscription;
+
   friends: IUser[] = [];
 
   ngOnInit(): void {
+    this.getQueryParams();
     this.loadingUser = true;
     this.authService.user$.subscribe((data: User | null) => {
       this.user = data;
       this.loadingUser = false;
-      this.getContentAccepted();
+      if (this.queryParam.length) {
+        switch (this.queryParam) {
+          case 'inbox':
+            this.changeMatTab(1);
+        }
+      } else {
+        this.getContentAccepted();
+      }
     });
   }
 
@@ -116,5 +145,16 @@ export class MyFriendsComponent implements OnInit {
           this.friends.push(friend[0]);
         });
     });
+  }
+
+  getQueryParams(): void {
+    this.optionSub = this.activatedRoute.queryParamMap.subscribe((params) => {
+      this.queryType = params.keys[0];
+      this.queryParam = params.get(this.queryType) || '';
+    });
+  }
+
+  changeMatTab(tabIndex: number) {
+    this.tabGroup.selectedIndex = tabIndex;
   }
 }
