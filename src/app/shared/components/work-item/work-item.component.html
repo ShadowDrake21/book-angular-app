@@ -1,5 +1,7 @@
-<div
-  class="item__card cursor-default rounded inline-block overflow-hidden shadow-lg relative"
+<a
+  class="item__card cursor-pointer rounded inline-block overflow-hidden shadow-lg relative"
+  [routerLink]="['/booklist']"
+  [queryParams]="{ work: work.title }"
 >
   <div>
     <img
@@ -19,4 +21,4 @@
       <h3 class="font-bold text-xl mb-2">{{ work.title }}</h3>
     </div>
   </div>
-</div>
+</a>

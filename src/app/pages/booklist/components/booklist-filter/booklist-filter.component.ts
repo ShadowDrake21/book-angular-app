@@ -57,6 +57,16 @@ export class BooklistFilterComponent implements OnInit {
   ngOnInit(): void {
     this.filterForm.controls.author.setValue(this.authorName);
     this.filterForm.controls.limit.setValue(this.authorLimit);
+    if (this.authorName !== null) {
+      this.filterForm.markAsDirty();
+      this.disabledUnusedFields(
+        !!this.filterForm.controls.author.value,
+        'genre',
+        'yearFrom',
+        'yearTo',
+        'sorting'
+      );
+    }
   }
 
   disabledUnusedFields(bool: boolean, ...fields: string[]) {
@@ -86,10 +96,13 @@ export class BooklistFilterComponent implements OnInit {
   onSubmit() {
     this.getFilterLoading.emit(true);
     if (this.filterForm.value.author) {
+      console.log('author');
       this.bookService
         .getBooksByAuthor(
           this.filterForm.value.author,
-          this.filterForm.value.limit && { limit: this.filterForm.value.limit }
+          this.filterForm.value.limit && {
+            limit: this.filterForm.value.limit,
+          }
         )
         .subscribe((res) => {
           this.submitSubscribe(res);
@@ -135,10 +148,20 @@ export class BooklistFilterComponent implements OnInit {
   }
 
   submitSubscribe(res: any) {
-    this.filteredBooks = res.works ?? res.docs;
-    this.getFilteredBooks.emit(this.filteredBooks);
-    this.setFilterRequest();
-    this.formClean();
+    if (res) {
+      console.log('res', res);
+      this.filteredBooks = res.works ?? res.docs;
+      if (this.filteredBooks.length > 0) {
+        this.getFilteredBooks.emit(this.filteredBooks);
+        this.setFilterRequest();
+      } else {
+        this.getFilterError.emit({
+          message: 'There is no book from this author',
+          code: 400,
+        });
+      }
+      this.formClean();
+    }
   }
 
   formClean() {

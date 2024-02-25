@@ -137,6 +137,7 @@ export class CommentsService {
         where('email', '==', userEmail)
       )
     );
+
     return !querySnapshot.empty;
   }
 
