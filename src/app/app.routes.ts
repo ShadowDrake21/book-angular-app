@@ -95,6 +95,11 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'chats',
+    loadComponent: () =>
+      import('./pages/chats/chats.component').then((m) => m.ChatsComponent),
+  },
+  {
     path: 'my-profile',
     loadComponent: () =>
       import('./pages/my-profile/my-profile.component').then(
