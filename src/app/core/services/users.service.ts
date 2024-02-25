@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -70,5 +71,9 @@ export class UsersService {
       photoURL: updateDataObj.photoURL,
     };
     await updateDoc(docRef, updateObj);
+  }
+
+  async deleteUser(userId: string) {
+    await deleteDoc(doc(this._firestore, 'users', userId));
   }
 }
