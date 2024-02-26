@@ -79,6 +79,17 @@ export class BooklistComponent implements OnInit, OnDestroy {
               }
             );
           break;
+        case 'work':
+          this.loadingBooks = true;
+          this.booksService.getBooksByTitle(this.queryParam).subscribe(
+            (res) => {
+              this.books = res.docs;
+              this.loadingBooks = false;
+            },
+            (err) => {
+              this.errorWhileFetching = 'There is no such book!';
+            }
+          );
       }
     }
   }

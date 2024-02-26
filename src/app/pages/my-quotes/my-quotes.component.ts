@@ -114,6 +114,7 @@ export class MyQuotesComponent implements OnInit {
       };
     } finally {
       if (this.isOnDelete) this.isOnDelete = false;
+      this.quoteBtnText = 'Add';
       this.quoteForm.reset();
       setTimeout(() => {
         this.quoteActionResult = undefined;

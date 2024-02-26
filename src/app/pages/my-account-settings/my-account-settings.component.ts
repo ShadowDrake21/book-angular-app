@@ -13,6 +13,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { UsersService } from '../../core/services/users.service';
+import { IUser } from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-my-account-settings',
@@ -28,6 +30,7 @@ import {
 })
 export class MyAccountSettingsComponent implements OnInit {
   private authService = inject(AuthService);
+  private usersService = inject(UsersService);
   private router = inject(Router);
 
   phoneForm = new FormGroup({
@@ -57,8 +60,6 @@ export class MyAccountSettingsComponent implements OnInit {
       if (this.phone) this.phoneForm.setValue({ phone: this.phone });
     });
   }
-
-  // jwt token rewrite
 
   getPhone() {
     this.phone = localStorage.getItem('phone');
@@ -108,9 +109,15 @@ export class MyAccountSettingsComponent implements OnInit {
   }
 
   async deleteProfile() {
-    this.deleteMessage = await this.authService.deleteAccount();
-    setTimeout(() => {
-      this.router.navigate(['/']);
-    }, 5000);
+    if (this.user?.email) {
+      const userDB: IUser = (
+        await this.authService.retrieveUserData(this.user?.email)
+      )[0];
+      await this.usersService.deleteUser(userDB.id);
+      this.deleteMessage = await this.authService.deleteAccount();
+      setTimeout(() => {
+        this.router.navigate(['/']);
+      }, 5000);
+    }
   }
 }

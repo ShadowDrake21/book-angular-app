@@ -22,33 +22,30 @@ export class NotificationsService {
     let gottenRequests: IGottenFriendRequestToClient[] = [];
     let notifications: INotification[] = [];
 
-    try {
-      const user = await this.authService.user$.pipe(first()).toPromise();
-      this.user = user;
-      if (this.user?.email)
-        gottenRequests =
-          await this.friendsManagementService.getAllGottenFriendRequests(
-            this.user?.email,
-            'gottenRequests'
-          );
-      if (gottenRequests) {
-        await Promise.all(
-          gottenRequests.map(async (request: IGottenFriendRequestToClient) => {
-            const sender: IUser = (
-              (await this.usersService.getUserByEmail(
-                request.senderEmail
-              )) as IUser[]
-            )[0];
-            notifications.push({
-              photoURL: sender?.photoURL || '/assets/no profile photo.jpg',
-              name: sender?.name,
-              request: request,
-            });
-          })
+    const user = await this.authService.user$.pipe(first()).toPromise();
+
+    this.user = user;
+    if (this.user?.email)
+      gottenRequests =
+        await this.friendsManagementService.getAllGottenFriendRequests(
+          this.user?.email,
+          'gottenRequests'
         );
-      }
-    } catch (error) {
-      console.error('Error loading notifications:', error);
+    if (gottenRequests) {
+      await Promise.all(
+        gottenRequests.map(async (request: IGottenFriendRequestToClient) => {
+          const sender: IUser = (
+            (await this.usersService.getUserByEmail(
+              request.senderEmail
+            )) as IUser[]
+          )[0];
+          notifications.push({
+            photoURL: sender?.photoURL || '/assets/no profile photo.jpg',
+            name: sender?.name,
+            request: request,
+          });
+        })
+      );
     }
 
     console.log('notifications: ', notifications);

@@ -75,7 +75,7 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
         }
       });
     await this.getAllComments().then(async () => {
-      await this.getUserComment(this.neededUserInfo.email);
+      this.getUserComment(this.neededUserInfo.email);
     });
   }
 
