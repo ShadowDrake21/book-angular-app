@@ -5,7 +5,6 @@ import { TruncateTextPipe } from '../../../../pipes/truncate-text.pipe';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
-import { notifications } from '../../mocks/header.mocks';
 import { UsersService } from '../../../../../core/services/users.service';
 import { FriendsManagementService } from '../../../../../core/services/friends-management.service';
 import { RouterModule } from '@angular/router';

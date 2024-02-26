@@ -10,6 +10,8 @@ import { ButtonComponent } from '../../shared/components/UI/button/button.compon
 import { InputComponent } from '../../shared/components/UI/input/input.component';
 import { TextareaComponent } from '../../shared/components/UI/textarea/textarea.component';
 
+declare let Email: any;
+
 @Component({
   selector: 'app-contact-me',
   standalone: true,
@@ -30,9 +32,19 @@ export class ContactMeComponent {
     message: new FormControl('', Validators.minLength(10)),
   });
 
-  myEmail: string = 'dimka670020040@gmail.com';
-
   onSubmit() {
-    console.log('form', this.contactForm);
+    console.log('form', Email);
+
+    Email.send({
+      SecureToken: 'ea79a6eb-98aa-4ada-badc-c17ec70bd0ff',
+      To: 'shadowdrake21.commercial@gmail.com',
+      From: 'shadowdrake21.commercial@gmail.com',
+      Subject: 'From Contact Me',
+      Body: `
+      <i>This is sent as a request to contact with my from Contact Me page.</i> <br/> <b>Name: </b>${this.contactForm.value.name} <br /> <b>Email: </b>${this.contactForm.value.email}<br /> <b>Subject: </b>From Contact Me<br /> <b>Message:</b> <br /> ${this.contactForm.value.message} <br><br> <b>~End of Message.~</b> `,
+    }).then((message: string) => {
+      alert(message);
+      this.contactForm.reset();
+    });
   }
 }

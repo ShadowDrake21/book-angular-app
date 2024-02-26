@@ -112,14 +112,14 @@ export class AuthService {
     if (this._auth.currentUser)
       updateProfile(this._auth.currentUser, {
         displayName: name,
-        photoURL: auth.user.photoURL || '/assets/no profile photo.jpg',
+        photoURL: auth.user.photoURL || '/assets/images/no profile photo.jpg',
       });
     const user: IUser = {
       id: auth.user.uid,
       email: auth.user.email,
       name: auth.user.displayName || name,
       lastSignInTime: auth.user.metadata.lastSignInTime,
-      photoURL: auth.user.photoURL || '/assets/no profile photo.jpg',
+      photoURL: auth.user.photoURL || '/assets/images/no profile photo.jpg',
     };
     const userDocRef = doc(this._firestore, `users/${user.id}`);
     return setDoc(userDocRef, user).then(() => user);
