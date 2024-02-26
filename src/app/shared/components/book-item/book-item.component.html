@@ -19,7 +19,14 @@
     <div class="item__description-info">
       <h3 class="font-bold text-xl mb-2">{{ book.title }}</h3>
       <p class="text-gray-700 text-base">
-        {{ book.ratings_average | number : "1.1-1" }}
+        <span class="font-semibold">Rating:</span>
+        <span class="font-bold">
+          {{
+            book.ratings_average
+              ? (book.ratings_average | number : "1.1-1")
+              : "unknown"
+          }}</span
+        >
       </p>
     </div>
   </div>
