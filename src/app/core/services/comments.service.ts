@@ -2,12 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
   Timestamp,
-  addDoc,
   collection,
-  collectionGroup,
   deleteDoc,
   doc,
-  getDoc,
   getDocs,
   orderBy,
   query,

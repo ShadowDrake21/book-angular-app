@@ -4,7 +4,6 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
-  inject,
 } from '@angular/core';
 import { IGottenFriendRequestToClient } from '../../../../shared/models/friendsManagement.model';
 import { CommonModule } from '@angular/common';

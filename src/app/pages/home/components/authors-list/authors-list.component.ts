@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputComponent } from '../../../../shared/components/UI/input/input.component';
 import { ButtonComponent } from '../../../../shared/components/UI/button/button.component';
-import { BehaviorSubject, Observable, map, switchMap, tap } from 'rxjs';
 import { PaginationService } from '../../../../core/services/pagination.service';
 import { AuthorlistService } from '../../../../core/services/authorlist.service';
 

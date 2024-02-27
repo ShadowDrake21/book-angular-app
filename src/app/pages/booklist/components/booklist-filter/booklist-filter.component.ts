@@ -2,7 +2,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
   Output,
   inject,
@@ -96,7 +95,6 @@ export class BooklistFilterComponent implements OnInit {
   onSubmit() {
     this.getFilterLoading.emit(true);
     if (this.filterForm.value.author) {
-      console.log('author');
       this.bookService
         .getBooksByAuthor(
           this.filterForm.value.author,
@@ -149,7 +147,6 @@ export class BooklistFilterComponent implements OnInit {
 
   submitSubscribe(res: any) {
     if (res) {
-      console.log('res', res);
       this.filteredBooks = res.works ?? res.docs;
       if (this.filteredBooks.length > 0) {
         this.getFilteredBooks.emit(this.filteredBooks);

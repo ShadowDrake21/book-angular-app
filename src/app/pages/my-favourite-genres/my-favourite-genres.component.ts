@@ -5,7 +5,7 @@ import { User } from '@angular/fire/auth';
 import { IGenre } from '../../shared/models/genre.model';
 import { AuthService } from '../../core/authentication/auth.service';
 import { myFavouriteGenresContent } from './content/my-favourite-genres.content';
-import { SymbolReplacePipe } from '../../shared/utils/symbol-replace.pipe';
+import { SymbolReplacePipe } from '../../shared/pipes/symbol-replace.pipe';
 import { TextDeletePipe } from '../../shared/pipes/text-delete.pipe';
 import { IItemResult } from '../../shared/models/general.model';
 
@@ -50,7 +50,6 @@ export class MyFavouriteGenresComponent implements OnInit {
   async getUserGenres() {
     if (!this.user?.email) return;
     this.userGenres = await this.genresService.getAllGenres(this.user?.email);
-    console.log(this.userGenres);
 
     this.selectedGenres = [];
     this.userGenres.forEach((genre: IGenre) => {
@@ -66,7 +65,6 @@ export class MyFavouriteGenresComponent implements OnInit {
     const btnSelector: Element | null = document.querySelector(
       `#${chosenGenre.name}`
     );
-    console.log('saved ', this.userGenres);
     if (btnSelector?.classList.contains('btn-active')) {
       if (this.operationName === 'delete') {
         return;
@@ -137,7 +135,6 @@ export class MyFavouriteGenresComponent implements OnInit {
       );
 
       localDeletedGenres.forEach((localDeletedGenre: IGenre) => {
-        console.log(localDeletedGenres);
         if (localDeletedGenre.id)
           localDeletedGenresIds.push(localDeletedGenre.id);
       });

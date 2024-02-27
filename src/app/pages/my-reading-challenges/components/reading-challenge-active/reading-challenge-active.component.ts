@@ -35,10 +35,8 @@ export class ReadingChallengeActiveComponent implements OnInit, OnChanges {
 
   async ngOnInit(): Promise<void> {
     this.loadingActiveChallenges = true;
-    console.log('active challenge', this.email);
     await this.getActiveChallenges().then(() => {
       this.loadingActiveChallenges = false;
-      console.log('active challenges items:', this.activeChallenges);
     });
   }
 

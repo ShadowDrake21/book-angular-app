@@ -32,10 +32,8 @@ export class ReadingChallengeFinishedComponent implements OnInit, OnChanges {
 
   async ngOnInit(): Promise<void> {
     this.loadingFinishedChallenges = true;
-    console.log('finished challenge', this.email);
     await this.getFinishedChallenges().then(() => {
       this.loadingFinishedChallenges = false;
-      console.log('finished challenges items:', this.finishedChallenges);
     });
   }
 

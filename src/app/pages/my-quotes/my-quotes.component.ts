@@ -11,7 +11,7 @@ import {
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
 import { User } from '@angular/fire/auth';
 import { AuthService } from '../../core/authentication/auth.service';
-import { IQuote, IQuoteResult } from '../../shared/models/quote.model';
+import { IQuote } from '../../shared/models/quote.model';
 import { IItemResult } from '../../shared/models/general.model';
 
 @Component({
@@ -99,7 +99,6 @@ export class MyQuotesComponent implements OnInit {
           message: 'Quote successfully updated!',
         };
       } else if (this.isOnDelete) {
-        console.log('deletion');
         this.quoteActionResult = {
           isSuccessfull: true,
           message: 'Quote successfully deleted!',

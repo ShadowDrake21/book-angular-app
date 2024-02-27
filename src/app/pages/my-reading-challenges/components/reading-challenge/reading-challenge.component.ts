@@ -9,10 +9,8 @@ import {
   inject,
 } from '@angular/core';
 import { AuthService } from '../../../../core/authentication/auth.service';
-import { ChallengesService } from '../../../../core/services/challenges.service';
 import { User } from '@angular/fire/auth';
 import { Subject, takeUntil } from 'rxjs';
-import { IChallenge } from '../../../../shared/models/challenge.model';
 import { ReadingChallengeItemComponent } from '../reading-challenge-item/reading-challenge-item.component';
 import { PaginationLiteService } from '../../../../core/services/pagination-lite.service';
 import { ReadingChallengeFinishedComponent } from '../reading-challenge-finished/reading-challenge-finished.component';

@@ -1,7 +1,6 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import {
-  AUTHORS_API_URL,
   AUTHOR_API_URL,
   SEARCH_API_URL,
   SUBJECT_API_URL,

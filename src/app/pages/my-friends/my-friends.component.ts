@@ -1,14 +1,6 @@
 import { CommonModule } from '@angular/common';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {
-  Component,
-  ElementRef,
-  OnInit,
-  Renderer2,
-  ViewChild,
-  inject,
-} from '@angular/core';
-import {
-  MatTab,
   MatTabChangeEvent,
   MatTabGroup,
   MatTabsModule,

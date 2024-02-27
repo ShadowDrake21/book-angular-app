@@ -11,24 +11,18 @@ import { InputComponent } from '../../../../shared/components/UI/input/input.com
 import { ButtonComponent } from '../../../../shared/components/UI/button/button.component';
 import {
   FormControl,
-  FormControlName,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { TruncateTextPipe } from '../../../../shared/pipes/truncate-text.pipe';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { AuthService } from '../../../../core/authentication/auth.service';
 import { EMPTY, Observable, Subject, catchError, takeUntil } from 'rxjs';
 import { User } from '@angular/fire/auth';
 import { StorageService } from '../../../../core/services/storage.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MEDIA_STORAGE_PATH } from '../../../../core/constants/storage.constants';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { environment } from '../../../../../environments/environment';
-import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { ChallengesService } from '../../../../core/services/challenges.service';
 
 @Component({
@@ -82,7 +76,6 @@ export class AddReadingChallengeComponent implements OnInit, OnDestroy {
   filesHandler(event: Event | null) {
     const inputElement = event?.target as HTMLInputElement;
     this.image = inputElement?.files?.[0];
-    console.log(this.addChallengeForm.value);
     this.previewPhoto();
   }
 
@@ -100,7 +93,6 @@ export class AddReadingChallengeComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.isNewChallenge.emit(false);
-    console.log(this.addChallengeForm.value);
     this.uploadImage();
   }
 

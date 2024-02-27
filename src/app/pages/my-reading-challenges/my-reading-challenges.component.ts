@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReadingChallengeComponent } from './components/reading-challenge/reading-challenge.component';
 import { AddReadingChallengeComponent } from './components/add-reading-challenge/add-reading-challenge.component';
 

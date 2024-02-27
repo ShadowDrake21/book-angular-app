@@ -35,7 +35,6 @@ export class InboxRequestsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.loadingRequests = true;
-    console.log('all gotten requests: ', this.allGottenRequests);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
