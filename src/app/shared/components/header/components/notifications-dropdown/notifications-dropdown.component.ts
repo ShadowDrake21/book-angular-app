@@ -5,11 +5,8 @@ import { TruncateTextPipe } from '../../../../pipes/truncate-text.pipe';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
-import { UsersService } from '../../../../../core/services/users.service';
-import { FriendsManagementService } from '../../../../../core/services/friends-management.service';
 import { RouterModule } from '@angular/router';
 import { NotificationsService } from '../../../../../core/services/notifications.service';
-import { User } from '@angular/fire/auth';
 import { INotification } from '../../../../models/notification.model';
 
 @Component({
@@ -45,7 +42,6 @@ export class NotificationsDropdownComponent implements OnInit {
       this.notifications.length - 2,
       this.notifications.length
     );
-    console.log('this loading', this.notifications);
     this.loadingNotifications = false;
   }
 

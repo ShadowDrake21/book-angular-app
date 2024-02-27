@@ -4,7 +4,6 @@ import { AuthService } from '../../core/authentication/auth.service';
 import { ProfileInfoComponent } from '../my-profile/components/profile-info/profile-info.component';
 import { User } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { IError } from '../../shared/models/error.model';
 import { IItemResult } from '../../shared/models/general.model';
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
 import {

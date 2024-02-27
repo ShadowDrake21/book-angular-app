@@ -1,4 +1,4 @@
-import { inject, Injectable, NgZone } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   Auth,
   authState,
@@ -9,21 +9,18 @@ import {
   UserCredential,
   signOut,
   updateProfile,
-  getAuth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
   sendPasswordResetEmail,
   onAuthStateChanged,
   signInWithPopup,
   GoogleAuthProvider,
-  PhoneAuthCredential,
 } from '@angular/fire/auth';
 import { IUser } from '../../shared/models/user.model';
 import {
   collection,
   doc,
   Firestore,
-  getDoc,
   getDocs,
   query,
   updateDoc,

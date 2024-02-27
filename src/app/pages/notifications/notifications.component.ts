@@ -1,7 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { UsersService } from '../../core/services/users.service';
-import { FriendsManagementService } from '../../core/services/friends-management.service';
 import { NotificationsService } from '../../core/services/notifications.service';
 import { INotification } from '../../shared/models/notification.model';
 import { TruncateTextPipe } from '../../shared/pipes/truncate-text.pipe';

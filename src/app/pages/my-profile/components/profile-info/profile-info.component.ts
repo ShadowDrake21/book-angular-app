@@ -1,18 +1,13 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  OnInit,
-  Output,
   SimpleChanges,
   inject,
 } from '@angular/core';
 import { User, getAuth } from '@angular/fire/auth';
 import { TruncateTextPipe } from '../../../../shared/pipes/truncate-text.pipe';
-import { ModalService } from '../../../../core/services/modal.service';
-import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 import {
   FormControl,
   FormGroup,
@@ -53,7 +48,6 @@ export class ProfileInfoComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['user']) {
       this.user = changes['user'].currentValue;
-      console.log('image', this.user?.photoURL);
       if (this.user?.displayName) {
         this.editProfileForm.patchValue({
           name: this.user.displayName,

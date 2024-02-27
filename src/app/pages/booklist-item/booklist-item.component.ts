@@ -13,7 +13,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { StarRatingModule } from 'angular-star-rating';
 import { AuthService } from '../../core/authentication/auth.service';
 import { INeededUserInfo } from '../../shared/models/comment.model';
-import { CommentsService } from '../../core/services/comments.service';
 import { Subscription } from 'rxjs';
 import { BookmarkButtonComponent } from '../../shared/components/bookmark-button/bookmark-button.component';
 import { BookmarkService } from '../../core/services/bookmark.service';

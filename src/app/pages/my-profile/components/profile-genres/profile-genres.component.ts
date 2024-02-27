@@ -4,7 +4,7 @@ import { User } from '@angular/fire/auth';
 import { RouterModule } from '@angular/router';
 import { GenresService } from '../../../../core/services/genres.service';
 import { IGenre } from '../../../../shared/models/genre.model';
-import { SymbolReplacePipe } from '../../../../shared/utils/symbol-replace.pipe';
+import { SymbolReplacePipe } from '../../../../shared/pipes/symbol-replace.pipe';
 
 @Component({
   selector: 'app-profile-genres',

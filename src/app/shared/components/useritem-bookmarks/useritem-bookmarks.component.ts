@@ -7,7 +7,7 @@ import {
   SimpleChanges,
   inject,
 } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { IWork } from '../../models/book.model';
 import { IAuthor } from '../../models/author.model';
 import { WorkItemComponent } from '../work-item/work-item.component';
