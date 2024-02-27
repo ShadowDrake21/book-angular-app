@@ -32,18 +32,25 @@ export class ContactMeComponent {
     message: new FormControl('', Validators.minLength(10)),
   });
 
-  onSubmit() {
-    console.log('form', Email);
+  resultMessage: string = '';
 
+  onSubmit() {
     Email.send({
-      SecureToken: 'ea79a6eb-98aa-4ada-badc-c17ec70bd0ff',
-      To: 'shadowdrake21.commercial@gmail.com',
-      From: 'shadowdrake21.commercial@gmail.com',
+      SecureToken: '82f1e382-7f27-45b6-b3f6-cb2fc9ed4757',
+      To: 'dimka670020040@gmail.com',
+      From: 'dimka670020040@gmail.com',
       Subject: 'From Contact Me',
       Body: `
       <i>This is sent as a request to contact with my from Contact Me page.</i> <br/> <b>Name: </b>${this.contactForm.value.name} <br /> <b>Email: </b>${this.contactForm.value.email}<br /> <b>Subject: </b>From Contact Me<br /> <b>Message:</b> <br /> ${this.contactForm.value.message} <br><br> <b>~End of Message.~</b> `,
     }).then((message: string) => {
-      alert(message);
+      if (message === 'OK') {
+        this.resultMessage = 'Your message successfully sent!';
+      } else {
+        this.resultMessage = message;
+      }
+      setTimeout(() => {
+        this.resultMessage = '';
+      }, 5000);
       this.contactForm.reset();
     });
   }

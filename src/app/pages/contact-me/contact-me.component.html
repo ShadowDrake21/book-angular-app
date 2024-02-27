@@ -1,5 +1,6 @@
 <section class="py-[120px] min-h-screen h-full flex">
   <div class="container-big">
+    @if(!this.resultMessage) {
     <div class="relative flex justify-center sm:items-center sm:pt-0">
       <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="mt-8 overflow-hidden">
@@ -178,5 +179,10 @@
         </div>
       </div>
     </div>
+    } @else {
+    <div class="no-items">
+      <p class="text-3xl font-semibold text-center">{{ resultMessage }}</p>
+    </div>
+    }
   </div>
 </section>
