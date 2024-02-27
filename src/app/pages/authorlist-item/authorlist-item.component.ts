@@ -14,7 +14,7 @@ import { IBook } from '../../shared/models/book.model';
 import { BooksService } from '../../core/services/books.service';
 import { AuthoritemCommentsSectionComponent } from './authoritem-comments-section/authoritem-comments-section.component';
 import { BookmarkService } from '../../core/services/bookmark.service';
-import { Subscription } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
 import { INeededUserInfo } from '../../shared/models/comment.model';
 import { AuthService } from '../../core/authentication/auth.service';
 import { BookmarkButtonComponent } from '../../shared/components/bookmark-button/bookmark-button.component';
@@ -44,7 +44,6 @@ export class AuthorlistItemComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
   neededUserInfo: INeededUserInfo = { email: '' };
   isUserHasComment: boolean = false;
-
   loadingAuthor!: boolean;
 
   authorId!: string;
@@ -81,6 +80,11 @@ export class AuthorlistItemComponent implements OnInit, OnDestroy {
     });
 
     this.authorId = this.route.snapshot.url[1].path;
+
+    this.loadAuthorDetails();
+  }
+
+  loadAuthorDetails(): void {
     this.loadingAuthor = true;
     this.loadingBooks = true;
     this.authorsService.getAuthorByKey(this.authorId).subscribe((res) => {
@@ -127,16 +131,13 @@ export class AuthorlistItemComponent implements OnInit, OnDestroy {
 
     this.fullRemoteIdsLinks = [];
 
-    for (let remoteId = 0; remoteId < remoteIdsKeys.length; remoteId++) {
-      const key = remoteIdsKeys[remoteId];
+    this.fullRemoteIdsLinks = remoteIdsKeys.map((key) => {
       const value = this.author.remote_ids[key];
-
-      const remoteIdsLink: IRemoteIdsLinks = {
+      return {
         text: key,
         link: `${remoteIdsServices[key]}${value}`,
       };
-      this.fullRemoteIdsLinks.push(remoteIdsLink);
-    }
+    });
   }
 
   showCloseBio() {

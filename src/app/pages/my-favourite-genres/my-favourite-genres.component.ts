@@ -66,37 +66,45 @@ export class MyFavouriteGenresComponent implements OnInit {
       `#${chosenGenre.name}`
     );
     if (btnSelector?.classList.contains('btn-active')) {
-      if (this.operationName === 'delete') {
-        return;
-      }
-      this.operationName = 'add';
-      btnSelector?.classList.remove('btn-active');
-      this.selectedGenres = this.selectedGenres.filter(
-        (genre: IGenre) => genre.name !== chosenGenre.name
-      );
-      this.newGenres = this.newGenres.filter(
-        (genre: IGenre) => genre.name !== chosenGenre.name
-      );
-      if (this.isGenreSaved(chosenGenre)) {
-        this.deletedGenres.push(chosenGenre);
-      } else if (this.newGenres.length === 0) {
-        this.hasNewGenres = false;
-      }
+      this.toggleDeleteGenre(btnSelector, chosenGenre);
     } else {
-      if (this.operationName === 'add') {
-        return;
-      }
-      this.operationName = 'delete';
-      btnSelector?.classList.add('btn-active');
-      this.selectedGenres.push(chosenGenre);
-      this.newGenres.push(chosenGenre);
-      if (this.isGenreOnDelete(chosenGenre)) {
-        this.deletedGenres = this.deletedGenres.filter(
-          (genreOnDelete: IGenre) => genreOnDelete.name !== chosenGenre.name
-        );
-      } else if (!this.isGenreSaved(chosenGenre)) {
-        this.hasNewGenres = true;
-      }
+      this.toggleAddGenre(btnSelector, chosenGenre);
+    }
+  }
+
+  toggleDeleteGenre(btnSelector: Element | null, chosenGenre: IGenre) {
+    if (this.operationName === 'delete') {
+      return;
+    }
+    this.operationName = 'add';
+    btnSelector?.classList.remove('btn-active');
+    this.selectedGenres = this.selectedGenres.filter(
+      (genre: IGenre) => genre.name !== chosenGenre.name
+    );
+    this.newGenres = this.newGenres.filter(
+      (genre: IGenre) => genre.name !== chosenGenre.name
+    );
+    if (this.isGenreSaved(chosenGenre)) {
+      this.deletedGenres.push(chosenGenre);
+    } else if (this.newGenres.length === 0) {
+      this.hasNewGenres = false;
+    }
+  }
+
+  toggleAddGenre(btnSelector: Element | null, chosenGenre: IGenre) {
+    if (this.operationName === 'add') {
+      return;
+    }
+    this.operationName = 'delete';
+    btnSelector?.classList.add('btn-active');
+    this.selectedGenres.push(chosenGenre);
+    this.newGenres.push(chosenGenre);
+    if (this.isGenreOnDelete(chosenGenre)) {
+      this.deletedGenres = this.deletedGenres.filter(
+        (genreOnDelete: IGenre) => genreOnDelete.name !== chosenGenre.name
+      );
+    } else if (!this.isGenreSaved(chosenGenre)) {
+      this.hasNewGenres = true;
     }
   }
 
@@ -191,8 +199,8 @@ export class MyFavouriteGenresComponent implements OnInit {
     } else {
       this.operationName = '';
 
+      console.log(this.deletedGenres);
       this.deletedGenres.forEach((genre: IGenre) => {
-        this.selectedGenres.push(genre);
         this.toggleChooseGenre(genre);
       });
       this.operationName = '';

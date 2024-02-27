@@ -44,6 +44,10 @@ export class BooklistComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getQueryParams();
     this.errorWhileFetching = '';
+    this.loadBooksByQueryParam();
+  }
+
+  loadBooksByQueryParam() {
     if (this.queryParam.length) {
       switch (this.queryType) {
         case 'subject':

@@ -93,9 +93,11 @@ export class BooklistItemComponent implements OnInit, OnDestroy {
     if (externalDataParams !== null) {
       this.bookExternalData = JSON.parse(externalDataParams);
     }
-
     this.bookId = this.route.snapshot.url[1].path;
+    this.loadWork();
+  }
 
+  loadWork() {
     this.loadingBook = true;
     this.booksService.getWorkByKey(this.bookId).subscribe((res) => {
       this.book = res;

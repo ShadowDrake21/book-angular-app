@@ -105,60 +105,68 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
       date: Timestamp.now(),
     };
     if (this.commentFormBtn === 'Post') {
-      this.commentsService
-        .addNewComment('books', this.bookId, commentObj.id, commentObj)
-        .then(async () => {
-          this.commentActionsResult = {
-            isSuccessfull: true,
-            message: 'Review successfully added!',
-          };
-          await this.getAllComments().then(async () => {
-            await this.getUserComment(this.neededUserInfo.email);
-          });
-          this.getUserComment(this.neededUserInfo.email);
-          this.areUserBtnsActive = false;
-          this.disableForm();
-        })
-        .catch((err) => {
-          this.areUserBtnsActive = false;
-          this.commentActionsResult = {
-            isSuccessfull: false,
-            message: err.toString(),
-          };
-        });
-      setTimeout(() => {
-        this.areUserBtnsActive = true;
-        this.commentActionsResult = undefined;
-      }, 3000);
+      await this.onAddNewComment(commentObj);
     } else {
-      this.commentsService
-        .updateComment('books', this.bookId, commentObj.id, commentObj)
-        .then(async () => {
-          this.commentActionsResult = {
-            isSuccessfull: true,
-            message: 'Review successfully edited!',
-          };
-          await this.getAllComments().then(async () => {
-            await this.getUserComment(this.neededUserInfo.email);
-          });
-          this.getUserComment(this.neededUserInfo.email);
-          this.areUserBtnsActive = false;
-          this.disableForm();
-        })
-        .catch((err) => {
-          this.areUserBtnsActive = false;
-          this.commentActionsResult = {
-            isSuccessfull: false,
-            message: err.toString(),
-          };
-        });
-      setTimeout(() => {
-        this.areUserBtnsActive = true;
-        this.commentActionsResult = undefined;
-      }, 3000);
+      await this.onEditComment(commentObj);
     }
     this.commentForm.reset();
     this.commentFormBtn = 'Post';
+  }
+
+  async onAddNewComment(commentObj: IBookCommentToDB) {
+    await this.commentsService
+      .addNewComment('books', this.bookId, commentObj.id, commentObj)
+      .then(async () => {
+        this.commentActionsResult = {
+          isSuccessfull: true,
+          message: 'Review successfully added!',
+        };
+        await this.getAllComments().then(async () => {
+          this.getUserComment(this.neededUserInfo.email);
+        });
+        this.getUserComment(this.neededUserInfo.email);
+        this.areUserBtnsActive = false;
+        this.disableForm();
+      })
+      .catch((err) => {
+        this.areUserBtnsActive = false;
+        this.commentActionsResult = {
+          isSuccessfull: false,
+          message: err.toString(),
+        };
+      });
+    setTimeout(() => {
+      this.areUserBtnsActive = true;
+      this.commentActionsResult = undefined;
+    }, 3000);
+  }
+
+  async onEditComment(commentObj: IBookCommentToDB) {
+    await this.commentsService
+      .updateComment('books', this.bookId, commentObj.id, commentObj)
+      .then(async () => {
+        this.commentActionsResult = {
+          isSuccessfull: true,
+          message: 'Review successfully edited!',
+        };
+        await this.getAllComments().then(async () => {
+          this.getUserComment(this.neededUserInfo.email);
+        });
+        this.getUserComment(this.neededUserInfo.email);
+        this.areUserBtnsActive = false;
+        this.disableForm();
+      })
+      .catch((err) => {
+        this.areUserBtnsActive = false;
+        this.commentActionsResult = {
+          isSuccessfull: false,
+          message: err.toString(),
+        };
+      });
+    setTimeout(() => {
+      this.areUserBtnsActive = true;
+      this.commentActionsResult = undefined;
+    }, 3000);
   }
 
   async getAllComments() {
@@ -168,10 +176,10 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
     this.comments = comments;
   }
 
-  editComment(commentId: string) {
+  async editComment(commentId: string) {
     this.commentFormBtn = 'Edit';
     let choosenComment: IBookCommentToClient | undefined = undefined;
-    this.commentsService
+    await this.commentsService
       .getBookComment(this.bookId, commentId)
       .then((comment) => {
         this.enableForm();
@@ -186,8 +194,8 @@ export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
       });
   }
 
-  deleteComment(commentId: string) {
-    this.commentsService
+  async deleteComment(commentId: string) {
+    await this.commentsService
       .deleteComment('books', this.bookId, commentId, this.neededUserInfo.email)
       .then(async () => {
         this.commentActionsResult = {
