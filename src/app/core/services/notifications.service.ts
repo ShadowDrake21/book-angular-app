@@ -40,7 +40,7 @@ export class NotificationsService {
             )) as IUser[]
           )[0];
           notifications.push({
-            photoURL: sender?.photoURL || '/assets/no profile photo.jpg',
+            photoURL: sender?.photoURL || '/assets/images/no profile photo.jpg',
             name: sender?.name,
             request: request,
           });
