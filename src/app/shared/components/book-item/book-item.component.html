@@ -7,7 +7,7 @@
       class="item__image"
       [src]="
         !book.cover_edition_key
-          ? '/assets/if there is no image.png'
+          ? '/assets/images/if there is no image.png'
           : (book.cover_edition_key | bookImage : 'M' : 'olid')
       "
       alt="Sunset in the mountains"
