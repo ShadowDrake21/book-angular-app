@@ -48,14 +48,14 @@
             <li
               class="mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
             >
-              <a [href]="link.url">{{ link.title }}</a>
+              <a [href]="link.url" target="_blank">{{ link.title }}</a>
             </li>
             }
             <li
               *ngIf="author.wikipedia as wikipedia"
               class="mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
             >
-              <a [href]="wikipedia">Wikipedia</a>
+              <a [href]="wikipedia" target="_blank">Wikipedia</a>
             </li>
           </ul>
         </div>
@@ -67,7 +67,9 @@
             <li
               class="mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
             >
-              <a [href]="remoteLink.link">{{ remoteLink.text | titlecase }}</a>
+              <a [href]="remoteLink.link" target="_blank">{{
+                remoteLink.text | titlecase
+              }}</a>
             </li>
             }
           </ul>

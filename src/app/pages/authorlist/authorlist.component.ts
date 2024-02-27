@@ -42,7 +42,7 @@ export class AuthorlistComponent implements OnInit {
     this.paginationService.itemsPerPage = 10;
   }
 
-  async onSearch() {
+  onSearch() {
     if (!this.searchAuthorForm.value.authorName) {
       return;
     }
