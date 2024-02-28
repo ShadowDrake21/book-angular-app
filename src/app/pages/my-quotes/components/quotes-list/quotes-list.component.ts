@@ -4,7 +4,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -17,19 +16,14 @@ import { IQuote } from '../../../../shared/models/quote.model';
   templateUrl: './quotes-list.component.html',
   styleUrl: './quotes-list.component.scss',
 })
-export class QuotesListComponent implements OnInit, OnChanges {
+export class QuotesListComponent implements OnChanges {
   @Input() quotes: IQuote[] = [];
   @Output() onEdit = new EventEmitter<string>();
   @Output() onDelete = new EventEmitter<string>();
 
-  ngOnInit(): void {
-    console.log('on init: ', this.quotes);
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['quotes']) {
       this.quotes = changes['quotes'].currentValue;
-      console.log('on changes: ', this.quotes);
     }
   }
 }

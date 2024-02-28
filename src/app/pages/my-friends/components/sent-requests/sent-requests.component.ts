@@ -44,11 +44,13 @@ export class SentRequestsComponent implements OnInit, OnChanges {
     if (!this.user?.email) return;
     await this.friendsManagementService.deleteSentFriendRequest(
       this.user?.email,
-      deleteEmail
+      deleteEmail,
+      'sentRequests'
     );
     await this.friendsManagementService.deleteGottenFriendRequest(
       this.user?.email,
-      deleteEmail
+      deleteEmail,
+      'gottenRequests'
     );
     this.isUpdate.emit(true);
   }

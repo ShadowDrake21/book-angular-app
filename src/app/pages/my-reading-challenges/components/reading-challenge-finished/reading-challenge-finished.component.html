@@ -7,10 +7,6 @@
     [isFinished]="true"
     (challengeOnRemove)="removeChallenge($event)"
   ></app-reading-challenge-item>
-  }} @else {
-  <div class="no-items">
-    <p class="text-3xl font-semibold">You don't have any finished challenge</p>
-  </div>
   }
   <div class="pagination mb-5">
     <button
@@ -34,6 +30,10 @@
     </button>
   </div>
   } @else {
+  <div class="no-items">
+    <p class="text-3xl font-semibold">You don't have any finished challenge</p>
+  </div>
+  } } @else {
   <div class="no-items"><p class="text-3xl font-semibold">Loading...</p></div>
   }
 </div>

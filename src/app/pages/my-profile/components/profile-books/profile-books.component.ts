@@ -1,14 +1,6 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { User } from '@angular/fire/auth';
-import { IWork } from '../../../../shared/models/book.model';
 import { WorkItemComponent } from '../../../../shared/components/work-item/work-item.component';
 import { FavouriteBooksService } from '../../../../core/services/favourite-books.service';
 

@@ -1,12 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BooklistCatalogueComponent } from '../../shared/components/booklist-catalogue/booklist-catalogue.component';
 import { BooklistFilterComponent } from './components/booklist-filter/booklist-filter.component';
@@ -51,6 +44,10 @@ export class BooklistComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getQueryParams();
     this.errorWhileFetching = '';
+    this.loadBooksByQueryParam();
+  }
+
+  loadBooksByQueryParam() {
     if (this.queryParam.length) {
       switch (this.queryType) {
         case 'subject':

@@ -1,14 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { BooksService } from '../../../../core/services/books.service';
 import { AuthService } from '../../../../core/authentication/auth.service';
-import { User, getAuth } from '@angular/fire/auth';
-import { IUpdateProfile } from '../../../../shared/models/profileManipulations.model';
-import { aboutUser } from '../../mocks/home.mocks';
-import { UsersService } from '../../../../core/services/users.service';
-import { IUser } from '../../../../shared/models/user.model';
+import { User } from '@angular/fire/auth';
 import { IActivity } from '../../../../shared/models/activity.model';
-import { AuthorsService } from '../../../../core/services/authors.service';
 import { BookmarkService } from '../../../../core/services/bookmark.service';
 import { CommentsService } from '../../../../core/services/comments.service';
 import { FriendsManagementService } from '../../../../core/services/friends-management.service';
@@ -86,7 +80,6 @@ export class AboutUserComponent implements OnInit {
       writtenReviewsAuthors: authorsComments.length,
       notifications: friendsRequests.length,
     };
-    console.log('aboutUser', this.aboutUser);
     this.loadingAboutUser = false;
   }
 }

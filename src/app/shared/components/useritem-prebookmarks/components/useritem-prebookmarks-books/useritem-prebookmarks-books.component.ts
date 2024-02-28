@@ -8,7 +8,6 @@ import {
   inject,
 } from '@angular/core';
 import { UseritemBookmarksComponent } from '../../../useritem-bookmarks/useritem-bookmarks.component';
-import { IWork } from '../../../../models/book.model';
 import { FavouriteBooksService } from '../../../../../core/services/favourite-books.service';
 
 @Component({

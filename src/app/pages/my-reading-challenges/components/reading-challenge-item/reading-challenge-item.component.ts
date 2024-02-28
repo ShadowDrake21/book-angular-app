@@ -4,16 +4,13 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
-  inject,
 } from '@angular/core';
 import { TruncateTextPipe } from '../../../../shared/pipes/truncate-text.pipe';
 import { IChallenge } from '../../../../shared/models/challenge.model';
 import { RouterModule } from '@angular/router';
-import { ChallengesService } from '../../../../core/services/challenges.service';
 
 @Component({
   selector: 'app-reading-challenge-item',
@@ -63,7 +60,6 @@ export class ReadingChallengeItemComponent implements OnInit, OnChanges {
       this.setBoolValuesWhileEditing(true);
     }
     this.challenge.read--;
-    console.log(`You have read ${this.challenge.read}`);
     this.updateProgressBar();
     this.subtitleChange();
   }
@@ -73,7 +69,6 @@ export class ReadingChallengeItemComponent implements OnInit, OnChanges {
       this.setBoolValuesWhileEditing(true);
     }
     this.challenge.read++;
-    console.log(`You have read ${this.challenge.read}`);
     this.updateProgressBar();
     this.subtitleChange();
   }

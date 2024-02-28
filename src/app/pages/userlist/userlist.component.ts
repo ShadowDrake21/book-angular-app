@@ -12,7 +12,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Auth } from '@angular/fire/auth';
 import { PaginationLiteService } from '../../core/services/pagination-lite.service';
 
 @Component({

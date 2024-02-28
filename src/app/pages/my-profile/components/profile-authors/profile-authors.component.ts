@@ -2,7 +2,6 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import { AuthorItemComponent } from '../../../../shared/components/author-item/author-item.component';
 import { CommonModule } from '@angular/common';
 import { User } from '@angular/fire/auth';
-import { IAuthor } from '../../../../shared/models/author.model';
 import { FavouriteAuthorsService } from '../../../../core/services/favourite-authors.service';
 
 @Component({

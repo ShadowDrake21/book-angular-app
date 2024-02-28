@@ -52,6 +52,12 @@ export class ProfileStatisticsComponent implements OnInit {
         )) as string[];
     }
 
+    this.getAvgRatings();
+
+    this.loadingStatistics = false;
+  }
+
+  getAvgRatings() {
     this.avgRatingBooks = this.bookComments.length
       ? this.bookComments.reduce(
           (accumulator, currentValue) => accumulator + currentValue.rating,
@@ -64,6 +70,5 @@ export class ProfileStatisticsComponent implements OnInit {
           0
         ) / this.authorComments.length
       : 0;
-    this.loadingStatistics = false;
   }
 }

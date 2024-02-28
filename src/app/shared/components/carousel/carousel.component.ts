@@ -12,7 +12,6 @@ import { IBook, IWork } from '../../models/book.model';
 import { BookItemComponent } from '../book-item/book-item.component';
 import { RouterModule } from '@angular/router';
 import { WorkItemComponent } from '../work-item/work-item.component';
-import { IAuthor } from '../../models/author.model';
 import { AuthorItemComponent } from '../author-item/author-item.component';
 
 @Component({
