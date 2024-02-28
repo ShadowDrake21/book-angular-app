@@ -1,15 +1,21 @@
 <section class="min-h-screen">
-  <div class="flex items-center flex-col container mx-auto min-h-screen pt-10">
-    <div>
-      <img src="/assets/logo/png/logo-no-background.png" alt="" class="w-80" />
+  <div
+    class="flex items-center flex-col w-full mx-auto min-h-screen pt-5 sm:pt-10"
+  >
+    <div *ngIf="!isInSystem">
+      <img
+        src="/assets/logo/png/logo-no-background.png"
+        alt=""
+        class="w-40 md:w-56 lg:w-80"
+      />
     </div>
     <form
       *ngIf="!isInSystem; else confirmation"
-      class="max-w-lg w-full mt-5 pb-5 text-center"
+      class="max-w-[300px] sm:max-w-sm md:max-w-md lg:max-w-lg w-full mt-2 mb:mt-5 pb-2 md:pb-5 text-center"
       [formGroup]="loginForm"
       (ngSubmit)="onSubmit()"
     >
-      <h2 class="text-4xl font-bold mb-1">Sign-In</h2>
+      <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-1">Sign-In</h2>
       @if(failedLoginSet.isFailed) {
       <p class="text-black bg-red-500 p-3 my-5">
         {{ failedLoginSet.message }}
@@ -76,19 +82,19 @@
         [disabled]="loginForm.invalid || loginForm.untouched"
       />
     </form>
-    <!-- fix bugs!!! -->
-    <div *ngIf="!isInSystem" class="text-center pb-4">
-      <p class="pb-4">or</p>
+
+    <div *ngIf="!isInSystem" class="text-center pb-2 md:pb-4">
+      <p class="pb-2 md:pb-4">or</p>
       <app-google-btn />
     </div>
-    <div *ngIf="!isInSystem" class="text-center">
-      <p class="pb-3">
+    <div *ngIf="!isInSystem" class="text-center text-sm md:text-base">
+      <p class="pb-1 md:p-3">
         Don't have an account?
         <a routerLink="/registration" class="text-blue-700"
           >Create an Account</a
         >
       </p>
-      <p class="pb-3">
+      <p class="pb-1 md:p-3">
         Forget your password?
         <a routerLink="/login/reset-password" class="text-blue-700">Reset it</a>
       </p>
