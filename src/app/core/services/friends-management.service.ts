@@ -1,6 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import {
+  DocumentData,
   Firestore,
+  QueryDocumentSnapshot,
   Timestamp,
   collection,
   deleteDoc,
@@ -94,53 +96,75 @@ export class FriendsManagementService {
     }
 
     querySnapshot.forEach((doc) => {
-      let requestDataFromDB;
+      let requestDataToClient;
       if (action === 'send') {
-        requestDataFromDB = doc.data() as ISentFriendRequestToDB;
-
-        let transformDate: Date = (
-          requestDataFromDB.date as Timestamp
-        ).toDate();
-        const requestDataToClient: ISentFriendRequestToClient = {
-          recipientEmail: requestDataFromDB.recipientEmail,
-          date: transformDate,
-        };
+        requestDataToClient = this.formSentGottenRequest(doc);
         friendRequests.push(requestDataToClient);
+        console.log('send requests:', requestDataToClient);
       } else {
-        requestDataFromDB = doc.data() as IGottenFriendRequestToDB;
-
-        let transformDate: Date = (
-          requestDataFromDB.date as Timestamp
-        ).toDate();
-        const requestDataToClient: IGottenFriendRequestToClient = {
-          senderEmail: requestDataFromDB.senderEmail,
-          date: transformDate,
-        };
+        requestDataToClient = this.formReceivedGottenRequest(doc);
         friendRequests.push(requestDataToClient);
+        console.log('gotten requests:', requestDataToClient);
       }
     });
     return friendRequests;
   }
 
-  async deleteSentFriendRequest(senderEmail: string, recipientEmail: string) {
+  formSentGottenRequest(
+    doc: QueryDocumentSnapshot<DocumentData, DocumentData>
+  ): ISentFriendRequestToClient {
+    let requestDataFromDB = doc.data() as ISentFriendRequestToDB;
+
+    let transformDate: Date = (requestDataFromDB.date as Timestamp).toDate();
+    const requestDataToClient: ISentFriendRequestToClient = {
+      recipientEmail: requestDataFromDB.recipientEmail,
+      date: transformDate,
+    };
+
+    return requestDataToClient;
+  }
+
+  formReceivedGottenRequest(
+    doc: QueryDocumentSnapshot<DocumentData, DocumentData>
+  ): IGottenFriendRequestToClient {
+    let requestDataFromDB = doc.data() as IGottenFriendRequestToDB;
+
+    let transformDate: Date = (requestDataFromDB.date as Timestamp).toDate();
+    const requestDataToClient: IGottenFriendRequestToClient = {
+      senderEmail: requestDataFromDB.senderEmail,
+      date: transformDate,
+    };
+
+    return requestDataToClient;
+  }
+
+  async deleteSentFriendRequest(
+    senderEmail: string,
+    recipientEmail: string,
+    entity: 'sentRequests' | 'accepted' | 'rejected'
+  ) {
     await deleteDoc(
       doc(
         this._firestore,
         'friendsManagement',
         senderEmail,
-        'sentRequests',
+        entity,
         recipientEmail
       )
     );
   }
 
-  async deleteGottenFriendRequest(senderEmail: string, recipientEmail: string) {
+  async deleteGottenFriendRequest(
+    senderEmail: string,
+    recipientEmail: string,
+    entity: 'gottenRequests' | 'accepted' | 'rejected'
+  ) {
     await deleteDoc(
       doc(
         this._firestore,
         'friendsManagement',
         recipientEmail,
-        'gottenRequests',
+        entity,
         senderEmail
       )
     );
@@ -204,6 +228,126 @@ export class FriendsManagementService {
         recipientEmail
       ),
       dataObj
+    );
+  }
+
+  // async prepareUserFriendRequestCollectionToRemove(email: string) {
+  //   const allGottenFriendRequests: IGottenFriendRequestToClient[] =
+  //     await this.getAllGottenFriendRequests(email, 'gottenRequests');
+  //   let allGottenFriendRequestsEmails: string[] = [];
+  //   const allAcceptedFriendRequests: IGottenFriendRequestToClient[] =
+  //     await this.getAllGottenFriendRequests(email, 'accepted');
+  //   let allAcceptedFriendRequestsEmails: string[] = [];
+  //   const allRejectedFriendRequests: IGottenFriendRequestToClient[] =
+  //     await this.getAllGottenFriendRequests(email, 'rejected');
+  //   let allRejectedFriendRequestsEmails: string[] = [];
+
+  //   allGottenFriendRequests.map((request) => {
+  //     allGottenFriendRequestsEmails.push(request.senderEmail);
+  //   });
+  //   allAcceptedFriendRequests.map((request) => {
+  //     allAcceptedFriendRequestsEmails.push(request.senderEmail);
+  //   });
+  //   allRejectedFriendRequests.map((request) => {
+  //     allRejectedFriendRequestsEmails.push(request.senderEmail);
+  //   });
+
+  //   allGottenFriendRequestsEmails.map((senderEmail: string) => {
+  //     this.deleteGottenFriendRequest(senderEmail, email, 'gottenRequests');
+  //   });
+  //   allAcceptedFriendRequestsEmails.map((senderEmail: string) => {
+  //     this.deleteGottenFriendRequest(senderEmail, email, 'accepted');
+  //   });
+  //   allRejectedFriendRequestsEmails.map((senderEmail: string) => {
+  //     this.deleteGottenFriendRequest(senderEmail, email, 'rejected');
+  //   });
+
+  //   allGottenFriendRequestsEmails.map((senderEmail: string) => {
+  //     this.deleteSentFriendRequest(senderEmail, email, 'sentRequests');
+  //   });
+  //   allAcceptedFriendRequestsEmails.map((senderEmail: string) => {
+  //     this.deleteSentFriendRequest(senderEmail, email, 'accepted');
+  //   });
+  //   allRejectedFriendRequestsEmails.map((senderEmail: string) => {
+  //     this.deleteSentFriendRequest(senderEmail, email, 'rejected');
+  //   });
+
+  //   const allSendFriendRequests: ISentFriendRequestToClient[] =
+  //     await this.getAllSentFriendRequests(email);
+  //   let allSendFriendRequestsEmails: string[] = [];
+
+  //   allSendFriendRequests.map((request) => {
+  //     allSendFriendRequestsEmails.push(request.recipientEmail);
+  //   });
+  //   allSendFriendRequestsEmails.map((recipientEmail: string) => {
+  //     this.deleteSentFriendRequest(email, recipientEmail, 'sentRequests');
+  //     this.deleteGottenFriendRequest(email, recipientEmail, 'gottenRequests');
+  //     this.deleteGottenFriendRequest(email, recipientEmail, 'accepted');
+  //     this.deleteGottenFriendRequest(email, recipientEmail, 'rejected');
+  //   });
+  // }
+
+  async prepareUserFriendRequestCollectionToRemove(email: string) {
+    const allGottenFriendRequests = await this.getAllGottenFriendRequests(
+      email,
+      'gottenRequests'
+    );
+    const allAcceptedFriendRequests = await this.getAllGottenFriendRequests(
+      email,
+      'accepted'
+    );
+    const allRejectedFriendRequests = await this.getAllGottenFriendRequests(
+      email,
+      'rejected'
+    );
+    const allSendFriendRequests = await this.getAllSentFriendRequests(email);
+
+    const allGottenFriendRequestsEmails = allGottenFriendRequests.map(
+      (request) => request.senderEmail
+    );
+    const allAcceptedFriendRequestsEmails = allAcceptedFriendRequests.map(
+      (request) => request.senderEmail
+    );
+    const allRejectedFriendRequestsEmails = allRejectedFriendRequests.map(
+      (request) => request.senderEmail
+    );
+    const allSendFriendRequestsEmails = allSendFriendRequests.map(
+      (request) => request.recipientEmail
+    );
+
+    await Promise.all([
+      ...allGottenFriendRequestsEmails.map((senderEmail) =>
+        this.deleteGottenFriendRequest(senderEmail, email, 'gottenRequests')
+      ),
+      ...allAcceptedFriendRequestsEmails.map((senderEmail) =>
+        this.deleteGottenFriendRequest(senderEmail, email, 'accepted')
+      ),
+      ...allRejectedFriendRequestsEmails.map((senderEmail) =>
+        this.deleteGottenFriendRequest(senderEmail, email, 'rejected')
+      ),
+      ...allGottenFriendRequestsEmails.map((senderEmail) =>
+        this.deleteSentFriendRequest(senderEmail, email, 'sentRequests')
+      ),
+      ...allAcceptedFriendRequestsEmails.map((senderEmail) =>
+        this.deleteSentFriendRequest(senderEmail, email, 'accepted')
+      ),
+      ...allRejectedFriendRequestsEmails.map((senderEmail) =>
+        this.deleteSentFriendRequest(senderEmail, email, 'rejected')
+      ),
+      ...allSendFriendRequestsEmails.map((recipientEmail) => {
+        this.deleteSentFriendRequest(email, recipientEmail, 'sentRequests');
+        this.deleteGottenFriendRequest(email, recipientEmail, 'gottenRequests');
+        this.deleteGottenFriendRequest(email, recipientEmail, 'accepted');
+        this.deleteGottenFriendRequest(email, recipientEmail, 'rejected');
+      }),
+    ]);
+  }
+
+  async deleteUserFriendRequestCollection(email: string) {
+    await deleteDoc(doc(this._firestore, 'friendsManagement', email)).then(
+      () => {
+        console.log('deleteUserFriendRequestCollection successfull');
+      }
     );
   }
 }

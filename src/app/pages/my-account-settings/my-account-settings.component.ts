@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { UsersService } from '../../core/services/users.service';
 import { IUser } from '../../shared/models/user.model';
+import { FriendsManagementService } from '../../core/services/friends-management.service';
 
 @Component({
   selector: 'app-my-account-settings',
@@ -30,6 +31,7 @@ import { IUser } from '../../shared/models/user.model';
 export class MyAccountSettingsComponent implements OnInit {
   private authService = inject(AuthService);
   private usersService = inject(UsersService);
+  private friendsManagementService = inject(FriendsManagementService);
   private router = inject(Router);
 
   phoneForm = new FormGroup({
@@ -112,6 +114,14 @@ export class MyAccountSettingsComponent implements OnInit {
       const userDB: IUser = (
         await this.authService.retrieveUserData(this.user?.email)
       )[0];
+      await this.friendsManagementService.prepareUserFriendRequestCollectionToRemove(
+        this.user.email
+      );
+      await this.friendsManagementService
+        .deleteUserFriendRequestCollection(this.user.email)
+        .then(() => {
+          console.log('deleteUserFriendRequestCollection done');
+        });
       await this.usersService.deleteUser(userDB.id);
       this.deleteMessage = await this.authService.deleteAccount();
       setTimeout(() => {
