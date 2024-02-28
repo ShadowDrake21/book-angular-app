@@ -9,10 +9,6 @@
     (challengeOnUpdate)="updateChallenge($event)"
     (challengeWhileUpdate)="challengeWhileEditing = $event"
   ></app-reading-challenge-item>
-  }}@else {
-  <div class="no-items">
-    <p class="text-3xl font-semibold">You don't have any active challenge</p>
-  </div>
   }
   <div class="pagination mb-5">
     <button
@@ -39,6 +35,10 @@
     </button>
   </div>
   }@else {
+  <div class="no-items">
+    <p class="text-3xl font-semibold">You don't have any active challenge</p>
+  </div>
+  } }@else {
   <div class="no-items"><p class="text-3xl font-semibold">Loading...</p></div>
   }
 </div>

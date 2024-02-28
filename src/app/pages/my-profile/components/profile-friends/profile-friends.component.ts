@@ -2,10 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { RouterModule } from '@angular/router';
-import {
-  IFriend,
-  IGottenFriendRequestToClient,
-} from '../../../../shared/models/friendsManagement.model';
+import { IGottenFriendRequestToClient } from '../../../../shared/models/friendsManagement.model';
 import { PaginationLiteService } from '../../../../core/services/pagination-lite.service';
 import { FriendsManagementService } from '../../../../core/services/friends-management.service';
 import { IUser } from '../../../../shared/models/user.model';

@@ -10,11 +10,6 @@ import { User } from '@angular/fire/auth';
 import { TruncateTextPipe } from '../../pipes/truncate-text.pipe';
 import { ProfileDropdownComponent } from './components/profile-dropdown/profile-dropdown.component';
 import { NotificationsDropdownComponent } from './components/notifications-dropdown/notifications-dropdown.component';
-import { ModalComponent } from '../modal/modal.component';
-import { ModalService } from '../../../core/services/modal.service';
-import { BooksService } from '../../../core/services/books.service';
-import { BooklistCatalogueComponent } from '../booklist-catalogue/booklist-catalogue.component';
-import { IBook } from '../../models/book.model';
 
 @Component({
   selector: 'app-header',

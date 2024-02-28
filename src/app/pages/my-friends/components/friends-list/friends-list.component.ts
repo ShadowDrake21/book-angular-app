@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { IUser } from '../../../../shared/models/user.model';
 import { FriendsListItemComponent } from '../friends-list-item/friends-list-item.component';
-import { TruncateTextPipe } from '../../../../shared/pipes/truncate-text.pipe';
 
 @Component({
   selector: 'app-friends-list',

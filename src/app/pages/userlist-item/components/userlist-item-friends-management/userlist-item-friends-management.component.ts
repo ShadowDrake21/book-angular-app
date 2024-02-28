@@ -35,7 +35,6 @@ export class UserlistItemFriendsManagementComponent
   loadingOurEmail?: boolean;
   loadingIsFriendRequest?: boolean;
 
-  // zrobić akceptację, uchylenie zapytu + stronę z główną informacją
   ngOnInit(): void {
     this.loadingOurEmail = true;
     this.loadingIsFriendRequest = true;
@@ -80,7 +79,6 @@ export class UserlistItemFriendsManagementComponent
       )
       .then((res: boolean) => {
         this.isFriendRequestAccepted = res;
-        console.log('accepted: ', res);
       });
     await this.friendsManagementService
       .checkUserFriendRequest(
@@ -91,7 +89,6 @@ export class UserlistItemFriendsManagementComponent
       )
       .then((res: boolean) => {
         this.isFriendRequestRejected = res;
-        console.log('rejected: ', res);
       });
   }
 
@@ -121,11 +118,13 @@ export class UserlistItemFriendsManagementComponent
     } else {
       await this.friendsManagementService.deleteSentFriendRequest(
         this.ourEmail,
-        this.userEmail
+        this.userEmail,
+        'sentRequests'
       );
       await this.friendsManagementService.deleteGottenFriendRequest(
         this.ourEmail,
-        this.userEmail
+        this.userEmail,
+        'gottenRequests'
       );
     }
   }

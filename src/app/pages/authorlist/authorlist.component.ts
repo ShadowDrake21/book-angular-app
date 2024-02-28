@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { BooksService } from '../../core/services/books.service';
 import { PaginationService } from '../../core/services/pagination.service';
-import { IAuthor } from '../../shared/models/author.model';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -43,7 +42,7 @@ export class AuthorlistComponent implements OnInit {
     this.paginationService.itemsPerPage = 10;
   }
 
-  async onSearch() {
+  onSearch() {
     if (!this.searchAuthorForm.value.authorName) {
       return;
     }

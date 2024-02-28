@@ -47,8 +47,6 @@ export class NotificationsService {
         })
       );
     }
-
-    console.log('notifications: ', notifications);
     return notifications;
   }
 }

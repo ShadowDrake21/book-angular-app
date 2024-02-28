@@ -53,6 +53,13 @@ export class HomeComponent implements OnInit {
     this.loadingChildren = true;
 
     await new Promise((resolve) => setTimeout(resolve, 2000));
+    this.getFantasyBooks();
+    this.getAdventuresBooks();
+    this.getLoveBooks();
+    this.getChildrenBooks();
+  }
+
+  getFantasyBooks() {
     this.booksService
       .getBooksBySubject('fantasy', {
         details: true,
@@ -64,7 +71,9 @@ export class HomeComponent implements OnInit {
         this.booksFantasy = res.works;
         this.loadingFantasy = false;
       });
+  }
 
+  getAdventuresBooks() {
     this.booksService
       .getBooksBySubject('adventures', {
         details: true,
@@ -76,7 +85,9 @@ export class HomeComponent implements OnInit {
         this.booksSport = res.works;
         this.loadingSport = false;
       });
+  }
 
+  getLoveBooks() {
     this.booksService
       .getBooksBySubject('love', {
         details: true,
@@ -88,7 +99,9 @@ export class HomeComponent implements OnInit {
         this.booksLove = res.works;
         this.loadingLove = false;
       });
+  }
 
+  getChildrenBooks() {
     this.booksService
       .getBooksBySubject('children', {
         details: true,

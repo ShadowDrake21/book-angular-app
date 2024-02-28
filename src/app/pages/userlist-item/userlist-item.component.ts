@@ -126,11 +126,9 @@ export class UserlistItemComponent implements OnInit {
 
   getCountBooks(value: number) {
     this.countBooks = value;
-    console.log('countBooks', this.countBooks);
   }
 
   getCountAuthors(value: number) {
     this.countAuthors = value;
-    console.log('countAuthors', this.countAuthors);
   }
 }

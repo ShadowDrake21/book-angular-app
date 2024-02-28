@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { faL } from '@fortawesome/free-solid-svg-icons';
 
 @Pipe({
   name: 'truncateText',
