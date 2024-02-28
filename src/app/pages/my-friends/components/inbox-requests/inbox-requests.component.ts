@@ -61,11 +61,13 @@ export class InboxRequestsComponent implements OnInit, OnChanges {
     );
     await this.friendsManagementService.deleteGottenFriendRequest(
       senderEmail,
-      this.user?.email
+      this.user?.email,
+      'gottenRequests'
     );
     await this.friendsManagementService.deleteSentFriendRequest(
       senderEmail,
-      this.user?.email
+      this.user?.email,
+      'sentRequests'
     );
     this.isUpdate.emit(true);
   }
@@ -86,11 +88,13 @@ export class InboxRequestsComponent implements OnInit, OnChanges {
     );
     await this.friendsManagementService.deleteGottenFriendRequest(
       senderEmail,
-      this.user?.email
+      this.user?.email,
+      'gottenRequests'
     );
     await this.friendsManagementService.deleteSentFriendRequest(
       senderEmail,
-      this.user?.email
+      this.user?.email,
+      'sentRequests'
     );
     this.isUpdate.emit(true);
   }

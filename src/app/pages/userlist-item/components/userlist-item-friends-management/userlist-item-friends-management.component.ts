@@ -118,11 +118,13 @@ export class UserlistItemFriendsManagementComponent
     } else {
       await this.friendsManagementService.deleteSentFriendRequest(
         this.ourEmail,
-        this.userEmail
+        this.userEmail,
+        'sentRequests'
       );
       await this.friendsManagementService.deleteGottenFriendRequest(
         this.ourEmail,
-        this.userEmail
+        this.userEmail,
+        'gottenRequests'
       );
     }
   }
