@@ -4,12 +4,19 @@
 @import "../node_modules/swiper/swiper.scss";
 @import "../node_modules/css-star-rating/scss/star-rating";
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;500;600;700&family=Roboto+Slab:wght@400;500;600;700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap");
-// font-family: 'Roboto', sans-serif;
-// font-family: 'Roboto Condensed', sans-serif;
-// font-family: 'Roboto Slab', serif;
 
 :root {
   --error-color: red;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
 }
 
 body {

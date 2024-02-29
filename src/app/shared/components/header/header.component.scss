@@ -38,58 +38,10 @@ header {
   }
 }
 
-.dropdown {
-  background: #fff;
-  color: rgb(122, 122, 122);
-  padding: 15px;
-  width: 400px;
-  position: absolute;
-  right: -19px;
-  top: 52px;
-  font-size: 14px;
-  line-height: 18px;
-}
-
-.profile-dropdown {
-  width: 250px;
-}
-
-.dropdown-item {
-  cursor: pointer;
-  padding: 8px 5px;
-  text-align: left;
-}
-
-.user-actions__list {
-  div,
-  app-notifications-dropdown,
-  app-profile-dropdown {
-    &:hover {
-      background-color: #303030;
-      color: #fff;
-    }
-  }
-}
-
-.dropdown-wrapper {
-  display: inline-block;
-  position: relative;
-  width: 40px;
-  height: 40px;
-  overflow: hidden;
-  border-radius: 50%;
-
-  .dropdown-img {
-    width: auto;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
 .menu__btn {
   position: absolute;
   top: 20px;
-  left: 25px;
+  right: 25px;
   width: 40px;
   height: 40px;
   display: flex;
@@ -145,15 +97,28 @@ header {
   }
 }
 
-@media (max-width: 630px) {
-  .nav .nav-list .nav-item .nav-link {
-    padding: 0 10px;
-    font-size: 14px;
-    line-height: 18px;
-    text-align: center;
+@media (max-width: 640px) {
+  .header__responsive {
+    height: 260px;
+  }
+  .nav .nav-list {
+    flex-direction: column;
+    .nav-item .nav-link {
+      padding: 0 10px;
+      font-size: 14px;
+      line-height: 18px;
+      text-align: center;
+    }
   }
   .menu__btn {
     width: 30px;
     height: 30px;
+    top: 25px;
+  }
+}
+
+@media (max-width: 500px) {
+  header {
+    padding: 0 10px;
   }
 }
