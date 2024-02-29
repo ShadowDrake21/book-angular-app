@@ -18,3 +18,21 @@
     display: none;
   }
 }
+
+@media screen and (max-width: 1200px) {
+  .swiper-wrapper {
+    left: -350px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .swiper-wrapper {
+    left: -250px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .swiper-wrapper {
+    left: -100px;
+  }
+}
