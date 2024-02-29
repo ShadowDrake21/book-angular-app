@@ -1,20 +1,14 @@
 <section class="min-h-screen">
   <div
-    class="flex items-center flex-col container mx-auto min-h-screen justify-center"
+    class="flex items-center flex-col w-full mx-auto min-h-screen justify-center"
     *ngIf="!registrationMessage; else registered"
   >
     <form
-      class="max-w-lg w-full mt-10 pb-5 text-center"
+      class="max-w-[300px] sm:max-w-sm md:max-w-md lg:max-w-lg w-full mt-3 sm:mt-6 md:mt-10 pb-2 md:pb-5 text-center"
       [formGroup]="registrationForm"
       (ngSubmit)="onSubmit()"
     >
-      <h2 class="text-4xl font-bold mb-1">Sign-Up</h2>
-      <!-- @if(failedLoginSet.isFailed) {
-      <p class="text-black bg-red-500 p-3 my-5">
-        {{ failedLoginSet.message }}
-      </p>
-      } -->
-      <!-- email -->
+      <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-1">Sign-Up</h2>
       <app-input
         [type]="'email'"
         [label]="'Email'"
@@ -40,8 +34,6 @@
         {{ registrationForm.controls.email.value }} is not a valid email
       </div>
       }
-      <!-- email -->
-      <!-- name -->
       <app-input
         [type]="'text'"
         [label]="'Name'"
@@ -67,8 +59,6 @@
         Name should have less than 40 characters
       </div>
       }
-      <!-- name -->
-      <!-- Password -->
       <app-input
         [type]="'password'"
         [label]="'Password'"
@@ -117,8 +107,6 @@
         Passwords are not the same
       </div>
       }
-      <!-- Password -->
-      <!-- Password -->
       <app-input
         [type]="'password'"
         [label]="'Confirm password'"
@@ -167,8 +155,7 @@
         Passwords are not the same
       </div>
       }
-      <!-- Password -->
-      <div class="flex flex-col justify-center pt-5">
+      <div class="flex flex-col justify-center mt-3 md:pt-5">
         <re-captcha
           formControlName="recaptcha"
           required
@@ -189,7 +176,7 @@
       />
     </form>
     <div class="text-center">
-      <p class="pb-3">
+      <p class="pb-1 md:pb-3">
         Already have an account?
         <a routerLink="/login" class="text-blue-700">Sign-In</a>
       </p>
@@ -198,9 +185,11 @@
 
   <ng-template #registered>
     <div
-      class="flex items-center flex-col container mx-auto min-h-screen justify-center"
+      class="flex items-center flex-col container mx-auto min-h-screen justify-center text-center min-[450px]:px-2"
     >
-      <p class="font-semibold text-2xl pb-5">{{ registrationMessage }}</p>
+      <p class="font-semibold text-xl md:text-2xl pb-1 sm:pb-2 md:pb-5">
+        {{ registrationMessage }}
+      </p>
     </div>
   </ng-template>
 </section>
