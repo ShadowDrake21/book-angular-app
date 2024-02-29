@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -35,6 +35,8 @@ export class HeaderComponent {
   public user!: User | null;
   public userEmail: string = '';
 
+  isResponsiveMenuShow: boolean = false;
+
   constructor(private authService: AuthService) {
     this.authService.user$.subscribe((res) => {
       this.user = res;
@@ -48,5 +50,16 @@ export class HeaderComponent {
 
   getSearchTerm(value: string) {
     this.searchTerm.emit(value);
+  }
+
+  toggleResponsiveMenu() {
+    this.isResponsiveMenuShow = !this.isResponsiveMenuShow;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    if (window.innerWidth > 1030) {
+      this.isResponsiveMenuShow = false;
+    }
   }
 }

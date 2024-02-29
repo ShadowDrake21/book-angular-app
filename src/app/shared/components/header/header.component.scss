@@ -1,5 +1,6 @@
 header {
   height: 80px;
+  position: relative;
 }
 
 .nav {
@@ -82,5 +83,77 @@ header {
     width: auto;
     height: 100%;
     object-fit: cover;
+  }
+}
+
+.menu__btn {
+  position: absolute;
+  top: 20px;
+  left: 25px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  span {
+    display: block;
+    width: 100%;
+    height: 5px;
+    background-color: #000;
+  }
+}
+
+.header__responsive {
+  height: 220px;
+}
+
+.nav__responsive {
+  display: flex;
+  gap: 10px;
+  .nav-list {
+    width: 100%;
+    .nav-item {
+      width: 100%;
+    }
+  }
+}
+
+.menu__responsive {
+  display: none;
+}
+
+.logo__responsive {
+  display: block;
+}
+
+@media (max-width: 1350px) {
+  .nav .nav-list .nav-item .nav-link {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 1030px) {
+  .menu__responsive {
+    display: flex;
+  }
+  .logo__normal {
+    display: none;
+  }
+  .nav .nav-list .nav-item .nav-link {
+    padding: 10px 0;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 630px) {
+  .nav .nav-list .nav-item .nav-link {
+    padding: 0 10px;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+  }
+  .menu__btn {
+    width: 30px;
+    height: 30px;
   }
 }
