@@ -1,8 +1,23 @@
-<header class="fixed top-0 z-10 w-full px-5 bg-[#e7e7e7]">
+<header
+  class="fixed top-0 z-10 w-full px-5 bg-[#e7e7e7]"
+  [class.header__responsive]="isResponsiveMenuShow"
+>
+  <div class="menu__responsive h-20 flex justify-center">
+    <div class="menu__btn" (click)="toggleResponsiveMenu()">
+      <span></span><span></span><span></span>
+    </div>
+    <a routerLink="/home" class="logo__responsive max-h-full h-full w-full py-5"
+      ><img
+        src="/assets/logo/png/logo-sm.png"
+        alt="logo"
+        class="w-full h-full object-contain"
+    /></a>
+  </div>
   <nav
-    class="nav flex container-normall max-h-full h-full items-center justify-between"
+    class="nav flex max-[1030px]:flex-col max-[1030px]:hidden container-normall max-h-full min-[1030px]:h-full items-center justify-between"
+    [class.nav__responsive]="isResponsiveMenuShow"
   >
-    <a routerLink="/home" class="max-h-full h-full w-1/4"
+    <a routerLink="/home" class="logo__normal max-h-full h-full w-1/5"
       ><img
         src="/assets/logo/png/logo-sm.png"
         alt="logo"
