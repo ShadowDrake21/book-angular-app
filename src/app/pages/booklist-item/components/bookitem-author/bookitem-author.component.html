@@ -1,4 +1,6 @@
-<div class="flex w-full gap-5 mb-10">
+<div
+  class="flex w-full gap-3 md:gap-5 mb-3 sm:mb-5 md:mb-7 lg:mb-10 flex-col md:flex-row items-center md:items-start"
+>
   <div class="max-w-52 w-full h-72 flex-shrink-0">
     <img
       [src]="
@@ -11,7 +13,7 @@
     />
   </div>
   <div>
-    <h5 class="text-xl font-semibold pb-2">{{ author.name }}</h5>
+    <h5 class="text-lg lg:text-xl font-semibold pb-2">{{ author.name }}</h5>
     <p *ngIf="isString(author.bio); else noBio">
       {{ author.bio | truncateText : 350 }}
     </p>
@@ -22,7 +24,7 @@
       </p>
     </ng-template>
     <a
-      class="inline-block mt-5 underline text-blue-700 transition-colors hover:text-blue-800"
+      class="inline-block mt-2 sm:mt-3 md:mt-5 underline text-blue-700 transition-colors hover:text-blue-800"
       [routerLink]="['/authorlist', authorKeys[index]]"
       >Go to Author page</a
     >
