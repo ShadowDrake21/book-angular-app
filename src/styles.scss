@@ -202,7 +202,6 @@ body {
   align-items: center;
 }
 
-/* Container Tooltip */
 .tooltip {
   position: relative;
   display: flex;
@@ -211,7 +210,6 @@ body {
   cursor: pointer;
 }
 
-/* Style text tooltip */
 .tooltipText {
   background-color: #fff;
   position: absolute;
@@ -223,7 +221,6 @@ body {
   transition: all 0.5s;
 }
 
-/*  Membuat dan style tip*/
 .tooltipText::after {
   content: "";
   border-width: 5px;
@@ -235,8 +232,17 @@ body {
   margin-left: 5%;
 }
 
-/* Hover text tooltip */
 .tooltip:hover .tooltipText {
   opacity: 1;
   transform: translateY(-10px);
+}
+
+@media (max-width: 600px) {
+  .pagination {
+    margin-top: 15px;
+    gap: 20px;
+    &__btn {
+      padding: 10px;
+    }
+  }
 }
