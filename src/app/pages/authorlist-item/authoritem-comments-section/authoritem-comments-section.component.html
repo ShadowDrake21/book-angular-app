@@ -1,5 +1,7 @@
 <form [formGroup]="commentForm" (ngSubmit)="onCommentFormSubmit()">
-  <label for="comment" class="block mb-2 text-2xl font-semibold"
+  <label
+    for="comment"
+    class="blockmb-1 md:mb-2 text-xl lg:text-2xl font-semibold text-center md:text-start"
     >Your review</label
   >
   <textarea
@@ -22,8 +24,8 @@
   >
     You should write a comment
   </div>
-  <div class="my-5 flex gap-[15px]">
-    <label for="booksNumber" class="text-lg font-semibold"
+  <div class="my-3 md:my-5 flex gap-3 md:gap-[15px]">
+    <label for="booksNumber" class="text-lg lg:text-xl font-semibold"
       >Count of this author books you've read</label
     >
     <input
@@ -50,8 +52,8 @@
     [disabled]="commentForm.controls.comment.errors?.['required'] || commentForm.controls.booksNumber.errors?.['required'] || commentForm.controls.comment.disabled"
   />
 </form>
-<div class="pt-10">
-  <div class="mb-5" *ngIf="commentActionsResult">
+<div class="pt-5 md:pt-7 lg:pt-10">
+  <div class="mb-3 md:mb-5" *ngIf="commentActionsResult">
     <p
       class="text-red-600"
       [class.successfull]="commentActionsResult.isSuccessfull"
@@ -60,7 +62,7 @@
     </p>
   </div>
   @if(userComment) {
-  <h3 class="text-2xl font-semibold pb-2">Your Review</h3>
+  <h3 class="text-xl lg:text-2xl font-semibold pb-1 md:pb-2">Your Review</h3>
   <app-authoritem-comment
     [comment]="userComment"
     [isUserComment]="true"
@@ -69,7 +71,9 @@
     (deleteCommentId)="deleteComment($event)"
   ></app-authoritem-comment>
   } @else {
-  <p class="mb-10">You have not written a review yet</p>
+  <p class="text-center md:text-start mb-3 sm:mb-5 md:mb-7 lg:mb-10">
+    You have not written a review yet
+  </p>
   } @if (comments.length) {
   <h3 class="text-2xl font-semibold pb-2">All reviews</h3>
   @for (comment of comments; track $index) {
@@ -79,6 +83,6 @@
     (deleteCommentId)="deleteComment($event)"
   ></app-authoritem-comment>
   } } @else {
-  <p>Write a first opinion on the author!</p>
+  <p class="text-center md:text-start">Write a first opinion on the author!</p>
   }
 </div>
