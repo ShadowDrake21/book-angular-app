@@ -104,9 +104,9 @@
             ></app-item-scroll-list>
           </div>
         </div>
-        <!-- @if (!loadingAuthor) {
-        <div class="mb-3">
-          <h3 class="text-2xl font-semibold pb-2">Authors</h3>
+        @if (!loadingAuthor) {
+        <div class="mb-2 md:mb-3">
+          <h3 class="text-xl lg:text-2xl font-semibold pb-2">Authors</h3>
           @for (author of authors; track $index) {
           <app-bookitem-author
             [author]="author"
@@ -116,11 +116,15 @@
           }
         </div>
         } @else {
-        <p class="text-3xl font-semibold">Loading authors...</p>
-        } -->
+        <p class="text-xl sm:text-2xl md:text-3xl font-semibold">
+          Loading authors...
+        </p>
+        }
       </div>
     </div>
-    <!-- <div class="flex justify-between items-start py-10">
+    <div
+      class="flex justify-between items-center md:items-start pb-10 pt-5 md:py-7 lg:py-10 flex-col md:flex-row"
+    >
       <app-bookitem-ratings
         [ratingData]="bookExternalData"
       ></app-bookitem-ratings>
@@ -130,9 +134,11 @@
           [neededUserInfo]="neededUserInfo"
         ></app-bookitem-comments-section>
       </div>
-      <div class="w-60">
-        <h3 class="text-2xl font-semibold pb-2 text-center">Bookmark</h3>
-        <p class="mb-5 text-center">
+      <div class="w-60 mt-5 md:mt-0">
+        <h3 class="text-xl lg:text-2xl font-semibold pb-2 text-center">
+          Bookmark
+        </h3>
+        <p class="mb-3 md:mb-5 text-center">
           {{ isBookmarked ? "Bookmarked" : "Not bookmarked" }}
         </p>
         <app-bookmark-button
@@ -141,10 +147,12 @@
           class="text-center max-w-full w-full block"
         ></app-bookmark-button>
       </div>
-    </div> -->
+    </div>
     } @else {
     <div class="no-items">
-      <p class="text-3xl font-semibold text-center">Loading...</p>
+      <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+        Loading...
+      </p>
     </div>
     }
   </div>
