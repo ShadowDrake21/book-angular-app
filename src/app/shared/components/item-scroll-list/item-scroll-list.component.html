@@ -1,7 +1,9 @@
-<div class="">
+<div>
   <div class="text-center" *ngIf="this.allItems.length; else noItems">
-    <h3 class="text-2xl font-semibold pb-2">{{ listTitle }}</h3>
-    <ul class="overflow-y-scroll h-[170px]">
+    <h3 class="text-xl xl:text-2xl font-semibold pb-1 md:pb-2">
+      {{ listTitle }}
+    </h3>
+    <ul class="overflow-y-scroll max-h-[170px]">
       @for (item of showItems; track $index) {
       <li class="mb-3">
         @if(this.isLinks) {
@@ -21,7 +23,7 @@
       type="button"
       (click)="toggleList()"
       *ngIf="allItems.length > 5"
-      class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 transition-all"
+      class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-sm px-3 lg:px-5 py-2.5 transition-all"
     >
       {{ btnText }}
     </button>
