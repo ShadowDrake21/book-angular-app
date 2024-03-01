@@ -98,15 +98,20 @@ header {
 
 @media (max-width: 640px) {
   .header__responsive {
-    height: 260px;
+    height: 360px;
+    border-bottom: 2px solid #303030;
   }
-  .nav .nav-list {
-    flex-direction: column;
-    .nav-item .nav-link {
-      padding: 0 10px;
-      font-size: 14px;
-      line-height: 18px;
-      text-align: center;
+  .nav {
+    margin: 0 -20px;
+
+    .nav-list {
+      flex-direction: column;
+      .nav-item .nav-link {
+        padding: 10px;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: center;
+      }
     }
   }
   .menu__btn {

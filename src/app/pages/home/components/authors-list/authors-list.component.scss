@@ -36,3 +36,22 @@
     }
   }
 }
+
+@media (max-width: 600px) {
+  .pagination {
+    margin-top: 15px;
+    gap: 20px;
+    &__btn {
+      padding: 10px;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .author__list {
+    flex-direction: column;
+    .author__list-link {
+      flex: auto;
+    }
+  }
+}
