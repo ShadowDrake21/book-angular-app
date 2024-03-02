@@ -1,9 +1,11 @@
-<div class="container-small pb-5">
-  <div class="pb-3">
-    <h3 class="text-2xl font-semibold mb-3">
+<div class="mb-3 md:pb-5">
+  <div class="pb-1 md:pb-2 lg:pb-3">
+    <h3
+      class="text-xl lg:text-2xl font-semibold text-center md:text-start mb-2 md:mb-3"
+    >
       Favorite {{ entity | titlecase }}
     </h3>
-    <div class="flex gap-5">
+    <div class="flex gap-3 md:gap-5 text-center md:text-start">
       <p>
         <span class="font-semibold">Bookmarks:</span>
         {{ works.length || authors.length }}

@@ -38,7 +38,9 @@
       <div class="mt-2 md:mt-4 items-center space-x-4 py-3 md:py-6">
         <div class="text-sm font-semibold">
           {{ comment.email }} •
-          <span class="font-normal"> {{ comment.date | date : "medium" }}</span>
+          <span class="font-normal block min-[450px]:inline-block">
+            {{ comment.date | date : "medium" }}</span
+          >
         </div>
       </div>
     </div>

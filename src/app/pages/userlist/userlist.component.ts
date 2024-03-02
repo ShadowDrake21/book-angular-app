@@ -13,6 +13,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PaginationLiteService } from '../../core/services/pagination-lite.service';
+import { TruncateTextPipe } from '../../shared/pipes/truncate-text.pipe';
 
 @Component({
   selector: 'app-userlist',
@@ -23,6 +24,7 @@ import { PaginationLiteService } from '../../core/services/pagination-lite.servi
     ButtonComponent,
     ReactiveFormsModule,
     UserItemComponent,
+    TruncateTextPipe,
   ],
   providers: [PaginationLiteService],
   templateUrl: './userlist.component.html',
