@@ -1,9 +1,14 @@
-<section class="pt-[120px]">
+<section class="pt-[100px] md:pt-[120px]">
   <div class="container-big">
     @if (!deleteMessage) { @if (!loadingUser) {
     <app-profile-info [user]="user" [isSettings]="true"></app-profile-info>
-    <div class="pt-5 min-h-10">
-      <div *ngIf="!isChangePhone" class="flex gap-5 items-center h-full">
+    <div
+      class="pt-3 md:pt-5 min-h-10 flex sm:block justify-center sm:justify-normal"
+    >
+      <div
+        *ngIf="!isChangePhone"
+        class="flex gap-3 md:gap-5 items-center h-full"
+      >
         <h5 class="font-semibold">Your phone</h5>
         <p>{{ phone || "unknown" }}</p>
         <button
@@ -20,7 +25,7 @@
         (ngSubmit)="onSubmit()"
         *ngIf="isChangePhone"
       >
-        <div class="flex justify-between items-end">
+        <div class="flex justify-between items-end gap-3 sm:gap-0">
           <div>
             <label
               for="phone-input"
@@ -89,12 +94,17 @@
         </div>
       </form>
     </div>
-    <div *ngIf="!user?.emailVerified" class="flex items-center gap-3 pt-5">
-      <h5 class="pb-3 font-semibold">Have you not verified an email yet?</h5>
+    <div
+      *ngIf="!user?.emailVerified"
+      class="flex items-center gap-1 sm:gap-3 pt-3 md:pt-5 flex-col sm:flex-row"
+    >
+      <h5 class="pb-1 sm:pb-2 md:pb-3 font-semibold">
+        Have you not verified an email yet?
+      </h5>
       <button
         id="emailVerified"
         type="button"
-        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5"
         (click)="sendVerification()"
       >
         Send an email verification
@@ -102,13 +112,14 @@
     </div>
     <p
       *ngIf="verificationMessage"
+      class="text-center sm:text-start pt-2"
       [class.successfull]="verificationMessage.isSuccessfull"
       [class.error]="!verificationMessage.isSuccessfull"
     >
       {{ verificationMessage.message }}
     </p>
-    <div class="flex items-center gap-3 pt-5">
-      <h5 class="pb-3 font-semibold">Wanna sign-out?</h5>
+    <div class="flex items-center gap-3 pt-3 md:pt-5 flex-col sm:flex-row">
+      <h5 class="pb-1 sm:pb-2 md:pb-3 font-semibold">Wanna sign-out?</h5>
       <button
         id="emailVerified"
         type="button"
@@ -118,8 +129,10 @@
         Sign-out
       </button>
     </div>
-    <div class="flex items-center gap-3 pt-5">
-      <h5 class="pb-3 font-semibold">Do you want to delete your profile?</h5>
+    <div class="flex items-center gap-3 pt-3 md:pt-5 flex-col sm:flex-row">
+      <h5 class="pb-1 sm:pb-2 md:pb-3 font-semibold">
+        Do you want to delete your profile?
+      </h5>
       <button
         id="emailVerified"
         type="button"
@@ -130,12 +143,16 @@
       </button>
     </div>
     }@else {
-    <div class="no-items">
-      <p class="text-3xl font-semibold text-center">User data loading...</p>
+    <div class="no-items w-full">
+      <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+        User data loading...
+      </p>
     </div>
     }} @else {
-    <div class="no-items">
-      <p class="text-3xl font-semibold text-center">{{ deleteMessage }}</p>
+    <div class="no-items w-full">
+      <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+        {{ deleteMessage }}
+      </p>
     </div>
     }
   </div>
