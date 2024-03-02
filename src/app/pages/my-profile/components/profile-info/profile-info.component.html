@@ -1,5 +1,7 @@
 <div class="w-full">
-  <div class="flex gap-10 max-h-full h-full">
+  <div
+    class="flex gap-5 md:gap-7 lg:gap-10 max-h-full h-full flex-col sm:flex-row items-center sm:items-start"
+  >
     <div class="h-[250px] w-[250px] flex-shrink-0 rounded-full overflow-hidden">
       <img
         [src]="user?.photoURL || '/assets/images/no profile photo.jpg'"
@@ -7,24 +9,16 @@
         class="w-full h-full object-cover"
       />
     </div>
-    <div class="w-full">
+    <div class="w-full text-center sm:text-start">
       @if(!isEdit){
       <div>
-        <div class="flex flex-col gap-y-3 pb-5">
-          <div class="profile__titles w-full pb-3">
-            <h2 class="text-4xl font-semibold">
-              {{
-                user?.displayName !== null || user?.displayName !== undefined
-                  ? user?.displayName
-                  : ("" | truncateText : 20)
-              }}
+        <div class="flex flex-col gap-y-3 pb-3 md:pb-5">
+          <div class="profile__titles w-full pb-2 md:pb-3">
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-semibold">
+              {{ user?.displayName ?? "" | truncateText : 20 }}
             </h2>
-            <h3 class="text-xl font-semibold">
-              {{
-                user?.email !== null || user?.email !== undefined
-                  ? user?.email
-                  : ("" | truncateText : 20)
-              }}
+            <h3 class="text-lg lg:text-xl font-semibold">
+              {{ user?.email ?? "" | truncateText : 20 }}
             </h3>
           </div>
           @if (!isSettings) {
