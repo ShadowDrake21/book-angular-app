@@ -9,13 +9,21 @@
 
 <popup-modal id="search-by-title">
   <div class="min-h-[85vh] h-full relative">
-    <div class="flex justify-between items-center pb-2">
-      <h3 class="text-2xl font-semibold">
+    <div
+      class="flex justify-between items-center sm:items-start md:items-center flex-col md:flex-row pb-1 md:pb-2"
+    >
+      <h3
+        class="text-xl lg:text-2xl font-semibold mb-1 md:mb-0 text-center sm:text-start"
+      >
         Search books by title: {{ searchTerm }}
       </h3>
-      <form [formGroup]="searchLimitsForm" (change)="setVisibleBooks()">
+      <form
+        [formGroup]="searchLimitsForm"
+        (change)="setVisibleBooks()"
+        class="flex sm:block"
+      >
         <label
-          class="font-semibold"
+          class="font-semibold text-center sm:text-start"
           for="search__limits"
           *ngIf="!loadingFoundBooks && foundBooks.length > 10"
           >Searching count of books:
@@ -46,20 +54,22 @@
     ></app-booklist-catalogue>
     } @else {
     <div class="no-items">
-      <p class="text-3xl font-semibold text-center">
+      <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
         There are no books with such title
       </p>
     </div>
     } } @else {
     <div class="no-items">
-      <p class="text-3xl font-semibold text-center">Loading...</p>
+      <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+        Loading...
+      </p>
     </div>
     }
 
-    <div class="w-[46px] h-[30px] absolute bottom-0 left-0">
+    <div class="w-[46px] h-[30px] absolute -bottom-[15px] sm:bottom-0 left-0">
       <button
         (click)="modalService.close()"
-        class="font-medium text-lg inline-block text-gray-600 hover:underline"
+        class="font-medium text-base md:text-lg inline-block text-gray-600 hover:underline"
       >
         Close
       </button>
