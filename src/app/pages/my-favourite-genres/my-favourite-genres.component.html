@@ -1,7 +1,13 @@
-<section class="pt-[120px]">
+<section class="pt-[100px] md:pt-[120px] pb-10">
   <div class="container-big">
-    <h2 class="text-3xl font-semibold mb-3">Choose literature genres</h2>
-    <div class="relative flex gap-5 flex-wrap mb-20 min-h-[200px]">
+    <h2
+      class="text-xl sm:text-2xl md:text-3xl font-semibold mb-1 sm:mb-2 md:mb-3 text-center md:text-start"
+    >
+      Choose literature genres
+    </h2>
+    <div
+      class="relative flex gap-3 md:gap-5 flex-wrap mb-10 md:mb-[60px] lg:mb-20 min-h-[200px] justify-around sm:justify-between"
+    >
       @if (!loadingGenres) { @for (availableGenre of availableGenres; track
       $index) {
       <button
@@ -14,12 +20,14 @@
         {{ availableGenre.name | symbolReplace : "_" : " " | titlecase }}
       </button>
       }} @else {
-      <div class="no-items">
-        <p class="text-3xl font-semibold text-center">Genres loading...</p>
+      <div class="no-items w-full">
+        <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+          Genres loading...
+        </p>
       </div>
       }
     </div>
-    <div class="mb-5 text-center" *ngIf="genreActionResult">
+    <div class="mb-4 md:mb-5 text-center" *ngIf="genreActionResult">
       <p
         class="text-red-600"
         [class.successfull]="genreActionResult.isSuccessfull"
@@ -27,15 +35,17 @@
         {{ genreActionResult.message }}
       </p>
     </div>
-    <div class="relative min-h-20 mb-10 text-center">
+    <div class="relative min-h-20 mb-5 md:mb-7 lg:mb-10 text-center">
       @if (!loadingGenres){ @if (selectedGenres.length > 0) {
-      <h3 class="text-2xl font-semibold pb-3">Selected genres</h3>
-      <div class="flex gap-5 flex-wrap justify-center">
+      <h3 class="text-xl lg:text-2xl font-semibold pb-1 sm:pb-2 lg:pb-3">
+        Selected genres
+      </h3>
+      <div class="flex gap-3 md:gap-5 flex-wrap justify-center">
         @for (selectedGenre of selectedGenres; track $index) {
         <p>{{ selectedGenre.name | symbolReplace : "_" : " " | titlecase }}</p>
         }
       </div>
-      <div class="pt-5" *ngIf="hasNewGenres">
+      <div class="pt-3 md:pt-5" *ngIf="hasNewGenres">
         <button
           type="button"
           class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
@@ -52,12 +62,14 @@
         </button>
       </div>
       } @else{
-      <div class="no-items">
-        <p class="text-3xl font-semibold text-center">No selected genres</p>
+      <div class="no-items w-full">
+        <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+          No selected genres
+        </p>
       </div>
       }} @else {
-      <div class="no-items">
-        <p class="text-3xl font-semibold text-center">
+      <div class="no-items w-full">
+        <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
           Selected genres loading...
         </p>
       </div>
@@ -65,13 +77,15 @@
     </div>
     <div class="relative min-h-20 text-center">
       @if (!loadingGenres && deletedGenres.length > 0){
-      <h3 class="text-2xl font-semibold pb-2">Genres for removal</h3>
-      <div class="flex gap-5 flex-wrap justify-center">
+      <h3 class="text-xl lg:text-2xl font-semibold pb-1 sm:pb-2 lg:pb-3">
+        Genres for removal
+      </h3>
+      <div class="flex gap-3 md:gap-5 flex-wrap justify-center">
         @for (deletedGenre of deletedGenres; track $index) {
         <p>{{ deletedGenre.name | symbolReplace : "_" : " " | titlecase }}</p>
         }
       </div>
-      <div class="pt-5">
+      <div class="pt-3 sm:pt-4 md:pt-5">
         <button
           type="button"
           class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
