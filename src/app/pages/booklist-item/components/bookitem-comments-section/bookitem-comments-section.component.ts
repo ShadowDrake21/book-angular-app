@@ -41,9 +41,7 @@ import { IItemResult } from '../../../../shared/models/general.model';
   styleUrl: './bookitem-comments-section.component.scss',
 })
 export class BookitemCommentsSectionComponent implements OnInit, OnChanges {
-  authService = inject(AuthService);
-  booksService = inject(BooksService);
-  commentsService = inject(CommentsService);
+  private commentsService = inject(CommentsService);
 
   @Input() bookId!: string;
   @Input() neededUserInfo: INeededUserInfo = { email: '' };

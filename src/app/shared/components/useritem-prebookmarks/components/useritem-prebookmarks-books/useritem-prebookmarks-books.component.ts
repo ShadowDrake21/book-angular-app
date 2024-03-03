@@ -9,11 +9,12 @@ import {
 } from '@angular/core';
 import { UseritemBookmarksComponent } from '../../../useritem-bookmarks/useritem-bookmarks.component';
 import { FavouriteBooksService } from '../../../../../core/services/favourite-books.service';
+import { FloatingMessageComponent } from '../../../floating-message/floating-message.component';
 
 @Component({
   selector: 'app-useritem-prebookmarks-books',
   standalone: true,
-  imports: [CommonModule, UseritemBookmarksComponent],
+  imports: [CommonModule, UseritemBookmarksComponent, FloatingMessageComponent],
   providers: [FavouriteBooksService],
   templateUrl: './useritem-prebookmarks-books.component.html',
   styleUrl: './useritem-prebookmarks-books.component.scss',

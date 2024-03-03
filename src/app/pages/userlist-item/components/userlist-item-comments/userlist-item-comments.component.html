@@ -6,15 +6,17 @@
 comment.id) {
 <app-bookitem-comment [comment]="comment"></app-bookitem-comment>
 } } @else {
-<div class="no-items w-full">
-  <p class="text-lg md:text-xl font-semibold text-center">
+<app-floating-message
+  ><p class="text-lg md:text-xl font-semibold text-center">
     User has not written any comment
-  </p>
-</div>
+  </p></app-floating-message
+>
 } } @else {
-<div class="no-items w-full">
-  <p class="text-lg md:text-xl font-semibold text-center">Loading...</p>
-</div>
+<app-floating-message>
+  <p class="text-lg md:text-xl font-semibold text-center">
+    Loading...
+  </p></app-floating-message
+>
 } } @else if(type === 'authors') { @if(!loadingComments) {
 <h3 class="text-xl lg:text-2xl font-semibold pb-2 text-center">
   Recent user author reviews
@@ -23,13 +25,15 @@ comment.id) {
 comment.id) {
 <app-authoritem-comment [comment]="comment"></app-authoritem-comment>
 } } @else{
-<div class="no-items w-full">
-  <p class="text-lg md:text-xl font-semibold text-center">
+<app-floating-message
+  ><p class="text-lg md:text-xl font-semibold text-center">
     User has not written any comment
-  </p>
-</div>
+  </p></app-floating-message
+>
 } } @else {
-<div class="no-items w-full">
-  <p class="text-lg md:text-xl font-semibold text-center">Loading...</p>
-</div>
+<app-floating-message>
+  <p class="text-lg md:text-xl font-semibold text-center">
+    Loading...
+  </p></app-floating-message
+>
 } }

@@ -7,6 +7,7 @@ import { BookmarkService } from '../../core/services/bookmark.service';
 import { UseritemBookmarksComponent } from '../../shared/components/useritem-bookmarks/useritem-bookmarks.component';
 import { TruncateTextPipe } from '../../shared/pipes/truncate-text.pipe';
 import { UseritemPrebookmarksComponent } from '../../shared/components/useritem-prebookmarks/useritem-prebookmarks.component';
+import { FloatingMessageComponent } from '../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-favbooks',
@@ -16,15 +17,13 @@ import { UseritemPrebookmarksComponent } from '../../shared/components/useritem-
     UseritemBookmarksComponent,
     TruncateTextPipe,
     UseritemPrebookmarksComponent,
+    FloatingMessageComponent,
   ],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.scss',
 })
 export class FavoritesComponent implements OnInit {
-  authService = inject(AuthService);
-  bookmarkService = inject(BookmarkService);
-  booksService = inject(BooksService);
-  authorsService = inject(AuthorsService);
+  private authService = inject(AuthService);
 
   loadingUserEmail!: boolean;
   userEmail!: string | null | undefined;

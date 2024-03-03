@@ -68,9 +68,11 @@
           You have {{ aboutUser.notifications }} notifications
         </p>
         } @else {
-        <div class="no-items">
-          <p class="text-xl font-semibold text-center">Activity loading...</p>
-        </div>
+        <app-floating-message
+          ><p class="text-xl font-semibold text-center">
+            Activity loading...
+          </p></app-floating-message
+        >
         }
       </div>
     </div>

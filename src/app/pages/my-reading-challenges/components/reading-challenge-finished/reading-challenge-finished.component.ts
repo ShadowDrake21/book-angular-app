@@ -11,11 +11,16 @@ import { CommonModule } from '@angular/common';
 import { ChallengesService } from '../../../../core/services/challenges.service';
 import { IChallenge } from '../../../../shared/models/challenge.model';
 import { ReadingChallengeItemComponent } from '../reading-challenge-item/reading-challenge-item.component';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-reading-challenge-finished',
   standalone: true,
-  imports: [CommonModule, ReadingChallengeItemComponent],
+  imports: [
+    CommonModule,
+    ReadingChallengeItemComponent,
+    FloatingMessageComponent,
+  ],
   providers: [PaginationLiteService],
   templateUrl: './reading-challenge-finished.component.html',
   styleUrl: './reading-challenge-finished.component.scss',

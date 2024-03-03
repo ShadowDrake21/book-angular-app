@@ -41,28 +41,28 @@
             {{ "View challenges" | titlecase }}
           </button>
           }@else {
-          <div class="no-items">
-            <p class="text-lg lg:text-xl font-semibold text-center">
+          <app-floating-message
+            ><p class="text-lg lg:text-xl font-semibold text-center">
               No challenges
-            </p>
-          </div>
+            </p></app-floating-message
+          >
           }} @else {
-          <div class="no-items">
-            <p class="text-lg lg:text-xl font-semibold text-center">
+          <app-floating-message
+            ><p class="text-lg lg:text-xl font-semibold text-center">
               Loading...
-            </p>
-          </div>
+            </p></app-floating-message
+          >
           }
         </div>
         <app-profile-genres [user]="user"></app-profile-genres>
       </div>
     </div>
     } @else {
-    <div class="no-items w-full">
-      <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+    <app-floating-message
+      ><p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
         User data loading...
-      </p>
-    </div>
+      </p></app-floating-message
+    >
     }
   </div>
 </section>

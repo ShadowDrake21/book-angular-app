@@ -20,11 +20,11 @@
         {{ availableGenre.name | symbolReplace : "_" : " " | titlecase }}
       </button>
       }} @else {
-      <div class="no-items w-full">
-        <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+      <app-floating-message
+        ><p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
           Genres loading...
-        </p>
-      </div>
+        </p></app-floating-message
+      >
       }
     </div>
     <div class="mb-4 md:mb-5 text-center" *ngIf="genreActionResult">
@@ -62,17 +62,17 @@
         </button>
       </div>
       } @else{
-      <div class="no-items w-full">
+      <app-floating-message>
         <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
           No selected genres
-        </p>
-      </div>
+        </p></app-floating-message
+      >
       }} @else {
-      <div class="no-items w-full">
+      <app-floating-message>
         <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
           Selected genres loading...
-        </p>
-      </div>
+        </p></app-floating-message
+      >
       }
     </div>
     <div class="relative min-h-20 text-center">

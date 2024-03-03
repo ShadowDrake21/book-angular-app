@@ -12,11 +12,17 @@ import {
 import { CommonModule } from '@angular/common';
 import { AuthoritemCommentComponent } from '../../../../shared/components/authoritem-comment/authoritem-comment.component';
 import { BookitemCommentComponent } from '../../../../shared/components/bookitem-comment/bookitem-comment.component';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-userlist-item-comments',
   standalone: true,
-  imports: [CommonModule, BookitemCommentComponent, AuthoritemCommentComponent],
+  imports: [
+    CommonModule,
+    BookitemCommentComponent,
+    AuthoritemCommentComponent,
+    FloatingMessageComponent,
+  ],
   templateUrl: './userlist-item-comments.component.html',
   styleUrl: './userlist-item-comments.component.scss',
 })

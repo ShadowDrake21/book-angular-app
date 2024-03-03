@@ -18,6 +18,7 @@ import { Subscription, switchMap } from 'rxjs';
 import { INeededUserInfo } from '../../shared/models/comment.model';
 import { AuthService } from '../../core/authentication/auth.service';
 import { BookmarkButtonComponent } from '../../shared/components/bookmark-button/bookmark-button.component';
+import { FloatingMessageComponent } from '../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-authorlist-item',
@@ -32,14 +33,15 @@ import { BookmarkButtonComponent } from '../../shared/components/bookmark-button
     CarouselComponent,
     AuthoritemCommentsSectionComponent,
     BookmarkButtonComponent,
+    FloatingMessageComponent,
   ],
 })
 export class AuthorlistItemComponent implements OnInit, OnDestroy {
-  route = inject(ActivatedRoute);
-  authService = inject(AuthService);
-  authorsService = inject(AuthorsService);
-  booksService = inject(BooksService);
-  bookmarkService = inject(BookmarkService);
+  private route = inject(ActivatedRoute);
+  private authService = inject(AuthService);
+  private authorsService = inject(AuthorsService);
+  private booksService = inject(BooksService);
+  private bookmarkService = inject(BookmarkService);
 
   private subscription!: Subscription;
   neededUserInfo: INeededUserInfo = { email: '' };

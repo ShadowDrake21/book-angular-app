@@ -8,11 +8,16 @@ import {
 import { IGottenFriendRequestToClient } from '../../../../shared/models/friendsManagement.model';
 import { CommonModule } from '@angular/common';
 import { RejectedRequestItemComponent } from '../rejected-request-item/rejected-request-item.component';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-rejected-requests',
   standalone: true,
-  imports: [CommonModule, RejectedRequestItemComponent],
+  imports: [
+    CommonModule,
+    RejectedRequestItemComponent,
+    FloatingMessageComponent,
+  ],
   templateUrl: './rejected-requests.component.html',
   styleUrl: './rejected-requests.component.scss',
 })

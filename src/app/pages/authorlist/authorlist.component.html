@@ -68,8 +68,8 @@
       </p>
     </div>
     <ng-template #loadingAuthors>
-      <div class="no-items w-full">
-        @if(authorlistService.loadingAuthors) {
+      <app-floating-message
+        >@if(authorlistService.loadingAuthors) {
         <p class="text-xl md:text-2xl lg:text-3xl font-semibold text-center">
           Loading...
         </p>
@@ -77,8 +77,8 @@
         <p class="text-xl md:text-2xl lg:text-3xl font-semibold text-center">
           There are no authors
         </p>
-        }
-      </div>
+        }</app-floating-message
+      >
     </ng-template>
     <div
       class="pagination"

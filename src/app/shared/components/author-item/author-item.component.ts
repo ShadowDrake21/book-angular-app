@@ -13,7 +13,7 @@ import { AuthorsService } from '../../../core/services/authors.service';
   styleUrl: './author-item.component.scss',
 })
 export class AuthorItemComponent implements OnInit {
-  authorsService = inject(AuthorsService);
+  private authorsService = inject(AuthorsService);
   @Input() author!: IAuthorSearch | IAuthor;
 
   photoId: string = '';

@@ -14,6 +14,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { PaginationLiteService } from '../../core/services/pagination-lite.service';
 import { TruncateTextPipe } from '../../shared/pipes/truncate-text.pipe';
+import { FloatingMessageComponent } from '../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-userlist',
@@ -25,6 +26,7 @@ import { TruncateTextPipe } from '../../shared/pipes/truncate-text.pipe';
     ReactiveFormsModule,
     UserItemComponent,
     TruncateTextPipe,
+    FloatingMessageComponent,
   ],
   providers: [PaginationLiteService],
   templateUrl: './userlist.component.html',

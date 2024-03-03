@@ -22,6 +22,7 @@ import { BookitemRatingsComponent } from './components/bookitem-ratings/bookitem
 import { BookitemAuthorComponent } from './components/bookitem-author/bookitem-author.component';
 import { BookitemCommentsSectionComponent } from './components/bookitem-comments-section/bookitem-comments-section.component';
 import { AuthorsService } from '../../core/services/authors.service';
+import { FloatingMessageComponent } from '../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-booklist-item',
@@ -40,16 +41,17 @@ import { AuthorsService } from '../../core/services/authors.service';
     BookitemRatingsComponent,
     BookitemAuthorComponent,
     BookitemCommentsSectionComponent,
+    FloatingMessageComponent,
   ],
   templateUrl: './booklist-item.component.html',
   styleUrl: './booklist-item.component.scss',
 })
 export class BooklistItemComponent implements OnInit, OnDestroy {
-  route = inject(ActivatedRoute);
-  authService = inject(AuthService);
-  booksService = inject(BooksService);
-  authorsService = inject(AuthorsService);
-  bookmarkService = inject(BookmarkService);
+  private route = inject(ActivatedRoute);
+  private authService = inject(AuthService);
+  private booksService = inject(BooksService);
+  private authorsService = inject(AuthorsService);
+  private bookmarkService = inject(BookmarkService);
 
   private subscription!: Subscription;
   neededUserInfo: INeededUserInfo = { email: '' };

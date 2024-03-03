@@ -9,6 +9,7 @@ import {
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
 import { InputComponent } from '../../shared/components/UI/input/input.component';
 import { TextareaComponent } from '../../shared/components/UI/textarea/textarea.component';
+import { FloatingMessageComponent } from '../../shared/components/floating-message/floating-message.component';
 
 declare let Email: any;
 
@@ -21,6 +22,7 @@ declare let Email: any;
     InputComponent,
     TextareaComponent,
     ButtonComponent,
+    FloatingMessageComponent,
   ],
   templateUrl: './contact-me.component.html',
   styleUrl: './contact-me.component.scss',

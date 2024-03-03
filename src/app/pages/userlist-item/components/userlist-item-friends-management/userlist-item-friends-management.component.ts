@@ -19,8 +19,8 @@ import { Timestamp } from '@angular/fire/firestore';
 export class UserlistItemFriendsManagementComponent
   implements OnInit, OnDestroy
 {
-  authService = inject(AuthService);
-  friendsManagementService = inject(FriendsManagementService);
+  private authService = inject(AuthService);
+  private friendsManagementService = inject(FriendsManagementService);
 
   @Input({ required: true }) userEmail: string | null = '';
 

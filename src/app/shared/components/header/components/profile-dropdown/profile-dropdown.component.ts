@@ -22,8 +22,8 @@ import { AuthService } from '../../../../../core/authentication/auth.service';
   styleUrl: './profile-dropdown.component.scss',
 })
 export class ProfileDropdownComponent {
-  authService = inject(AuthService);
-  router = inject(Router);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   @Input({ required: true }) userEmail: string = '';
   @Input({ required: true }) clickedLi!: string;

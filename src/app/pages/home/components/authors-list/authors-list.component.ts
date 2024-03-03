@@ -23,9 +23,8 @@ import { AuthorlistService } from '../../../../core/services/authorlist.service'
   styleUrl: './authors-list.component.scss',
 })
 export class AuthorsListComponent implements OnInit {
-  booksService = inject(BooksService);
-  authorlistService = inject(AuthorlistService);
-  paginationService = inject(PaginationService);
+  protected authorlistService = inject(AuthorlistService);
+  protected paginationService = inject(PaginationService);
 
   searchAuthorForm = new FormGroup({
     authorName: new FormControl('Bronte'),

@@ -6,11 +6,12 @@ import { IActivity } from '../../../../shared/models/activity.model';
 import { BookmarkService } from '../../../../core/services/bookmark.service';
 import { CommentsService } from '../../../../core/services/comments.service';
 import { FriendsManagementService } from '../../../../core/services/friends-management.service';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-about-user',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FloatingMessageComponent],
   templateUrl: './about-user.component.html',
   styleUrl: './about-user.component.scss',
 })

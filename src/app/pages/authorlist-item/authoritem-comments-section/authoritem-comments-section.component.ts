@@ -38,11 +38,8 @@ import { IItemResult } from '../../../shared/models/general.model';
   templateUrl: './authoritem-comments-section.component.html',
   styleUrl: './authoritem-comments-section.component.scss',
 })
-// refactoring
 export class AuthoritemCommentsSectionComponent implements OnInit, OnChanges {
-  authService = inject(AuthService);
-  authorsService = inject(AuthorsService);
-  commentsService = inject(CommentsService);
+  private commentsService = inject(CommentsService);
 
   @Input() authorId!: string;
   @Input() neededUserInfo: INeededUserInfo = { email: '' };

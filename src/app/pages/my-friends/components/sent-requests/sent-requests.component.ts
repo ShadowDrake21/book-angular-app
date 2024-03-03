@@ -13,11 +13,12 @@ import { FriendsManagementService } from '../../../../core/services/friends-mana
 import { User } from '@angular/fire/auth';
 import { ISentFriendRequestToClient } from '../../../../shared/models/friendsManagement.model';
 import { SentRequestItemComponent } from '../sent-request-item/sent-request-item.component';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-sent-requests',
   standalone: true,
-  imports: [CommonModule, SentRequestItemComponent],
+  imports: [CommonModule, SentRequestItemComponent, FloatingMessageComponent],
   templateUrl: './sent-requests.component.html',
   styleUrl: './sent-requests.component.scss',
 })
