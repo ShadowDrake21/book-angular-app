@@ -8,11 +8,12 @@ import {
 } from '@angular/core';
 import { IUser } from '../../../../shared/models/user.model';
 import { FriendsListItemComponent } from '../friends-list-item/friends-list-item.component';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-friends-list',
   standalone: true,
-  imports: [CommonModule, FriendsListItemComponent],
+  imports: [CommonModule, FriendsListItemComponent, FloatingMessageComponent],
   templateUrl: './friends-list.component.html',
   styleUrl: './friends-list.component.scss',
 })

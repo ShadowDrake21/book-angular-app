@@ -15,6 +15,7 @@ import {
 import { UsersService } from '../../core/services/users.service';
 import { IUser } from '../../shared/models/user.model';
 import { FriendsManagementService } from '../../core/services/friends-management.service';
+import { FloatingMessageComponent } from '../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-my-account-settings',
@@ -24,6 +25,7 @@ import { FriendsManagementService } from '../../core/services/friends-management
     ProfileInfoComponent,
     ButtonComponent,
     ReactiveFormsModule,
+    FloatingMessageComponent,
   ],
   templateUrl: './my-account-settings.component.html',
   styleUrl: './my-account-settings.component.scss',

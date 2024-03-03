@@ -8,6 +8,7 @@ import { InputComponent } from '../../shared/components/UI/input/input.component
 import { ButtonComponent } from '../../shared/components/UI/button/button.component';
 import { AuthorlistService } from '../../core/services/authorlist.service';
 import { AuthorItemComponent } from '../../shared/components/author-item/author-item.component';
+import { FloatingMessageComponent } from '../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-authorlist',
@@ -19,15 +20,15 @@ import { AuthorItemComponent } from '../../shared/components/author-item/author-
     InputComponent,
     ButtonComponent,
     AuthorItemComponent,
+    FloatingMessageComponent,
   ],
   providers: [PaginationService, AuthorlistService],
   templateUrl: './authorlist.component.html',
   styleUrl: './authorlist.component.scss',
 })
 export class AuthorlistComponent implements OnInit {
-  booksService = inject(BooksService);
-  authorlistService = inject(AuthorlistService);
-  paginationService = inject(PaginationService);
+  protected authorlistService = inject(AuthorlistService);
+  protected paginationService = inject(PaginationService);
 
   searchAuthorForm = new FormGroup({
     authorName: new FormControl(''),

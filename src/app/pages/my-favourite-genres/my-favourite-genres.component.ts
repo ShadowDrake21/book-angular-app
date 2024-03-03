@@ -8,11 +8,17 @@ import { myFavouriteGenresContent } from './content/my-favourite-genres.content'
 import { SymbolReplacePipe } from '../../shared/pipes/symbol-replace.pipe';
 import { TextDeletePipe } from '../../shared/pipes/text-delete.pipe';
 import { IItemResult } from '../../shared/models/general.model';
+import { FloatingMessageComponent } from '../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-my-favourite-genres',
   standalone: true,
-  imports: [CommonModule, SymbolReplacePipe, TextDeletePipe],
+  imports: [
+    CommonModule,
+    SymbolReplacePipe,
+    TextDeletePipe,
+    FloatingMessageComponent,
+  ],
   templateUrl: './my-favourite-genres.component.html',
   styleUrl: './my-favourite-genres.component.scss',
 })

@@ -21,9 +21,9 @@ import { IError } from '../../shared/models/error.model';
   styleUrl: './booklist.component.scss',
 })
 export class BooklistComponent implements OnInit, OnDestroy {
-  router = inject(Router);
-  activatedRoute = inject(ActivatedRoute);
-  booksService = inject(BooksService);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private booksService = inject(BooksService);
 
   queryType: string = 'subject';
   queryParam!: string;

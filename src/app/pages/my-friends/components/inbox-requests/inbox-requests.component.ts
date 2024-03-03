@@ -17,11 +17,12 @@ import { FriendsManagementService } from '../../../../core/services/friends-mana
 import { User } from '@angular/fire/auth';
 import { Timestamp } from '@angular/fire/firestore';
 import { InboxRequestItemComponent } from '../inbox-request-item/inbox-request-item.component';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-inbox-requests',
   standalone: true,
-  imports: [CommonModule, InboxRequestItemComponent],
+  imports: [CommonModule, InboxRequestItemComponent, FloatingMessageComponent],
   templateUrl: './inbox-requests.component.html',
   styleUrl: './inbox-requests.component.scss',
 })

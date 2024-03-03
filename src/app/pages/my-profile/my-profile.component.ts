@@ -12,6 +12,7 @@ import { ProfileStatisticsComponent } from './components/profile-statistics/prof
 import { ProfileFriendsComponent } from './components/profile-friends/profile-friends.component';
 import { ProfileGenresComponent } from './components/profile-genres/profile-genres.component';
 import { ChallengesService } from '../../core/services/challenges.service';
+import { FloatingMessageComponent } from '../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-my-profile',
@@ -26,6 +27,7 @@ import { ChallengesService } from '../../core/services/challenges.service';
     ProfileStatisticsComponent,
     ProfileFriendsComponent,
     ProfileGenresComponent,
+    FloatingMessageComponent,
   ],
   templateUrl: './my-profile.component.html',
   styleUrl: './my-profile.component.scss',

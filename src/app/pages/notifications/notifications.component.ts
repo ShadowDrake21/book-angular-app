@@ -5,11 +5,17 @@ import { INotification } from '../../shared/models/notification.model';
 import { TruncateTextPipe } from '../../shared/pipes/truncate-text.pipe';
 import { PaginationLiteService } from '../../core/services/pagination-lite.service';
 import { RouterLink } from '@angular/router';
+import { FloatingMessageComponent } from '../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-notifications',
   standalone: true,
-  imports: [CommonModule, TruncateTextPipe, RouterLink],
+  imports: [
+    CommonModule,
+    TruncateTextPipe,
+    RouterLink,
+    FloatingMessageComponent,
+  ],
   providers: [PaginationLiteService],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.scss',

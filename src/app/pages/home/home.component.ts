@@ -30,9 +30,7 @@ import { AboutUserComponent } from './components/about-user/about-user.component
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-  authService = inject(AuthService);
-  router = inject(Router);
-  booksService = inject(BooksService);
+  private booksService = inject(BooksService);
 
   booksFantasy: IBook[] = [];
   loadingFantasy?: boolean;

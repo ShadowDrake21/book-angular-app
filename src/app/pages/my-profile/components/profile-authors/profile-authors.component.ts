@@ -3,11 +3,12 @@ import { AuthorItemComponent } from '../../../../shared/components/author-item/a
 import { CommonModule } from '@angular/common';
 import { User } from '@angular/fire/auth';
 import { FavouriteAuthorsService } from '../../../../core/services/favourite-authors.service';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-profile-authors',
   standalone: true,
-  imports: [CommonModule, AuthorItemComponent],
+  imports: [CommonModule, AuthorItemComponent, FloatingMessageComponent],
   providers: [FavouriteAuthorsService],
   templateUrl: './profile-authors.component.html',
   styleUrl: './profile-authors.component.scss',

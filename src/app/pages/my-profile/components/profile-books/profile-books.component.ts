@@ -3,11 +3,12 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { WorkItemComponent } from '../../../../shared/components/work-item/work-item.component';
 import { FavouriteBooksService } from '../../../../core/services/favourite-books.service';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-profile-books',
   standalone: true,
-  imports: [CommonModule, WorkItemComponent],
+  imports: [CommonModule, WorkItemComponent, FloatingMessageComponent],
   providers: [FavouriteBooksService],
   templateUrl: './profile-books.component.html',
   styleUrl: './profile-books.component.scss',

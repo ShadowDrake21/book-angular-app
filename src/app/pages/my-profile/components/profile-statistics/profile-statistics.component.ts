@@ -6,11 +6,12 @@ import {
   IAuthorCommentToClient,
   IBookCommentToClient,
 } from '../../../../shared/models/comment.model';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-profile-statistics',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FloatingMessageComponent],
   templateUrl: './profile-statistics.component.html',
   styleUrl: './profile-statistics.component.scss',
 })

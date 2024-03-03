@@ -5,8 +5,8 @@ import { AuthorsService } from './authors.service';
 
 @Injectable()
 export class AuthorlistService {
-  authorsService = inject(AuthorsService);
-  paginationService = inject(PaginationService);
+  private authorsService = inject(AuthorsService);
+  private paginationService = inject(PaginationService);
 
   numFound!: number;
   loadingAuthors?: boolean;

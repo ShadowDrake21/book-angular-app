@@ -8,11 +8,16 @@ import {
 } from '@angular/core';
 import { IGottenFriendRequestToClient } from '../../../../shared/models/friendsManagement.model';
 import { AcceptedRequestItemComponent } from '../accepted-request-item/accepted-request-item.component';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-accepted-requests',
   standalone: true,
-  imports: [CommonModule, AcceptedRequestItemComponent],
+  imports: [
+    CommonModule,
+    AcceptedRequestItemComponent,
+    FloatingMessageComponent,
+  ],
   templateUrl: './accepted-requests.component.html',
   styleUrl: './accepted-requests.component.scss',
 })

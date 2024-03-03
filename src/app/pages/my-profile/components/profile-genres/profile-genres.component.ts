@@ -5,11 +5,17 @@ import { RouterModule } from '@angular/router';
 import { GenresService } from '../../../../core/services/genres.service';
 import { IGenre } from '../../../../shared/models/genre.model';
 import { SymbolReplacePipe } from '../../../../shared/pipes/symbol-replace.pipe';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-profile-genres',
   standalone: true,
-  imports: [CommonModule, RouterModule, SymbolReplacePipe],
+  imports: [
+    CommonModule,
+    RouterModule,
+    SymbolReplacePipe,
+    FloatingMessageComponent,
+  ],
   templateUrl: './profile-genres.component.html',
   styleUrl: './profile-genres.component.scss',
 })

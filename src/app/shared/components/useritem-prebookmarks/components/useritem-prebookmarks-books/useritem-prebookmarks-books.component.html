@@ -6,18 +6,18 @@
       [works]="favouriteBooksService.userBooks"
     ></app-userlist-item-bookmarks
     >} @else {
-    <div class="no-items">
-      <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+    <app-floating-message
+      ><p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
         Loading...
-      </p>
-    </div>
+      </p></app-floating-message
+    >
     }
   </div>
   <ng-template #noBook>
-    <div class="no-items">
-      <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+    <app-floating-message
+      ><p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
         No bookmarks
-      </p>
-    </div>
+      </p></app-floating-message
+    >
   </ng-template>
 </div>

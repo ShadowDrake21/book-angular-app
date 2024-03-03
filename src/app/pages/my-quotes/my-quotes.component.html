@@ -122,17 +122,17 @@
           (onDelete)="deleteUserQuote($event)"
         ></app-quotes-list
         >} @else {
-        <div class="no-items w-full">
+        <app-floating-message>
           <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
             There are no quotes
-          </p>
-        </div>
+          </p></app-floating-message
+        >
         } } @else {
-        <div class="no-items w-full">
+        <app-floating-message>
           <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
             Quotes loading...
-          </p>
-        </div>
+          </p></app-floating-message
+        >
         }
       </div>
     </div>

@@ -67,30 +67,33 @@
               [userEmail]="user.email"
             ></app-userlist-item-friends-management
             >}@else {
-            <div class="no-items w-full text-center">
-              <p class="text-xl font-semibold">
+            <app-floating-message
+              ><p class="text-xl font-semibold text-center">
                 You are already friends with yourself XD
-              </p>
-            </div>
+              </p></app-floating-message
+            >
             }
           </div>
         </div>
         } @else {
-        <div class="no-items">
-          <p class="text-xl md:text-2xl lg:text-3xl font-semibold">
+        <app-floating-message>
+          <p class="text-xl md:text-2xl lg:text-3xl font-semibold text-center">
             Loading...
-          </p>
-        </div>
+          </p></app-floating-message
+        >
         }
       </div>
     </div>
     <ng-template #noUser>
-      <div class="no-items">
-        <p class="text-3xl font-semibold">No such user</p>
-      </div>
+      <app-floating-message
+        ><p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+          No such user
+        </p></app-floating-message
+      >
     </ng-template>
     <div
       class="flex justify-between items-center py-2 sm:py-3 md:py-4 lg:py-5 flex-col lg:flex-row"
+      *ngIf="user.id !== 'unknown'"
     >
       <div class="relative max-w-full w-full mx-5 min-h-[300px]">
         <app-userlist-item-comments
@@ -111,13 +114,16 @@
       [userEmail]="user.email"
       (countBooks)="getCountBooks($event)"
       (countAuthors)="getCountAuthors($event)"
+      *ngIf="user.id !== 'unknown'"
     ></app-useritem-prebookmarks>
     } @else {
-    <div class="no-items w-full">
+
+    <app-floating-message>
       <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
         User data loading...
-      </p>
-    </div>
+      </p></app-floating-message
+    >
+
     }
   </div>
 </section>

@@ -7,11 +7,12 @@ import { PaginationLiteService } from '../../../../core/services/pagination-lite
 import { FriendsManagementService } from '../../../../core/services/friends-management.service';
 import { IUser } from '../../../../shared/models/user.model';
 import { UsersService } from '../../../../core/services/users.service';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-profile-friends',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FloatingMessageComponent],
   providers: [PaginationLiteService],
   templateUrl: './profile-friends.component.html',
   styleUrl: './profile-friends.component.scss',
@@ -49,9 +50,5 @@ export class ProfileFriendsComponent implements OnInit {
     this.paginationLiteService.elements = this.allFriends;
     this.paginationLiteService.updateVisibleElements();
     this.loadingFriends = false;
-    console.log(
-      this.paginationLiteService.currentPage,
-      this.paginationLiteService.numPages()
-    );
   }
 }

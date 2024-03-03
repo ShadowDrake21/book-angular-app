@@ -9,6 +9,7 @@ import { IBook } from './shared/models/book.model';
 import { BooklistCatalogueComponent } from './shared/components/booklist-catalogue/booklist-catalogue.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FloatingMessageComponent } from './shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
     ModalComponent,
     BooklistCatalogueComponent,
     ReactiveFormsModule,
+    FloatingMessageComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

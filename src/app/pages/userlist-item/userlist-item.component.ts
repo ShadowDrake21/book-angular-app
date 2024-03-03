@@ -19,6 +19,7 @@ import { UserlistItemFriendsManagementComponent } from './components/userlist-it
 import { UseritemBookmarksComponent } from '../../shared/components/useritem-bookmarks/useritem-bookmarks.component';
 import { UseritemPrebookmarksComponent } from '../../shared/components/useritem-prebookmarks/useritem-prebookmarks.component';
 import { AuthService } from '../../core/authentication/auth.service';
+import { FloatingMessageComponent } from '../../shared/components/floating-message/floating-message.component';
 
 interface IUserDetails {
   countBookComments: number;
@@ -39,18 +40,16 @@ interface IUserDetails {
     UseritemBookmarksComponent,
     UserlistItemCommentsComponent,
     UseritemPrebookmarksComponent,
+    FloatingMessageComponent,
   ],
   templateUrl: './userlist-item.component.html',
   styleUrl: './userlist-item.component.scss',
 })
 export class UserlistItemComponent implements OnInit {
-  route = inject(ActivatedRoute);
-  authService = inject(AuthService);
-  usersService = inject(UsersService);
-  booksService = inject(BooksService);
-  authorsService = inject(AuthorsService);
-  commentsService = inject(CommentsService);
-  bookmarkService = inject(BookmarkService);
+  private route = inject(ActivatedRoute);
+  private authService = inject(AuthService);
+  private usersService = inject(UsersService);
+  private commentsService = inject(CommentsService);
 
   myEmail!: string | null | undefined;
   userId!: string;

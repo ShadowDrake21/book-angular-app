@@ -13,11 +13,16 @@ import { ReadingChallengeItemComponent } from '../reading-challenge-item/reading
 import { ChallengesService } from '../../../../core/services/challenges.service';
 import { PaginationLiteService } from '../../../../core/services/pagination-lite.service';
 import { IChallenge } from '../../../../shared/models/challenge.model';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-reading-challenge-active',
   standalone: true,
-  imports: [CommonModule, ReadingChallengeItemComponent],
+  imports: [
+    CommonModule,
+    ReadingChallengeItemComponent,
+    FloatingMessageComponent,
+  ],
   templateUrl: './reading-challenge-active.component.html',
   styleUrl: './reading-challenge-active.component.scss',
 })

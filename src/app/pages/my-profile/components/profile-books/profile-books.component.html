@@ -15,15 +15,19 @@
         <app-work-item [work]="work"></app-work-item>
       </div>
       }} @else {
-      <div class="no-items">
-        <p class="text-3xl font-semibold text-center">Loading...</p>
-      </div>
+      <app-floating-message
+        ><p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+          Loading...
+        </p></app-floating-message
+      >
       }
     </div>
     <ng-template #noBook>
-      <div class="no-items">
-        <p class="text-3xl font-semibold text-center">No favourite books</p>
-      </div>
+      <app-floating-message
+        ><p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+          No favourite books
+        </p></app-floating-message
+      >
     </ng-template>
   </div>
 </div>

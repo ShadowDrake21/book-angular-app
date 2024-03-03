@@ -13,6 +13,7 @@ import { User } from '@angular/fire/auth';
 import { AuthService } from '../../core/authentication/auth.service';
 import { IQuote } from '../../shared/models/quote.model';
 import { IItemResult } from '../../shared/models/general.model';
+import { FloatingMessageComponent } from '../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-my-quotes',
@@ -22,6 +23,7 @@ import { IItemResult } from '../../shared/models/general.model';
     QuotesListComponent,
     ReactiveFormsModule,
     ButtonComponent,
+    FloatingMessageComponent,
   ],
   templateUrl: './my-quotes.component.html',
   styleUrl: './my-quotes.component.scss',

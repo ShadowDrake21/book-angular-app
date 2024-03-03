@@ -35,13 +35,16 @@
     >,} }
   </div>
   } @else {
-  <div class="no-items">
-    <p class="text-xl font-semibold text-center">No favourite genres</p>
-  </div>
+  <app-floating-message
+    ><p class="text-xl font-semibold text-center">
+      No favourite genres
+    </p></app-floating-message
+  >
   } } @else {
-
-  <div class="no-items">
-    <p class="text-xl font-semibold text-center">Loading...</p>
-  </div>
+  <app-floating-message
+    ><p class="text-xl font-semibold text-center">
+      Loading...
+    </p></app-floating-message
+  >
   }
 </div>
