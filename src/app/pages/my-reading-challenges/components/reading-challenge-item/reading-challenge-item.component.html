@@ -1,8 +1,10 @@
-<div class="w-full pb-3">
-  <h4 class="profile__titles pb-2 font-semibold text-xl">
+<!-- <div class="w-full pb-3">
+  <h4 class="profile__titles pb-1 md:pb-2 font-semibold text-lg md:text-xl">
     {{ challenge.title | uppercase }}
   </h4>
-  <div class="flex gap-5 p-3">
+  <div
+    class="flex gap-3 sm:gap-5 p-3 justify-center lg:justify-normal flex-col lg:flex-row"
+  >
     <div class="max-w-96 w-full max-h-60 min-h-60">
       <img
         [src]="challenge.image"
@@ -69,6 +71,106 @@
         </button>
       </div>
       <div *ngIf="isEdit" class="flex gap-5 absolute bottom-0 left-0 right-0">
+        <button
+          type="button"
+          class="flex-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+          (click)="updateChallenge()"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          class="flex-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          (click)="cancelEdit()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="w-full pb-3">
+  <h4 class="profile__titles pb-1 md:pb-2 font-semibold text-lg md:text-xl">
+    {{ challenge.title | uppercase }}
+  </h4>
+  <div
+    class="flex gap-3 sm:gap-5 p-3 justify-center lg:justify-normal max-[1023px]:items-center flex-col lg:flex-row"
+  >
+    <div
+      class="flex items-center lg:block max-w-96 w-full max-h-none lg:max-h-60 min-h-60 overflow-hidden"
+    >
+      <img
+        [src]="challenge.image"
+        alt="challenge"
+        class="object-contain lg:object-cover h-full w-full object-center"
+      />
+    </div>
+    <div
+      class="w-full text-center relative pb-5 sm:pb-0"
+      [class.pb-20]="!isFinished && isEdit"
+    >
+      <button
+        type="button"
+        class="float-end px-3 py-2 bg-black text-white absolute bottom-0 right-0 sm:static transition-all duration-200 rounded-tr-xl rounded-md hover:bg-gray-500 hover:text-gray-200"
+        (click)="challengeOnRemove.emit(this.challenge.id)"
+      >
+        &#10005;
+      </button>
+      <div class="mx-auto flex h-full items-center gap-5">
+        <button
+          *ngIf="!isFinished"
+          type="button"
+          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-4 sm:px-7 py-3 sm:py-5 disabled:bg-gray-500 disabled:cursor-not-allowed"
+          (click)="minusBook()"
+          [disabled]="this.challenge.read <= 0"
+        >
+          -
+        </button>
+        <div class="w-full">
+          <a
+            routerLink="/favourites"
+            class="inline-block mb-2 text-base md:text-lg hover:underline"
+            >Your have read {{ challenge.read }} of
+            {{ challenge.total }} books.</a
+          >
+
+          <div class="pb-3">
+            <div class="flex justify-between mb-1">
+              <span class="text-lg font-medium text-gray-700 dark:text-white"
+                >Progress</span
+              >
+              <span
+                class="text-base font-medium text-gray-700 dark:text-white"
+                >{{ progressBarTitle }}</span
+              >
+            </div>
+
+            <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+              <div
+                class="bg-gray-600 h-2.5 rounded-full"
+                [style]="progressBarWidth"
+              ></div>
+            </div>
+          </div>
+          <span class="block text-base text-gray-500 pb-3 text-center">{{
+            subtitle
+          }}</span>
+        </div>
+        <button
+          *ngIf="!isFinished"
+          type="button"
+          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-4 sm:px-7 py-3 sm:py-5 disabled:bg-gray-500 disabled:cursor-not-allowed"
+          (click)="plusBook()"
+          [disabled]="this.challenge.read >= this.challenge.total"
+        >
+          +
+        </button>
+      </div>
+      <div
+        *ngIf="isEdit"
+        class="flex gap-5 absolute bottom-[35px] sm:bottom-0 left-0 right-0"
+      >
         <button
           type="button"
           class="flex-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
