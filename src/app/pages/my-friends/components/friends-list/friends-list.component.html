@@ -1,19 +1,21 @@
-<div class="relative min-h-60 pt-5">
+<div class="relative min-h-60 pt-3 md:pt-5">
   @if (!loadingFriends) { @if(friends.length > 0){
-  <div class="flex justify-center flex-wrap gap-3">
+  <div class="flex justify-center flex-wrap gap-2 md:gap-3">
     @for (friend of friends; track $index) {
     <app-friends-list-item [friend]="friend"></app-friends-list-item>
     }
   </div>
   } @else {
-  <div class="no-items">
-    <p class="text-3xl font-semibold text-center">
+  <div class="no-items w-full">
+    <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
       You did not have any friends
     </p>
   </div>
   } } @else {
-  <div class="no-items">
-    <p class="text-3xl font-semibold text-center">Loading...</p>
+  <div class="no-items w-full">
+    <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+      Loading...
+    </p>
   </div>
   }
 </div>

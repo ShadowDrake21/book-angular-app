@@ -1,7 +1,7 @@
-<section class="pt-[120px] pb-10">
+<section class="pt-[100px] md:pt-[120px] pb-5 sm:pb-10">
   <div class="container-big">
-    <div class="flex gap-5">
-      <div class="min-w-[220px]">
+    <div class="flex gap-5 flex-col sm:flex-row">
+      <div class="min-w-full sm:min-w-[220px]">
         <app-booklist-filter
           [authorName]="isAuthorParam() ? queryParam : null"
           [authorLimit]="isAuthorParam() ? 50 : null"
@@ -13,12 +13,12 @@
       </div>
       @if (queryParam || isAfterFilter || loadingFilterBooks) {
       <div class="w-full">
-        <h2
-          class="text-3xl font-semibold mb-3"
+        <h3
+          class="text-xl lg:text-2xl xl:text-3xl font-semibold mb-2 lg:mb-3 text-center sm:text-start"
           *ngIf="books.length && !loadingFilterBooks && !filterError"
         >
           Search by: {{ formSearchTitle() }}
-        </h2>
+        </h3>
         <app-booklist-catalogue
           [books]="books"
           *ngIf="books.length && !loadingFilterBooks && !filterError"
@@ -27,20 +27,32 @@
           class="flex justify-center items-center min-h-full h-full"
           *ngIf="loadingBooks || loadingFilterBooks"
         >
-          <p class="text-3xl font-semibold" *ngIf="!errorWhileFetching">
+          <p
+            class="text-xl sm:text-2xl md:text-3xl font-semibold"
+            *ngIf="!errorWhileFetching"
+          >
             Loading...
           </p>
-          <p class="text-3xl font-semibold" *ngIf="errorWhileFetching">
+          <p
+            class="text-xl sm:text-2xl md:text-3xl font-semibold"
+            *ngIf="errorWhileFetching"
+          >
             {{ errorWhileFetching }}
           </p>
         </div>
       </div>
       } @else {
       <div class="w-full flex justify-center items-center">
-        <p class="text-3xl font-semibold" *ngIf="!filterError">
+        <p
+          class="text-xl sm:text-2xl md:text-3xl font-semibold"
+          *ngIf="!filterError"
+        >
           There are no books
         </p>
-        <p class="text-3xl font-semibold" *ngIf="filterError">
+        <p
+          class="text-xl sm:text-2xl md:text-3xl font-semibold"
+          *ngIf="filterError"
+        >
           {{ filterError.message }}
         </p>
       </div>

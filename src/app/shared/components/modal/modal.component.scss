@@ -22,3 +22,16 @@ popup-modal {
 body.popup-modal__open {
   overflow: hidden;
 }
+
+@media (max-width: 500px) {
+  popup-modal {
+    .popup-modal {
+      padding: 20px;
+    }
+
+    .popup-modal__body {
+      padding: 10px 10px 20px;
+      background: #fff;
+    }
+  }
+}

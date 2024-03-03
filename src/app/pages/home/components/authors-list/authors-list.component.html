@@ -1,7 +1,7 @@
 <div>
   @if(paginationService.currentPageData$ | async) {
   <form
-    class="flex mb-7"
+    class="flex mb-2 sm:mb-4 md:mb-7"
     [formGroup]="searchAuthorForm"
     (ngSubmit)="onSearch()"
   >
@@ -52,8 +52,6 @@
       }
     </div>
   </div>
-
-  <!-- pagination -->
   <div class="pagination">
     <button
       class="pagination__btn"
@@ -78,7 +76,7 @@
   </div>
   <a
     routerLink="/authorlist"
-    class="font-medium text-lg inline-block mt-3 ml-2 text-gray-600 hover:underline"
+    class="font-medium text-base md:text-lg inline-block mt-2 md:mt-5 ml-2 text-gray-600 hover:underline"
     >Go to the Authors page</a
   >
   } @else {

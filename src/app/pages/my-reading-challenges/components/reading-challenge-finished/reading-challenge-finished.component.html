@@ -1,5 +1,9 @@
-<div class="relative min-h-[260px] pt-5">
-  <h4 class="pb-2 font-semibold text-3xl">Finished challenges</h4>
+<div class="relative min-h-[260px]">
+  <h4
+    class="pb-2 font-semibold text-xl sm:text-2xl md:text-3xl text-center sm:text-start"
+  >
+    Finished challenges
+  </h4>
   @if (!loadingFinishedChallenges) { @if(finishedChallenges.length > 0) {@for
   (challenge of paginationLiteService.visibleElements; track $index) {
   <app-reading-challenge-item
@@ -8,7 +12,7 @@
     (challengeOnRemove)="removeChallenge($event)"
   ></app-reading-challenge-item>
   }
-  <div class="pagination mb-5">
+  <div class="pagination mb-5" *ngIf="paginationLiteService.numPages() > 1">
     <button
       class="pagination__btn"
       (click)="paginationLiteService.prevPage()"
@@ -30,10 +34,16 @@
     </button>
   </div>
   } @else {
-  <div class="no-items">
-    <p class="text-3xl font-semibold">You don't have any finished challenge</p>
+  <div class="no-items w-full">
+    <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+      You don't have any finished challenge
+    </p>
   </div>
   } } @else {
-  <div class="no-items"><p class="text-3xl font-semibold">Loading...</p></div>
+  <div class="no-items w-full">
+    <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+      Loading...
+    </p>
+  </div>
   }
 </div>

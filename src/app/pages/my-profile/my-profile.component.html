@@ -1,7 +1,9 @@
-<section id="my-profile" class="pt-[120px] pb-10">
+<section id="my-profile" class="pt-[100px] md:pt-[120px] pb-10">
   <div class="container-big">
     @if (!loadingUser) {
-    <div class="flex justify-between gap-5">
+    <div
+      class="flex items-center min-[1100px]:items-start gap-10 min-[1100px]:gap-5 flex-col min-[1100px]:flex-row"
+    >
       <div class="w-full">
         <app-profile-info [user]="user"></app-profile-info>
         <div>
@@ -21,7 +23,7 @@
         </div>
         <app-profile-friends [user]="user"></app-profile-friends>
       </div>
-      <div class="w-96">
+      <div class="w-[300px] min-[450px]:w-96">
         <div class="relative min-h-60">
           @if (!loadingChallenges) { @if (challenges.length > 0) {
           <div class="pr-3 max-h-[500px] overflow-y-scroll">
@@ -40,11 +42,15 @@
           </button>
           }@else {
           <div class="no-items">
-            <p class="text-xl font-semibold text-center">No challenges</p>
+            <p class="text-lg lg:text-xl font-semibold text-center">
+              No challenges
+            </p>
           </div>
           }} @else {
           <div class="no-items">
-            <p class="text-xl font-semibold text-center">Loading...</p>
+            <p class="text-lg lg:text-xl font-semibold text-center">
+              Loading...
+            </p>
           </div>
           }
         </div>
@@ -52,8 +58,10 @@
       </div>
     </div>
     } @else {
-    <div class="no-items">
-      <p class="text-3xl font-semibold text-center">User data loading...</p>
+    <div class="no-items w-full">
+      <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+        User data loading...
+      </p>
     </div>
     }
   </div>

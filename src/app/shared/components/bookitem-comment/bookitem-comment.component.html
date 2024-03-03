@@ -1,16 +1,16 @@
 <div
-  class="bg-white max-w-full rounded-2xl px-6 py-4 mb-10 shadow-lg hover:shadow-2xl transition duration-500"
+  class="bg-white max-w-full rounded-2xl px-4 md:px-5 lg:px-6 py-2 md:py-3 lg:py-4 mb-5 md:mb-7 lg:mb-10 shadow-lg hover:shadow-2xl transition duration-500"
 >
-  <div class="mt-4">
+  <div class="mt-2 lg:mt-4">
     <div class="flex justify-between">
       <h1
-        class="text-lg text-gray-700 font-semibold hover:underline cursor-pointer"
+        class="text-base md:text-lg text-gray-700 font-semibold hover:underline cursor-pointer"
       >
         Book Review
       </h1>
-      <div *ngIf="isUserComment">
+      <div *ngIf="isUserComment" class="max-[880px]:flex flex-col gap-2">
         <button
-          class="mr-4 text-gray-600 transition-colors hover:underline hover:text-gray-800"
+          class="mr-0 min-[880px]:mr-4 text-gray-600 transition-colors hover:underline hover:text-gray-800"
           (click)="editComment()"
           [disabled]="!areUserBtnsActive"
           [class.disabled-btn]="!areUserBtnsActive"
@@ -35,14 +35,16 @@
         [readOnly]="true"
       ></star-rating>
     </div>
-    <p class="mt-4 text-md text-gray-600">
+    <p class="mt-2 md:mt-4 text-base text-gray-600">
       {{ comment.comment }}
     </p>
     <div class="flex justify-between items-center">
-      <div class="mt-4 space-x-4 py-6">
+      <div class="mt-2 md:mt-4 space-x-4 py-3 md:py-6">
         <div class="text-sm font-semibold">
-          {{ comment.email }} •
-          <span class="font-normal"> {{ comment.date | date : "medium" }}</span>
+          {{ comment.email | truncateText : 30 }} •
+          <span class="font-normal block min-[450px]:inline-block">
+            {{ comment.date | date : "medium" }}</span
+          >
         </div>
       </div>
     </div>

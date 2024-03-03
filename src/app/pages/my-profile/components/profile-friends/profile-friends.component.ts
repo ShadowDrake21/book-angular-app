@@ -17,9 +17,9 @@ import { UsersService } from '../../../../core/services/users.service';
   styleUrl: './profile-friends.component.scss',
 })
 export class ProfileFriendsComponent implements OnInit {
-  protected paginationLiteService = inject(PaginationLiteService);
   private friendsManagementService = inject(FriendsManagementService);
   private usersService = inject(UsersService);
+  protected paginationLiteService = inject(PaginationLiteService);
 
   @Input() user!: User | null;
 
@@ -49,5 +49,9 @@ export class ProfileFriendsComponent implements OnInit {
     this.paginationLiteService.elements = this.allFriends;
     this.paginationLiteService.updateVisibleElements();
     this.loadingFriends = false;
+    console.log(
+      this.paginationLiteService.currentPage,
+      this.paginationLiteService.numPages()
+    );
   }
 }

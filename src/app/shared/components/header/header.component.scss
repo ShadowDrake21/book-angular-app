@@ -37,50 +37,92 @@ header {
   }
 }
 
-.dropdown {
-  background: #fff;
-  color: rgb(122, 122, 122);
-  padding: 15px;
-  width: 400px;
+.menu__btn {
   position: absolute;
-  right: -19px;
-  top: 52px;
-  font-size: 14px;
-  line-height: 18px;
+  top: 20px;
+  right: 25px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  span {
+    display: block;
+    width: 100%;
+    height: 5px;
+    background-color: #000;
+  }
 }
 
-.profile-dropdown {
-  width: 250px;
+.header__responsive {
+  height: 220px;
 }
 
-.dropdown-item {
-  cursor: pointer;
-  padding: 8px 5px;
-  text-align: left;
-}
-
-.user-actions__list {
-  div,
-  app-notifications-dropdown,
-  app-profile-dropdown {
-    &:hover {
-      background-color: #303030;
-      color: #fff;
+.nav__responsive {
+  display: flex;
+  gap: 10px;
+  .nav-list {
+    width: 100%;
+    .nav-item {
+      width: 100%;
     }
   }
 }
 
-.dropdown-wrapper {
-  display: inline-block;
-  position: relative;
-  width: 40px;
-  height: 40px;
-  overflow: hidden;
-  border-radius: 50%;
+.menu__responsive {
+  display: none;
+}
 
-  .dropdown-img {
-    width: auto;
-    height: 100%;
-    object-fit: cover;
+.logo__responsive {
+  display: block;
+}
+
+@media (max-width: 1350px) {
+  .nav .nav-list .nav-item .nav-link {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 1030px) {
+  .menu__responsive {
+    display: flex;
+  }
+  .logo__normal {
+    display: none;
+  }
+  .nav .nav-list .nav-item .nav-link {
+    padding: 10px 0;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .header__responsive {
+    height: 360px;
+    border-bottom: 2px solid #303030;
+  }
+  .nav {
+    margin: 0 -20px;
+
+    .nav-list {
+      flex-direction: column;
+      .nav-item .nav-link {
+        padding: 10px;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: center;
+      }
+    }
+  }
+  .menu__btn {
+    width: 30px;
+    height: 30px;
+    top: 25px;
+  }
+}
+
+@media (max-width: 500px) {
+  header {
+    padding: 0 10px;
   }
 }

@@ -1,9 +1,11 @@
-<section class="pt-[120px]">
+<section class="pt-[100px] md:pt-[120px] pb-10">
   <div class="container-big">
     @if (!loadingBook) {
-    <div class="flex gap-10">
-      <div class="max-w-96 flex-shrink-0">
-        <div class="max-h-[500px] h-full">
+    <div class="flex gap-5 md:gap-7 lg:gap-10 flex-col md:flex-row">
+      <div class="max-w-full md:max-w-60 lg:max-w-80 xl:max-w-96 flex-shrink-0">
+        <div
+          class="max-h-full md:max-h-[300px] lg:max-h-[400px] xl:max-h-[500px] h-full overflow-hidden"
+        >
           <img
             [src]="
               mainCover
@@ -11,46 +13,56 @@
                 : '/assets/images/if there is no image.png'
             "
             alt="main cover"
-            class="w-full h-full object-cover"
+            class="w-full h-full object-contain object-center md:object-cover"
           />
         </div>
-        <div class="my-5">
-          <p *ngIf="book.first_publish_date" class="mb-2">
-            First published in
-            <span class="font-semibold">{{ book.first_publish_date }}</span>
-          </p>
-          <p *ngIf="bookExternalData.number_of_pages_median" class="mb-2">
-            Pages:
-            <span class="font-semibold">{{
-              bookExternalData.number_of_pages_median
-            }}</span>
-          </p>
-          <p *ngIf="book.created">
-            Release date:
-            <span class="font-semibold">{{
-              book.created.value | date : "longDate"
-            }}</span>
-          </p>
-        </div>
-        <div class="mb-3" *ngIf="book.links">
-          <h3 class="text-2xl font-semibold">Links</h3>
-          <ul class="list-disc pl-5">
-            @for (link of book.links; track $index) {
-            <li
-              class="mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
+        <div>
+          <div class="my-3 md:my-5">
+            <p *ngIf="book.first_publish_date" class="mb-1 md:mb-2">
+              First published in
+              <span class="font-semibold">{{ book.first_publish_date }}</span>
+            </p>
+            <p
+              *ngIf="bookExternalData.number_of_pages_median"
+              class="mb-1 md:mb-2"
             >
-              <a [href]="link.url">{{ link.title }}</a>
-            </li>
-            }
-          </ul>
+              Pages:
+              <span class="font-semibold">{{
+                bookExternalData.number_of_pages_median
+              }}</span>
+            </p>
+            <p *ngIf="book.created">
+              Release date:
+              <span class="font-semibold">{{
+                book.created.value | date : "longDate"
+              }}</span>
+            </p>
+          </div>
+          <div class="mb-2 md:mb-3" *ngIf="book.links">
+            <h3 class="text-xl lg:text-2xl font-semibold">Links</h3>
+            <ul class="list-disc pl-5">
+              @for (link of book.links; track $index) {
+              <li
+                class="mb-1 md:mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
+              >
+                <a [href]="link.url">{{ link.title }}</a>
+              </li>
+              }
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="max-w-full w-full">
-        <h1 class="font-semibold text-5xl mb-5">
+      <div class="max-w-full w-full text-center md:text-start">
+        <h1
+          class="font-semibold text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-2 md:mb-3 lg:mb-5"
+        >
           {{ book.title | truncateText : 50 }}
         </h1>
-        <div class="mb-5" *ngIf="book.description; else noDescription">
-          <h3 class="text-2xl font-semibold pb-2">Description</h3>
+        <div
+          class="mb-2 md:mb-3 lg:mb-5"
+          *ngIf="book.description; else noDescription"
+        >
+          <h3 class="text-xl lg:text-2xl font-semibold pb-2">Description</h3>
           <p>
             {{
               book.description.value || book.description.toString()
@@ -70,20 +82,22 @@
         <ng-template #noDescription
           ><p class="my-5">This book has no description</p></ng-template
         >
-        <div class="flex justify-between pb-10">
-          <div class="mb-3 max-w-[30%] w-full">
+        <div
+          class="flex items-center md:items-start justify-center md:justify-between pb-5 md:pb-7 lg:pb-10 flex-col md:flex-row"
+        >
+          <div class="mb-2 md:mb-3 max-w-full md:max-w-[30%] w-full">
             <app-item-scroll-list
               [itemObj]="charactersListObject"
               [listTitle]="'Main Characters'"
             ></app-item-scroll-list>
           </div>
-          <div class="mb-3 max-w-[30%] w-full">
+          <div class="mb-2 md:mb-3 max-w-full md:max-w-[30%] w-full">
             <app-item-scroll-list
               [itemObj]="placesListObject"
               [listTitle]="'Main Places'"
             ></app-item-scroll-list>
           </div>
-          <div class="mb-3 max-w-[30%] w-full">
+          <div class="mb-2 md:mb-3 max-w-full md:max-w-[30%] w-full">
             <app-item-scroll-list
               [itemObj]="subjectsListObject"
               [listTitle]="'Main Subjects'"
@@ -91,8 +105,8 @@
           </div>
         </div>
         @if (!loadingAuthor) {
-        <div class="mb-3">
-          <h3 class="text-2xl font-semibold pb-2">Authors</h3>
+        <div class="mb-2 md:mb-3">
+          <h3 class="text-xl lg:text-2xl font-semibold pb-2">Authors</h3>
           @for (author of authors; track $index) {
           <app-bookitem-author
             [author]="author"
@@ -102,11 +116,15 @@
           }
         </div>
         } @else {
-        <p class="text-3xl font-semibold">Loading authors...</p>
+        <p class="text-xl sm:text-2xl md:text-3xl font-semibold">
+          Loading authors...
+        </p>
         }
       </div>
     </div>
-    <div class="flex justify-between items-start py-10">
+    <div
+      class="flex justify-between items-center md:items-start pb-10 pt-5 md:py-7 lg:py-10 flex-col md:flex-row"
+    >
       <app-bookitem-ratings
         [ratingData]="bookExternalData"
       ></app-bookitem-ratings>
@@ -116,9 +134,11 @@
           [neededUserInfo]="neededUserInfo"
         ></app-bookitem-comments-section>
       </div>
-      <div class="w-60">
-        <h3 class="text-2xl font-semibold pb-2 text-center">Bookmark</h3>
-        <p class="mb-5 text-center">
+      <div class="w-60 mt-5 md:mt-0">
+        <h3 class="text-xl lg:text-2xl font-semibold pb-2 text-center">
+          Bookmark
+        </h3>
+        <p class="mb-3 md:mb-5 text-center">
           {{ isBookmarked ? "Bookmarked" : "Not bookmarked" }}
         </p>
         <app-bookmark-button
@@ -130,7 +150,9 @@
     </div>
     } @else {
     <div class="no-items">
-      <p class="text-3xl font-semibold text-center">Loading...</p>
+      <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+        Loading...
+      </p>
     </div>
     }
   </div>

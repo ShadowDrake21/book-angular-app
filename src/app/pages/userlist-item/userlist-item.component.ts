@@ -18,6 +18,7 @@ import { UserlistItemCommentsComponent } from './components/userlist-item-commen
 import { UserlistItemFriendsManagementComponent } from './components/userlist-item-friends-management/userlist-item-friends-management.component';
 import { UseritemBookmarksComponent } from '../../shared/components/useritem-bookmarks/useritem-bookmarks.component';
 import { UseritemPrebookmarksComponent } from '../../shared/components/useritem-prebookmarks/useritem-prebookmarks.component';
+import { AuthService } from '../../core/authentication/auth.service';
 
 interface IUserDetails {
   countBookComments: number;
@@ -44,12 +45,14 @@ interface IUserDetails {
 })
 export class UserlistItemComponent implements OnInit {
   route = inject(ActivatedRoute);
+  authService = inject(AuthService);
   usersService = inject(UsersService);
   booksService = inject(BooksService);
   authorsService = inject(AuthorsService);
   commentsService = inject(CommentsService);
   bookmarkService = inject(BookmarkService);
 
+  myEmail!: string | null | undefined;
   userId!: string;
   user!: IUser;
   isUserAvailable!: boolean;
@@ -76,6 +79,9 @@ export class UserlistItemComponent implements OnInit {
     this.loadingUser = true;
     this.loadingBookComments = true;
     this.loadingAuthorComments = true;
+    this.authService.user$.subscribe((user) => {
+      this.myEmail = user?.email;
+    });
     this.usersService
       .getUserById(this.userId)
       .then(async (res) => {

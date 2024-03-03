@@ -1,7 +1,11 @@
-<section class="pt-[120px]">
+<section class="pt-[100px] md:pt-[120px]">
   <div class="container-big">
     <div>
-      <h3 class="font-semibold text-3xl mb-5">Books by genre</h3>
+      <h3
+        class="font-semibold text-xl md:text-2xl lg:text-3xl mb-1 md:mb-3 lg:mb-5"
+      >
+        Books by genre
+      </h3>
       @if(loadingFantasy) {
       <div class="loading">
         <p class="loading__text">Loading...</p>
@@ -48,10 +52,12 @@
 </section>
 <section class="container-big">
   <div>
-    <h3 class="font-semibold text-3xl">Authors by name</h3>
+    <h3 class="font-semibold text-xl md:text-2xl lg:text-3xl">
+      Authors by name
+    </h3>
     <app-authors-list></app-authors-list>
   </div>
 </section>
 <section class="bg-stone-300">
-  <app-about-user></app-about-user>
+  <app-about-user />
 </section>
