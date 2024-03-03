@@ -11,11 +11,12 @@ import {
 import { IBook } from '../../models/book.model';
 import { BookItemComponent } from '../book-item/book-item.component';
 import { PaginationLiteService } from '../../../core/services/pagination-lite.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-booklist-catalogue',
   standalone: true,
-  imports: [BookItemComponent],
+  imports: [CommonModule, BookItemComponent],
   providers: [PaginationLiteService],
   templateUrl: './booklist-catalogue.component.html',
   styleUrl: './booklist-catalogue.component.scss',

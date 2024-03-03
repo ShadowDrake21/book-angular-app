@@ -53,6 +53,8 @@ export class BooklistFilterComponent implements OnInit {
     sorting: new FormControl(null),
   });
 
+  isLoading?: boolean;
+
   ngOnInit(): void {
     this.filterForm.controls.author.setValue(this.authorName);
     this.filterForm.controls.limit.setValue(this.authorLimit);
@@ -94,6 +96,7 @@ export class BooklistFilterComponent implements OnInit {
 
   onSubmit() {
     this.getFilterLoading.emit(true);
+    this.isLoading = true;
     if (this.filterForm.value.author) {
       this.bookService
         .getBooksByAuthor(
@@ -164,5 +167,6 @@ export class BooklistFilterComponent implements OnInit {
   formClean() {
     this.filterForm.reset();
     this.filterForm.enable();
+    this.isLoading = false;
   }
 }
