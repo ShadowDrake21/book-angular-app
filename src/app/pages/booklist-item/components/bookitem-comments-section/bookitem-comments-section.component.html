@@ -1,5 +1,7 @@
 <form [formGroup]="commentForm" (ngSubmit)="onCommentFormSubmit()">
-  <label for="comment" class="block mb-2 text-2xl font-semibold"
+  <label
+    for="comment"
+    class="block mb-1 md:mb-2 text-xl lg:text-2xl font-semibold text-center md:text-start"
     >Your review</label
   >
   <textarea
@@ -22,8 +24,12 @@
   >
     You should write a comment
   </div>
-  <div class="flex gap-5 items-center my-5">
-    <label for="rating" class="text-xl font-semibold">Your rating</label>
+  <div
+    class="flex gap-3 md:gap-5 items-center my-3 md:my-5 justify-center md:justify-normal"
+  >
+    <label for="rating" class="text-lg lg:text-xl font-semibold"
+      >Your rating</label
+    >
     <star-rating-control
       id="rating"
       formControlName="rating"
@@ -40,8 +46,8 @@
     [disabled]="commentForm.controls.comment.errors?.['required'] || commentForm.controls.comment.disabled"
   />
 </form>
-<div class="pt-10">
-  <div class="mb-5" *ngIf="commentActionsResult">
+<div class="pt-5 md:pt-7 lg:pt-10">
+  <div class="mb-3 md:mb-5" *ngIf="commentActionsResult">
     <p
       class="text-red-600"
       [class.successfull]="commentActionsResult.isSuccessfull"
@@ -50,7 +56,7 @@
     </p>
   </div>
   @if(userComment) {
-  <h3 class="text-2xl font-semibold pb-2">Your Review</h3>
+  <h3 class="text-xl lg:text-2xl font-semibold pb-1 md:pb-2">Your Review</h3>
   <app-bookitem-comment
     [comment]="userComment"
     [isUserComment]="true"
@@ -59,9 +65,11 @@
     (deleteCommentId)="deleteComment($event)"
   ></app-bookitem-comment>
   } @else {
-  <p class="mb-10">You have not written a review yet</p>
+  <p class="text-center md:text-start mb-3 sm:mb-5 md:mb-7 lg:mb-10">
+    You have not written a review yet
+  </p>
   } @if (comments.length) {
-  <h3 class="text-2xl font-semibold pb-2">All reviews</h3>
+  <h3 class="text-xl lg:text-2xl font-semibold pb-1 md:pb-2">All reviews</h3>
   @for (comment of comments; track $index) {
   <app-bookitem-comment
     [comment]="comment"
@@ -69,6 +77,6 @@
     (deleteCommentId)="deleteComment($event)"
   ></app-bookitem-comment>
   } } @else {
-  <p>Write a first opinion on the book!</p>
+  <p class="text-center md:text-start">Write a first opinion on the book!</p>
   }
 </div>

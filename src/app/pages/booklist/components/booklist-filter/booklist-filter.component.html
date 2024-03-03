@@ -11,7 +11,7 @@
         <input
           type="text"
           id="author"
-          class="filter__item-input block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="filter__item-input block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Rebecca Kuang"
           formControlName="author"
           (change)="
@@ -61,12 +61,12 @@
     </div>
     <div class="filter__item">
       <h3 class="filter__item-title">Years</h3>
-      <p class="my-3">From</p>
+      <p class="my-2 lg:my-3">From</p>
       <label for="yearFrom" class="filter__item-label">
         <input
           type="number"
           id="yearFrom"
-          class="filter__item-input block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="filter__item-input block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Year from"
           formControlName="yearFrom"
           (change)="
@@ -74,12 +74,12 @@
           "
         />
       </label>
-      <p class="my-3">to</p>
+      <p class="my-2 lg:my-3">to</p>
       <label for="yearTo" class="filter__item-label">
         <input
           type="number"
           id="yearFrom"
-          class="filter__item-input block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="filter__item-input block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Year to"
           formControlName="yearTo"
           (change)="
@@ -94,7 +94,7 @@
         <input
           type="number"
           id="limit"
-          class="filter__item-input block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="filter__item-input block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="100"
           formControlName="limit"
         />
@@ -132,7 +132,7 @@
       type="button"
       class="clean__btn w-full text-gray-900 transition-all hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 disabled:border-[#c6c6c6] disabled:text-[#c6c6c6]"
       (click)="formClean()"
-      [disabled]="!filterForm.dirty"
+      [disabled]="!filterForm.dirty || isLoading"
     >
       Clean all
     </button>

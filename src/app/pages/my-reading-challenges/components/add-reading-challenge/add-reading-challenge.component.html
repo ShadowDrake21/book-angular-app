@@ -1,7 +1,7 @@
 <div>
   <div>
     <form [formGroup]="addChallengeForm" (ngSubmit)="onSubmit()">
-      <div class="flex max-h-full">
+      <div class="flex max-h-full flex-col lg:flex-row">
         <div class="flex items-center justify-center w-full">
           <label
             for="dropzone-file"
@@ -39,7 +39,9 @@
             />
           </label>
         </div>
-        <div class="relative w-full max-h-64">
+        <div
+          class="relative w-full max-h-full lg:max-h-64 min-h-64 overflow-hidden mt-5 lg:mt-0"
+        >
           <img
             src="#"
             alt="Preview Uploaded Image"
@@ -49,18 +51,22 @@
             [class.hidden]="!image"
           />
           <div class="no-items" [class.hidden]="image">
-            <p class="text-3xl font-semibold text-center">Image preview</p>
+            <p
+              class="md:text-xl lg:text-2xl xl:text-3xl font-semibold text-center"
+            >
+              Image preview
+            </p>
           </div>
         </div>
       </div>
-      <div *ngIf="image" class="pt-3">
+      <div *ngIf="image" class="pt-3 break-words">
         <p>{{ image.name | truncateText : 100 }}</p>
       </div>
-      <div class="flex gap-5 items-center justify-center">
+      <div class="flex gap-5 items-center justify-center flex-col md:flex-row">
         <app-input
           label="Challenge title"
           formControlName="title"
-          class="w-1/2"
+          class="w-full md:w-1/2"
           [isError]="
             addChallengeForm.controls.title.invalid &&
             addChallengeForm.controls.title.touched

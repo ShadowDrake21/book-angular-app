@@ -46,12 +46,17 @@ $font-family_1: "Play", sans-serif;
     text-align: left;
     padding: 5%;
     .row {
+      font-size: 14px;
+      line-height: 18px;
       ul {
         li {
           display: block;
           margin: 10px 0px;
-          text-align: left;
+          text-align: center;
         }
+      }
+      &__socials {
+        gap: 20px;
       }
     }
   }

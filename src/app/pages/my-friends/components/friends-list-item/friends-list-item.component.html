@@ -1,5 +1,5 @@
 <a
-  class="p-5 bg-white rounded-xl inline-block"
+  class="p-5 bg-white rounded-xl inline-block w-[300px]"
   [routerLink]="['/userlist', friend.id]"
 >
   <div class="flex justify-center">
@@ -11,8 +11,10 @@
   </div>
   <div class="text-center pt-4">
     <h3 class="text-xl font-semibold">
-      {{ (friend.email !== null ? friend.email : "") | truncateText : 25 }}
+      {{ friend.email ?? "" | truncateText : 15 }}
     </h3>
-    <h4 class="text-base font-semibold">{{ friend.name }}</h4>
+    <h4 class="text-base font-semibold">
+      {{ friend.name ?? "" | truncateText : 15 }}
+    </h4>
   </div>
 </a>

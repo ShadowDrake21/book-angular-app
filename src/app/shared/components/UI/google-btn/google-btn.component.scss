@@ -38,3 +38,9 @@
     cursor: not-allowed;
   }
 }
+
+@media (max-width: 640px) {
+  .login-with-google-btn {
+    padding: 10px 14px 10px 40px;
+  }
+}

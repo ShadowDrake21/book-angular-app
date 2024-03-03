@@ -1,8 +1,14 @@
-<section class="pt-[120px] pb-10">
+<section class="pt-[100px] md:pt-[120px] pb-10">
   <div class="container-big">
-    <h2 class="text-3xl font-semibold mb-3">{{ quoteBtnText }} quote</h2>
+    <h2
+      class="text-xl sm:text-2xl md:text-3xl font-semibold mb-2 md:mb-3 text-center md:text-start"
+    >
+      {{ quoteBtnText }} quote
+    </h2>
     <form [formGroup]="quoteForm" (ngSubmit)="onQuoteSubmit()">
-      <label for="text" class="block mb-2 text-xl font-semibold"
+      <label
+        for="text"
+        class="block mb-1 md:mb-2 text-lg md:text-xl font-semibold text-center md:text-start"
         >Quote text</label
       >
       <textarea
@@ -20,11 +26,19 @@
       >
         You should write a quote
       </div>
-      <div class="flex items-center justify-between pt-5">
-        <div class="flex gap-10">
+      <div
+        class="flex items-center justify-between pt-3 md:pt-4 lg:pt-5 flex-col lg:flex-row"
+      >
+        <div
+          class="flex gap-5 md:gap-10 flex-col md:flex-row pb-5 md:pb-0 items-center md:items-start"
+        >
           <div>
-            <div class="my-5 flex items-center gap-[15px] w-full">
-              <label for="author" class="text-xl font-semibold flex-shrink-0"
+            <div
+              class="my-0 md:my-5 flex items-center gap-[10px] min-[400px]:gap-[15px] w-full max-[400px]:flex-col"
+            >
+              <label
+                for="author"
+                class="text-lg md:text-xl font-semibold flex-shrink-0"
                 >Quote author</label
               >
               <input
@@ -36,7 +50,7 @@
               />
             </div>
             <p
-              class="validate-error pt-2 block flex-shrink-0"
+              class="validate-error pt-2 block flex-shrink-0 text-center md:text-start"
               *ngIf="
         quoteForm.controls.author.touched && quoteForm.controls.author.errors?.['required']
         "
@@ -45,10 +59,12 @@
             </p>
           </div>
           <div>
-            <div class="my-5 flex items-center gap-[15px] w-full">
+            <div
+              class="my-0 md:my-5 flex items-center gap-[10px] min-[400px]:gap-[15px] w-full max-[400px]:flex-col"
+            >
               <label
                 for="workTitle"
-                class="tooltip text-xl font-semibold flex-shrink-0 cursor-pointer"
+                class="tooltip text-lg md:text-xl font-semibold flex-shrink-0 cursor-pointer"
                 >Quote source *
                 <span class="tooltipText font-normal"
                   >This is not a required field.</span
@@ -64,7 +80,7 @@
             </div>
           </div>
         </div>
-        <div class="flex gap-5">
+        <div class="flex gap-2.5 md:gap-5">
           <button
             type="button"
             class="flex-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-normal rounded-lg text-[19px] px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:text-[#c6c6c6] disabled:bg-transparent disabled:border-[#c6c6c6] disabled:border"
@@ -81,8 +97,11 @@
         </div>
       </div>
     </form>
-    <div class="pt-5">
-      <div class="mb-5" *ngIf="quoteActionResult">
+    <div class="pt-2.5 md:pt-5">
+      <div
+        class="mb-2.5 md:mb-5 text-center md:text-start"
+        *ngIf="quoteActionResult"
+      >
         <p
           class="text-red-600"
           [class.successfull]="quoteActionResult.isSuccessfull"
@@ -90,7 +109,11 @@
           {{ quoteActionResult.message }}
         </p>
       </div>
-      <h2 class="text-3xl font-semibold mb-3">All quotes</h2>
+      <h2
+        class="text-xl sm:text-2xl md:text-3xl font-semibold mb-2 md:mb-3 text-center md:text-start"
+      >
+        All quotes
+      </h2>
       <div class="relative min-h-60">
         @if (!loadingQuotes) { @if (quotes.length > 0) {
         <app-quotes-list
@@ -99,12 +122,16 @@
           (onDelete)="deleteUserQuote($event)"
         ></app-quotes-list
         >} @else {
-        <div class="no-items">
-          <p class="text-3xl font-semibold text-center">There are no quotes</p>
+        <div class="no-items w-full">
+          <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+            There are no quotes
+          </p>
         </div>
         } } @else {
-        <div class="no-items">
-          <p class="text-3xl font-semibold text-center">Quotes loading...</p>
+        <div class="no-items w-full">
+          <p class="text-xl sm:text-2xl md:text-3xl font-semibold text-center">
+            Quotes loading...
+          </p>
         </div>
         }
       </div>

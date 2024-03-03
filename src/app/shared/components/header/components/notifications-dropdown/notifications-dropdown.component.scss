@@ -52,3 +52,21 @@
     object-fit: cover;
   }
 }
+
+@media (max-width: 1030px) {
+  .dropdown {
+    top: 37px;
+
+    transform: translateX(50%);
+  }
+}
+
+@media (max-width: 640px) {
+  .dropdown {
+    width: 300px;
+    top: 30px;
+  }
+}
+
+@media (max-width: 520px) {
+}

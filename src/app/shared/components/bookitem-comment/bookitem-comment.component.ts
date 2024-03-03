@@ -9,11 +9,12 @@ import {
 } from '@angular/core';
 import { StarRatingModule } from 'angular-star-rating';
 import { IBookCommentToClient } from '../../models/comment.model';
+import { TruncateTextPipe } from '../../pipes/truncate-text.pipe';
 
 @Component({
   selector: 'app-bookitem-comment',
   standalone: true,
-  imports: [CommonModule, StarRatingModule],
+  imports: [CommonModule, StarRatingModule, TruncateTextPipe],
   templateUrl: './bookitem-comment.component.html',
   styleUrl: './bookitem-comment.component.scss',
 })

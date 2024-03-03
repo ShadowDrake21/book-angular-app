@@ -1,9 +1,11 @@
-<section class="pt-[120px]">
+<section class="pt-[100px] md:pt-[120px]">
   <div class="container-big">
     @if (!loadingAuthor) {
-    <div class="flex gap-10">
-      <div class="max-w-96 flex-shrink-0">
-        <div class="max-h-[500px] h-full">
+    <div class="flex gap-5 md:gap-7 lg:gap-10 flex-col md:flex-row">
+      <div class="max-w-full md:max-w-60 lg:max-w-80 xl:max-w-96 flex-shrink-0">
+        <div
+          class="max-h-full md:max-h-[300px] lg:max-h-[400px] xl:max-h-[500px] h-full overflow-hidden"
+        >
           <img
             [src]="
               mainPhoto
@@ -14,26 +16,26 @@
             class="w-full h-full object-cover"
           />
         </div>
-        <div class="my-5">
-          <p *ngIf="author.birth_date" class="mb-2">
+        <div class="my-3 md:my-5">
+          <p *ngIf="author.birth_date" class="mb-1 md:mb-2">
             Date of birth:
             <span class="font-semibold">{{
               author.birth_date | date : "longDate"
             }}</span>
           </p>
-          <p *ngIf="author.death_date" class="mb-2">
+          <p *ngIf="author.death_date" class="mb-1 md:mb-2">
             Date of death:
             <span class="font-semibold">{{
               author.death_date | date : "longDate"
             }}</span>
           </p>
-          <p *ngIf="author.created" class="mb-2">
+          <p *ngIf="author.created" class="mb-1 md:mb-2">
             Page created:
             <span class="font-semibold">{{
               author.created.value | date : "medium"
             }}</span>
           </p>
-          <p *ngIf="author.last_modified" class="mb-2">
+          <p *ngIf="author.last_modified" class="mb-1 md:mb-2">
             Last modified:
             <span class="font-semibold">{{
               author.last_modified.value | date : "medium"
@@ -41,31 +43,31 @@
           </p>
         </div>
 
-        <div class="mb-3" *ngIf="author.links">
-          <h3 class="text-2xl font-semibold">Links</h3>
+        <div class="mb-2 md:mb-3" *ngIf="author.links">
+          <h3 class="text-xl lg:text-2xl font-semibold">Links</h3>
           <ul class="list-disc pl-5">
             @for (link of author.links; track $index) {
             <li
-              class="mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
+              class="mb-1 md:mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
             >
               <a [href]="link.url" target="_blank">{{ link.title }}</a>
             </li>
             }
             <li
               *ngIf="author.wikipedia as wikipedia"
-              class="mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
+              class="mb-1 md:mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
             >
               <a [href]="wikipedia" target="_blank">Wikipedia</a>
             </li>
           </ul>
         </div>
-        <div class="mb-3">
+        <div class="mb-2 md:mb-3">
           @if(fullRemoteIdsLinks) {
-          <h3 class="text-2xl font-semibold">Services</h3>
+          <h3 class="text-xl lg:text-2xl font-semibold">Services</h3>
           <ul class="list-disc pl-5">
             @for (remoteLink of fullRemoteIdsLinks; track $index) {
             <li
-              class="mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
+              class="mb-1 md:mb-2 underline text-blue-700 transition-colors hover:text-blue-800"
             >
               <a [href]="remoteLink.link" target="_blank">{{
                 remoteLink.text | titlecase
@@ -76,12 +78,17 @@
           }
         </div>
       </div>
-      <div class="max-w-full w-full overflow-auto">
-        <h1 class="font-semibold text-5xl mb-5">
+      <div class="max-w-full w-full overflow-auto text-center md:text-start">
+        <h1
+          class="font-semibold text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-2 md:mb-3 lg:mb-5"
+        >
           {{ author.name | truncateText : 50 }}
         </h1>
-        <div class="mb-5" *ngIf="isString(author.bio); else noBio">
-          <h3 class="text-2xl font-semibold pb-2">Description</h3>
+        <div
+          class="mb-2 md:mb-3 lg:mb-5"
+          *ngIf="isString(author.bio); else noBio"
+        >
+          <h3 class="text-xl lg:text-2xl font-semibold pb-2">Description</h3>
           <p>
             {{ author.bio | truncateText : bioShowLength : isBioFullText }}
             <span class="ml-1"
@@ -101,14 +108,16 @@
             normal bio info XD
           </p></ng-template
         >
-        <div class="flex justify-between pb-10">
-          <div class="mb-3 max-w-[50%] w-full">
+        <div
+          class="flex items-center md:items-start justify-center md:justify-between pb-3 md:pb-5 lg:pb-10 flex-col md:flex-row"
+        >
+          <div class="mb-2 md:mb-3 max-w-full md:max-w-[50%] w-full">
             <app-item-scroll-list
               [itemObj]="alternateNamesListObject"
               [listTitle]="'Alternative names'"
             ></app-item-scroll-list>
           </div>
-          <div class="mb-3 max-w-[50%] w-full">
+          <div class="mb-2 md:mb-3 max-w-full md:max-w-[50%] w-full">
             <app-item-scroll-list
               [itemObj]="soutceRecordsListObject"
               [listTitle]="'Source Records'"
@@ -116,7 +125,7 @@
           </div>
         </div>
         @if (!loadingBooks) {
-        <div class="overflow-hidden max-w-full w-full">
+        <div class="overflow-hidden max-w-full w-full text-start">
           <app-carousel
             [contents]="authorBooks"
             [title]="'Author books'"
@@ -131,16 +140,20 @@
         }
       </div>
     </div>
-    <div class="flex justify-between items-start py-10">
+    <div
+      class="flex justify-between items-center md:items-start pb-10 pt-3 md:py-7 lg:py-10 flex-col md:flex-row"
+    >
       <div class="max-w-full w-full mx-5">
         <app-authoritem-comments-section
           [authorId]="authorId"
           [neededUserInfo]="neededUserInfo"
         ></app-authoritem-comments-section>
       </div>
-      <div class="w-60">
-        <h3 class="text-2xl font-semibold pb-2 text-center">Bookmark</h3>
-        <p class="mb-5 text-center">
+      <div class="w-60 mt-5 md:mt-0">
+        <h3 class="text-xl lg:text-2xl font-semibold pb-2 text-center">
+          Bookmark
+        </h3>
+        <p class="mb-3 md:mb-5 text-center">
           {{ isBookmarked ? "Bookmarked" : "Not bookmarked" }}
         </p>
         <app-bookmark-button
@@ -151,7 +164,9 @@
       </div>
     </div>
     } @else {
-    <div class="no-items"><p class="text-3xl font-semibold">Loading...</p></div>
+    <div class="no-items">
+      <p class="text-xl sm:text-2xl md:text-3xl font-semibold">Loading...</p>
+    </div>
     }
   </div>
 </section>

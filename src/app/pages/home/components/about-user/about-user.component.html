@@ -1,15 +1,23 @@
 <div class="about__user container-big min-h-[600px]">
-  <h3 class="font-semibold text-3xl mb-5">About you</h3>
-  <div class="flex max-h-[470px] min-h-full h-full">
-    <div class="w-1/2 text-center flex items-center justify-center flex-col">
-      <div class="max-w-full mb-4 overflow-hidden w-full">
+  <h3
+    class="font-semibold text-xl md:text-2xl lg:text-3xl mb-2 md:mb-5 text-center lg:text-start"
+  >
+    About you
+  </h3>
+  <div
+    class="flex max-h-full lg:max-h-[470px] min-h-full h-full flex-col lg:flex-row"
+  >
+    <div
+      class="w-full lg:w-1/2 text-center flex max-[1024px]:items-center max-[1024px]:justify-center flex-col gap-3 lg:gap-0"
+    >
+      <div class="max-w-full mb-2 md:mb-3 lg:mb-4 overflow-hidden w-full">
         <img
           [src]="user?.photoURL"
           class="object-contain h-full w-full"
           alt="profile-img"
         />
       </div>
-      <div class="flex flex-col gap-3">
+      <div class="flex flex-col text-center gap-2 md:gap-3">
         <p>
           Your email: <span class="font-semibold">{{ user?.email }}</span>
         </p>
@@ -30,12 +38,18 @@
         </p>
       </div>
     </div>
-    <div class="about__user-activity w-1/2 min-h-[470px]">
+    <div
+      class="about__user-activity w-full lg:w-1/2 mix-h-full lg:min-h-[470px] pt-5 sm:pt-7 md:pt-10 lg:pt-0"
+    >
       <div
-        class="relative flex justify-center items-center flex-col gap-4 h-full"
+        class="relative flex justify-center text-center items-center flex-col gap-2 md:gap-3 lg:gap-4 h-full"
       >
         @if(!loadingAboutUser) {
-        <h6 class="font-semibold text-2xl mb-3">Your activity</h6>
+        <h6
+          class="font-semibold text-lg md:text-xl lg:text-2xl mb-1 md:mb-2 lg:mb-3"
+        >
+          Your activity
+        </h6>
         <p class="italic text-base">
           You like {{ aboutUser.likedBooks }} books
         </p>

@@ -1,11 +1,12 @@
-<section class="pt-[120px] pb-10 min-h-screen h-full">
+<section class="pt-[100px] md:pt-[120px] pb-10 min-h-screen h-full">
   <div class="container-ultra__big">
-    <h2 class="text-3xl font-semibold mb-3">
+    <h2
+      class="text-xl md:text-2xl lg:text-3xl font-semibold mb-1 md:mb-3 text-center md:text-start"
+    >
       Search author <span *ngIf="searchTitle">: {{ searchTitle }}</span>
     </h2>
-
     <form
-      class="flex mb-7"
+      class="flex mb-4 md:mb-7 items-center justify-center md:justify-normal"
       [formGroup]="searchAuthorForm"
       (ngSubmit)="onSearch()"
     >
@@ -60,18 +61,22 @@
       class="no-items"
     >
       <p
-        class="text-3xl font-semibold text-center"
+        class="text-xl md:text-2xl lg:text-3xl font-semibold text-center"
         *ngIf="paginationService.currentPageData$"
       >
         No authors with such name
       </p>
     </div>
     <ng-template #loadingAuthors>
-      <div class="no-items">
+      <div class="no-items w-full">
         @if(authorlistService.loadingAuthors) {
-        <p class="text-3xl font-semibold text-center">Loading...</p>
+        <p class="text-xl md:text-2xl lg:text-3xl font-semibold text-center">
+          Loading...
+        </p>
         } @else {
-        <p class="text-3xl font-semibold text-center">There are no authors</p>
+        <p class="text-xl md:text-2xl lg:text-3xl font-semibold text-center">
+          There are no authors
+        </p>
         }
       </div>
     </ng-template>

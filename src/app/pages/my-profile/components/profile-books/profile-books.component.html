@@ -1,12 +1,12 @@
 <div class="pt-5">
   <div class="pb-3">
-    <h4 class="profile__titles pb-2 font-semibold">
+    <h4 class="profile__titles pb-2 font-semibold text-center sm:text-start">
       {{ user?.displayName + "'s favourite books" | uppercase }}
     </h4>
   </div>
   <div class="relative min-h-48">
     <div
-      class="relative min-h-48 flex flex-wrap gap-2"
+      class="relative min-h-48 flex flex-wrap justify-center gap-2"
       *ngIf="favouriteBooksService.isAnyBook; else noBook"
     >
       @if (!favouriteBooksService.loadingBooks) { @for (work of
