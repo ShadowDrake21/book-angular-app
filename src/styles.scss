@@ -200,6 +200,7 @@ body {
   .mat-mdc-tab {
   display: flex;
   align-items: center;
+  padding: 0 15px !important;
 }
 
 .tooltip {
@@ -235,6 +236,13 @@ body {
 .tooltip:hover .tooltipText {
   opacity: 1;
   transform: translateY(-10px);
+}
+
+@media (max-width: 1024px) {
+  .mdc-tab__text-label {
+    font-size: 16px !important;
+    line-height: 24px !important;
+  }
 }
 
 @media (max-width: 600px) {
