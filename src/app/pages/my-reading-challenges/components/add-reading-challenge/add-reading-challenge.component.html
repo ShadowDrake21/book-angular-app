@@ -52,7 +52,7 @@
           />
           <div class="no-items" [class.hidden]="image">
             <p
-              class="md:text-xl lg:text-2xl xl:text-3xl font-semibold text-center"
+              class="text-xl lg:text-2xl xl:text-3xl font-semibold text-center"
             >
               Image preview
             </p>
@@ -90,7 +90,7 @@
           [disabled]="addChallengeForm.invalid || addChallengeForm.untouched"
         ></app-button>
       </div>
-      <div class="pt-5 text-center">
+      <div class="pt-2.5 md:pt-5 text-center">
         <div
           class="validate-error mt-2"
           *ngIf="addChallengeForm.controls.title.errors?.['required'] &&  addChallengeForm.controls.title.touched"
@@ -124,14 +124,12 @@
         </div>
         <div
           class="validate-error mt-2"
-          *ngIf=" addChallengeForm.controls.count.errors?.['max']
-
-        "
+          *ngIf=" addChallengeForm.controls.count.errors?.['max']"
         >
           Count should be less or equal to 9999
         </div>
       </div>
-      <div class="pt-5" *ngIf="submitted">
+      <div class="pt-2.5 md:pt-5" *ngIf="submitted">
         <p class="text-center text-xl font-medium text-gray-700 pb-1">
           Creation...
         </p>

@@ -42,7 +42,7 @@
       class="about__user-activity w-full lg:w-1/2 mix-h-full lg:min-h-[470px] pt-5 sm:pt-7 md:pt-10 lg:pt-0"
     >
       <div
-        class="relative flex justify-center text-center items-center flex-col gap-2 md:gap-3 lg:gap-4 h-full"
+        class="relative flex justify-center text-center items-center flex-col gap-2 md:gap-3 lg:gap-4 h-full min-h-40"
       >
         @if(!loadingAboutUser) {
         <h6
@@ -69,7 +69,7 @@
         </p>
         } @else {
         <app-floating-message
-          ><p class="text-xl font-semibold text-center">
+          ><p class="text-lg md:text-xl font-semibold text-center">
             Activity loading...
           </p></app-floating-message
         >

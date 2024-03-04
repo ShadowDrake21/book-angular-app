@@ -56,6 +56,7 @@ header {
 
 .header__responsive {
   height: 220px;
+  border-bottom: 2px solid #303030;
 }
 
 .nav__responsive {
@@ -99,7 +100,6 @@ header {
 @media (max-width: 640px) {
   .header__responsive {
     height: 360px;
-    border-bottom: 2px solid #303030;
   }
   .nav {
     margin: 0 -20px;

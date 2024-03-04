@@ -1,4 +1,4 @@
-<div>
+<div class="min-h-[200px] relative">
   @if(paginationService.currentPageData$ | async) {
   <form
     class="flex mb-2 sm:mb-4 md:mb-7"
@@ -34,7 +34,7 @@
   </form>
 
   <div *ngIf="paginationService.currentPageData$ | async as authorsList">
-    <p class="mb-2">
+    <p class="mb-1 md:mb-2">
       <span class="font-semibold">Found results:</span>
       {{ authorlistService.numFound }}
     </p>
@@ -80,6 +80,10 @@
     >Go to the Authors page</a
   >
   } @else {
-  <p class="mt-5">Loading!</p>
+  <app-floating-message
+    ><p class="text-lg md:text-xl font-semibold text-center">
+      Loading...
+    </p></app-floating-message
+  >
   }
 </div>

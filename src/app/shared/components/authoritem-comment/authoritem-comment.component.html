@@ -10,7 +10,7 @@
       </h1>
       <div *ngIf="isUserComment" class="max-[880px]:flex flex-col gap-2">
         <button
-          class="mr-4 text-gray-600 transition-colors hover:underline hover:text-gray-800"
+          class="mr-0 min-[880px]:mr-4 text-gray-600 transition-colors hover:underline hover:text-gray-800"
           (click)="editComment()"
           [disabled]="!areUserBtnsActive"
           [class.disabled-btn]="!areUserBtnsActive"
