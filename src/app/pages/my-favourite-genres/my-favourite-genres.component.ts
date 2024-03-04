@@ -205,7 +205,6 @@ export class MyFavouriteGenresComponent implements OnInit {
     } else {
       this.operationName = '';
 
-      console.log(this.deletedGenres);
       this.deletedGenres.forEach((genre: IGenre) => {
         this.toggleChooseGenre(genre);
       });
