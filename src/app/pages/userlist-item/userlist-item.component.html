@@ -32,7 +32,6 @@
           {{ user.email ?? "" | truncateText : 20 }}
         </h1>
         @if(details) {
-
         <div
           class="flex flex-col items-center gap-3 min-[400px]:gap-5 min-[530px]:flex-row min-[530px]:items-start min-[530px]:gap-0"
         >
@@ -40,7 +39,7 @@
             class="max-w-full min-[530px]:max-w-[50%] w-full text-center min-[530px]:text-start"
           >
             <h3 class="text-xl lg:text-2xl font-semibold pb-2">Details</h3>
-            <p class="mb-2">
+            <p class="mb-1 sm:mb-2">
               All book reviews:
               <span class="font-semibold">{{ details.countBookComments }}</span>
             </p>
@@ -50,11 +49,11 @@
                 details.countAuthorComments
               }}</span>
             </p>
-            <p class="mb-2">
+            <p class="mb-1 sm:mb-2">
               All book bookmarks:
               <span class="font-semibold">{{ details.countBooks }}</span>
             </p>
-            <p class="mb-2">
+            <p class="mb-1 sm:mb-2">
               All author bookmarks:
               <span class="font-semibold">{{ details.countAuthors }}</span>
             </p>
@@ -68,7 +67,7 @@
             ></app-userlist-item-friends-management
             >}@else {
             <app-floating-message
-              ><p class="text-xl font-semibold text-center">
+              ><p class="text-lg md:text-xl font-semibold text-center">
                 You are already friends with yourself XD
               </p></app-floating-message
             >
@@ -123,7 +122,6 @@
         User data loading...
       </p></app-floating-message
     >
-
     }
   </div>
 </section>

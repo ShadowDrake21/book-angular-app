@@ -7,6 +7,7 @@ import { InputComponent } from '../../../../shared/components/UI/input/input.com
 import { ButtonComponent } from '../../../../shared/components/UI/button/button.component';
 import { PaginationService } from '../../../../core/services/pagination.service';
 import { AuthorlistService } from '../../../../core/services/authorlist.service';
+import { FloatingMessageComponent } from '../../../../shared/components/floating-message/floating-message.component';
 
 @Component({
   selector: 'app-authors-list',
@@ -17,6 +18,7 @@ import { AuthorlistService } from '../../../../core/services/authorlist.service'
     ReactiveFormsModule,
     InputComponent,
     ButtonComponent,
+    FloatingMessageComponent,
   ],
   providers: [PaginationService, AuthorlistService],
   templateUrl: './authors-list.component.html',

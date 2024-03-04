@@ -28,7 +28,7 @@ export interface ServicesIds {
   storygraph: string;
   librarything: string;
   wikidata: string;
-  [key: string]: string; // Add an index signature
+  [key: string]: string;
 }
 
 export interface Bio {

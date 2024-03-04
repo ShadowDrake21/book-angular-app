@@ -8,6 +8,7 @@ import { ClickOutsideDirective } from '../../directives/click-outside.directive'
 import { RouterModule } from '@angular/router';
 import { NotificationsService } from '../../../../../core/services/notifications.service';
 import { INotification } from '../../../../models/notification.model';
+import { FloatingMessageComponent } from '../../../floating-message/floating-message.component';
 
 @Component({
   selector: 'app-notifications-dropdown',
@@ -18,6 +19,7 @@ import { INotification } from '../../../../models/notification.model';
     ClickOutsideDirective,
     TruncateTextPipe,
     RouterModule,
+    FloatingMessageComponent,
   ],
   templateUrl: './notifications-dropdown.component.html',
   styleUrl: './notifications-dropdown.component.scss',

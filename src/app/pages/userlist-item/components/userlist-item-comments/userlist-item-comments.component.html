@@ -1,5 +1,5 @@
 @if(type === 'books') { @if(!loadingComments) {
-<h3 class="text-xl lg:text-2xl font-semibold pb-2 text-center">
+<h3 class="text-xl lg:text-2xl font-semibold pb-1 sm:pb-2 text-center">
   Recent user book reviews
 </h3>
 @if(bookComments.length) { @for (comment of recentBookComments; track
@@ -18,7 +18,7 @@ comment.id) {
   </p></app-floating-message
 >
 } } @else if(type === 'authors') { @if(!loadingComments) {
-<h3 class="text-xl lg:text-2xl font-semibold pb-2 text-center">
+<h3 class="text-xl lg:text-2xl font-semibold pb-1 sm:pb-2 text-center">
   Recent user author reviews
 </h3>
 @if(authorComments.length) { @for(comment of recentAuthorComments; track

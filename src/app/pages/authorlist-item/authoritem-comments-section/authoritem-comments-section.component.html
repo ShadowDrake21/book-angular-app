@@ -1,7 +1,7 @@
 <form [formGroup]="commentForm" (ngSubmit)="onCommentFormSubmit()">
   <label
     for="comment"
-    class="blockmb-1 md:mb-2 text-xl lg:text-2xl font-semibold text-center md:text-start"
+    class="block mb-1 md:mb-2 text-xl lg:text-2xl font-semibold text-center md:text-start"
     >Your review</label
   >
   <textarea
@@ -75,7 +75,7 @@
     You have not written a review yet
   </p>
   } @if (comments.length) {
-  <h3 class="text-2xl font-semibold pb-2">All reviews</h3>
+  <h3 class="text-xl lg:text-2xl font-semibold pb-2">All reviews</h3>
   @for (comment of comments; track $index) {
   <app-authoritem-comment
     [comment]="comment"
