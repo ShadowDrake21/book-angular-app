@@ -1,18 +1,17 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { ResetPasswordComponent } from './pages/login/components/reset-password/reset-password.component';
+import { secureInnerPageGuard } from './core/guards/secure-inner-page.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: 'login',
     component: LoginComponent,
-    // canActivate: [secureInnerPageGuard],
   },
   { path: 'login/reset-password', component: ResetPasswordComponent },
   {
     path: 'registration',
-    // canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/registration/registration.component').then(
         (m) => m.RegistrationComponent
@@ -20,11 +19,13 @@ export const routes: Routes = [
   },
   {
     path: 'home',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
     path: 'booklist',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/booklist/booklist.component').then(
         (m) => m.BooklistComponent
@@ -32,6 +33,7 @@ export const routes: Routes = [
   },
   {
     path: 'booklist-item/:bookid',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/booklist-item/booklist-item.component').then(
         (m) => m.BooklistItemComponent
@@ -39,6 +41,7 @@ export const routes: Routes = [
   },
   {
     path: 'userlist',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/userlist/userlist.component').then(
         (m) => m.UserlistComponent
@@ -46,6 +49,7 @@ export const routes: Routes = [
   },
   {
     path: 'userlist/:userid',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/userlist-item/userlist-item.component').then(
         (m) => m.UserlistItemComponent
@@ -53,6 +57,7 @@ export const routes: Routes = [
   },
   {
     path: 'authorlist',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/authorlist/authorlist.component').then(
         (m) => m.AuthorlistComponent
@@ -60,6 +65,7 @@ export const routes: Routes = [
   },
   {
     path: 'authorlist/:authorid',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/authorlist-item/authorlist-item.component').then(
         (m) => m.AuthorlistItemComponent
@@ -67,6 +73,7 @@ export const routes: Routes = [
   },
   {
     path: 'favourites',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/favorites/favorites.component').then(
         (m) => m.FavoritesComponent
@@ -74,6 +81,7 @@ export const routes: Routes = [
   },
   {
     path: 'contact-me',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/contact-me/contact-me.component').then(
         (m) => m.ContactMeComponent
@@ -81,6 +89,7 @@ export const routes: Routes = [
   },
   {
     path: 'about-developer',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/about-developer/about-developer.component').then(
         (m) => m.AboutDeveloperComponent
@@ -88,6 +97,7 @@ export const routes: Routes = [
   },
   {
     path: 'notifications',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/notifications/notifications.component').then(
         (m) => m.NotificationsComponent
@@ -95,6 +105,7 @@ export const routes: Routes = [
   },
   {
     path: 'my-profile',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/my-profile/my-profile.component').then(
         (m) => m.MyProfileComponent
@@ -102,6 +113,7 @@ export const routes: Routes = [
   },
   {
     path: 'my-friends',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/my-friends/my-friends.component').then(
         (m) => m.MyFriendsComponent
@@ -109,6 +121,7 @@ export const routes: Routes = [
   },
   {
     path: 'my-reading-challenges',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import(
         './pages/my-reading-challenges/my-reading-challenges.component'
@@ -116,6 +129,7 @@ export const routes: Routes = [
   },
   {
     path: 'my-quotes',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/my-quotes/my-quotes.component').then(
         (m) => m.MyQuotesComponent
@@ -123,6 +137,7 @@ export const routes: Routes = [
   },
   {
     path: 'my-favorite-genres',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/my-favourite-genres/my-favourite-genres.component').then(
         (m) => m.MyFavouriteGenresComponent
@@ -130,6 +145,7 @@ export const routes: Routes = [
   },
   {
     path: 'my-account-settings',
+    canActivate: [secureInnerPageGuard],
     loadComponent: () =>
       import('./pages/my-account-settings/my-account-settings.component').then(
         (m) => m.MyAccountSettingsComponent

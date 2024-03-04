@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { AuthService } from '../../core/authentication/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -23,6 +23,7 @@ import { GoogleBtnComponent } from '../../shared/components/UI/google-btn/google
     ReactiveFormsModule,
     RouterModule,
     GoogleBtnComponent,
+    NgOptimizedImage,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
