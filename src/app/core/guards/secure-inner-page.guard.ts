@@ -6,7 +6,9 @@ export const secureInnerPageGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
   if (authService.isLoggedIn !== true) {
-    router.navigate(['login']);
+    router.navigate(['/login']);
+    return false;
+  } else {
+    return true;
   }
-  return true;
 };

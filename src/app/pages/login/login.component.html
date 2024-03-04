@@ -4,9 +4,13 @@
   >
     <div *ngIf="!isInSystem">
       <img
-        src="/assets/logo/png/logo-no-background.png"
+        ngSrc="/assets/logo/png/logo-no-background.png"
+        ngSrcset="400w, 500w"
         alt="logo"
         class="w-40 md:w-56 lg:w-80"
+        width="320"
+        height="360"
+        priority="true"
       />
     </div>
     <form
