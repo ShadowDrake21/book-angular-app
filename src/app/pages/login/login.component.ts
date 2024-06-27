@@ -95,6 +95,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
+  patchTest() {
+    this.loginForm.patchValue({ email: 'test1@gmail.com', password: '111111' });
+    this.loginForm.markAllAsTouched();
+  }
+
   ngOnDestroy(): void {
     if (this.authSubscription) this.authSubscription.unsubscribe();
   }

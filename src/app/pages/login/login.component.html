@@ -80,11 +80,25 @@
         Password should have less than 20 characters
       </div>
       }
-      <app-button
-        [button-styles]="'margin-top: 40px'"
-        [text]="'Sign-In'"
-        [disabled]="loginForm.invalid || loginForm.untouched"
-      />
+      <div
+        style="
+          display: flex;
+          gap: 10px;
+          align-items: flex-end;
+          justify-content: center;
+        "
+      >
+        <app-button
+          [button-styles]="'margin-top: 40px'"
+          [text]="'Sign-In'"
+          [disabled]="loginForm.invalid || loginForm.untouched"
+        />
+        <div class="flex gap-2">
+          <button type="button" class="test-button" (click)="patchTest()">
+            Test profile
+          </button>
+        </div>
+      </div>
     </form>
 
     <div *ngIf="!isInSystem" class="text-center pb-2 md:pb-4">
