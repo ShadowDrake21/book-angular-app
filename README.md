@@ -2,9 +2,21 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.1.
 
+The project represents my passion for reading and programming together. 
+
+This application has authorization and registration pages, general book and specific book recommendations pages, author biography and author literature achievements, mechanism and block of pages for user profile interaction and much more.
+
+I used Angular for front-end, Firebase Auth, Storage and Firebase Database for authorization, media storage and data storage respectively. Moreover the provided API from the Open Library acted as a link between the interface and the server.
+
+Of course now after 5 months since the last commit I've already noticed a bunch of possible future fixes, for example to rewrite some pieces of code in order to get more effective mechanism or using more RxJS to handle data more conveniently. 
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+## Project testing
+
+In order to test project functionality and performance you should register or sign-in to the system. For this there is a test profile what meet the user expectations.
 
 ## Code scaffolding
 
