@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 # Quick tutorial
 
-![Quick tutorial](https://github.com/ShadowDrake21/book-angular-app/raw/main/src/assets/readme-gif.gif)
+![Quick tutorial](https://raw.githubusercontent.com/ShadowDrake21/book-angular-app/master/src/assets/readme-gif.gif)
 
 # How to work with the application?
 
